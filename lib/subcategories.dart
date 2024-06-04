@@ -29,19 +29,17 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://c05e-59-92-206-153.ngrok-free.app///category/";
+      "https://6cec-117-193-84-227.ngrok-free.app/category/";
   final String productsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app///mainCategory-Product/";
-      final String searchproducturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/search/?q=";
+      "https://6cec-117-193-84-227.ngrok-free.app/mainCategory-Product/";
+  final String searchproducturl =
+      "https://6cec-117-193-84-227.ngrok-free.app/products/search/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
   int _index = 0;
-    List<Map<String, dynamic>> searchResults = [];
-      TextEditingController searchitem = TextEditingController();
-
-
+  List<Map<String, dynamic>> searchResults = [];
+  TextEditingController searchitem = TextEditingController();
 
   @override
   void initState() {
@@ -77,13 +75,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       suffixIcon: IconButton(
-                        onPressed: ()async {
-                         await searchproduct();
+                        onPressed: () async {
+                          await searchproduct();
 
                           setState(() {
                             _isSearching = false;
 
-                             Navigator.push(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
@@ -120,7 +118,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app//${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -144,10 +142,8 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     }
   }
 
-   Future<void> searchproduct() async {
-    print(
-      'dfggggggggggggggggggggggggggggggggggggggggggggggggggg'
-    );
+  Future<void> searchproduct() async {
+    print('dfggggggggggggggggggggggggggggggggggggggggggggggggggg');
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.post(
@@ -167,7 +163,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -190,25 +186,26 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     }
   }
 
-
   Future<void> fetchSubcategories() async {
+    print("dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    print(subcategoriesurl + widget.categoryId.toString());
     try {
       final response = await http
-          .get(Uri.parse(subcategoriesurl + widget.categoryId.toString()));
+          .get(Uri.parse(subcategoriesurl + widget.categoryId.toString()+"/"));
       print('Response: ${response.statusCode}');
       print(widget.categoryId);
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> subcategoriessData = parsed['subcategory'];
+        final List<dynamic> subcategoriessData = parsed['data'];
         List<Map<String, dynamic>> subcategoryList = [];
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${subcategoryData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
-            'name': subcategoryData['sub_category'],
+            'name': subcategoryData['name'],
             'image': imageUrl,
           });
         }
@@ -439,74 +436,72 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                 ),
               ),
               SizedBox(height: 10),
-             GestureDetector(
-  onTap: () {},
-  child: Container(
-    child: ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: categoryProducts.length > 5 ? 5 : categoryProducts.length,
-      itemBuilder: (BuildContext context, int index) {
-        final product = categoryProducts[index];
-        try {
-          // Decode image data
-          final imageData = product['image'];
-          // Return ListTile with decoded image
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Product_big_View(
-                    product_id: product['id'],
-                    Category_id: product['category_id']
-                  )
-                )
-              );
-            },
-            child: ListTile(
-              title: Text(
-                product['name'],
-                style: TextStyle(overflow: TextOverflow.ellipsis),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '\$${product['price']}',
-                    style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.grey,
-                    ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: categoryProducts.length > 5
+                        ? 5
+                        : categoryProducts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final product = categoryProducts[index];
+                      try {
+                        // Decode image data
+                        final imageData = product['image'];
+                        // Return ListTile with decoded image
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Product_big_View(
+                                        product_id: product['id'],
+                                        Category_id: product['category_id'])));
+                          },
+                          child: ListTile(
+                            title: Text(
+                              product['name'],
+                              style: TextStyle(overflow: TextOverflow.ellipsis),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '\$${product['price']}',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  'Sale Price: \$${product['salePrice']}',
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            leading: Image.network(
+                              imageData,
+                              width: 50,
+                              height: 50,
+                            ),
+                          ),
+                        );
+                      } catch (e) {
+                        // Print error if decoding fails
+                        print('Error decoding image: $e');
+                        return ListTile(
+                          title: Text(product['name']),
+                          subtitle: Text('\$${product['price']}'),
+                        );
+                      }
+                    },
                   ),
-                  Text(
-                    'Sale Price: \$${product['salePrice']}',
-                    style: TextStyle(
-                      color: Colors.green,
-                    ),
-                  ),
-                ],
+                ),
               ),
-              leading: Image.network(
-                imageData,
-                width: 50,
-                height: 50,
-              ),
-            ),
-          );
-        } catch (e) {
-          // Print error if decoding fails
-          print('Error decoding image: $e');
-          return ListTile(
-            title: Text(product['name']),
-            subtitle: Text('\$${product['price']}'),
-          );
-        }
-      },
-    ),
-  ),
-),
-
             ],
           ),
         ),

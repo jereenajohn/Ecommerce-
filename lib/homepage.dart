@@ -50,33 +50,33 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> offers = [];
 
-  final String bannerurl = "https://c05e-59-92-206-153.ngrok-free.app/banners/";
-  final String baseUrl = "https://c05e-59-92-206-153.ngrok-free.app";
-  final String categoryUrl = "https://c05e-59-92-206-153.ngrok-free.app/home/";
+  final String bannerurl = "https://6cec-117-193-84-227.ngrok-free.app/banners/";
+  final String baseUrl = "https://6cec-117-193-84-227.ngrok-free.app";
+  final String categoryUrl = "https://6cec-117-193-84-227.ngrok-free.app/category/";
   final String productsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/";
+      "https://6cec-117-193-84-227.ngrok-free.app/products/";
   final String offersurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/offer-banners/";
+      "https://6cec-117-193-84-227.ngrok-free.app/offer-banner/";
 
   final String discountsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/discount-products/";
+      "https://6cec-117-193-84-227.ngrok-free.app/discount-products/";
   final String buyonegetoneurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/buy-1-get-1-offer/";
+      "https://6cec-117-193-84-227.ngrok-free.app/buy-1-get-1-offer/";
 
   final String bestsaleurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/best-sale-products/";
+      "https://6cec-117-193-84-227.ngrok-free.app/best-sale-products/";
 
   final String flashsaleurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/flash-sale-offer/";
+      "https://6cec-117-193-84-227.ngrok-free.app/flash-sale-offer/";
 
   final String buytwogetoneurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/buy-2-get-1-offer/";
+      "https://6cec-117-193-84-227.ngrok-free.app/buy-2-get-1-offer/";
 
   final String halfrateproductsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/half-rate-products/";
+      "https://6cec-117-193-84-227.ngrok-free.app/half-rate-products/";
 
   final String searchproducturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/search/?q=";
+      "https://6cec-117-193-84-227.ngrok-free.app/products/search/?q=";
 
   bool _isSearching = false;
   int _index = 0;
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -190,12 +190,12 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> offersData = parsed['banners'];
+        final List<dynamic> offersData = parsed['banner'];
         List<Map<String, dynamic>> offersList = [];
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${offerData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -221,16 +221,16 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['offer_for_you'];
+        final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> productsList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
-            'price': productData['price'],
+            'salePrice': productData['salePrice'],
             'image': imageUrl,
           });
         }
@@ -259,7 +259,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -297,7 +297,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -336,7 +336,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -372,7 +372,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -406,7 +406,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -438,7 +438,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -469,12 +469,12 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> bannersData = parsed['banners'];
+        final List<dynamic> bannersData = parsed['banner'];
         List<Map<String, dynamic>> bannerList = [];
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${bannerData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -498,12 +498,12 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> categorysData = parsed['categories'];
+        final List<dynamic> categorysData = parsed['data'];
         List<Map<String, dynamic>> categoryList = [];
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${categoryData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -811,7 +811,7 @@ class _HomePageState extends State<HomePage> {
                                               padding: const EdgeInsets.only(
                                                   left: 10),
                                               child: Text(
-                                                '\₹${products[index]['price']}',
+                                                '\₹${products[index]['salePrice']}',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.green,
@@ -1060,7 +1060,7 @@ class _HomePageState extends State<HomePage> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
-                                      '\₹${products[index]['price']}',
+                                      '\₹${products[index]['salePrice']}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.green,

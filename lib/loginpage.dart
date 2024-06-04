@@ -23,7 +23,7 @@ class _Login_PageState extends State<Login_Page> {
 
   List<dynamic> data = [];
 
-  var url = "https://c05e-59-92-206-153.ngrok-free.app/";
+  var url = "https://6cec-117-193-84-227.ngrok-free.app/";
 
   @override
   void initState() {
@@ -197,7 +197,7 @@ Future<void> UserLogin() async {
       var responseData = jsonDecode(response.body);
       var status = responseData['status'];
 
-      if (status == 'Login is successful') {
+      if (status == 'success') {
         var token = responseData['token']; // Extract token
         var userId = responseData['id'];
 

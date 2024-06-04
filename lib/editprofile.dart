@@ -16,7 +16,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var url = "https://c05e-59-92-206-153.ngrok-free.app//profile/";
+  var url = "https://c36a-59-92-192-37.ngrok-free.app//profile/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();

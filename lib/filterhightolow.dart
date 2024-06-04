@@ -25,7 +25,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://c05e-59-92-206-153.ngrok-free.app//products/search/?q=";
+      "https://c36a-59-92-192-37.ngrok-free.app//products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -42,7 +42,7 @@ class _hightolowpageState extends State<hightolowpage> {
     print("Search results: ${widget.result}");
   }
 
-  final String lowtohigh = "https://c05e-59-92-206-153.ngrok-free.app//products/filter/";
+  final String lowtohigh = "https://c36a-59-92-192-37.ngrok-free.app//products/filter/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -62,7 +62,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://c05e-59-92-206-153.ngrok-free.app//${productData['image']}";
+          String imageUrl = "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -85,7 +85,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://c05e-59-92-206-153.ngrok-free.app//whishlist/";
+  final String wishlisturl = "https://c36a-59-92-192-37.ngrok-free.app//whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
@@ -166,7 +166,7 @@ class _hightolowpageState extends State<hightolowpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${productData['image']}";
+              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

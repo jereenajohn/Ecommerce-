@@ -29,10 +29,8 @@ class _usersettingsState extends State<usersettings> {
           SizedBox(height: 10),
           GestureDetector(
             onTap: () {
-               Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => resetpassword()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => resetpassword()));
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -82,10 +80,8 @@ class _usersettingsState extends State<usersettings> {
           SizedBox(height: 10),
           GestureDetector(
             onTap: () {
-               Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => forgotpassword()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => forgotpassword()));
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 8, right: 8),
@@ -132,11 +128,9 @@ class _usersettingsState extends State<usersettings> {
               ),
             ),
           ),
-         
         ],
       ),
-
-       bottomNavigationBar: Container(
+      bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),

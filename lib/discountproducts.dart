@@ -26,16 +26,16 @@ class _Discount_ProductsState extends State<Discount_Products> {
   List<bool> isFavorite = [];
 
   final String discountsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app//discount-products/";
+      "https://c36a-59-92-192-37.ngrok-free.app//discount-products/";
   List<Map<String, dynamic>> discountproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://c05e-59-92-206-153.ngrok-free.app//products/search/?q=";
+      "https://c36a-59-92-192-37.ngrok-free.app//products/search/?q=";
 
-        final String wishlisturl =
-      "https://c05e-59-92-206-153.ngrok-free.app///whishlist/";
+  final String wishlisturl =
+      "https://c36a-59-92-192-37.ngrok-free.app///whishlist/";
 
-        List<Map<String, dynamic>> products = [];
+  List<Map<String, dynamic>> products = [];
 
   bool _isSearching = false;
   int _index = 0;
@@ -64,11 +64,10 @@ class _Discount_ProductsState extends State<Discount_Products> {
     }
   }
 
-   Future<String?> gettokenFromPrefs() async {
+  Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
-
 
   Icon buildFavoriteIcon(int index) {
     if (index < isFavorite.length) {
@@ -117,7 +116,6 @@ class _Discount_ProductsState extends State<Discount_Products> {
     }
   }
 
-
   Future<void> searchproduct() async {
     try {
       print('$searchproducturl${searchitem.text}');
@@ -138,7 +136,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${productData['image']}";
+              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -232,11 +230,10 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
-
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
@@ -260,7 +257,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
         title: Text(
           'Discount for you',
           style: TextStyle(fontSize: 15, color: Colors.grey),
@@ -367,18 +364,21 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-
-                                             Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Product_big_View(
-                                            product_id: discountproducts[
-                                                firstItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                discountproducts[
-                                                        firstItemIndex]
-                                                    ['mainCategory']),
-                                          )));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Product_big_View(
+                                                          product_id:
+                                                              discountproducts[
+                                                                      firstItemIndex]
+                                                                  ['id'],
+                                                          Category_id: int.parse(
+                                                              discountproducts[
+                                                                      firstItemIndex]
+                                                                  [
+                                                                  'mainCategory']),
+                                                        )));
                                             toggleFavorite(firstItemIndex);
                                           },
                                           child: Padding(

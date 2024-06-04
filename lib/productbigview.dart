@@ -24,14 +24,14 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/mainCategory-Product/";
+      "https://c36a-59-92-192-37.ngrok-free.app/mainCategory-Product/";
 
-  final multipleimageurl = "https://c05e-59-92-206-153.ngrok-free.app/product/";
+  final multipleimageurl = "https://c36a-59-92-192-37.ngrok-free.app/product/";
 
-  final String addtocarturl = "https://c05e-59-92-206-153.ngrok-free.app/Cart/";
+  final String addtocarturl = "https://c36a-59-92-192-37.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/whishlist/";
+      "https://c36a-59-92-192-37.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
@@ -775,7 +775,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${productData['image']}";
+              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -834,15 +834,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://c05e-59-92-206-153.ngrok-free.app/${imageData['image1']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image1']}";
           String imageUrl2 =
-              "https://c05e-59-92-206-153.ngrok-free.app/${imageData['image2']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image2']}";
           String imageUrl3 =
-              "https://c05e-59-92-206-153.ngrok-free.app/${imageData['image3']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image3']}";
           String imageUrl4 =
-              "https://c05e-59-92-206-153.ngrok-free.app/${imageData['image4']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image4']}";
           String imageUrl5 =
-              "https://c05e-59-92-206-153.ngrok-free.app/${imageData['image5']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

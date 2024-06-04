@@ -20,14 +20,14 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://c05e-59-92-206-153.ngrok-free.app/whishlistss/";
+  var wishlisturl = "https://6cec-117-193-84-227.ngrok-free.app/wishlist/";
   final String productsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/";
+      "https://6cec-117-193-84-227.ngrok-free.app/products/";
 
   final String deletewishlisturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/whishlist-delete";
+      "https://6cec-117-193-84-227.ngrok-free.app/wishlist-delete/";
 
-  final String addtocarturl = "https://c05e-59-92-206-153.ngrok-free.app/Cart/";
+  final String addtocarturl = "https://c36a-59-92-192-37.ngrok-free.app/Cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -93,7 +93,7 @@ class _WishlistState extends State<Wishlist> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['offer_for_you'];
+        final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> filteredProducts = [];
 
         for (var productData in productsData) {
@@ -101,11 +101,11 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+                "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
-              'price': productData['price'],
+              'salePrice': productData['salePrice'],
               'image': imageUrl,
               'mainCategory': productData['mainCategory']
             });
@@ -132,10 +132,11 @@ class _WishlistState extends State<Wishlist> {
 
   Future<void> deleteWishlistProduct(int wishlistId) async {
     try {
+      print('$deletewishlisturl$wishlistId/');
       final response = await http.delete(
-        Uri.parse('$deletewishlisturl/$wishlistId/'),
+        Uri.parse('$deletewishlisturl$wishlistId/'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json;',
         },
       );
       print("uuuuuuuuuuuuuuuuuuuuuuuuuu");
@@ -161,7 +162,7 @@ class _WishlistState extends State<Wishlist> {
         headers: {
           'Content-type': 'application/json',
           'Authorization': ' $token',
-        },
+        }, 
         body: jsonEncode({
           'token': token,
           'product': productId,

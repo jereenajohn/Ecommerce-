@@ -33,18 +33,18 @@ class _CartState extends State<Cart> {
 
   int _selectedIndex = 0;
 
-  var CartUrl = "https://c05e-59-92-206-153.ngrok-free.app/Cart-products/";
+  var CartUrl = "https://c36a-59-92-192-37.ngrok-free.app/Cart-products/";
   final String productsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/";
+      "https://c36a-59-92-192-37.ngrok-free.app/products/";
 
   final quantityincrementurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/Cart-product-quantity-increament/";
+      "https://c36a-59-92-192-37.ngrok-free.app/Cart-product-quantity-increament/";
 
   final quantitydecrementurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/Cart-product-quantity-decereament/";
+      "https://c36a-59-92-192-37.ngrok-free.app/Cart-product-quantity-decereament/";
 
   final deletecarturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/Cart-product-delete/";
+      "https://c36a-59-92-192-37.ngrok-free.app/Cart-product-delete/";
 
   @override
   void initState() {
@@ -83,7 +83,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${item['image']}";
+              "https://c36a-59-92-192-37.ngrok-free.app/${item['image']}";
 
           cartItems.add({
             'id': item['id'],

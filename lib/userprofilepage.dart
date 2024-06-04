@@ -287,7 +287,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms_and_conditions()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms_and_conditions()));
 
                   },
                   child: Container(
@@ -323,7 +323,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Shipping_Policy_Details()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Shipping_Policy_Details()));
 
                   },
                   child: Container(

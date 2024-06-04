@@ -32,21 +32,25 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   List<Map<String, dynamic>> hightolowresult = [];
   List<bool> isFavorite = [];
   List<Map<String, dynamic>> searchResults = [];
-   bool loading = true;
+  bool loading = true;
+
+  void aa() {
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF${widget.subcategoryId}");
+  }
 
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://c05e-59-92-206-153.ngrok-free.app/category-products/";
+      "https://6cec-117-193-84-227.ngrok-free.app/subcategory/";
   final String wishlisturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/whishlist/";
+      "https://6cec-117-193-84-227.ngrok-free.app/add-wishlist/";
 
   final String searchproducturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/search/?q=";
+      "https://6cec-117-193-84-227.ngrok-free.app/products/search/?q=";
   final String lowtohigh =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/filter/";
+      "https://6cec-117-193-84-227.ngrok-free.app/products/filter/";
   final String hightolow =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/filtering/";
+      "https://6cec-117-193-84-227.ngrok-free.app/products/filtering/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -86,7 +90,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -127,7 +131,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -169,30 +173,35 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   Future<dynamic> subcategoryproducts() async {
     try {
+      print(
+          "oooooooooooooooooooooooooooooooooooooooooooooooooooooo$productsUrl${widget.subcategoryId}");
       final response =
-          await http.get(Uri.parse('$productsUrl${widget.subcategoryId}'));
+          await http.get(Uri.parse('$productsUrl${widget.subcategoryId}/'));
       if (response.statusCode == 200) {
-        final List<dynamic> productsData = jsonDecode(response.body)['data'];
+        final List<dynamic> productsData =
+            jsonDecode(response.body)['products'];
         List<Map<String, dynamic>> productsList = [];
         List<bool> favoritesList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
-            'category_id': productData['mainCategory'],
+            'category_id': productData['category'],
           });
           favoritesList.add(false);
         }
         setState(() {
           products = productsList;
           isFavorite = favoritesList;
-            loading = false;
+          loading = false;
+
+          print("GGGGGGGGGGGGGGGGGGGGGGGGHHHHHHHHHHHHHHHHHHHHH$productsList");
         });
       } else {
         throw Exception('Failed to load products');
@@ -220,10 +229,15 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   }
 
   Future<void> addProductToWishlist(int productId) async {
+    print(
+        "PPPPPPPPPPPPPRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productId");
+
     try {
       final token = await gettokenFromPrefs();
+      print("TTTTTTTOOOOOOOOOOKKKKKKKKKKKKKKKEEEEEEEEENNNNNNNNN$token");
+
       final response = await http.post(
-        Uri.parse(wishlisturl),
+        Uri.parse('${wishlisturl}${productId}/'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': '$token',
@@ -273,7 +287,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}";
+              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -500,257 +514,360 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                 ),
               ),
             ],
-          ), 
-    Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: loading
-            ? Center(child: CircularProgressIndicator()): products.isNotEmpty
-        ? Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: (products.length / 2).ceil(),
-          itemBuilder: (BuildContext context, int index) {
-            int firstItemIndex = index * 2;
-            int secondItemIndex = firstItemIndex + 1;
-      
-            // Check if this is the last row
-            bool isLastRow = index == (products.length / 2).ceil() - 1;
-      
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    if (firstItemIndex < products.length) ...[
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Product_big_View(
-                                  product_id: products[firstItemIndex]['id'],
-                                  Category_id: int.parse(products[firstItemIndex]['category_id']),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 250,
-                            margin: EdgeInsets.only(
-                              right: (secondItemIndex < products.length || isLastRow) ? 5 : 0,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 3,
-                                  spreadRadius: 2,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.topRight,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Container(
-                                          width: 150,
-                                          height: 150,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: NetworkImage(products[firstItemIndex]['image']),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: loading
+                ? Center(child: CircularProgressIndicator())
+                : products.isNotEmpty
+                    ? Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, right: 10, top: 10),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: (products.length / 2).ceil(),
+                          itemBuilder: (BuildContext context, int index) {
+                            int firstItemIndex = index * 2;
+                            int secondItemIndex = firstItemIndex + 1;
+
+                            // Check if this is the last row
+                            bool isLastRow =
+                                index == (products.length / 2).ceil() - 1;
+
+                            return Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    if (firstItemIndex < products.length) ...[
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Product_big_View(
+                                                  product_id:
+                                                      products[firstItemIndex]
+                                                          ['id'],
+                                                  Category_id: int.parse(
+                                                      products[firstItemIndex]
+                                                          ['category_id']),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 250,
+                                            margin: EdgeInsets.only(
+                                              right: (secondItemIndex <
+                                                          products.length ||
+                                                      isLastRow)
+                                                  ? 5
+                                                  : 0,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.1),
+                                                  blurRadius: 3,
+                                                  spreadRadius: 2,
+                                                  offset: Offset(0, 2),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 20),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Stack(
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        child: Container(
+                                                          width: 150,
+                                                          height: 150,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              image: NetworkImage(
+                                                                  products[
+                                                                          firstItemIndex]
+                                                                      [
+                                                                      'image']),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          toggleFavorite(
+                                                              firstItemIndex);
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child:
+                                                              buildFavoriteIcon(
+                                                                  firstItemIndex),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Text(
+                                                          products[
+                                                                  firstItemIndex]
+                                                              ['name'],
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      if (products[
+                                                                  firstItemIndex]
+                                                              ['price'] !=
+                                                          null)
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10,
+                                                                  right: 10),
+                                                          child: Text(
+                                                            '\$${products[firstItemIndex]['price']}',
+                                                            style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Text(
+                                                          'Sale Price: \$${products[firstItemIndex]['salePrice']}',
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          toggleFavorite(firstItemIndex);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: buildFavoriteIcon(firstItemIndex),
+                                    ],
+                                    if (secondItemIndex < products.length) ...[
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Product_big_View(
+                                                  product_id:
+                                                      products[secondItemIndex]
+                                                          ['id'],
+                                                  Category_id: int.parse(
+                                                      products[secondItemIndex]
+                                                          ['category_id']),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 250,
+                                            margin: EdgeInsets.only(
+                                              left: (firstItemIndex <
+                                                          products.length ||
+                                                      isLastRow)
+                                                  ? 5
+                                                  : 0,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.1),
+                                                  blurRadius: 3,
+                                                  spreadRadius: 2,
+                                                  offset: Offset(0, 2),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 20),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Stack(
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        child: Image.network(
+                                                          products[
+                                                                  secondItemIndex]
+                                                              ['image'],
+                                                          width: 150,
+                                                          height: 150,
+                                                        ),
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          toggleFavorite(
+                                                              secondItemIndex);
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: buildFavoriteIcon(
+                                                              secondItemIndex),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Text(
+                                                          products[
+                                                                  secondItemIndex]
+                                                              ['name'],
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      if (products[
+                                                                  firstItemIndex]
+                                                              ['price'] !=
+                                                          null)
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10,
+                                                                  right: 10),
+                                                          child: Text(
+                                                            '\$${products[secondItemIndex]['price']}',
+                                                            style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Text(
+                                                          'Sale Price: \$${products[secondItemIndex]['salePrice']}',
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10, right: 10),
-                                        child: Text(
-                                          products[firstItemIndex]['name'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10, right: 10),
-                                        child: Text(
-                                          '\$${products[firstItemIndex]['price']}',
-                                          style: TextStyle(
-                                            decoration: TextDecoration.lineThrough,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10, right: 10),
-                                        child: Text(
-                                          'Sale Price: \$${products[firstItemIndex]['salePrice']}',
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                    if (secondItemIndex < products.length) ...[
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Product_big_View(
-                                  product_id: products[secondItemIndex]['id'],
-                                  Category_id: int.parse(products[secondItemIndex]['category_id']),
+                                  ],
                                 ),
-                              ),
+                                SizedBox(height: 10),
+                              ],
                             );
                           },
-                          child: Container(
-                            height: 250,
-                            margin: EdgeInsets.only(
-                              left: (firstItemIndex < products.length || isLastRow) ? 5 : 0,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 3,
-                                  spreadRadius: 2,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.topRight,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Image.network(
-                                          products[secondItemIndex]['image'],
-                                          width: 150,
-                                          height: 150,
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          toggleFavorite(secondItemIndex);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: buildFavoriteIcon(secondItemIndex),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10, right: 10),
-                                        child: Text(
-                                          products[secondItemIndex]['name'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10, right: 10),
-                                        child: Text(
-                                          '\$${products[secondItemIndex]['price']}',
-                                          style: TextStyle(
-                                            decoration: TextDecoration.lineThrough,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10, right: 10),
-                                        child: Text(
-                                          'Sale Price: \$${products[secondItemIndex]['salePrice']}',
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                        ),
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 250),
+                            child: Text(
+                              'No products found',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ],
-                ),
-                SizedBox(height: 10),
-              ],
-            );
-          },
-        ),
-      )
-        : Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 250),
-          child: Text(
-            'No products found',
-            style: TextStyle(fontSize: 18,color: Colors.grey),
           ),
-        ),
-      ],
-        ),
-    ),
-
-        
         ],
       )),
       bottomNavigationBar: Container(

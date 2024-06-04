@@ -27,7 +27,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/products/search/?q=";
+      "https://c36a-59-92-192-37.ngrok-free.app/products/search/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
@@ -35,10 +35,10 @@ class _OfferProductsState extends State<OfferProducts> {
 
 
   final String offerproductsurl =
-      "https://c05e-59-92-206-153.ngrok-free.app/offer-based-products/";
+      "https://c36a-59-92-192-37.ngrok-free.app/offer-based-products/";
 
        final String wishlisturl =
-      "https://c05e-59-92-206-153.ngrok-free.app/whishlist/";
+      "https://c36a-59-92-192-37.ngrok-free.app/whishlist/";
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -149,7 +149,7 @@ void toggleFavorite(int index) {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://c05e-59-92-206-153.ngrok-free.app/${productData['image']}",
+              "https://c36a-59-92-192-37.ngrok-free.app/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -177,7 +177,7 @@ void toggleFavorite(int index) {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c05e-59-92-206-153.ngrok-free.app//${productData['image']}";
+              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
