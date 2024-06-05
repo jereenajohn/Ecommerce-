@@ -27,18 +27,17 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/products/search/?q=";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
-    List<bool> isFavorite = [];
-
+  List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://c36a-59-92-192-37.ngrok-free.app/offer-based-products/";
+      "https://fb93-59-92-205-33.ngrok-free.app/offer-banner/";
 
-       final String wishlisturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/whishlist/";
+  final String wishlisturl =
+      "https://fb93-59-92-205-33.ngrok-free.app/whishlist/";
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -56,7 +55,7 @@ class _OfferProductsState extends State<OfferProducts> {
     _initData();
   }
 
-void toggleFavorite(int index) {
+  void toggleFavorite(int index) {
     setState(() {
       isFavorite[index] = !isFavorite[index];
     });
@@ -73,7 +72,7 @@ void toggleFavorite(int index) {
     }
   }
 
-   Future<void> addProductToWishlist(int productId) async {
+  Future<void> addProductToWishlist(int productId) async {
     try {
       final token = await gettokenFromPrefs();
 
@@ -110,13 +109,12 @@ void toggleFavorite(int index) {
     }
   }
 
-
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
-   Icon buildFavoriteIcon(int index) {
+  Icon buildFavoriteIcon(int index) {
     if (index < isFavorite.length) {
       return Icon(
         isFavorite[index] ? Icons.favorite : Icons.favorite_border,
@@ -128,8 +126,9 @@ void toggleFavorite(int index) {
 
   Future<void> fetchOfferProducts() async {
     final token = await gettokenFromPrefs();
+    print('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQWWWWWWWWWWWWWWWWWEEEEEEEEEEEEEEEEEEEEEEEEE$offerproductsurl${widget.offerId}/products/');
     var response = await http.post(
-      Uri.parse('$offerproductsurl${widget.offerId}/'),
+      Uri.parse('$offerproductsurl${widget.offerId}/products/'),
       headers: {
         'Authorization': '$token',
       },
@@ -149,15 +148,15 @@ void toggleFavorite(int index) {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://c36a-59-92-192-37.ngrok-free.app/${productData['image']}",
-          'price': productData['price'],
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}",
+          
           'salePrice': productData['salePrice'],
         });
       }
 
       setState(() {
         products = productsList;
-           isFavorite = List<bool>.filled(products.length, false);
+        isFavorite = List<bool>.filled(products.length, false);
       });
     } else {
       print("Failed to load products");
@@ -177,7 +176,7 @@ void toggleFavorite(int index) {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -379,7 +378,7 @@ void toggleFavorite(int index) {
                                           child: Text(
                                             products[firstItemIndex]['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),
@@ -492,7 +491,7 @@ void toggleFavorite(int index) {
                                           child: Text(
                                             products[secondItemIndex]['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),

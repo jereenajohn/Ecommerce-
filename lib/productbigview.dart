@@ -24,14 +24,14 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/mainCategory-Product/";
+      "https://fb93-59-92-205-33.ngrok-free.app/category/";
 
-  final multipleimageurl = "https://c36a-59-92-192-37.ngrok-free.app/product/";
+  final multipleimageurl = "https://fb93-59-92-205-33.ngrok-free.app/product/";
 
-  final String addtocarturl = "https://c36a-59-92-192-37.ngrok-free.app/Cart/";
+  final String addtocarturl = "https://fb93-59-92-205-33.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/whishlist/";
+      "https://fb93-59-92-205-33.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
@@ -766,7 +766,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
   Future<void> fetchproductdata() async {
     try {
       final response =
-          await http.get(Uri.parse('$producturl${widget.Category_id}'));
+          await http.get(Uri.parse('$producturl${widget.Category_id}/products/'));
 
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
@@ -775,17 +775,19 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
-            'shortDescription': productData['shortDescription'],
+            'shortDescription': productData['short_description'],
             'description': productData['description'],
             'mainCategory': productData['mainCategory'],
             'offer_type': productData['offer_type'],
             'image': imageUrl,
+
+            
           });
         }
 
@@ -794,11 +796,12 @@ class _Product_big_ViewState extends State<Product_big_View> {
             if (widget.product_id == productsList[i]['id']) {
               print(
                   "AAAAAAAAAMMMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAA${productsList[i]}");
+                  
               image = productsList[i]['image'];
               name = productsList[i]['name'];
               price = productsList[i]['price'];
               salePrice = productsList[i]['salePrice'];
-              shortdescription = productsList[i]['shortDescription'];
+              shortdescription = productsList[i]['short_description'];
               description = productsList[i]['description'];
               offer_type = productsList[i]['offer_type'];
             }
@@ -834,15 +837,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image1']}";
+              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image1']}";
           String imageUrl2 =
-              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image2']}";
+              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image2']}";
           String imageUrl3 =
-              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image3']}";
+              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image3']}";
           String imageUrl4 =
-              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image4']}";
+              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image4']}";
           String imageUrl5 =
-              "https://c36a-59-92-192-37.ngrok-free.app/${imageData['image5']}";
+              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

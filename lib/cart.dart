@@ -33,18 +33,18 @@ class _CartState extends State<Cart> {
 
   int _selectedIndex = 0;
 
-  var CartUrl = "https://c36a-59-92-192-37.ngrok-free.app/Cart-products/";
+  var CartUrl = "https://fb93-59-92-205-33.ngrok-free.app/cart-products/";
   final String productsurl =
-      "https://c36a-59-92-192-37.ngrok-free.app/products/";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/";
 
   final quantityincrementurl =
-      "https://c36a-59-92-192-37.ngrok-free.app/Cart-product-quantity-increament/";
+      "https://fb93-59-92-205-33.ngrok-free.app/cart/increment/";
 
   final quantitydecrementurl =
-      "https://c36a-59-92-192-37.ngrok-free.app/Cart-product-quantity-decereament/";
+      "https://fb93-59-92-205-33.ngrok-free.app/cart/decrement/";
 
   final deletecarturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/Cart-product-delete/";
+      "https://fb93-59-92-205-33.ngrok-free.app/cart-delete/";
 
   @override
   void initState() {
@@ -82,15 +82,14 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl =
-              "https://c36a-59-92-192-37.ngrok-free.app/${item['image']}";
+          String imageUrl ="https://fb93-59-92-205-33.ngrok-free.app${item['image']}";
 
           cartItems.add({
             'id': item['id'],
             'productId': item['product'],
-            'mainCategory':item['category'],
+            'mainCategory':item['mainCategory'],
             'quantity': item['quantity'],
-            'price': item['price'],
+            'price': item['salePrice'],
             'name': item['name'],
             'image': imageUrl,
 
@@ -165,11 +164,8 @@ class _CartState extends State<Cart> {
     final token = await gettokenFromPrefs();
 
     try {
-      final response = await http.post(
+      final response = await http.delete(
         Uri.parse('$deletecarturl$cartProductId/'),
-        headers: {
-          'Authorization': '$token',
-        },
       );
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");

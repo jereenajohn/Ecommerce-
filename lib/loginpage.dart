@@ -23,7 +23,7 @@ class _Login_PageState extends State<Login_Page> {
 
   List<dynamic> data = [];
 
-  var url = "https://6cec-117-193-84-227.ngrok-free.app/";
+  var url = "https://fb93-59-92-205-33.ngrok-free.app/";
 
   @override
   void initState() {

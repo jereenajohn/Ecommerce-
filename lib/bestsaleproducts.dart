@@ -27,14 +27,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://c36a-59-92-192-37.ngrok-free.app/best-sale-products/";
+      "https://fb93-59-92-205-33.ngrok-free.app/best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/products/search/?q=";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://c36a-59-92-192-37.ngrok-free.app/whishlist/";
+      "https://fb93-59-92-205-33.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -137,7 +137,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://c36a-59-92-192-37.ngrok-free.app//${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -233,7 +233,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://c36a-59-92-192-37.ngrok-free.app/${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

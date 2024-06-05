@@ -29,11 +29,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://6cec-117-193-84-227.ngrok-free.app/category/";
+      "https://fb93-59-92-205-33.ngrok-free.app/category/";
   final String productsurl =
-      "https://6cec-117-193-84-227.ngrok-free.app/mainCategory-Product/";
+      "https://fb93-59-92-205-33.ngrok-free.app/mainCategory-Product/";
   final String searchproducturl =
-      "https://6cec-117-193-84-227.ngrok-free.app/products/search/?q=";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -118,7 +118,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app//${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -163,7 +163,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -202,7 +202,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app${subcategoryData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

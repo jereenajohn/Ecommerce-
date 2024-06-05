@@ -20,14 +20,14 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://6cec-117-193-84-227.ngrok-free.app/wishlist/";
+  var wishlisturl = "https://fb93-59-92-205-33.ngrok-free.app/wishlist/";
   final String productsurl =
-      "https://6cec-117-193-84-227.ngrok-free.app/products/";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/";
 
   final String deletewishlisturl =
-      "https://6cec-117-193-84-227.ngrok-free.app/wishlist-delete/";
+      "https://fb93-59-92-205-33.ngrok-free.app/wishlist-delete/";
 
-  final String addtocarturl = "https://c36a-59-92-192-37.ngrok-free.app/Cart/";
+  final String addtocarturl = "https://fb93-59-92-205-33.ngrok-free.app/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -101,11 +101,11 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
+                "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
-              'salePrice': productData['salePrice'],
+              'SalePrice': productData['SalePrice'],
               'image': imageUrl,
               'mainCategory': productData['mainCategory']
             });
@@ -155,10 +155,11 @@ class _WishlistState extends State<Wishlist> {
 
   Future<void> addProductToCart(int productId, var name, var price) async {
     try {
+      print('AAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLL$addtocarturl$productId/');
       final token = await gettokenFromPrefs();
 
       final response = await http.post(
-        Uri.parse(addtocarturl),
+        Uri.parse('$addtocarturl$productId/'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': ' $token',
@@ -171,7 +172,7 @@ class _WishlistState extends State<Wishlist> {
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('Product added to cart: $productId');
       } else if (response.statusCode == 400) {
         // Product already in cart, show SnackBar
@@ -285,7 +286,7 @@ class _WishlistState extends State<Wishlist> {
                           SizedBox(
                               height: 5), // Add spacing between name and price
                           Text(
-                            '\$${products[index]['price']}',
+                            '\$${products[index]['SalePrice']}',
                             style: TextStyle(
                               fontSize: 14, // Adjust font size as needed
                             ),

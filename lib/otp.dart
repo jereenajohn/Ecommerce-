@@ -13,7 +13,7 @@
 // class _OtpPageState extends State<OtpPage> {
 //   List<TextEditingController> controllers =
 //       List.generate(6, (_) => TextEditingController());
-//   var url = "https://c36a-59-92-192-37.ngrok-free.app/otp-verfication/";
+//   var url = "https://fb93-59-92-205-33.ngrok-free.app/otp-verfication/";
 
 //   Future<void> otpverify() async {
 //     try {
@@ -144,7 +144,7 @@ var email;
 }
 
 class _OtpPageState extends State<OtpPage> {
-  var url = "https://c36a-59-92-192-37.ngrok-free.app/otp-verify/";
+  var url = "https://fb93-59-92-205-33.ngrok-free.app/otp-verify/";
   TextEditingController otpController = TextEditingController();
 
   Future<void> sendOtp() async {

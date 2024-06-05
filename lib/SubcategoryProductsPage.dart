@@ -41,16 +41,16 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://6cec-117-193-84-227.ngrok-free.app/subcategory/";
+      "https://fb93-59-92-205-33.ngrok-free.app/subcategory/";
   final String wishlisturl =
-      "https://6cec-117-193-84-227.ngrok-free.app/add-wishlist/";
+      "https://fb93-59-92-205-33.ngrok-free.app/add-wishlist/";
 
   final String searchproducturl =
-      "https://6cec-117-193-84-227.ngrok-free.app/products/search/?q=";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
   final String lowtohigh =
-      "https://6cec-117-193-84-227.ngrok-free.app/products/filter/";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/filter/";
   final String hightolow =
-      "https://6cec-117-193-84-227.ngrok-free.app/products/filtering/";
+      "https://fb93-59-92-205-33.ngrok-free.app/products/filtering/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -90,7 +90,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -131,7 +131,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -185,7 +185,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -287,7 +287,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://6cec-117-193-84-227.ngrok-free.app/${productData['image']}";
+              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
