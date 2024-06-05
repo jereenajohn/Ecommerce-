@@ -30,7 +30,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController state = TextEditingController();
   TextEditingController note = TextEditingController();
 
-  String updateaddressurl = "https://fb93-59-92-205-33.ngrok-free.app///user-address-update/";
+  String updateaddressurl = "https://fb93-59-92-205-33.ngrok-free.app/update-address/";
 
   @override
   Widget build(BuildContext context) {
@@ -454,7 +454,7 @@ Future<void> updateaddress(int id) async {
       Uri.parse('$updateaddressurl$id/'),
       headers: {
         'Authorization': '$token',
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
 
        },
       body: jsonEncode(

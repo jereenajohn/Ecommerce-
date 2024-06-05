@@ -46,11 +46,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
       "https://fb93-59-92-205-33.ngrok-free.app/add-wishlist/";
 
   final String searchproducturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
+      "https://fb93-59-92-205-33.ngrok-free.app/search-products/?q=";
   final String lowtohigh =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/filter/";
+      "https://fb93-59-92-205-33.ngrok-free.app/low-products/";
   final String hightolow =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/filtering/";
+      "https://fb93-59-92-205-33.ngrok-free.app/high-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -115,6 +115,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   Future<void> HightoLow(int subcategoryId) async {
     print(subcategoryId);
+    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$hightolow$subcategoryId/');
     final token = await gettokenFromPrefs();
     try {
       final response = await http.post(

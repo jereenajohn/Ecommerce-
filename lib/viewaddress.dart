@@ -30,9 +30,9 @@ class _viewAddressState extends State<viewAddress> {
   }
 
   String durl =
-      "https://fb93-59-92-205-33.ngrok-free.app///user-address-delete/";
+      "https://fb93-59-92-205-33.ngrok-free.app/delete-address/";
 
-  String url = "https://fb93-59-92-205-33.ngrok-free.app///user-address/";
+  String url = "https://fb93-59-92-205-33.ngrok-free.app/get-address/";
   List<Map<String, dynamic>> address = [];
 
   List<Map<String, dynamic>> addressList = [];
@@ -51,7 +51,7 @@ class _viewAddressState extends State<viewAddress> {
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
-      var data = responseData['data'];
+      var data = responseData['address'];
 
       setState(() {
         addressList = List<Map<String, dynamic>>.from(data);
@@ -276,7 +276,7 @@ class _viewAddressState extends State<viewAddress> {
     print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$token");
 
     try {
-      final response = await http.post(
+      final response = await http.delete(
         Uri.parse('$durl$Id/'),
         headers: {
           'Authorization': '$token',

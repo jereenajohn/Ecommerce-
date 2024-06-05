@@ -17,9 +17,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryProductView extends StatefulWidget {
   const CategoryProductView(
-      {required this.categoryId, required this.subcategoryId});
+      {required this.categoryId});
   final int categoryId;
-  final int subcategoryId;
+ 
 
   @override
   State<CategoryProductView> createState() => _CategoryProductViewState();
@@ -27,7 +27,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://fb93-59-92-205-33.ngrok-free.app//mainCategory-Product/";
+      "https://fb93-59-92-205-33.ngrok-free.app/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -103,7 +103,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
   Future<void> fetchCatProducts() async {
     try {
       final response =
-          await http.get(Uri.parse('$productsurl${widget.categoryId}/'));
+          await http.get(Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
       print('$productsurl${widget.categoryId}');
       print("QQQQQQQQQQQQQQQQQQQQQQQQQ$response");
       if (response.statusCode == 200) {
@@ -550,7 +550,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                               categoryProducts[firstItemIndex]
                                                   ['name'],
                                               style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   overflow:
                                                       TextOverflow.ellipsis),
@@ -668,7 +668,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                               categoryProducts[secondItemIndex]
                                                   ['name'],
                                               style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   overflow:
                                                       TextOverflow.ellipsis),

@@ -67,7 +67,7 @@
 //               children: List.generate(
 //                 6,
 //                 (index) => Expanded(
-//                   child: Padding(  
+//                   child: Padding(
 //                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
 //                     child: TextField(
 //                       controller: controllers[index],
@@ -127,8 +127,6 @@
 //   }
 // }
 
-
-
 import 'dart:convert';
 
 import 'package:bepocart/changepassword.dart';
@@ -136,7 +134,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class OtpPage extends StatefulWidget {
-var email;
+  var email;
   OtpPage({super.key, required this.email});
 
   @override
@@ -144,23 +142,18 @@ var email;
 }
 
 class _OtpPageState extends State<OtpPage> {
-  var url = "https://fb93-59-92-205-33.ngrok-free.app/otp-verify/";
+  var url = "https://fb93-59-92-205-33.ngrok-free.app/verify-otp/";
   TextEditingController otpController = TextEditingController();
 
   Future<void> sendOtp() async {
     try {
-       print("haiiiiiii");
+      print("haiiiiiii");
       var response = await http.post(
         Uri.parse(url),
         headers: {
-        
-        'Content-Type': 'application/json; charset=UTF-8',
-
-       },
-        body: jsonEncode({
-          "otp": otpController.text,
-          "email":widget.email
-          }),
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({"otp": otpController.text, "email": widget.email}),
       );
       print("${response.body}");
 
@@ -169,7 +162,8 @@ class _OtpPageState extends State<OtpPage> {
         var responseData = jsonDecode(response.body);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => changepassword(email:widget.email)),
+          MaterialPageRoute(
+              builder: (context) => changepassword(email: widget.email)),
         );
       } else {
         var responseData = jsonDecode(response.body);
@@ -207,7 +201,8 @@ class _OtpPageState extends State<OtpPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
+                    padding:
+                        const EdgeInsets.only(top: 40, left: 15, right: 15),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -239,7 +234,7 @@ class _OtpPageState extends State<OtpPage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20, right: 20),
                             child: Column(
-                           children: [
+                              children: [
                                 SizedBox(height: 15),
                                 TextField(
                                   controller: otpController,
@@ -254,15 +249,15 @@ class _OtpPageState extends State<OtpPage> {
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                                  255, 170, 170, 170)
-                                              .withOpacity(0.5)),
+                                          color:
+                                              Color.fromARGB(255, 170, 170, 170)
+                                                  .withOpacity(0.5)),
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 188, 2, 2)),
+                                          color:
+                                              Color.fromARGB(255, 188, 2, 2)),
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     filled: true,
@@ -274,9 +269,6 @@ class _OtpPageState extends State<OtpPage> {
                                 SizedBox(height: 15),
                               ],
                             ),
-
-
-                
                           ),
                           SizedBox(height: 20),
                           Container(
@@ -312,4 +304,3 @@ class _OtpPageState extends State<OtpPage> {
     );
   }
 }
-

@@ -17,7 +17,7 @@ class _resetpasswordState extends State<resetpassword> {
     TextEditingController newpass1=TextEditingController();
 
   TextEditingController newpass2=TextEditingController();
-    var url = "https://fb93-59-92-205-33.ngrok-free.app/user-password-reset/";
+    var url = "https://fb93-59-92-205-33.ngrok-free.app/reset-password/";
 
 
   Future<void> resetpassword() async {
@@ -28,13 +28,13 @@ class _resetpasswordState extends State<resetpassword> {
         Uri.parse(url),
         headers: {
           'Authorization': '$token',
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: jsonEncode(
           {
             'old_password': pass.text,
             'new_password': newpass1.text,
-            'retype_password': newpass2.text,
+            'confirm_password': newpass2.text,
           },
         ),
       );

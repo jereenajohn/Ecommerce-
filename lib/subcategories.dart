@@ -31,7 +31,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   final String subcategoriesurl =
       "https://fb93-59-92-205-33.ngrok-free.app/category/";
   final String productsurl =
-      "https://fb93-59-92-205-33.ngrok-free.app/mainCategory-Product/";
+      "https://fb93-59-92-205-33.ngrok-free.app/category/";
   final String searchproducturl =
       "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
 
@@ -104,8 +104,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
   Future<void> fetchCategoryProducts() async {
     try {
+      print('$productsurl${widget.categoryId.toString()}/products/');
       final response =
-          await http.get(Uri.parse(productsurl + widget.categoryId.toString()));
+          await http.get(Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
       print('Responseeee: ${response.statusCode}');
       print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL$response");
       print(widget.categoryId);
@@ -408,14 +409,14 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => CategoryProductView(
-                        //       categoryId: widget.categoryId, subcategoryId: ,
-                        //     ),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CategoryProductView(
+                              categoryId: widget.categoryId,
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:

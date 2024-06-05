@@ -29,7 +29,7 @@ class _UserAddressState extends State<UserAddress> {
   TextEditingController state = TextEditingController();
   TextEditingController note = TextEditingController();
 
-  String url = "https://fb93-59-92-205-33.ngrok-free.app/address/";
+  String url = "https://fb93-59-92-205-33.ngrok-free.app/add-address/";
 
   @override
   Widget build(BuildContext context) {

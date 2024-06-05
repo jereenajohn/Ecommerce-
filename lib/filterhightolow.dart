@@ -42,7 +42,7 @@ class _hightolowpageState extends State<hightolowpage> {
     print("Search results: ${widget.result}");
   }
 
-  final String lowtohigh = "https://fb93-59-92-205-33.ngrok-free.app//products/filter/";
+  final String lowtohigh = "https://fb93-59-92-205-33.ngrok-free.app/low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
