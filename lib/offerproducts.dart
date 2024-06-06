@@ -27,17 +27,17 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
+      "https://9ed9-117-193-85-29.ngrok-free.app/products/search/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://fb93-59-92-205-33.ngrok-free.app/offer-banner/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/offer-banner/";
 
   final String wishlisturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/whishlist/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/whishlist/";
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -148,7 +148,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}",
+              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}",
           
           'salePrice': productData['salePrice'],
         });
@@ -176,7 +176,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app//${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -384,6 +384,7 @@ class _OfferProductsState extends State<OfferProducts> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
+                                        if(products[firstItemIndex]['price']!=null)
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
@@ -497,6 +498,7 @@ class _OfferProductsState extends State<OfferProducts> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
+                                        if(products[secondItemIndex]['price']!=null)
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),

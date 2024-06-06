@@ -13,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 }
 
 class _Sign_UpState extends State<Sign_Up> {
-  var url = "https://fb93-59-92-205-33.ngrok-free.app/register";
+  var url = "https://9ed9-117-193-85-29.ngrok-free.app/register";
   bool _obscureText = true;
 
   var userId;

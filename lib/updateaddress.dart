@@ -22,6 +22,12 @@ class UpdateAddress extends StatefulWidget {
 }
 
 class _UpdateAddressState extends State<UpdateAddress> {
+  @override
+  void initState() {
+    super.initState();
+    fetchAddress();
+  }
+
   TextEditingController address = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -30,21 +36,69 @@ class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController state = TextEditingController();
   TextEditingController note = TextEditingController();
 
-  String updateaddressurl = "https://fb93-59-92-205-33.ngrok-free.app/update-address/";
+  String updateaddressurl =
+      "https://9ed9-117-193-85-29.ngrok-free.app/update-address/";
+
+  String durl = "https://9ed9-117-193-85-29.ngrok-free.app/delete-address/";
+
+  String url = "https://9ed9-117-193-85-29.ngrok-free.app/get-address/";
+
+  List<Map<String, dynamic>> addressList = [];
+
+  Future<void> fetchAddress() async {
+    final token = await gettokenFromPrefs();
+    print("--------------------------------------------R$token");
+
+    var response = await http.post(Uri.parse(url), headers: {
+      'Authorization': '$token',
+    }, body: {
+      'token': token,
+    });
+
+    print("FetchWishlistData status code: ${response.body}");
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var data = responseData['address'];
+
+      setState(() {
+        addressList = List<Map<String, dynamic>>.from(data);
+        print(addressList);
+
+        if (addressList.isNotEmpty) {
+          var fetchedAddress = addressList[0];
+          address.text = fetchedAddress['address'] ?? '';
+          email.text = fetchedAddress['email'] ?? '';
+          phone.text = fetchedAddress['phone'] ?? '';
+          pin.text = fetchedAddress['pincode']?.toString() ?? '';
+          city.text = fetchedAddress['city'] ?? '';
+          state.text = fetchedAddress['state'] ?? '';
+          note.text = fetchedAddress['note'] ?? '';
+        }
+      });
+    } else {
+      print("Failed to fetch address data");
+    }
+  }
+
+  Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text("Change Address"),),
+      appBar: AppBar(
+        title: Text("Change Address"),
+      ),
       body: Builder(
         builder: (BuildContext scaffoldContext) {
           return SingleChildScrollView(
             child: Container(
               child: Column(
                 children: [
-
-                 
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 40, left: 15, right: 15),
@@ -90,6 +144,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: address,
                                           decoration: InputDecoration(
                                             labelText: 'Address',
+                                            hintText: address.text.isNotEmpty ? address.text : 'Enter your address',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -127,6 +182,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: email,
                                           decoration: InputDecoration(
                                             labelText: 'Email',
+                                            hintText: email.text.isNotEmpty ? email.text : 'Enter your email',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -164,6 +220,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: phone,
                                           decoration: InputDecoration(
                                             labelText: 'Phone',
+                                            hintText: phone.text.isNotEmpty ? phone.text : 'Enter your phone number',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -201,6 +258,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: pin,
                                           decoration: InputDecoration(
                                             labelText: 'Pincode',
+                                            hintText: pin.text.isNotEmpty ? pin.text : 'Enter your pincode',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -238,6 +296,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: city,
                                           decoration: InputDecoration(
                                             labelText: 'City',
+                                            hintText: city.text.isNotEmpty ? city.text : 'Enter your city',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -275,6 +334,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: state,
                                           decoration: InputDecoration(
                                             labelText: 'State',
+                                            hintText: state.text.isNotEmpty ? state.text : 'Enter your state',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -312,6 +372,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                           controller: note,
                                           decoration: InputDecoration(
                                             labelText: 'Note',
+                                            hintText: note.text.isNotEmpty ? note.text : 'Enter a note (optional)',
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: const Color.fromARGB(
@@ -360,8 +421,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                             ),
                             child: TextButton(
                               onPressed: () async {
-                                              updateaddress(widget.id);
-
+                                updateaddress(widget.id);
                               },
                               child: Text(
                                 "Add",
@@ -385,7 +445,6 @@ class _UpdateAddressState extends State<UpdateAddress> {
           );
         },
       ),
-
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(
@@ -430,8 +489,10 @@ class _UpdateAddressState extends State<UpdateAddress> {
               GButton(
                 icon: Icons.person,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserProfilePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserProfilePage()));
                   // Navigate to Profile page
                 },
               ),
@@ -442,50 +503,40 @@ class _UpdateAddressState extends State<UpdateAddress> {
     );
   }
 
+  Future<void> updateaddress(int id) async {
+    print("========================>>>>>>>>>>>>>>>>>.....$id");
+    try {
+      final token = await gettokenFromPrefs();
 
-Future<void> updateaddress(int id) async {
-
-  print("========================>>>>>>>>>>>>>>>>>.....$id");
-  try {
-    final token = await gettokenFromPrefs();
-
-    print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy$token");
-    var response = await http.put(
-      Uri.parse('$updateaddressurl$id/'),
-      headers: {
-        'Authorization': '$token',
-        'Content-Type': 'application/json',
-
-       },
-      body: jsonEncode(
-        {
-          'address': address.text,
-          'city': city.text,
-          'state': state.text,
-          'pincode': int.parse(pin.text),
-          'email': email.text,
-          'phone': phone.text,
-          'note': note.text,
+      print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy$token");
+      var response = await http.put(
+        Uri.parse('$updateaddressurl$id/'),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
         },
-      ),
-    );
+        body: jsonEncode(
+          {
+            'address': address.text,
+            'city': city.text,
+            'state': state.text,
+            'pincode': int.parse(pin.text),
+            'email': email.text,
+            'phone': phone.text,
+            'note': note.text,
+          },
+        ),
+      );
 
-    print("Response: $response");
+      print("Response: $response");
 
-    if (response.statusCode == 200) {
-      print('Address updated successfully');
-    } else {
-      print('Failed to update address: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        print('Address updated successfully');
+      } else {
+        print('Failed to update address: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error updating address: $error');
     }
-  } catch (error) {
-    print('Error updating address: $error');
   }
-}
-
-  Future<String?> gettokenFromPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
-  }
-
-  
 }

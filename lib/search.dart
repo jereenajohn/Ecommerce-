@@ -30,9 +30,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://fb93-59-92-205-33.ngrok-free.app//whishlist/";
+      "https://9ed9-117-193-85-29.ngrok-free.app//whishlist/";
   final String searchproducturl =
-      "https://fb93-59-92-205-33.ngrok-free.app//products/search/?q=";
+      "https://9ed9-117-193-85-29.ngrok-free.app//products/search/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -85,7 +85,7 @@ class _SearchState extends State<Search> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app//${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

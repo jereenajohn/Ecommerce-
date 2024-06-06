@@ -27,7 +27,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://fb93-59-92-205-33.ngrok-free.app/category/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -36,11 +36,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://fb93-59-92-205-33.ngrok-free.app//products/search/?q=";
+      "https://9ed9-117-193-85-29.ngrok-free.app//products/search/?q=";
   final String lowtohigh =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/filter/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/products/filter/";
   final String hightolow =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/filtering/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -77,7 +77,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app//${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -116,7 +116,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app/${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -225,7 +225,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://fb93-59-92-205-33.ngrok-free.app/${productData['image']}";
+  //             "https://9ed9-117-193-85-29.ngrok-free.app/${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -271,7 +271,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://fb93-59-92-205-33.ngrok-free.app/${productData['image']}";
+  //             "https://9ed9-117-193-85-29.ngrok-free.app/${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -556,6 +556,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                                       TextOverflow.ellipsis),
                                             ),
                                           ),
+                                          if(categoryProducts[firstItemIndex]['price']!=null)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10, right: 10),
@@ -674,6 +675,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                                       TextOverflow.ellipsis),
                                             ),
                                           ),
+                                          if(categoryProducts[secondItemIndex]['price']!=null)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10, right: 10),

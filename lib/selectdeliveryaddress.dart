@@ -19,7 +19,7 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
   String? userId;
 
   String fetchaddressurl =
-      "https://fb93-59-92-205-33.ngrok-free.app///user-address/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/get-address/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;

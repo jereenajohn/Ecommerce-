@@ -13,7 +13,7 @@
 // class _OtpPageState extends State<OtpPage> {
 //   List<TextEditingController> controllers =
 //       List.generate(6, (_) => TextEditingController());
-//   var url = "https://fb93-59-92-205-33.ngrok-free.app/otp-verfication/";
+//   var url = "https://9ed9-117-193-85-29.ngrok-free.app/otp-verfication/";
 
 //   Future<void> otpverify() async {
 //     try {
@@ -142,7 +142,7 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
-  var url = "https://fb93-59-92-205-33.ngrok-free.app/verify-otp/";
+  var url = "https://9ed9-117-193-85-29.ngrok-free.app/verify-otp/";
   TextEditingController otpController = TextEditingController();
 
   Future<void> sendOtp() async {

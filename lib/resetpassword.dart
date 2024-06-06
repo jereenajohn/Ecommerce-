@@ -17,7 +17,7 @@ class _resetpasswordState extends State<resetpassword> {
     TextEditingController newpass1=TextEditingController();
 
   TextEditingController newpass2=TextEditingController();
-    var url = "https://fb93-59-92-205-33.ngrok-free.app/reset-password/";
+    var url = "https://9ed9-117-193-85-29.ngrok-free.app/reset-password/";
 
 
   Future<void> resetpassword() async {

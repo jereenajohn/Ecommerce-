@@ -24,14 +24,14 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/category/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
 
-  final multipleimageurl = "https://fb93-59-92-205-33.ngrok-free.app/product/";
+  final multipleimageurl = "https://9ed9-117-193-85-29.ngrok-free.app/product/";
 
-  final String addtocarturl = "https://fb93-59-92-205-33.ngrok-free.app/Cart/";
+  final String addtocarturl = "https://9ed9-117-193-85-29.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/whishlist/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
@@ -415,7 +415,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${product['name']}",
+                        "$name",
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -427,7 +427,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       Row(
                         children: [
                           Text(
-                            "\₹${product['salePrice']}",
+                            "\₹$salePrice",
                             style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.green,
@@ -436,18 +436,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
                           SizedBox(
                             width: 5,
                           ),
+                         
+                          if(price!=null)
                           Text(
-                            "\MRP",
-                            style: TextStyle(
-                                fontSize: 12,
-                                color:
-                                    const Color.fromARGB(255, 155, 155, 155)),
-                          ),
-                          Text(
-                            "\₹${product['price']}",
+                            "\₹$price",
                             style: TextStyle(
                                 fontSize: 15,
-                                color: Color.fromARGB(255, 156, 156, 156),
+                                color: Color.fromARGB(255, 197, 144, 144),
                                 decoration: TextDecoration.lineThrough),
                           ),
                         ],
@@ -656,15 +651,17 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                       child: Text(
                                         product['name'],
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 10,
                                             fontWeight: FontWeight.bold,
                                             overflow: TextOverflow.ellipsis),
                                       ),
                                     ),
+                                   
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10),
                                       child: Column(
                                         children: [
+                                           if(product['price']!=null)
                                           Text(
                                             '\$${product['price']}',
                                             style: TextStyle(
@@ -775,7 +772,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -801,14 +798,19 @@ class _Product_big_ViewState extends State<Product_big_View> {
               name = productsList[i]['name'];
               price = productsList[i]['price'];
               salePrice = productsList[i]['salePrice'];
-              shortdescription = productsList[i]['short_description'];
+              shortdescription = productsList[i]['shortDescription'];
               description = productsList[i]['description'];
               offer_type = productsList[i]['offer_type'];
             }
           }
+          print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$price");
+
+          print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS$salePrice");
+          print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT$shortdescription");
           categoryProducts = productsList;
           isDataLoaded = true;
         });
+        print("==========================LLLLLLLLLLLLLLLLLLLLLLLLLL$categoryProducts");
       } else {
         throw Exception('Failed to load category products');
       }
@@ -837,15 +839,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image1']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image1']}";
           String imageUrl2 =
-              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image2']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image2']}";
           String imageUrl3 =
-              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image3']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image3']}";
           String imageUrl4 =
-              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image4']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image4']}";
           String imageUrl5 =
-              "https://fb93-59-92-205-33.ngrok-free.app/${imageData['image5']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

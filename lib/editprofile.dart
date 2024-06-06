@@ -16,7 +16,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var url = "https://fb93-59-92-205-33.ngrok-free.app//profile/";
+  var url = "https://9ed9-117-193-85-29.ngrok-free.app/profile/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -29,7 +29,7 @@ class _EditProfileState extends State<EditProfile> {
         Uri.parse('$url'),
         headers: {
           'Authorization': '$token',
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: jsonEncode(
           {
@@ -91,7 +91,8 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
+                    padding:
+                        const EdgeInsets.only(top: 40, left: 15, right: 15),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -107,11 +108,17 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       child: Column(
                         children: [
-                          SizedBox(height: 30,),
+                          SizedBox(
+                            height: 30,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Edit Profile", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                              Text(
+                                "Edit Profile",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
                             ],
                           ),
                           SizedBox(height: 15),
@@ -119,7 +126,8 @@ class _EditProfileState extends State<EditProfile> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20, right: 20),
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
                                   child: Container(
                                     child: Column(
                                       children: [
@@ -128,67 +136,112 @@ class _EditProfileState extends State<EditProfile> {
                                           decoration: InputDecoration(
                                             labelText: 'Username',
                                             border: OutlineInputBorder(
-                                              borderSide: BorderSide(color: const Color.fromARGB(255, 165, 165, 165)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: const Color.fromARGB(
+                                                      255, 165, 165, 165)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 170, 170, 170).withOpacity(0.5)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                          255, 170, 170, 170)
+                                                      .withOpacity(0.5)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 188, 2, 2)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 188, 2, 2)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             filled: true,
                                             fillColor: Colors.white,
-                                            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 12.0,
+                                                    horizontal: 16.0),
                                           ),
                                         ),
-                                        SizedBox(height: 15,),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
                                         TextField(
                                           controller: email,
                                           decoration: InputDecoration(
                                             labelText: 'Email',
                                             border: OutlineInputBorder(
-                                              borderSide: BorderSide(color: const Color.fromARGB(255, 165, 165, 165)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: const Color.fromARGB(
+                                                      255, 165, 165, 165)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 170, 170, 170).withOpacity(0.5)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                          255, 170, 170, 170)
+                                                      .withOpacity(0.5)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 188, 2, 2)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 188, 2, 2)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             filled: true,
                                             fillColor: Colors.white,
-                                            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 12.0,
+                                                    horizontal: 16.0),
                                           ),
                                         ),
-                                        SizedBox(height: 15,),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
                                         TextField(
                                           controller: phone,
                                           decoration: InputDecoration(
                                             labelText: 'Phone',
                                             border: OutlineInputBorder(
-                                              borderSide: BorderSide(color: const Color.fromARGB(255, 165, 165, 165)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: const Color.fromARGB(
+                                                      255, 165, 165, 165)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 170, 170, 170).withOpacity(0.5)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                          255, 170, 170, 170)
+                                                      .withOpacity(0.5)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 188, 2, 2)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 188, 2, 2)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             filled: true,
                                             fillColor: Colors.white,
-                                            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 12.0,
+                                                    horizontal: 16.0),
                                           ),
                                         ),
-                                        SizedBox(height: 15,),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -196,7 +249,9 @@ class _EditProfileState extends State<EditProfile> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.6,
                             decoration: BoxDecoration(
@@ -216,7 +271,9 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 40,),
+                          SizedBox(
+                            height: 40,
+                          ),
                         ],
                       ),
                     ),

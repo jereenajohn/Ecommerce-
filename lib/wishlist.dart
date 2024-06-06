@@ -20,14 +20,14 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://fb93-59-92-205-33.ngrok-free.app/wishlist/";
+  var wishlisturl = "https://9ed9-117-193-85-29.ngrok-free.app/wishlist/";
   final String productsurl =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/products/";
 
   final String deletewishlisturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/wishlist-delete/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/wishlist-delete/";
 
-  final String addtocarturl = "https://fb93-59-92-205-33.ngrok-free.app/cart/";
+  final String addtocarturl = "https://9ed9-117-193-85-29.ngrok-free.app/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -101,11 +101,11 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
+                "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
-              'SalePrice': productData['SalePrice'],
+              'SalePrice': productData['salePrice'],
               'image': imageUrl,
               'mainCategory': productData['mainCategory']
             });
@@ -114,6 +114,7 @@ class _WishlistState extends State<Wishlist> {
 
         setState(() {
           products = filteredProducts;
+          print("EWWWWWWWWWWWWWWWWWWWWWWWWWWWEEEEEEEEEEEEEEEEEEEEEE$products");
         });
 
         print("-------------------------------$products");

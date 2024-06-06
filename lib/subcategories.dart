@@ -29,11 +29,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://fb93-59-92-205-33.ngrok-free.app/category/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
   final String productsurl =
-      "https://fb93-59-92-205-33.ngrok-free.app/category/";
+      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
   final String searchproducturl =
-      "https://fb93-59-92-205-33.ngrok-free.app/products/search/?q=";
+      "https://9ed9-117-193-85-29.ngrok-free.app/products/search/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -105,8 +105,8 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   Future<void> fetchCategoryProducts() async {
     try {
       print('$productsurl${widget.categoryId.toString()}/products/');
-      final response =
-          await http.get(Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
+      final response = await http.get(
+          Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
       print('Responseeee: ${response.statusCode}');
       print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL$response");
       print(widget.categoryId);
@@ -119,7 +119,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -164,7 +164,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app${productData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -191,8 +191,8 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     print("dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     print(subcategoriesurl + widget.categoryId.toString());
     try {
-      final response = await http
-          .get(Uri.parse(subcategoriesurl + widget.categoryId.toString()+"/"));
+      final response = await http.get(
+          Uri.parse(subcategoriesurl + widget.categoryId.toString() + "/"));
       print('Response: ${response.statusCode}');
       print(widget.categoryId);
 
@@ -203,7 +203,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://fb93-59-92-205-33.ngrok-free.app${subcategoryData['image']}";
+              "https://9ed9-117-193-85-29.ngrok-free.app${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],
@@ -469,13 +469,14 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '\$${product['price']}',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    color: Colors.grey,
+                                if (product['price'] != null)
+                                  Text(
+                                    '\$${product['price']}',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
                                 Text(
                                   'Sale Price: \$${product['salePrice']}',
                                   style: TextStyle(
