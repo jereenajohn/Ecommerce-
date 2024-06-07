@@ -79,6 +79,7 @@ class _CartState extends State<Cart> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final data = responseData['data'];
+        print("AAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHDEEEEEEEEEEEEEEEEEEEEE$data");
 
         List<Map<String, dynamic>> cartItems = [];
 

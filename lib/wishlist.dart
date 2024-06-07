@@ -96,6 +96,7 @@ class _WishlistState extends State<Wishlist> {
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> filteredProducts = [];
 
+print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIIII$productsData");
         for (var productData in productsData) {
           print(productIds);
 
@@ -224,12 +225,14 @@ class _WishlistState extends State<Wishlist> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
+              print("iddddddddddddddddddddddddddddddddddd${products[index]['id']}");
+              print("iddddddddddddddddddddddddddddduuuuuuuuuuuu${products[index]['mainCategory']}");
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Product_big_View(
                     product_id: products[index]['id'],
-                    Category_id: int.parse(products[index]['mainCategory']),
+                    Category_id: products[index]['mainCategory'],
                   ),
                 ),
               );

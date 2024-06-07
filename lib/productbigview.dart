@@ -767,6 +767,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
   }
 
   Future<void> fetchproductdata() async {
+    
     try {
       final response =
           await http.get(Uri.parse('$producturl${widget.Category_id}/products/'));
