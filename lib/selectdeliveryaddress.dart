@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:bepocart/addaddress.dart';
+import 'package:bepocart/address2.dart';
+import 'package:bepocart/orderpage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,18 +13,23 @@ class Select_Delivery_Address extends StatefulWidget {
   const Select_Delivery_Address({Key? key, this.user_id}) : super(key: key);
 
   @override
-  State<Select_Delivery_Address> createState() =>
-      _Select_Delivery_AddressState();
+  State<Select_Delivery_Address> createState() => _Select_Delivery_AddressState();
 }
 
 class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
   String? userId;
-
-  String fetchaddressurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/get-address/";
-
+  String fetchaddressurl = "https://3f25-59-92-198-21.ngrok-free.app/get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
+  var selectedAddressId;
+    var selectedAddressname;
+    var selectedAddressemail;
+    var selectedAddressphone;
+    var selectedAddresspincode;
+    var selectedAddresscity;
+    var selectedAddressstate;
+    var selectedAddressnote;
+    var selectedAddressuserid;
 
   @override
   void initState() {
@@ -56,11 +63,11 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
       'token': token,
     });
 
-    print("FetchWishlistData status code: ${response.body}");
+    print("Fetch address: ${response.body}");
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
-      var data = responseData['data'];
+      var data = responseData['address'];
 
       setState(() {
         addressList = List<Map<String, dynamic>>.from(data);
@@ -83,10 +90,13 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
               itemCount: addressList.length,
               itemBuilder: (context, index) {
                 var address = addressList[index];
+                print(address);
                 return InkWell(
                   onTap: () {
                     setState(() {
                       selectedAddressIndex = index;
+                      selectedAddressId = address['id'];  // Store the selected address ID
+                      print("Selected address ID: $selectedAddressId");
                     });
                   },
                   child: Container(
@@ -106,9 +116,25 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
                     child: RadioListTile(
                       value: index,
                       groupValue: selectedAddressIndex,
-                      onChanged: (_) {
+                      onChanged: (value) {
                         setState(() {
                           selectedAddressIndex = index;
+                          selectedAddressId = address['id'];  // Store the selected address ID
+                          selectedAddressname=address['address'];
+                          selectedAddresscity=address['city'];
+                          selectedAddressstate=address['state'];
+                          selectedAddresspincode=address['phone'];
+                          selectedAddressnote=address['note'];
+                          selectedAddressuserid=address['user'];
+
+                          selectedAddressphone=address['pincode'];
+
+                          
+                          selectedAddressemail=address['email'];
+                          
+                          
+                          print("Selected address ID: $selectedAddressId");
+                           print("Selected address name: $selectedAddressname");
                         });
                       },
                       title: Text(address['address']),
@@ -122,67 +148,76 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
               },
             ),
           ),
-      Container(
-  width: double.infinity,
-  margin: EdgeInsets.all(16),
-  padding: EdgeInsets.all(16),
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(8),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.5),
-        spreadRadius: 2,
-        blurRadius: 5,
-        offset: Offset(0, 3),
-      ),
-    ],
-  ),
-  child: Row(
-    children: [
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Add Address",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
             ),
-            // Add other widgets for adding address here
-          ],
-        ),
-      ),
-      GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAddress()));
-        },
-        
-        child: Image.asset(
-          'lib/assets/right-arrow.png',
-          width: 30, // Adjust width as needed
-          height: 30, // Adjust height as needed
-        ),
-      ),
-    ],
-  ),
-),
-
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Add Address",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      // Add other widgets for adding address here
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserAddress2()),
+                    );
+                  },
+                  child: Image.asset(
+                    'lib/assets/right-arrow.png',
+                    width: 30, // Adjust width as needed
+                    height: 30, // Adjust height as needed
+                  ),
+                ),
+              ],
+            ),
+          ),
           InkWell(
-            // onTap: submitAddress,
-            child: Container(
-              height: 70,
-              width: double.infinity,
-              padding: EdgeInsets.all(16),
-              color: Colors.black,
-              child: Center(
-                child: Text(
-                  "Save Address",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+            // onTap: submitAddress, // Add your submit address logic here
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => order(addressid:selectedAddressId,name:selectedAddressname,city:selectedAddresscity,state:selectedAddressstate,pincode:selectedAddresspincode,number:selectedAddressphone,email:selectedAddressemail,note:selectedAddressnote,userid:selectedAddressuserid)),
+                    );
+              },
+              child: Container(
+                height: 70,
+                width: double.infinity,
+                padding: EdgeInsets.all(16),
+                color: Colors.black,
+                child: Center(
+                  child: Text(
+                    "Save Address",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

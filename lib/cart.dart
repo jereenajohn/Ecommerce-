@@ -4,6 +4,7 @@ import 'package:bepocart/checkout.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
+import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -414,7 +415,7 @@ class _CartState extends State<Cart> {
             child: InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CheckoutPage()));
+                    MaterialPageRoute(builder: (context) => Select_Delivery_Address()));
               },
               child: Container(
                 height: 50,
