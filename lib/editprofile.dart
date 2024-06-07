@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bepocart/cart.dart';
+import 'package:bepocart/homepage.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -284,6 +287,62 @@ class _EditProfileState extends State<EditProfile> {
           );
         },
       ),
+
+         bottomNavigationBar: Container(
+          color: Color.fromARGB(255, 244, 244, 244),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: GNav(
+              gap: 20,
+              onTabChange: (index) {
+                setState(() {
+                  // _index = index;
+                  // if (index == 2) {
+                  //   _showSearchDialog(context);
+                  // }
+                });
+              },
+              padding: EdgeInsets.all(16),
+              // selectedIndex: _index,
+              tabs: [
+                GButton(
+                  icon: Icons.home,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                    // Navigate to Home page
+                  },
+                ),
+                GButton(
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                    // Navigate to Cart page
+                  },
+                ),
+                GButton(
+                  icon: Icons.search,
+                  onPressed: () {
+                    //  Navigator.push(
+                    //     context, MaterialPageRoute(builder: (context) => search()));
+                    // Show search dialog if tapped
+                  },
+                ),
+                GButton(
+                  icon: Icons.person,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserProfilePage()));
+                    // Navigate to Profile page
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
     );
   }
 }

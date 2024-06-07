@@ -598,7 +598,7 @@ class _HomePageState extends State<HomePage> {
               // color: Color.fromARGB(255, 235, 232, 232),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: [ 
                   Transform.scale(
                     scale: 1.2, // Adjust the scale factor as needed
                     child: Padding(

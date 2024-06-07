@@ -16,10 +16,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryProductView extends StatefulWidget {
-  const CategoryProductView(
-      {required this.categoryId});
+  const CategoryProductView({required this.categoryId});
   final int categoryId;
- 
 
   @override
   State<CategoryProductView> createState() => _CategoryProductViewState();
@@ -36,7 +34,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/products/search/?q=";
+      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
   final String lowtohigh =
       "https://3f25-59-92-198-21.ngrok-free.app/products/filter/";
   final String hightolow =
@@ -58,6 +56,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
   }
 
   Future<void> searchproduct() async {
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.post(
@@ -102,8 +101,8 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   Future<void> fetchCatProducts() async {
     try {
-      final response =
-          await http.get(Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
+      final response = await http.get(
+          Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
       print('$productsurl${widget.categoryId}');
       print("QQQQQQQQQQQQQQQQQQQQQQQQQ$response");
       if (response.statusCode == 200) {
@@ -556,20 +555,22 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                                       TextOverflow.ellipsis),
                                             ),
                                           ),
-                                          if(categoryProducts[firstItemIndex]['price']!=null)
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Text(
-                                              '\$${categoryProducts[firstItemIndex]['price']}',
-                                              style: TextStyle(
-                                                decoration: TextDecoration
-                                                    .lineThrough, // Add strikethrough decoration
-                                                color: Colors
-                                                    .grey, // You can adjust the color according to your design
+                                          if (categoryProducts[firstItemIndex]
+                                                  ['price'] !=
+                                              null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                '\$${categoryProducts[firstItemIndex]['price']}',
+                                                style: TextStyle(
+                                                  decoration: TextDecoration
+                                                      .lineThrough, // Add strikethrough decoration
+                                                  color: Colors
+                                                      .grey, // You can adjust the color according to your design
+                                                ),
                                               ),
                                             ),
-                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10, right: 10),
@@ -675,20 +676,22 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                                       TextOverflow.ellipsis),
                                             ),
                                           ),
-                                          if(categoryProducts[secondItemIndex]['price']!=null)
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Text(
-                                              '\$${categoryProducts[secondItemIndex]['price']}',
-                                              style: TextStyle(
-                                                decoration: TextDecoration
-                                                    .lineThrough, // Add strikethrough decoration
-                                                color: Colors
-                                                    .grey, // You can adjust the color according to your design
+                                          if (categoryProducts[secondItemIndex]
+                                                  ['price'] !=
+                                              null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                '\$${categoryProducts[secondItemIndex]['price']}',
+                                                style: TextStyle(
+                                                  decoration: TextDecoration
+                                                      .lineThrough, // Add strikethrough decoration
+                                                  color: Colors
+                                                      .grey, // You can adjust the color according to your design
+                                                ),
                                               ),
                                             ),
-                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10, right: 10),

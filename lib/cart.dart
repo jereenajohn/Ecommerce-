@@ -89,6 +89,7 @@ class _CartState extends State<Cart> {
             'productId': item['product'],
             'mainCategory':item['mainCategory'],
             'quantity': item['quantity'],
+            'actualprice':item['price'],
             'price': item['salePrice'],
             'name': item['name'],
             'image': imageUrl,
@@ -289,7 +290,7 @@ class _CartState extends State<Cart> {
                         SizedBox(width: 10),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -298,8 +299,18 @@ class _CartState extends State<Cart> {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                 SizedBox(height: 5),
+                                 if(cartProducts[index]['actualprice']!=null)
+                                Text(
+                                  '\$${cartProducts[index]['actualprice']}',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: 14,
+                                    color: Colors.grey
                                   ),
                                 ),
                                 SizedBox(height: 5),
@@ -307,11 +318,10 @@ class _CartState extends State<Cart> {
                                   '\$${cartProducts[index]['price']}',
                                   style: TextStyle(
                                     fontSize: 14,
+                                    color: Colors.green
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+                               
                                 // Inside the ListView.builder itemBuilder method
                                 Container(
                                   // decoration: BoxDecoration(

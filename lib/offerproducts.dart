@@ -244,6 +244,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'name': productData['name'],
           'image':
               "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}",
+              'price':productData['price'],
           
           'salePrice': productData['salePrice'],
         });

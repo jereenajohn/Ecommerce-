@@ -268,7 +268,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                             '$offer_type',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -448,7 +448,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                             "\₹$price",
                             style: TextStyle(
                                 fontSize: 15,
-                                color: Color.fromARGB(255, 197, 144, 144),
+                                color: Color.fromARGB(255, 155, 153, 153),
                                 decoration: TextDecoration.lineThrough),
                           ),
                         ],
