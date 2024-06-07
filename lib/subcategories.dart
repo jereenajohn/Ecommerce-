@@ -29,11 +29,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
+      "https://3f25-59-92-198-21.ngrok-free.app/category/";
   final String productsurl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
+      "https://3f25-59-92-198-21.ngrok-free.app/category/";
   final String searchproducturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/products/search/?q=";
+      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -119,7 +119,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -143,8 +143,8 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     }
   }
 
-  Future<void> searchproduct() async {
-    print('dfggggggggggggggggggggggggggggggggggggggggggggggggggg');
+ Future<void> searchproduct() async {
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.post(
@@ -164,7 +164,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -203,7 +203,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app${subcategoryData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

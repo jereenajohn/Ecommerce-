@@ -26,14 +26,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buyonegetoneurl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/buy-1-get-1-offer/";
+      "https://3f25-59-92-198-21.ngrok-free.app/buy-1-get-1-offer/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/products/search/?q=";
+      "https://3f25-59-92-198-21.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/whishlist/";
+      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -136,7 +136,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -227,7 +227,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
+import 'package:bepocart/filterhightolow.dart';
+import 'package:bepocart/filterlowtohigh.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +17,7 @@ class OfferProducts extends StatefulWidget {
   OfferProducts({Key? key, this.user_id, required this.offerId})
       : super(key: key);
   final int offerId;
+ 
 
   @override
   State<OfferProducts> createState() => _OfferProductsState();
@@ -24,20 +27,28 @@ class _OfferProductsState extends State<OfferProducts> {
   String? userId;
   List<Map<String, dynamic>> products = [];
   List<Map<String, dynamic>> searchResults = [];
+    List<Map<String, dynamic>> lowtohighresult = [];
+  List<Map<String, dynamic>> hightolowresult = [];
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/products/search/?q=";
+      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/offer-banner/";
+      "https://3f25-59-92-198-21.ngrok-free.app/offer-banner/";
 
   final String wishlisturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/whishlist/";
+      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
+
+   final String lowtohigh =
+      "https://3f25-59-92-198-21.ngrok-free.app/low-products/";
+  final String hightolow =
+      "https://3f25-59-92-198-21.ngrok-free.app/high-products/";
+
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -69,6 +80,90 @@ class _OfferProductsState extends State<OfferProducts> {
     } else {
       // If the product is being removed from the wishlist
       // You can implement this logic if needed
+    }
+  }
+
+
+ Future<void> LowtoHigh(int subcategoryId) async {
+    print(subcategoryId);
+    final token = await gettokenFromPrefs();
+    try {
+      final response = await http.post(
+        Uri.parse('$lowtohigh$subcategoryId/'),
+        headers: {
+          'Authorization': '$token',
+        },
+        body: ({'pk': subcategoryId.toString()}),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> searchData = jsonDecode(response.body);
+        List<Map<String, dynamic>> searchList = [];
+
+        for (var productData in searchData) {
+          String imageUrl =
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+          searchList.add({
+            'id': productData['id'],
+            'name': productData['name'],
+            'price': productData['price'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+            'category_id': productData['mainCategory'],
+          });
+        }
+        setState(() {
+          lowtohighresult = searchList;
+          print('llllllllllllllllll22222222hhhhhhhhhhhhhhhh$lowtohighresult');
+        });
+      } else {
+        print('Failed to search item: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error fetching product: $error');
+    }
+  }
+
+  Future<void> HightoLow(int subcategoryId) async {
+    print(subcategoryId);
+    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$hightolow$subcategoryId/');
+    final token = await gettokenFromPrefs();
+    try {
+      final response = await http.post(
+        Uri.parse('$hightolow$subcategoryId/'),
+        headers: {
+          'Authorization': '$token',
+        },
+        body: ({'pk': subcategoryId.toString()}),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> searchData = jsonDecode(response.body);
+        List<Map<String, dynamic>> searchList = [];
+
+        for (var productData in searchData) {
+          String imageUrl =
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+          searchList.add({
+            'id': productData['id'],
+            'name': productData['name'],
+            'price': productData['price'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+            'category_id': productData['mainCategory'],
+          });
+        }
+        setState(() {
+          hightolowresult = searchList;
+          print('hhhhhhhhhh222222222lllllllllllllll$hightolowresult');
+        });
+      } else {
+        print('Failed to search item: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error fetching product: $error');
     }
   }
 
@@ -148,7 +243,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}",
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}",
           
           'salePrice': productData['salePrice'],
         });
@@ -164,19 +259,27 @@ class _OfferProductsState extends State<OfferProducts> {
   }
 
   Future<void> searchproduct() async {
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
+      print('$searchproducturl${searchitem.text}');
       final response = await http.post(
         Uri.parse('$searchproducturl${searchitem.text}'),
         body: ({'q': searchitem.text}),
       );
+      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
+      print(
+          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
 
       if (response.statusCode == 200) {
+        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
+        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -188,6 +291,7 @@ class _OfferProductsState extends State<OfferProducts> {
         }
         setState(() {
           searchResults = searchList;
+          print("8888888888888888888$searchResults");
         });
       } else {
         print('Failed to search item: ${response.statusCode}');
@@ -273,7 +377,132 @@ class _OfferProductsState extends State<OfferProducts> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        
+        child:Column(
+
+          children: [
+
+          //    Row(
+          //   children: [
+          //     SizedBox(
+          //       width: 10,
+          //     ),
+          //     GestureDetector(
+          //       onTap: () {
+          //         showModalBottomSheet(
+          //           context: context,
+          //           builder: (BuildContext context) {
+          //             return Container(
+          //               height: 130,
+          //               child: Column(
+          //                 children: [
+          //                   ListTile(
+          //                     title: Text('High to Low'),
+          //                     onTap: () async {
+          //                       await HightoLow(widget.subcategoryId);
+          //                       Navigator.push(
+          //                           context,
+          //                           MaterialPageRoute(
+          //                               builder: (context) => hightolowpage(
+          //                                   result: hightolowresult,
+          //                                   SubcatId: widget.subcategoryId)));
+          //                     },
+          //                   ),
+          //                   ListTile(
+          //                     title: Text('Low to High'),
+          //                     onTap: () async {
+          //                       await LowtoHigh(widget.subcategoryId);
+          //                       Navigator.push(
+          //                           context,
+          //                           MaterialPageRoute(
+          //                               builder: (context) => lowtohighpage(
+          //                                   result: lowtohighresult,
+          //                                   SubcatId: widget.subcategoryId)));
+          //                     },
+          //                   ),
+          //                 ],
+          //               ),
+          //             );
+          //           },
+          //         );
+          //       },
+          //       child: Container(
+          //         width: 100,
+          //         height: 40,
+          //         decoration: BoxDecoration(
+          //           color: Colors.white,
+          //           borderRadius: BorderRadius.circular(10.0),
+          //           border: Border.all(
+          //             color:
+          //                 Colors.black, // Specify the color of the border here
+          //             width: 1.0, // Specify the width of the border here
+          //           ),
+          //           boxShadow: [
+          //             BoxShadow(
+          //               color: Colors.black.withOpacity(0.1),
+          //               blurRadius: 3,
+          //               spreadRadius: 2,
+          //               offset: Offset(0, 2),
+          //             ),
+          //           ],
+          //         ),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment
+          //               .center, // Center the text horizontally
+          //           children: [
+          //             Text("Sort By"),
+          //             SizedBox(width: 5),
+          //             Image.asset(
+          //               "lib/assets/sort.png",
+          //               width: 24,
+          //               height: 24,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //     SizedBox(
+          //       width: 20,
+          //     ),
+          //     Container(
+          //       width: 100,
+          //       height: 40,
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(10.0),
+          //         border: Border.all(
+          //           color: Colors.black, // Specify the color of the border here
+          //           width: 1.0, // Specify the width of the border here
+          //         ),
+          //         boxShadow: [
+          //           BoxShadow(
+          //             color: Colors.black.withOpacity(0.1),
+          //             blurRadius: 3,
+          //             spreadRadius: 2,
+          //             offset: Offset(0, 2),
+          //           ),
+          //         ],
+          //       ),
+          //       child: Row(
+          //         mainAxisAlignment:
+          //             MainAxisAlignment.center, // Center the text horizontally
+          //         children: [
+          //           Text("Filter"),
+          //           SizedBox(
+          //             width: 5,
+          //           ),
+          //           Image.asset(
+          //             "lib/assets/filter.png",
+          //             width: 24,
+          //             height: 24,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+
+          Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: ListView.builder(
             shrinkWrap: true,
@@ -539,6 +768,10 @@ class _OfferProductsState extends State<OfferProducts> {
             },
           ),
         ),
+          ],
+
+        ),
+        
       ),
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),

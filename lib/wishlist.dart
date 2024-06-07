@@ -20,14 +20,14 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://9ed9-117-193-85-29.ngrok-free.app/wishlist/";
+  var wishlisturl = "https://3f25-59-92-198-21.ngrok-free.app/wishlist/";
   final String productsurl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/products/";
+      "https://3f25-59-92-198-21.ngrok-free.app/products/";
 
   final String deletewishlisturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/wishlist-delete/";
+      "https://3f25-59-92-198-21.ngrok-free.app/wishlist-delete/";
 
-  final String addtocarturl = "https://9ed9-117-193-85-29.ngrok-free.app/cart/";
+  final String addtocarturl = "https://3f25-59-92-198-21.ngrok-free.app/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -101,7 +101,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
+                "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -332,9 +332,8 @@ class _WishlistState extends State<Wishlist> {
                             removeProduct(index);
                           },
                           child: ImageIcon(
-                            AssetImage('lib/assets/heart.png'),
+                            AssetImage('lib/assets/hert.png'),
                             size: 24,
-                            color: Colors.black, // Adjust the color as needed
                           ),
                         ),
                       ],

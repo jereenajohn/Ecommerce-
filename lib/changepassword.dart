@@ -18,7 +18,7 @@ class changepassword extends StatefulWidget {
 class _changepasswordState extends State<changepassword> {
   TextEditingController newpass = TextEditingController();
   TextEditingController confirmpass = TextEditingController();
-  var url = "https://9ed9-117-193-85-29.ngrok-free.app/password-reset/";
+  var url = "https://3f25-59-92-198-21.ngrok-free.app/change-password/";
 
   Future<void> change() async {
     try {
@@ -26,7 +26,7 @@ class _changepasswordState extends State<changepassword> {
         Uri.parse(url),
         body: {
           "new_password": newpass.text,
-          "retype_password": confirmpass.text,
+          "confirm_password": confirmpass.text,
           "email": widget.email
         },
       );

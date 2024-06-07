@@ -30,9 +30,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app//whishlist/";
+      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
   final String searchproducturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app//products/search/?q=";
+      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -66,6 +66,7 @@ class _SearchState extends State<Search> {
   }
 
   Future<void> searchproduct() async {
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.post(
@@ -85,7 +86,7 @@ class _SearchState extends State<Search> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -107,7 +108,6 @@ class _SearchState extends State<Search> {
       print('Error fetching product: $error');
     }
   }
-
   void _showSearchDialog(BuildContext context) {
     setState(() {
       _isSearching = true;

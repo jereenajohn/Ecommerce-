@@ -28,7 +28,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
   List<Map<String, dynamic>> hightolowresult = [];
    final String searchproducturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app//products/search/?q=";
+      "https://3f25-59-92-198-21.ngrok-free.app/products/search/?q=";
    bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -42,8 +42,8 @@ class _lowtohighpageState extends State<lowtohighpage> {
     print("Search results: ${widget.result}");
   }
 
-  final String hightolow = "https://9ed9-117-193-85-29.ngrok-free.app/high-products/";
-  final String wishlisturl = "https://9ed9-117-193-85-29.ngrok-free.app//whishlist/";
+  final String hightolow = "https://3f25-59-92-198-21.ngrok-free.app/high-products/";
+  final String wishlisturl = "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
 
   Future<void> HightoLow(int subcategoryId) async {
     print(subcategoryId);
@@ -62,7 +62,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
+          String imageUrl = "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -164,7 +164,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app//${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

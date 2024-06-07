@@ -24,14 +24,14 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/category/";
+      "https://3f25-59-92-198-21.ngrok-free.app/category/";
 
-  final multipleimageurl = "https://9ed9-117-193-85-29.ngrok-free.app/product/";
+  final multipleimageurl = "https://3f25-59-92-198-21.ngrok-free.app/product/";
 
-  final String addtocarturl = "https://9ed9-117-193-85-29.ngrok-free.app/Cart/";
+  final String addtocarturl = "https://3f25-59-92-198-21.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://9ed9-117-193-85-29.ngrok-free.app/whishlist/";
+      "https://3f25-59-92-198-21.ngrok-free.app/add-wishlist/";
 
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
@@ -59,13 +59,18 @@ class _Product_big_ViewState extends State<Product_big_View> {
     super.initState();
   }
 
-  Future<void> addProductToWishlist(int productId) async {
+   Future<void> addProductToWishlist(int productId) async {
+    print(
+        "PPPPPPPPPPPPPRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productId");
+
     try {
       final token = await gettokenFromPrefs();
+      print("TTTTTTTOOOOOOOOOOKKKKKKKKKKKKKKKEEEEEEEEENNNNNNNNN$token");
+
       final response = await http.post(
-        Uri.parse(wishlisturl),
+        Uri.parse('${wishlisturl}${productId}/'),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-type': 'application/json',
           'Authorization': '$token',
         },
         body: jsonEncode({
@@ -75,12 +80,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
       );
 
       if (response.statusCode == 201) {
+        print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Product added to wishlist successfully'),
+            content: Text('Product added to wishlist'),
+            backgroundColor: Colors.green,
           ),
         );
-        print('Product added to wishlist: $productId');
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -772,7 +778,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://9ed9-117-193-85-29.ngrok-free.app${productData['image']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -839,15 +845,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image1']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image1']}";
           String imageUrl2 =
-              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image2']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image2']}";
           String imageUrl3 =
-              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image3']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image3']}";
           String imageUrl4 =
-              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image4']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image4']}";
           String imageUrl5 =
-              "https://9ed9-117-193-85-29.ngrok-free.app/${imageData['image5']}";
+              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
