@@ -74,6 +74,7 @@ class _orderState extends State<order> {
   var orginalprice;
   var sellingprice;
   var discount;
+  var deliverycharge;
 
   Future<void> fetchCartData() async {
     print("Fetching cart data...");
@@ -163,6 +164,10 @@ class _orderState extends State<order> {
         totalPrice += double.parse(cartProducts[i]['saleprice']) *
             (cartProducts[i]['quantity'] ?? 1);
         print("total::::::$totalPrice");
+      }
+      if (totalPrice < 500) {
+        deliverycharge = 60;
+        totalPrice = totalPrice + deliverycharge;
       }
     });
 
@@ -336,6 +341,31 @@ class _orderState extends State<order> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Delivery Charge",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                              Spacer(),
+                              Text(
+                                deliverycharge != 60
+                                    ? "Free Delivery"
+                                    : "₹${deliverycharge}",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: deliverycharge != 60
+                                      ? Colors.green
+                                      : Colors
+                                          .black, // Change color if free delivery
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         Divider(),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -367,7 +397,7 @@ class _orderState extends State<order> {
                           child: Row(
                             children: [
                               Text(
-                                "You will save -₹${discount} on this order",
+                                "You will save ₹${discount} on this order",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.green,
