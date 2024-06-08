@@ -20,14 +20,15 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://3f25-59-92-198-21.ngrok-free.app/wishlist/";
+  var wishlisturl = "https://4a48-117-193-85-167.ngrok-free.app/wishlist/";
   final String productsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/products/";
 
   final String deletewishlisturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/wishlist-delete/";
+      "https://4a48-117-193-85-167.ngrok-free.app/wishlist-delete/";
 
-  final String addtocarturl = "https://3f25-59-92-198-21.ngrok-free.app/cart/";
+  final String addtocarturl =
+      "https://4a48-117-193-85-167.ngrok-free.app/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -96,13 +97,14 @@ class _WishlistState extends State<Wishlist> {
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> filteredProducts = [];
 
-print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIIII$productsData");
+        print(
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIIII$productsData");
         for (var productData in productsData) {
           print(productIds);
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+                "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -133,12 +135,13 @@ print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIII
   }
 
   Future<void> deleteWishlistProduct(int wishlistId) async {
+    print("fvvvvvvvvvvvvvvvvvvvvvvvjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjv$wishlistId");
     try {
       print('$deletewishlisturl$wishlistId/');
       final response = await http.delete(
         Uri.parse('$deletewishlisturl$wishlistId/'),
         headers: <String, String>{
-          'Content-Type': 'application/json;',
+          'Content-Type': 'application/json',
         },
       );
       print("uuuuuuuuuuuuuuuuuuuuuuuuuu");
@@ -165,7 +168,7 @@ print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIII
         headers: {
           'Content-type': 'application/json',
           'Authorization': ' $token',
-        }, 
+        },
         body: jsonEncode({
           'token': token,
           'product': productId,
@@ -225,8 +228,10 @@ print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIII
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              print("iddddddddddddddddddddddddddddddddddd${products[index]['id']}");
-              print("iddddddddddddddddddddddddddddduuuuuuuuuuuu${products[index]['mainCategory']}");
+              print(
+                  "iddddddddddddddddddddddddddddddddddd${products[index]['id']}");
+              print(
+                  "iddddddddddddddddddddddddddddduuuuuuuuuuuu${products[index]['mainCategory']}");
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -331,6 +336,7 @@ print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIII
                       children: [
                         GestureDetector(
                           onTap: () {
+                            print("delettttttttttttttttttttttttttttttttttttttiddd${WishlistIds[index]}");
                             deleteWishlistProduct(WishlistIds[index]);
                             removeProduct(index);
                           },

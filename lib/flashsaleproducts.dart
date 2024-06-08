@@ -26,14 +26,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/flash-sale-offer/";
+      "https://4a48-117-193-85-167.ngrok-free.app/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/products/search/?q=";
+      "https://4a48-117-193-85-167.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
+      "https://4a48-117-193-85-167.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -136,7 +136,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -232,7 +232,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -305,19 +305,19 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                           child: GestureDetector(
                             onTap: () {
                               try {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Product_big_View(
-                                      product_id:
-                                          flashsaleproducts[firstItemIndex]
-                                              ['id'],
-                                      Category_id: int.parse(
-                                          flashsaleproducts[firstItemIndex]
-                                              ['mainCategory']),
-                                    ),
-                                  ),
-                                );
+                               Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => Product_big_View(
+                                                        product_id:
+                                                            flashsaleproducts[
+                                                                    firstItemIndex]
+                                                                ['id'],
+                                                        Category_id:
+                                                            flashsaleproducts[
+                                                                    firstItemIndex]
+                                                                [
+                                                                'mainCategory'])));
                               } catch (e) {
                                 print('Error navigating: $e');
                               }
@@ -391,7 +391,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                                             flashsaleproducts[firstItemIndex]
                                                 ['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),
@@ -412,7 +412,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
+                                              left: 5, right: 10),
                                           child: Text(
                                             'Sale Price: \$${flashsaleproducts[firstItemIndex]['salePrice']}',
                                             style: TextStyle(
@@ -434,16 +434,18 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Product_big_View(
-                                            product_id: flashsaleproducts[
-                                                secondItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                flashsaleproducts[
-                                                        secondItemIndex]
-                                                    ['mainCategory']),
-                                          )));
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => Product_big_View(
+                                                        product_id:
+                                                            flashsaleproducts[
+                                                                    secondItemIndex]
+                                                                ['id'],
+                                                        Category_id:
+                                                            flashsaleproducts[
+                                                                    secondItemIndex]
+                                                                [
+                                                                'mainCategory'])));
                             },
                             child: Container(
                               height: 250,
@@ -508,7 +510,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                                             flashsaleproducts[secondItemIndex]
                                                 ['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),
@@ -529,7 +531,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
+                                              left: 5, right: 10),
                                           child: Text(
                                             'Sale Price: \$${flashsaleproducts[secondItemIndex]['salePrice']}',
                                             style: TextStyle(

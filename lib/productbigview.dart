@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:bepocart/cart.dart';
+import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -23,20 +24,25 @@ class Product_big_View extends StatefulWidget {
 }
 
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/category/";
+  final producturl = "https://4a48-117-193-85-167.ngrok-free.app/category/";
 
-  final multipleimageurl = "https://3f25-59-92-198-21.ngrok-free.app/product/";
+  final multipleimageurl =
+      "https://4a48-117-193-85-167.ngrok-free.app/product/";
 
-  final String addtocarturl = "https://3f25-59-92-198-21.ngrok-free.app/Cart/";
+  final String addtocarturl =
+      "https://4a48-117-193-85-167.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/add-wishlist/";
+      "https://4a48-117-193-85-167.ngrok-free.app/add-wishlist/";
 
+  final String discountsurl =
+      "https://4a48-117-193-85-167.ngrok-free.app/discount-sale/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
   List<Map<String, dynamic>> products = [];
+  List<Map<String, dynamic>> discountproducts = [];
+
   List<bool> isFavorite = [];
   int _selectedIndex = 0;
 
@@ -56,10 +62,47 @@ class _Product_big_ViewState extends State<Product_big_View> {
     print("category_idddddddddddddd${widget.Category_id}");
     fetchproductdata();
     multipleimage();
+    fetchDiscountProducts();
     super.initState();
   }
 
-   Future<void> addProductToWishlist(int productId) async {
+  Future<void> fetchDiscountProducts() async {
+    try {
+      final response = await http.get(Uri.parse(discountsurl));
+      print('Response: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed;
+
+        List<Map<String, dynamic>> productDiscountList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+          productDiscountList.add({
+            'id': productData['id'],
+            'mainCategory': productData['mainCategory'],
+            'name': productData['name'],
+            'price': productData['price'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+          });
+        }
+
+        setState(() {
+          discountproducts = productDiscountList;
+          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$discountproducts");
+        });
+      } else {
+        throw Exception('Failed to load discount products');
+      }
+    } catch (error) {
+      print('Error fetching discount products: $error');
+    }
+  }
+
+  Future<void> addProductToWishlist(int productId) async {
     print(
         "PPPPPPPPPPPPPRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productId");
 
@@ -253,8 +296,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
                               child: CircularProgressIndicator(),
                             ),
                     ),
-                    if (offer_type !=
-                        null && offer_type !="normal") // Check if discount percentage is available
+                    if (offer_type != null &&
+                        offer_type !=
+                            "normal") // Check if discount percentage is available
                       Positioned(
                         top: 10,
                         left: 10,
@@ -442,15 +486,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
                           SizedBox(
                             width: 5,
                           ),
-                         
-                          if(price!=null)
-                          Text(
-                            "\₹$price",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 155, 153, 153),
-                                decoration: TextDecoration.lineThrough),
-                          ),
+                          if (price != null)
+                            Text(
+                              "\₹$price",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 155, 153, 153),
+                                  decoration: TextDecoration.lineThrough),
+                            ),
                         ],
                       ),
                       SizedBox(
@@ -662,23 +705,22 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                             overflow: TextOverflow.ellipsis),
                                       ),
                                     ),
-                                   
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10),
                                       child: Column(
                                         children: [
-                                           if(product['price']!=null)
-                                          Text(
-                                            '\$${product['price']}',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.green,
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                              decorationColor: Colors
-                                                  .grey, // Set line color to grey
+                                          if (product['price'] != null)
+                                            Text(
+                                              '\$${product['price']}',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.green,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                decorationColor: Colors
+                                                    .grey, // Set line color to grey
+                                              ),
                                             ),
-                                          ),
                                           Text(
                                             'Sale Price: \$${product['salePrice']}',
                                             style: TextStyle(
@@ -696,6 +738,139 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+
+              if (discountproducts.isNotEmpty)
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    // color: Color.fromARGB(255, 217, 219, 221),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text("Discounts for you",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                            Spacer(),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 10, top: 10),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Discount_Products(),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color.fromARGB(255, 0, 0, 0), // Set white background color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
+                                ),
+                                child: Text(
+                                  'See More',
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 0.8,
+                          ),
+                          itemCount: (discountproducts.length > 4)
+                              ? 4
+                              : discountproducts.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final product = discountproducts[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Product_big_View(
+                                        product_id: product['id'],
+                                        Category_id: product['mainCategory'],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 211, 211, 211),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        product['image'],
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          product['name'],
+                                          style: TextStyle(
+                                              overflow: TextOverflow.ellipsis),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          ' \₹${product['price']}',
+                                          style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.lineThrough),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                          ' \₹${product['salePrice']}',
+                                          style: TextStyle(color: Colors.green),
+                                        ),
+                                      ),
+                                      if (product['discount'] != null)
+                                        Text(
+                                            'Discount: ${product['discount']}'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
             ],
@@ -767,10 +942,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
   }
 
   Future<void> fetchproductdata() async {
-    
     try {
-      final response =
-          await http.get(Uri.parse('$producturl${widget.Category_id}/products/'));
+      final response = await http
+          .get(Uri.parse('$producturl${widget.Category_id}/products/'));
 
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
@@ -779,7 +953,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -790,8 +964,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
             'mainCategory': productData['mainCategory'],
             'offer_type': productData['offer_type'],
             'image': imageUrl,
-
-            
           });
         }
 
@@ -800,7 +972,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
             if (widget.product_id == productsList[i]['id']) {
               print(
                   "AAAAAAAAAMMMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAA${productsList[i]}");
-                  
+
               image = productsList[i]['image'];
               name = productsList[i]['name'];
               price = productsList[i]['price'];
@@ -817,7 +989,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
           categoryProducts = productsList;
           isDataLoaded = true;
         });
-        print("==========================LLLLLLLLLLLLLLLLLLLLLLLLLL$categoryProducts");
+        print(
+            "==========================LLLLLLLLLLLLLLLLLLLLLLLLLL$categoryProducts");
       } else {
         throw Exception('Failed to load category products');
       }
@@ -846,15 +1019,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image1']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image1']}";
           String imageUrl2 =
-              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image2']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image2']}";
           String imageUrl3 =
-              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image3']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image3']}";
           String imageUrl4 =
-              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image4']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image4']}";
           String imageUrl5 =
-              "https://3f25-59-92-198-21.ngrok-free.app${imageData['image5']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

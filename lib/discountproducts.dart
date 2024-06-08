@@ -26,14 +26,14 @@ class _Discount_ProductsState extends State<Discount_Products> {
   List<bool> isFavorite = [];
 
   final String discountsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/discount-products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/discount-sale/";
   List<Map<String, dynamic>> discountproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/products/search/?q=";
+      "https://4a48-117-193-85-167.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
+      "https://4a48-117-193-85-167.ngrok-free.app/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -85,7 +85,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
       print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
-        Uri.parse(wishlisturl),
+        Uri.parse('${wishlisturl}${productId}/'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': '$token',
@@ -98,8 +98,14 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
       print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Product added to wishlist'),
+            backgroundColor: Colors.green,
+          ),
+        );
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -136,7 +142,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -225,15 +231,17 @@ class _Discount_ProductsState extends State<Discount_Products> {
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed;
+        print(
+            "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWr$productsData");
 
         List<Map<String, dynamic>> productDiscountList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productDiscountList.add({
-            'id': productData['id'],
-            'mainCategory': productData['mainCategory'],
+            'id': productData['id'], // Changed to int
+            'mainCategory': productData['mainCategory'], // Changed to int
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
@@ -307,9 +315,9 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                       product_id:
                                           discountproducts[firstItemIndex]
                                               ['id'],
-                                      Category_id: int.parse(
+                                      Category_id: 
                                           discountproducts[firstItemIndex]
-                                              ['mainCategory']),
+                                              ['mainCategory'],
                                     ),
                                   ),
                                 );
@@ -364,21 +372,26 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
+                                            print(
+                                                discountproducts[firstItemIndex]
+                                                    ['id']);
+                                            print(
+                                                discountproducts[firstItemIndex]
+                                                    ['mainCategory']);
+
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Product_big_View(
-                                                          product_id:
-                                                              discountproducts[
-                                                                      firstItemIndex]
-                                                                  ['id'],
-                                                          Category_id: int.parse(
-                                                              discountproducts[
-                                                                      firstItemIndex]
-                                                                  [
-                                                                  'mainCategory']),
-                                                        )));
+                                                    builder: (context) => Product_big_View(
+                                                        product_id:
+                                                            discountproducts[
+                                                                    firstItemIndex]
+                                                                ['id'],
+                                                        Category_id:
+                                                            discountproducts[
+                                                                    firstItemIndex]
+                                                                [
+                                                                'mainCategory'])));
                                             toggleFavorite(firstItemIndex);
                                           },
                                           child: Padding(
@@ -401,10 +414,10 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                             discountproducts[firstItemIndex]
                                                 ['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                         ),
                                         Padding(
@@ -447,13 +460,12 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Product_big_View(
-                                            product_id: discountproducts[
-                                                secondItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                discountproducts[
-                                                        secondItemIndex]
-                                                    ['mainCategory']),
-                                          )));
+                                          product_id:
+                                              discountproducts[secondItemIndex]
+                                                  ['id'],
+                                          Category_id:
+                                              discountproducts[secondItemIndex]
+                                                  ['mainCategory'])));
                             },
                             child: Container(
                               height: 250,
@@ -518,7 +530,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                             discountproducts[secondItemIndex]
                                                 ['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),

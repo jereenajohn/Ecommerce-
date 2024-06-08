@@ -40,7 +40,7 @@ class order extends StatefulWidget {
 class _orderState extends State<order> {
   String? userId;
   String fetchaddressurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/get-address/";
+      "https://4a48-117-193-85-167.ngrok-free.app/get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
 
@@ -69,7 +69,7 @@ class _orderState extends State<order> {
     return prefs.getString('token');
   }
 
-  var CartUrl = "https://3f25-59-92-198-21.ngrok-free.app/cart-products/";
+  var CartUrl = "https://4a48-117-193-85-167.ngrok-free.app/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -99,7 +99,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${item['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -475,7 +475,7 @@ class _orderState extends State<order> {
                 ),
                 child: Center(
                   child: Text(
-                    "Buy Now",
+                    "Payment",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),

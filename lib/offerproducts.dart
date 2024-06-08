@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
+      "https://4a48-117-193-85-167.ngrok-free.app/search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/offer-banner/";
+      "https://4a48-117-193-85-167.ngrok-free.app/offer-banner/";
 
   final String wishlisturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
+      "https://4a48-117-193-85-167.ngrok-free.app/add-wishlist/";
 
    final String lowtohigh =
-      "https://3f25-59-92-198-21.ngrok-free.app/low-products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/low-products/";
   final String hightolow =
-      "https://3f25-59-92-198-21.ngrok-free.app/high-products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/high-products/";
 
 
   Future<String?> getUserIdFromPrefs() async {
@@ -102,7 +102,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -144,7 +144,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -173,7 +173,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
       print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
-        Uri.parse(wishlisturl),
+        Uri.parse('${wishlisturl}${productId}/'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': '$token',
@@ -186,8 +186,14 @@ class _OfferProductsState extends State<OfferProducts> {
 
       print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Product added to wishlist'),
+            backgroundColor: Colors.green,
+          ),
+        );
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -243,7 +249,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}",
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}",
               'price':productData['price'],
           
           'salePrice': productData['salePrice'],
@@ -280,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

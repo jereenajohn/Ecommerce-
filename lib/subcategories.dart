@@ -29,11 +29,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/category/";
+      "https://4a48-117-193-85-167.ngrok-free.app/category/";
   final String productsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/category/";
+      "https://4a48-117-193-85-167.ngrok-free.app/category/";
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
+      "https://4a48-117-193-85-167.ngrok-free.app/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -119,7 +119,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -164,7 +164,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -203,7 +203,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${subcategoryData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],
@@ -396,115 +396,124 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                         );
                       },
                     ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'All Products',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+!categoryProducts.isEmpty
+    ? Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'All Products',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryProductView(
+                          categoryId: widget.categoryId,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.black),
                     ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
+                  ),
+                  child: Text(
+                    'See More',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: categoryProducts.length > 5
+                    ? 5
+                    : categoryProducts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final product = categoryProducts[index];
+                  try {
+                    final imageData = product['image'];
+                    return GestureDetector(
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CategoryProductView(
-                              categoryId: widget.categoryId,
+                            builder: (context) => Product_big_View(
+                              product_id: product['id'],
+                              Category_id: product['category_id']
                             ),
                           ),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.white, // Set white background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(color: Colors.black),
+                      child: ListTile(
+                        title: Text(
+                          product['name'],
+                          style: TextStyle(overflow: TextOverflow.ellipsis),
                         ),
-                      ),
-                      child: Text(
-                        'See More',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: categoryProducts.length > 5
-                        ? 5
-                        : categoryProducts.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final product = categoryProducts[index];
-                      try {
-                        // Decode image data
-                        final imageData = product['image'];
-                        // Return ListTile with decoded image
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Product_big_View(
-                                        product_id: product['id'],
-                                        Category_id: product['category_id'])));
-                          },
-                          child: ListTile(
-                            title: Text(
-                              product['name'],
-                              style: TextStyle(overflow: TextOverflow.ellipsis),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (product['price'] != null)
-                                  Text(
-                                    '\$${product['price']}',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                Text(
-                                  'Sale Price: \$${product['salePrice']}',
-                                  style: TextStyle(
-                                    color: Colors.green,
-                                  ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (product['price'] != null)
+                              Text(
+                                '\$${product['price']}',
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: Colors.grey,
                                 ),
-                              ],
+                              ),
+                            Text(
+                              'Sale Price: \$${product['salePrice']}',
+                              style: TextStyle(
+                                color: Colors.green,
+                              ),
                             ),
-                            leading: Image.network(
-                              imageData,
-                              width: 50,
-                              height: 50,
-                            ),
-                          ),
-                        );
-                      } catch (e) {
-                        // Print error if decoding fails
-                        print('Error decoding image: $e');
-                        return ListTile(
-                          title: Text(product['name']),
-                          subtitle: Text('\$${product['price']}'),
-                        );
-                      }
-                    },
-                  ),
-                ),
+                          ],
+                        ),
+                        leading: Image.network(
+                          imageData,
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                    );
+                  } catch (e) {
+                    print('Error decoding image: $e');
+                    return ListTile(
+                      title: Text(product['name']),
+                      subtitle: Text('\$${product['price']}'),
+                    );
+                  }
+                },
               ),
-            ],
+            ),
+          ),
+        ],
+      )
+    : Padding(
+      padding: const EdgeInsets.only(top: 120),
+      child: Center(child: Text('No products available',style:TextStyle(color: Colors.grey))),
+    )
+
+             
+          ],
           ),
         ),
       ),

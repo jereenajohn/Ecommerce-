@@ -17,7 +17,7 @@ class forgotpassword extends StatefulWidget {
 }
 
 class _forgotpasswordState extends State<forgotpassword> {
-  var url="https://3f25-59-92-198-21.ngrok-free.app/forgot-password/";
+  var url="https://4a48-117-193-85-167.ngrok-free.app/forgot-password/";
   TextEditingController email=TextEditingController();
   var emailres;
 

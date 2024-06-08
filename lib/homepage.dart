@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
@@ -50,33 +51,35 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> offers = [];
 
-  final String bannerurl = "https://3f25-59-92-198-21.ngrok-free.app/banners/";
-  final String baseUrl = "https://3f25-59-92-198-21.ngrok-free.app";
-  final String categoryUrl = "https://3f25-59-92-198-21.ngrok-free.app/category/";
+  final String bannerurl =
+      "https://4a48-117-193-85-167.ngrok-free.app/banners/";
+  final String baseUrl = "https://4a48-117-193-85-167.ngrok-free.app";
+  final String categoryUrl =
+      "https://4a48-117-193-85-167.ngrok-free.app/category/";
   final String productsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/products/";
   final String offersurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/offer-banner/";
+      "https://4a48-117-193-85-167.ngrok-free.app/offer-banner/";
 
   final String discountsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/discount-products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/discount-sale/";
   final String buyonegetoneurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/buy-1-get-1-offer/";
+      "https://4a48-117-193-85-167.ngrok-free.app/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/best-sale-products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/best-sale-products/";
 
   final String flashsaleurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/flash-sale-offer/";
+      "https://4a48-117-193-85-167.ngrok-free.app/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/buy-2-get-1-offer/";
+      "https://4a48-117-193-85-167.ngrok-free.app/buy-2-get-1-offer/";
 
   final String halfrateproductsurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/half-rate-products/";
+      "https://4a48-117-193-85-167.ngrok-free.app/half-rate-products/";
 
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/search-products/?q=";
+      "https://4a48-117-193-85-167.ngrok-free.app/search-products/?q=";
 
   bool _isSearching = false;
   int _index = 0;
@@ -140,7 +143,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
- Future<void> searchproduct() async {
+  Future<void> searchproduct() async {
     print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
@@ -161,7 +164,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -196,12 +199,11 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${offerData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
             'image': imageUrl,
-            
           });
         }
 
@@ -228,7 +230,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -261,7 +263,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -299,7 +301,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -338,7 +340,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -374,7 +376,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -408,7 +410,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -440,7 +442,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -476,7 +478,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${bannerData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -505,7 +507,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${categoryData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -598,7 +600,7 @@ class _HomePageState extends State<HomePage> {
               // color: Color.fromARGB(255, 235, 232, 232),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [ 
+                children: [
                   Transform.scale(
                     scale: 1.2, // Adjust the scale factor as needed
                     child: Padding(
@@ -718,7 +720,6 @@ class _HomePageState extends State<HomePage> {
                                     categories[index]['image'],
                                     width: 70,
                                     height: 70,
-                                    fit: BoxFit.cover,
                                   ),
                                   SizedBox(height: 4),
                                   Text(
@@ -1091,7 +1092,7 @@ class _HomePageState extends State<HomePage> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 10),
-                                        child: Text("Buy One Get One",
+                                        child: Text("Buy 1 Get 1 Free",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold)),
                                       ),

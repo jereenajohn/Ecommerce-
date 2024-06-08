@@ -26,14 +26,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buyonegetoneurl =
-      "https://3f25-59-92-198-21.ngrok-free.app/buy-1-get-1-offer/";
+      "https://4a48-117-193-85-167.ngrok-free.app/buy-1-get-1/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/products/search/?q=";
+      "https://4a48-117-193-85-167.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://3f25-59-92-198-21.ngrok-free.app/whishlist/";
+      "https://4a48-117-193-85-167.ngrok-free.app/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -85,7 +85,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
       print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
-        Uri.parse(wishlisturl),
+        Uri.parse('${wishlisturl}${productId}/'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': '$token',
@@ -98,8 +98,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
       print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Product added to wishlist'),
+            backgroundColor: Colors.green,
+          ),
+        );
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -136,7 +142,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -227,7 +233,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://3f25-59-92-198-21.ngrok-free.app${productData['image']}";
+              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -298,19 +304,16 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                           child: GestureDetector(
                             onTap: () {
                               try {
-                                Navigator.push(
+                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Product_big_View(
-                                      product_id:
-                                          buyonegetoneproducts[firstItemIndex]
-                                              ['id'],
-                                      Category_id: int.parse(
-                                          buyonegetoneproducts[firstItemIndex]
-                                              ['mainCategory']),
-                                    ),
-                                  ),
-                                );
+                                      builder: (context) => Product_big_View(
+                                          product_id:
+                                              buyonegetoneproducts[firstItemIndex]
+                                                  ['id'],
+                                          Category_id:
+                                              buyonegetoneproducts[firstItemIndex]
+                                                  ['mainCategory'])));
                               } catch (e) {
                                 print('Error navigating: $e');
                               }
@@ -430,13 +433,12 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Product_big_View(
-                                            product_id: buyonegetoneproducts[
-                                                secondItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                buyonegetoneproducts[
-                                                        secondItemIndex]
-                                                    ['mainCategory']),
-                                          )));
+                                          product_id:
+                                              buyonegetoneproducts[secondItemIndex]
+                                                  ['id'],
+                                          Category_id:
+                                              buyonegetoneproducts[secondItemIndex]
+                                                  ['mainCategory'])));
                             },
                             child: Container(
                               height: 250,

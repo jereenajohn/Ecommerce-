@@ -14,7 +14,7 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   List<TextEditingController> otpController =
       List.generate(6, (_) => TextEditingController());
-  var url = "https://3f25-59-92-198-21.ngrok-free.app/verify-otp/";
+  var url = "https://4a48-117-193-85-167.ngrok-free.app/verify-otp/";
 
   Future<void> sendOtp() async {
     try {
