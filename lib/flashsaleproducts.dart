@@ -26,14 +26,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/flash-sale/";
+      "https://78cf-117-193-81-85.ngrok-free.app/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/products/search/?q=";
+      "https://78cf-117-193-81-85.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/whishlist/";
+      "https://78cf-117-193-81-85.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 

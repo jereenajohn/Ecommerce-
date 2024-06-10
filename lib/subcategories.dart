@@ -29,11 +29,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/category/";
+      "https://78cf-117-193-81-85.ngrok-free.app/category/";
   final String productsurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/category/";
+      "https://78cf-117-193-81-85.ngrok-free.app/category/";
   final String searchproducturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/search-products/?q=";
+      "https://78cf-117-193-81-85.ngrok-free.app/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -48,6 +48,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     fetchCategoryProducts();
     aa();
   }
+
 
   void _showSearchDialog(BuildContext context) {
     setState(() {
@@ -119,7 +120,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -164,14 +165,15 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
-            'category_id': productData['mainCategory'],
+           'category_id': productData['mainCategory'],
+
           });
         }
         setState(() {
@@ -203,7 +205,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${subcategoryData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

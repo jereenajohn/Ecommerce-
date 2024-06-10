@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,9 +31,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/whishlist/";
+      "https://78cf-117-193-81-85.ngrok-free.app/whishlist/";
   final String searchproducturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/search-products/?q=";
+      "https://78cf-117-193-81-85.ngrok-free.app/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -85,8 +86,10 @@ class _SearchState extends State<Search> {
         print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
+          print(
+              "cattttttttttttttttttttttttttttttttppppppppppppppppppppppp$productData");
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -98,7 +101,8 @@ class _SearchState extends State<Search> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
+          print(
+              "5555555555555555555555555555555555555555555555555555555$searchResults");
         });
       } else {
         print('Failed to search item: ${response.statusCode}');
@@ -108,6 +112,7 @@ class _SearchState extends State<Search> {
       print('Error fetching product: $error');
     }
   }
+
   void _showSearchDialog(BuildContext context) {
     setState(() {
       _isSearching = true;
@@ -239,144 +244,182 @@ class _SearchState extends State<Search> {
             return Row(
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
+                  child: GestureDetector(
+                    onTap: () {
+                      print(
+                          "PROOOOOOOOOOOOOOOOOOOOOOOIIIIDDDDDDDDD${widget.searchresults[productIndex1]['id']}");
+                      print(
+                          "CATeeeeeeeeeegggggggooooooooooryiiiiiid${widget.searchresults[productIndex1]['category_id']}");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Product_big_View(
+                            product_id: widget.searchresults[productIndex1]
+                                ['id'],
+                            Category_id: widget.searchresults[productIndex1]
+                                ['category_id'],
+                          ),
                         ),
-                      ],
-                    ),
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Image.network(
-                              widget.searchresults[productIndex1]['image'],
-                              width: double.infinity,
-                              height: 160,
-                              // fit: BoxFit.cover,
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: GestureDetector(
-                                onTap: () {
-                                  toggleFavorite(productIndex1);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: buildFavoriteIcon(productIndex1),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        children: [
+                          Stack(
                             children: [
-                              Text(
-                                widget.searchresults[productIndex1]['name'] ??
-                                    '',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis),
+                              Image.network(
+                                widget.searchresults[productIndex1]['image'],
+                                width: double.infinity,
+                                height: 160,
+                                // fit: BoxFit.cover,
                               ),
-                              Text(
-                                '\$${widget.searchresults[productIndex1]['price'] ?? ''}',
-                                style: TextStyle(
-                                  decoration: TextDecoration.lineThrough,
-                                  color: Colors.grey,
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    toggleFavorite(productIndex1);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: buildFavoriteIcon(productIndex1),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '\$${widget.searchresults[productIndex1]['salePrice'] ?? ''}',
-                                style: TextStyle(color: Colors.green),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.searchresults[productIndex1]['name'] ??
+                                      '',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                                Text(
+                                  '\$${widget.searchresults[productIndex1]['price'] ?? ''}',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  '\$${widget.searchresults[productIndex1]['salePrice'] ?? ''}',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(width: 8.0),
                 Expanded(
                   child: productIndex2 < widget.searchresults.length
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  Image.network(
-                                    widget.searchresults[productIndex2]
-                                        ['image'],
-                                    width: double.infinity,
-                                    height: 160,
-                                    // fit: BoxFit.cover,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        toggleFavorite(productIndex2);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: buildFavoriteIcon(productIndex2),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Product_big_View(
+                                  product_id:
+                                      widget.searchresults[productIndex2]['id'],
+                                  Category_id:
                                       widget.searchresults[productIndex2]
-                                              ['name'] ??
-                                          '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          overflow: TextOverflow.ellipsis),
+                                          ['category_id'],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Image.network(
+                                      widget.searchresults[productIndex2]
+                                          ['image'],
+                                      width: double.infinity,
+                                      height: 160,
+                                      // fit: BoxFit.cover,
                                     ),
-                                    Text(
-                                      '\$${widget.searchresults[productIndex2]['price'] ?? ''}',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        color: Colors.grey,
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          toggleFavorite(productIndex2);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:
+                                              buildFavoriteIcon(productIndex2),
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '\$${widget.searchresults[productIndex2]['salePrice'] ?? ''}',
-                                      style: TextStyle(color: Colors.green),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.searchresults[productIndex2]
+                                                ['name'] ??
+                                            '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
+                                      Text(
+                                        '\$${widget.searchresults[productIndex2]['price'] ?? ''}',
+                                        style: TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Text(
+                                        '\$${widget.searchresults[productIndex2]['salePrice'] ?? ''}',
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       : Container(),

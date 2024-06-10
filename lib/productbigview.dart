@@ -24,19 +24,19 @@ class Product_big_View extends StatefulWidget {
 }
 
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl = "https://4a48-117-193-85-167.ngrok-free.app/category/";
+  final producturl = "https://78cf-117-193-81-85.ngrok-free.app/category/";
 
   final multipleimageurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/product/";
+      "https://78cf-117-193-81-85.ngrok-free.app/product-images/";
 
   final String addtocarturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/Cart/";
+      "https://78cf-117-193-81-85.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/add-wishlist/";
+      "https://78cf-117-193-81-85.ngrok-free.app/add-wishlist/";
 
   final String discountsurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/discount-sale/";
+      "https://78cf-117-193-81-85.ngrok-free.app/discount-sale/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -79,7 +79,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -953,7 +953,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1004,30 +1004,32 @@ class _Product_big_ViewState extends State<Product_big_View> {
   List<String> colors = [];
 
   Future<void> multipleimage() async {
+    print('======================$multipleimageurl${widget.product_id}/r');
     Set<String> colorsSet = {};
     try {
       final response =
-          await http.get(Uri.parse('$multipleimageurl${widget.product_id}'));
-
+          await http.get(Uri.parse('$multipleimageurl${widget.product_id}/'));
+print("statussssssssssssssssssssssssss${response.statusCode}");
       if (response.statusCode == 200) {
         final List<dynamic> imageData =
-            jsonDecode(response.body)['productImage'];
+            jsonDecode(response.body)['product'];
+            print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
-        product = jsonDecode(response.body)['product'];
+        // product = jsonDecode(response.body)['product'];
 
         List<Map<String, dynamic>> productsList = [];
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image1']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image1']}";
           String imageUrl2 =
-              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image2']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image2']}";
           String imageUrl3 =
-              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image3']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image3']}";
           String imageUrl4 =
-              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image4']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image4']}";
           String imageUrl5 =
-              "https://4a48-117-193-85-167.ngrok-free.app${imageData['image5']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -1042,14 +1044,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         setState(() {
           images = productsList;
+          print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$images");
           colors = colorsSet.toList();
           selectedColor = colors.isNotEmpty ? colors[0] : null;
         });
       } else {
-        throw Exception('Failed to load category products');
+        throw Exception('Error fetching product image');
       }
     } catch (error) {
-      print('Error fetching category products: $error');
+      print('Error fetching product image : $error');
     }
   }
 }

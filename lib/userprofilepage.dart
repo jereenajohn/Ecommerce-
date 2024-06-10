@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bepocart/addaddress.dart';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/contactus.dart';
@@ -15,23 +17,82 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({Key? key}) : super(key: key);
+  final String? user_id;
 
+  UserProfilePage({Key? key, this.user_id}) : super(key: key);
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  String? userId;
+  var userdata;
 
-   void logout() async {
+  var viewprofileurl =
+      "https://78cf-117-193-81-85.ngrok-free.app/profile-view/";
+
+  Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('userId'); 
-    await prefs.remove('token'); 
-
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+    return prefs.getString('userId');
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _initData();
+  }
+
+  Future<void> _initData() async {
+    userId = await getUserIdFromPrefs();
+    getprofiledata();
+  }
+
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId');
+    await prefs.remove('token');
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Login_Page()));
+  }
+
+  Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  Future<void> getprofiledata() async {
+    try {
+      final token = await gettokenFromPrefs();
+
+      var response = await http.post(
+        Uri.parse('$viewprofileurl'),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print(
+          "Responserrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.body}");
+
+      if (response.statusCode == 200) {
+        userdata = jsonDecode(response.body);
+        print(
+            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$userdata");
+
+        print('Profile data fetched successfully');
+      } else {
+        print('Failed to fetch profile data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching profile data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +114,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       width: 70,
                       height: 70,
                     ),
+                  ),
+                  Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(userdata['username']),
+                      Text(userdata['email']),
+                      Text(userdata['phone']),
+                    ],
                   ),
                   Expanded(
                     child: SizedBox(),
@@ -179,7 +249,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => EditProfile()));
                   },
                   child: Container(
                     child: Padding(
@@ -250,9 +321,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Return_Refund_Details()));
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Return_Refund_Details()));
                   },
                   child: Container(
                     child: Padding(
@@ -287,8 +359,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms_and_conditions()));
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Terms_and_conditions()));
                   },
                   child: Container(
                     child: Padding(
@@ -323,8 +397,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Shipping_Policy_Details()));
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Shipping_Policy_Details()));
                   },
                   child: Container(
                     child: Padding(
@@ -359,8 +435,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
-
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
                   },
                   child: Container(
                     child: Padding(
@@ -395,8 +470,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>usersettings()));
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => usersettings()));
                   },
                   child: Container(
                     child: Padding(
@@ -428,7 +505,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Contact_Us()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Contact_Us()));
                   },
                   child: Container(
                     child: Padding(
@@ -539,7 +617,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Wishlist()));
-                  
                 },
               ),
               GButton(

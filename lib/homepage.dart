@@ -52,34 +52,34 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/banners/";
-  final String baseUrl = "https://4a48-117-193-85-167.ngrok-free.app";
+      "https://78cf-117-193-81-85.ngrok-free.app/banners/";
+  final String baseUrl = "https://78cf-117-193-81-85.ngrok-free.app";
   final String categoryUrl =
-      "https://4a48-117-193-85-167.ngrok-free.app/category/";
+      "https://78cf-117-193-81-85.ngrok-free.app/category/";
   final String productsurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/products/";
+      "https://78cf-117-193-81-85.ngrok-free.app/products/";
   final String offersurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/offer-banner/";
+      "https://78cf-117-193-81-85.ngrok-free.app/offer-banner/";
 
   final String discountsurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/discount-sale/";
+      "https://78cf-117-193-81-85.ngrok-free.app/discount-sale/";
   final String buyonegetoneurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/buy-1-get-1/";
+      "https://78cf-117-193-81-85.ngrok-free.app/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/best-sale-products/";
+      "https://78cf-117-193-81-85.ngrok-free.app/best-sale-products/";
 
   final String flashsaleurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/flash-sale/";
+      "https://78cf-117-193-81-85.ngrok-free.app/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/buy-2-get-1-offer/";
+      "https://78cf-117-193-81-85.ngrok-free.app/buy-2-get-1-offer/";
 
   final String halfrateproductsurl =
-      "https://4a48-117-193-85-167.ngrok-free.app/half-rate-products/";
+      "https://78cf-117-193-81-85.ngrok-free.app/half-rate-products/";
 
   final String searchproducturl =
-      "https://4a48-117-193-85-167.ngrok-free.app/search-products/?q=";
+      "https://78cf-117-193-81-85.ngrok-free.app/search-products/?q=";
 
   bool _isSearching = false;
   int _index = 0;
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${offerData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -263,7 +263,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -376,7 +376,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -410,7 +410,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -442,7 +442,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -478,7 +478,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${bannerData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -507,7 +507,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${categoryData['image']}";
+              "https://78cf-117-193-81-85.ngrok-free.app${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
