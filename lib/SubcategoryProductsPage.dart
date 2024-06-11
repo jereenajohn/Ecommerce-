@@ -4,9 +4,11 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/filterhightolow.dart';
 import 'package:bepocart/filterlowtohigh.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
+import 'package:bepocart/waitingpagebeforelogin.dart';
 import 'package:bepocart/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -54,6 +56,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
+  var tokenn;
 
   bool _isSearching = false;
   int _index = 0;
@@ -66,6 +69,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
+    tokenn = await gettokenFromPrefs();
+
     print("--------------------------------------------R$userId");
     // Use userId after getting the value
     subcategoryproducts();
@@ -251,7 +256,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
-         ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
             backgroundColor: Colors.green,
@@ -558,7 +563,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                                                   product_id:
                                                       products[firstItemIndex]
                                                           ['id'],
-                                                  Category_id: 
+                                                  Category_id:
                                                       products[firstItemIndex]
                                                           ['category_id'],
                                                 ),
@@ -621,8 +626,18 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                                                       ),
                                                       GestureDetector(
                                                         onTap: () {
-                                                          toggleFavorite(
-                                                              firstItemIndex);
+                                                          if (tokenn == null) {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            Login_Page()));
+                                                           
+                                                          } else {
+                                                            toggleFavorite(
+                                                                firstItemIndex);
+                                                          }
                                                         },
                                                         child: Padding(
                                                           padding:
@@ -771,6 +786,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                                                       ),
                                                       GestureDetector(
                                                         onTap: () {
+                                                          if (tokenn == null) {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            Login_Page()));
+                                                           
+                                                                            
+                                                          } else {
+                                                            toggleFavorite(
+                                                                secondItemIndex);
+                                                          }
                                                           toggleFavorite(
                                                               secondItemIndex);
                                                         },

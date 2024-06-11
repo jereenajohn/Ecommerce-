@@ -22,7 +22,7 @@ class Bepocart extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login_Page(),
+      home: HomePage(),
     );
   }
 }

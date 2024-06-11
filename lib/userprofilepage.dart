@@ -40,7 +40,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     await prefs.remove('userId'); 
     await prefs.remove('token'); 
 
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
   }
 
    Future<String?> gettokenFromPrefs() async {
