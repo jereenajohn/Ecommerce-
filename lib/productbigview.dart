@@ -24,19 +24,19 @@ class Product_big_View extends StatefulWidget {
 }
 
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl = "https://78cf-117-193-81-85.ngrok-free.app/category/";
+  final producturl = "https://8f5a-59-92-197-197.ngrok-free.app/category/";
 
   final multipleimageurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/product-images/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/product-images/";
 
   final String addtocarturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/Cart/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/Cart/";
 
   final String wishlisturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/add-wishlist/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/add-wishlist/";
 
   final String discountsurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/discount-sale/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/discount-sale/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -79,7 +79,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -953,7 +953,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1021,15 +1021,15 @@ print("statussssssssssssssssssssssssss${response.statusCode}");
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image1']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image1']}";
           String imageUrl2 =
-              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image2']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image2']}";
           String imageUrl3 =
-              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image3']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image3']}";
           String imageUrl4 =
-              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image4']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image4']}";
           String imageUrl5 =
-              "https://78cf-117-193-81-85.ngrok-free.app${imageData['image5']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

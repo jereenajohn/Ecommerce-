@@ -25,7 +25,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/products/search/?q=";
+      "https://8f5a-59-92-197-197.ngrok-free.app/products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -42,7 +42,7 @@ class _hightolowpageState extends State<hightolowpage> {
     print("Search results: ${widget.result}");
   }
 
-  final String lowtohigh = "https://78cf-117-193-81-85.ngrok-free.app/low-products/";
+  final String lowtohigh = "https://8f5a-59-92-197-197.ngrok-free.app/low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -62,7 +62,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+          String imageUrl = "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -85,7 +85,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://78cf-117-193-81-85.ngrok-free.app/whishlist/";
+  final String wishlisturl = "https://8f5a-59-92-197-197.ngrok-free.app/whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
@@ -166,7 +166,7 @@ class _hightolowpageState extends State<hightolowpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

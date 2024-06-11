@@ -18,53 +18,44 @@ import 'package:flutter/widgets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 class UserProfilePage extends StatefulWidget {
-  final String? user_id;
+  
+  UserProfilePage({Key? key}) : super(key: key);
 
-  UserProfilePage({Key? key, this.user_id}) : super(key: key);
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  String? userId;
-  var userdata;
-
-  var viewprofileurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/profile-view/";
-
-  Future<String?> getUserIdFromPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId');
-  }
-
   @override
-  void initState() {
+   void initState() {
     super.initState();
-    _initData();
-  }
-
-  Future<void> _initData() async {
-    userId = await getUserIdFromPrefs();
     getprofiledata();
   }
 
-  void logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('userId');
-    await prefs.remove('token');
+  
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Login_Page()));
+   void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId'); 
+    await prefs.remove('token'); 
+
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
   }
 
-  Future<String?> gettokenFromPrefs() async {
+   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
+var userdata;
+var username="";
+var email="";
+var phone="";
+var viewprofileurl =
+      "https://8f5a-59-92-197-197.ngrok-free.app/profile-view/";
   Future<void> getprofiledata() async {
+    print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
       final token = await gettokenFromPrefs();
 
@@ -82,7 +73,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
       if (response.statusCode == 200) {
         userdata = jsonDecode(response.body);
         print(
-            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$userdata");
+            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa${userdata['username']}");
+            setState(() {
+              username=userdata['username'];
+              email=userdata['email'];
+              phone=userdata['phone'];
+              print(
+            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$email");
+
+            });
 
         print('Profile data fetched successfully');
       } else {
@@ -90,9 +89,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
       }
     } catch (error) {
       print('Error fetching profile data: $error');
-    }
-  }
-
+}
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,21 +113,32 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       height: 70,
                     ),
                   ),
-                  Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.start,
+                 Padding(
+                   padding: const EdgeInsets.only(top: 15),
+                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(userdata['username']),
-                      Text(userdata['email']),
-                      Text(userdata['phone']),
+                                       Text("$username",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                                       SizedBox(height: 3,),
+                                       Text("$email"),
+                                      
+                   
+                   
+                   
+                   
+                   
                     ],
-                  ),
+                   ),
+                 ),
+                
                   Expanded(
                     child: SizedBox(),
                   ),
                   IconButton(
                     onPressed: () {
-                      // Add edit functionality here
+                        
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile()));
+                  
                     },
                     icon: Icon(Icons.edit),
                   ),
@@ -247,42 +256,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
             Column(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EditProfile()));
-                  },
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.person,
-                                size: 30,
-                              ), // Edit Profile Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Edit Profile")
-                            ],
-                          ),
-                          Image.asset(
-                            'lib/assets/right-arrow.png',
-                            width: 18,
-                            height: 18,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
+              
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context,
@@ -321,10 +295,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Return_Refund_Details()));
+
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Return_Refund_Details()));
+
                   },
                   child: Container(
                     child: Padding(
@@ -359,10 +332,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Terms_and_conditions()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms_and_conditions()));
+
                   },
                   child: Container(
                     child: Padding(
@@ -397,10 +368,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Shipping_Policy_Details()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Shipping_Policy_Details()));
+
                   },
                   child: Container(
                     child: Padding(
@@ -435,7 +404,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
+                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
+
                   },
                   child: Container(
                     child: Padding(
@@ -470,10 +440,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => usersettings()));
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>usersettings()));
+
                   },
                   child: Container(
                     child: Padding(
@@ -505,8 +473,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Contact_Us()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Contact_Us()));
                   },
                   child: Container(
                     child: Padding(
@@ -617,6 +584,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Wishlist()));
+                  
                 },
               ),
               GButton(

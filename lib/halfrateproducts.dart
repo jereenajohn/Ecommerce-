@@ -26,14 +26,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/half-rate-products/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/products/search/?q=";
+      "https://8f5a-59-92-197-197.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/whishlist/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -136,7 +136,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -227,7 +227,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -305,9 +305,9 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                       product_id:
                                           halfrateproducts[firstItemIndex]
                                               ['id'],
-                                      Category_id: int.parse(
+                                      Category_id:
                                           halfrateproducts[firstItemIndex]
-                                              ['mainCategory']),
+                                              ['mainCategory'],
                                     ),
                                   ),
                                 );
@@ -464,121 +464,139 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                       builder: (context) => Product_big_View(
                                             product_id: halfrateproducts[
                                                 secondItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                halfrateproducts[
-                                                        secondItemIndex]
-                                                    ['mainCategory']),
+                                            Category_id: halfrateproducts[
+                                                    secondItemIndex]
+                                                ['mainCategory'],
                                           )));
                             },
-                           child: Container(
-  height: 250,
-  margin: EdgeInsets.only(
-    left: (firstItemIndex < halfrateproducts.length || isLastRow) ? 5 : 0,
-  ),
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(10.0),
-    color: Colors.white,
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 3,
-        spreadRadius: 2,
-        offset: Offset(0, 2),
-      ),
-    ],
-  ),
-  child: Stack(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                    halfrateproducts[secondItemIndex]['image'],
-                    width: 150,
-                    height: 150,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    toggleFavorite(secondItemIndex);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: buildFavoriteIcon(secondItemIndex),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    halfrateproducts[secondItemIndex]['name'],
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    '\$${halfrateproducts[secondItemIndex]['price']}',
-                    style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    'Sale Price: \$${halfrateproducts[secondItemIndex]['salePrice']}',
-                    style: TextStyle(
-                      color: Colors.green,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      if (halfrateproducts[secondItemIndex]['offer_type'] != null)
-        Positioned(
-          top: 5,
-          left: 5,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              '${halfrateproducts[secondItemIndex]['offer_type']}OFF',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-    ],
-  ),
-),
-
+                            child: Container(
+                              height: 250,
+                              margin: EdgeInsets.only(
+                                left:
+                                    (firstItemIndex < halfrateproducts.length ||
+                                            isLastRow)
+                                        ? 5
+                                        : 0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 3,
+                                    spreadRadius: 2,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: Image.network(
+                                                halfrateproducts[
+                                                    secondItemIndex]['image'],
+                                                width: 150,
+                                                height: 150,
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                toggleFavorite(secondItemIndex);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: buildFavoriteIcon(
+                                                    secondItemIndex),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                halfrateproducts[
+                                                    secondItemIndex]['name'],
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                '\$${halfrateproducts[secondItemIndex]['price']}',
+                                                style: TextStyle(
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                'Sale Price: \$${halfrateproducts[secondItemIndex]['salePrice']}',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (halfrateproducts[secondItemIndex]
+                                          ['offer_type'] !=
+                                      null)
+                                    Positioned(
+                                      top: 5,
+                                      left: 5,
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Text(
+                                          '${halfrateproducts[secondItemIndex]['offer_type']}OFF',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ],

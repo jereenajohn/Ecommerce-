@@ -26,14 +26,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/buy-2-get-1-offer/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/products/search/?q=";
+      "https://8f5a-59-92-197-197.ngrok-free.app/products/search/?q=";
 
   final String wishlisturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/whishlist/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -136,7 +136,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -227,10 +227,10 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
-            'mainCategory':productData['mainCategory'],
+            'mainCategory': productData['mainCategory'],
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
@@ -305,8 +305,8 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                       product_id:
                                           buytwogetoneproducts[firstItemIndex]
                                               ['id'],
-                                      Category_id: int.parse(
-                                          buytwogetoneproducts[firstItemIndex]
+                                      Category_id:
+                                          (buytwogetoneproducts[firstItemIndex]
                                               ['mainCategory']),
                                     ),
                                   ),
@@ -384,7 +384,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                             buytwogetoneproducts[firstItemIndex]
                                                 ['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),
@@ -410,6 +410,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                             'Sale Price: \$${buytwogetoneproducts[firstItemIndex]['salePrice']}',
                                             style: TextStyle(
                                               color: Colors.green,
+                                              fontSize: 12,
                                             ),
                                           ),
                                         ),
@@ -432,10 +433,9 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                       builder: (context) => Product_big_View(
                                             product_id: buytwogetoneproducts[
                                                 secondItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                buytwogetoneproducts[
-                                                        secondItemIndex]
-                                                    ['mainCategory']),
+                                            Category_id: buytwogetoneproducts[
+                                                    secondItemIndex]
+                                                ['mainCategory'],
                                           )));
                             },
                             child: Container(
@@ -501,7 +501,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                             buytwogetoneproducts[
                                                 secondItemIndex]['name'],
                                             style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 10,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),
@@ -527,6 +527,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                             'Sale Price: \$${buytwogetoneproducts[secondItemIndex]['salePrice']}',
                                             style: TextStyle(
                                               color: Colors.green,
+                                              fontSize: 12,
                                             ),
                                           ),
                                         ),

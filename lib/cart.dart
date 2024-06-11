@@ -34,18 +34,18 @@ class _CartState extends State<Cart> {
 
   int _selectedIndex = 0;
 
-  var CartUrl = "https://78cf-117-193-81-85.ngrok-free.app/cart-products/";
+  var CartUrl = "https://8f5a-59-92-197-197.ngrok-free.app/cart-products/";
   final String productsurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/products/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/products/";
 
   final quantityincrementurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/cart/increment/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/cart/increment/";
 
   final quantitydecrementurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/cart/decrement/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/cart/decrement/";
 
   final deletecarturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/cart-delete/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/cart-delete/";
 
   @override
   void initState() {
@@ -84,7 +84,7 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://78cf-117-193-81-85.ngrok-free.app${item['image']}";
+          String imageUrl ="https://8f5a-59-92-197-197.ngrok-free.app${item['image']}";
 
           cartItems.add({
             'id': item['id'],

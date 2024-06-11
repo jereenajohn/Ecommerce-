@@ -11,23 +11,24 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class Discount_Products extends StatefulWidget {
+class Recommended_products extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
 
-  const Discount_Products({Key? key, this.user_id}) : super(key: key);
+  const Recommended_products({Key? key, this.user_id}) : super(key: key);
 
   @override
-  State<Discount_Products> createState() => _Discount_ProductsState();
+  State<Recommended_products> createState() => _Recommended_productsState();
 }
 
-class _Discount_ProductsState extends State<Discount_Products> {
+class _Recommended_productsState extends State<Recommended_products> {
   String? userId; // Declare userId variable to store user ID
   int _selectedIndex = 0; // Index of the selected tab
   List<bool> isFavorite = [];
+    List<Map<String, dynamic>> recommendedproducts = [];
 
-  final String discountsurl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/discount-sale/";
-  List<Map<String, dynamic>> discountproducts = [];
+
+  final String recommendedproductsurl =
+      "https://8f5a-59-92-197-197.ngrok-free.app/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
       "https://8f5a-59-92-197-197.ngrok-free.app/products/search/?q=";
@@ -44,7 +45,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
   @override
   void initState() {
     super.initState();
-    fetchDiscountProducts();
+    fetchRecommendedProducts();
   }
 
   void toggleFavorite(int index) {
@@ -56,7 +57,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
     if (isFavorite[index]) {
       // If the product is being added to the wishlist
       addProductToWishlist(
-        discountproducts[index]['id'],
+        recommendedproducts[index]['id'],
       );
     } else {
       // If the product is being removed from the wishlist
@@ -96,7 +97,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
         }),
       );
 
-      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
+      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.body}");
 
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
@@ -223,51 +224,68 @@ class _Discount_ProductsState extends State<Discount_Products> {
     return prefs.getString('userId');
   }
 
-  Future<void> fetchDiscountProducts() async {
+  Future<void> fetchRecommendedProducts() async {
     try {
-      final response = await http.get(Uri.parse(discountsurl));
-      print('Response: ${response.statusCode}');
+      final token = await gettokenFromPrefs();
 
+      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+
+      final response = await http.post(
+        Uri.parse(recommendedproductsurl),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': ' $token',
+        },
+        body: jsonEncode({
+          'token': token,
+        }),
+      );
+      print(
+          "00000000000000008888888888888888888888888888888777777777777777777777777777777${response.body}");
+      print(
+          "222222222222222222222222222222222222222222222222222222222222222222222222222${response.statusCode}");
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed;
-        print(
-            "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWr$productsData");
+        final List<dynamic> productsData = parsed['data'];
 
-        List<Map<String, dynamic>> productDiscountList = [];
+        print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDYYYYYYYYYYYYYYYYY$productsData");
+
+        List<Map<String, dynamic>> productRecommendedList = [];
 
         for (var productData in productsData) {
           String imageUrl =
               "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
-          productDiscountList.add({
-            'id': productData['id'], // Changed to int
-            'mainCategory': productData['mainCategory'], // Changed to int
+          productRecommendedList.add({
+            'id': productData['id'],
+            'mainCategory': productData['mainCategory'],
             'name': productData['name'],
-            'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
           });
         }
 
         setState(() {
-          discountproducts = productDiscountList;
-          isFavorite = List<bool>.filled(discountproducts.length, false);
-          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$discountproducts");
+          recommendedproducts = productRecommendedList;
+           isFavorite =
+              List.generate(recommendedproducts.length, (index) => false);
+          print(
+              "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
         });
       } else {
-        throw Exception('Failed to load discount products');
+        throw Exception('Failed to load recommended products');
       }
     } catch (error) {
-      print('Error fetching discount products: $error');
+      print('Error fetching recommended products: $error');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Discount for you',
+          'Recommended for you',
           style: TextStyle(fontSize: 15, color: Colors.grey),
         ),
         actions: [
@@ -290,20 +308,20 @@ class _Discount_ProductsState extends State<Discount_Products> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: (discountproducts.length / 2).ceil(),
+            itemCount: (recommendedproducts.length / 2).ceil(),
             itemBuilder: (BuildContext context, int index) {
               int firstItemIndex = index * 2;
               int secondItemIndex = firstItemIndex + 1;
 
               // Check if this is the last row
               bool isLastRow =
-                  index == (discountproducts.length / 2).ceil() - 1;
+                  index == (recommendedproducts.length / 2).ceil() - 1;
 
               return Column(
                 children: [
                   Row(
                     children: [
-                      if (firstItemIndex < discountproducts.length) ...[
+                      if (firstItemIndex < recommendedproducts.length) ...[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -313,10 +331,10 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                   MaterialPageRoute(
                                     builder: (context) => Product_big_View(
                                       product_id:
-                                          discountproducts[firstItemIndex]
+                                          recommendedproducts[firstItemIndex]
                                               ['id'],
                                       Category_id: 
-                                          discountproducts[firstItemIndex]
+                                          recommendedproducts[firstItemIndex]
                                               ['mainCategory'],
                                     ),
                                   ),
@@ -329,7 +347,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                               height: 250,
                               margin: EdgeInsets.only(
                                 right: (secondItemIndex <
-                                            discountproducts.length ||
+                                            recommendedproducts.length ||
                                         isLastRow)
                                     ? 5
                                     : 0,
@@ -363,7 +381,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: NetworkImage(
-                                                  discountproducts[
+                                                  recommendedproducts[
                                                       firstItemIndex]['image'],
                                                 ),
                                               ),
@@ -373,10 +391,10 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                         GestureDetector(
                                           onTap: () {
                                             print(
-                                                discountproducts[firstItemIndex]
+                                                recommendedproducts[firstItemIndex]
                                                     ['id']);
                                             print(
-                                                discountproducts[firstItemIndex]
+                                                recommendedproducts[firstItemIndex]
                                                     ['mainCategory']);
 
                                             Navigator.push(
@@ -384,11 +402,11 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                                 MaterialPageRoute(
                                                     builder: (context) => Product_big_View(
                                                         product_id:
-                                                            discountproducts[
+                                                            recommendedproducts[
                                                                     firstItemIndex]
                                                                 ['id'],
                                                         Category_id:
-                                                            discountproducts[
+                                                            recommendedproducts[
                                                                     firstItemIndex]
                                                                 [
                                                                 'mainCategory'])));
@@ -411,7 +429,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            discountproducts[firstItemIndex]
+                                            recommendedproducts[firstItemIndex]
                                                 ['name'],
                                             style: TextStyle(
                                               fontSize: 10,
@@ -424,7 +442,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            '\$${discountproducts[firstItemIndex]['price']}',
+                                            '\$${recommendedproducts[firstItemIndex]['price']}',
                                             style: TextStyle(
                                               decoration: TextDecoration
                                                   .lineThrough, // Add strikethrough decoration
@@ -437,7 +455,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            'Sale Price: \$${discountproducts[firstItemIndex]['salePrice']}',
+                                            'Sale Price: \$${recommendedproducts[firstItemIndex]['salePrice']}',
                                             style: TextStyle(
                                               color: Colors.green,
                                             ),
@@ -452,7 +470,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                           ),
                         ),
                       ],
-                      if (secondItemIndex < discountproducts.length) ...[
+                      if (secondItemIndex < recommendedproducts.length) ...[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -461,17 +479,17 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                   MaterialPageRoute(
                                       builder: (context) => Product_big_View(
                                           product_id:
-                                              discountproducts[secondItemIndex]
+                                              recommendedproducts[secondItemIndex]
                                                   ['id'],
                                           Category_id:
-                                              discountproducts[secondItemIndex]
+                                              recommendedproducts[secondItemIndex]
                                                   ['mainCategory'])));
                             },
                             child: Container(
                               height: 250,
                               margin: EdgeInsets.only(
                                 left:
-                                    (firstItemIndex < discountproducts.length ||
+                                    (firstItemIndex < recommendedproducts.length ||
                                             isLastRow)
                                         ? 5
                                         : 0,
@@ -500,7 +518,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           child: Image.network(
-                                            discountproducts[secondItemIndex]
+                                            recommendedproducts[secondItemIndex]
                                                 ['image'],
                                             width: 150,
                                             height: 150,
@@ -527,7 +545,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            discountproducts[secondItemIndex]
+                                            recommendedproducts[secondItemIndex]
                                                 ['name'],
                                             style: TextStyle(
                                                 fontSize: 10,
@@ -540,7 +558,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            '\$${discountproducts[secondItemIndex]['price']}',
+                                            '\$${recommendedproducts[secondItemIndex]['price']}',
                                             style: TextStyle(
                                               decoration: TextDecoration
                                                   .lineThrough, // Add strikethrough decoration
@@ -553,7 +571,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            'Sale Price: \$${discountproducts[secondItemIndex]['salePrice']}',
+                                            'Sale Price: \$${recommendedproducts[secondItemIndex]['salePrice']}',
                                             style: TextStyle(
                                               color: Colors.green,
                                             ),

@@ -25,7 +25,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/category/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -34,11 +34,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/search-products/?q=";
+      "https://8f5a-59-92-197-197.ngrok-free.app/search-products/?q=";
   final String lowtohigh =
-      "https://78cf-117-193-81-85.ngrok-free.app/products/filter/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/products/filter/";
   final String hightolow =
-      "https://78cf-117-193-81-85.ngrok-free.app/products/filtering/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -76,7 +76,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -115,7 +115,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -224,7 +224,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://78cf-117-193-81-85.ngrok-free.app/${productData['image']}";
+  //             "https://8f5a-59-92-197-197.ngrok-free.app/${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -270,7 +270,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://78cf-117-193-81-85.ngrok-free.app/${productData['image']}";
+  //             "https://8f5a-59-92-197-197.ngrok-free.app/${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],

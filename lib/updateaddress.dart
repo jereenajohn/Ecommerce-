@@ -37,11 +37,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController note = TextEditingController();
 
   String updateaddressurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/update-address/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/update-address/";
 
-  String durl = "https://78cf-117-193-81-85.ngrok-free.app/delete-address/";
+  String durl = "https://8f5a-59-92-197-197.ngrok-free.app/delete-address/";
 
-  String url = "https://78cf-117-193-81-85.ngrok-free.app/get-address/";
+  String url = "https://8f5a-59-92-197-197.ngrok-free.app/get-address/";
 
   List<Map<String, dynamic>> addressList = [];
 

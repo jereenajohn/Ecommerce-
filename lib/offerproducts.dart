@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/search-products/?q=";
+      "https://8f5a-59-92-197-197.ngrok-free.app/search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://78cf-117-193-81-85.ngrok-free.app/offer-banner/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/offer-banner/";
 
   final String wishlisturl =
-      "https://78cf-117-193-81-85.ngrok-free.app/add-wishlist/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/add-wishlist/";
 
    final String lowtohigh =
-      "https://78cf-117-193-81-85.ngrok-free.app/low-products/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/low-products/";
   final String hightolow =
-      "https://78cf-117-193-81-85.ngrok-free.app/high-products/";
+      "https://8f5a-59-92-197-197.ngrok-free.app/high-products/";
 
 
   Future<String?> getUserIdFromPrefs() async {
@@ -102,7 +102,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -144,7 +144,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -249,7 +249,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}",
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}",
               'price':productData['price'],
           
           'salePrice': productData['salePrice'],
@@ -286,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://78cf-117-193-81-85.ngrok-free.app${productData['image']}";
+              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
