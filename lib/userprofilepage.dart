@@ -53,7 +53,7 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://303c-59-92-204-108.ngrok-free.app//profile-view/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

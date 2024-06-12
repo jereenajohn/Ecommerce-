@@ -25,24 +25,24 @@ class Product_big_View extends StatefulWidget {
 }
 
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl = "https://303c-59-92-204-108.ngrok-free.app//category/";
+  final producturl = "https://stylus-interracial-floppy-msn.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://303c-59-92-204-108.ngrok-free.app//product-images/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/product-images/";
 
- final String addtocarturl =
-      "https://303c-59-92-204-108.ngrok-free.app/cart/";
+  final String addtocarturl =
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://303c-59-92-204-108.ngrok-free.app//add-wishlist/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//discount-sale/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://303c-59-92-204-108.ngrok-free.app//recently-viewed/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//recommended/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -106,7 +106,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -155,7 +155,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${recentproductsData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -194,7 +194,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -289,12 +289,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
     );
   }
   
-  Future<void> addProductToCart(int productId, var name, var price) async {
+    Future<void> addProductToCart(int productId, var name, var price) async {
     try {
+      print('AAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLL$addtocarturl$productId/');
       final token = await gettokenFromPrefs();
 
       final response = await http.post(
-        Uri.parse(addtocarturl),
+        Uri.parse('$addtocarturl$productId/'),
         headers: {
           'Content-type': 'application/json',
           'Authorization': ' $token',
@@ -307,13 +308,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
         }),
       );
 
-      if (response.statusCode == 200) {
-        // Product successfully added to cart, show SnackBar
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Product added to cart successfully'),
-          ),
-        );
+      if (response.statusCode == 201) {
         print('Product added to cart: $productId');
       } else if (response.statusCode == 400) {
         // Product already in cart, show SnackBar
@@ -325,19 +320,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
       } else {
         print('Failed to add product to cart: ${response.statusCode}');
         print('Response body: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(' product added to cart successfully'),
-          ),
-        );
       }
     } catch (error) {
       print('Error adding product to cart: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error adding product to cart'),
-        ),
-      );
     }
   }
 
@@ -1010,7 +995,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        padding: const EdgeInsets.only( right: 10),
                         child: Container(
                           height:
                               220, // Adjusted height to accommodate the images
@@ -1353,7 +1338,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1420,15 +1405,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image1']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image2']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image3']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image4']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image5']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

@@ -27,14 +27,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://303c-59-92-204-108.ngrok-free.app//best-sale-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://303c-59-92-204-108.ngrok-free.app//products/search/?q=";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://303c-59-92-204-108.ngrok-free.app//whishlist/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -137,7 +137,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -233,7 +233,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

@@ -19,7 +19,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var url = "https://303c-59-92-204-108.ngrok-free.app//profile/";
+  var url = "https://stylus-interracial-floppy-msn.trycloudflare.com//profile/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();

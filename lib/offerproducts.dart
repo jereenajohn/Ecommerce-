@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://303c-59-92-204-108.ngrok-free.app//search-products/?q=";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//offer-banner/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://303c-59-92-204-108.ngrok-free.app//add-wishlist/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//add-wishlist/";
 
    final String lowtohigh =
-      "https://303c-59-92-204-108.ngrok-free.app//low-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://303c-59-92-204-108.ngrok-free.app//high-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//high-products/";
 
 
   Future<String?> getUserIdFromPrefs() async {
@@ -102,7 +102,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -144,7 +144,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -249,7 +249,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}",
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}",
               'price':productData['price'],
           
           'salePrice': productData['salePrice'],
@@ -286,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

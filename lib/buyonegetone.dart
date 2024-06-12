@@ -26,14 +26,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buyonegetoneurl =
-      "https://303c-59-92-204-108.ngrok-free.app//buy-1-get-1/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//buy-1-get-1/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://303c-59-92-204-108.ngrok-free.app//products/search/?q=";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://303c-59-92-204-108.ngrok-free.app//add-wishlist/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -142,7 +142,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -233,7 +233,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

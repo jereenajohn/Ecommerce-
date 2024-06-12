@@ -31,9 +31,9 @@ class _pricefilterpageState extends State<pricefilterpage> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
  final String wishlisturl =
-      "https://303c-59-92-204-108.ngrok-free.app/add-wishlist/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/add-wishlist/";
   final String searchproducturl =
-      "https://303c-59-92-204-108.ngrok-free.app/search-products/?q=";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -87,7 +87,7 @@ class _pricefilterpageState extends State<pricefilterpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

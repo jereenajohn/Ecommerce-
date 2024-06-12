@@ -13,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 }
 
 class _Sign_UpState extends State<Sign_Up> {
-  var url = "https://303c-59-92-204-108.ngrok-free.app//register/";
+  var url = "https://stylus-interracial-floppy-msn.trycloudflare.com//register/";
   bool _obscureText = true;
 
   var userId;

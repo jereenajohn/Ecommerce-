@@ -55,40 +55,40 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> offers = [];
 
-  final String bannerurl = "https://303c-59-92-204-108.ngrok-free.app//banners/";
-  final String baseUrl = "https://303c-59-92-204-108.ngrok-free.app/";
+  final String bannerurl = "https://stylus-interracial-floppy-msn.trycloudflare.com//banners/";
+  final String baseUrl = "https://stylus-interracial-floppy-msn.trycloudflare.com/";
   final String categoryUrl =
-      "https://303c-59-92-204-108.ngrok-free.app//category/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//category/";
   final String productsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//products/";
   final String offersurl =
-      "https://303c-59-92-204-108.ngrok-free.app//offer-banner/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//offer-banner/";
 
   final String discountsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//discount-sale/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//discount-sale/";
   final String buyonegetoneurl =
-      "https://303c-59-92-204-108.ngrok-free.app//buy-1-get-1/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://303c-59-92-204-108.ngrok-free.app//best-sale-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//best-sale-products/";
 
   final String flashsaleurl =
-      "https://303c-59-92-204-108.ngrok-free.app//flash-sale/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//flash-sale/";
 
   final String buytwogetoneurl =
-      "https://303c-59-92-204-108.ngrok-free.app//buy-2-get-1/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//offers/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//offers/";
 
   final String searchproducturl =
-      "https://303c-59-92-204-108.ngrok-free.app//search-products/?q=";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://303c-59-92-204-108.ngrok-free.app//recommended/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//recommended/";
 
   var recentlyviewedurl =
-      "https://303c-59-92-204-108.ngrok-free.app//recently-viewed/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${recentproductsData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -262,7 +262,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${offerData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -293,7 +293,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -326,7 +326,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -364,7 +364,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -403,7 +403,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -439,7 +439,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -476,7 +476,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -535,7 +535,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -568,7 +568,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -604,7 +604,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${bannerData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -633,7 +633,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${categoryData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -882,7 +882,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
+                                  const EdgeInsets.only( right: 10),
                               child: Container(
                                 height:
                                     220, // Adjusted height to accommodate the images
@@ -1154,7 +1154,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 10, right: 10, bottom: 10),
+                                   right: 10, bottom: 10),
                               child: SizedBox(
                                 height:
                                     220, // Adjusted height to accommodate the images
@@ -1899,117 +1899,120 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  LayoutBuilder(
-                                    builder: (context, constraints) {
-                                      double itemWidth =
-                                          (constraints.maxWidth - 32) / 3;
-                                      double itemHeight = itemWidth + 60;
-
-                                      return GridView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            (buytwogetoneproducts.length > 6)
-                                                ? 6
-                                                : buytwogetoneproducts.length,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          mainAxisSpacing: 8.0,
-                                          crossAxisSpacing: 8.0,
-                                          childAspectRatio:
-                                              itemWidth / itemHeight,
-                                        ),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          final product =
-                                              buytwogetoneproducts[index];
-
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Product_big_View(
-                                                    product_id: product['id'],
-                                                    Category_id:
-                                                        product['mainCategory'],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        double itemWidth =
+                                            (constraints.maxWidth - 32) / 3;
+                                        double itemHeight = itemWidth + 60;
+                                    
+                                        return GridView.builder(
+                                          shrinkWrap: true,
+                                          physics: NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              (buytwogetoneproducts.length > 6)
+                                                  ? 6
+                                                  : buytwogetoneproducts.length,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            mainAxisSpacing: 8.0,
+                                            crossAxisSpacing: 8.0,
+                                            childAspectRatio:
+                                                itemWidth / itemHeight,
+                                          ),
+                                          itemBuilder:
+                                              (BuildContext context, int index) {
+                                            final product =
+                                                buytwogetoneproducts[index];
+                                    
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Product_big_View(
+                                                      product_id: product['id'],
+                                                      Category_id:
+                                                          product['mainCategory'],
+                                                    ),
                                                   ),
+                                                );
+                                              },
+                                              child: Container(
+                                                width: itemWidth,
+                                                height: itemHeight,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Color.fromARGB(
+                                                        255, 211, 211, 211),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10.0),
+                                                  color: Colors.white,
                                                 ),
-                                              );
-                                            },
-                                            child: Container(
-                                              width: itemWidth,
-                                              height: itemHeight,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Color.fromARGB(
-                                                      255, 211, 211, 211),
-                                                  width: 1.0,
+                                                child: Column(
+                                                  children: [
+                                                    Image.network(
+                                                      product['image'],
+                                                      width: itemWidth * 0.6,
+                                                      height: itemWidth * 0.6,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10),
+                                                      child: Text(
+                                                        product['name'],
+                                                        style: TextStyle(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10),
+                                                      child: Text(
+                                                        '\₹${product['price']}',
+                                                        style: TextStyle(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .lineThrough,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10),
+                                                      child: Text(
+                                                        '\₹${product['salePrice']}',
+                                                        style: TextStyle(
+                                                          color: Colors.green,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    if (product['discount'] !=
+                                                        null)
+                                                      Text(
+                                                          'Discount: ${product['discount']}'),
+                                                  ],
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                color: Colors.white,
                                               ),
-                                              child: Column(
-                                                children: [
-                                                  Image.network(
-                                                    product['image'],
-                                                    width: itemWidth * 0.6,
-                                                    height: itemWidth * 0.6,
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10),
-                                                    child: Text(
-                                                      product['name'],
-                                                      style: TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10),
-                                                    child: Text(
-                                                      '\₹${product['price']}',
-                                                      style: TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .lineThrough,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10),
-                                                    child: Text(
-                                                      '\₹${product['salePrice']}',
-                                                      style: TextStyle(
-                                                        color: Colors.green,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  if (product['discount'] !=
-                                                      null)
-                                                    Text(
-                                                        'Discount: ${product['discount']}'),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                                   )
                                 ],
                               ),
@@ -2233,7 +2236,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 10, right: 10, bottom: 10),
+                                   right: 10, bottom: 10),
                               child: SizedBox(
                                 height:
                                     220, // Adjusted height to accommodate the images

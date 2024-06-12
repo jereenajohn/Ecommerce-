@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://303c-59-92-204-108.ngrok-free.app//subcategory/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://303c-59-92-204-108.ngrok-free.app/add-wishlist/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://303c-59-92-204-108.ngrok-free.app//search-products/?q=";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://303c-59-92-204-108.ngrok-free.app//low-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://303c-59-92-204-108.ngrok-free.app//high-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://303c-59-92-204-108.ngrok-free.app/filtered-products/";
+      "https://stylus-interracial-floppy-msn.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app${pfilter['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
