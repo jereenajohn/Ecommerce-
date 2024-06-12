@@ -13,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 }
 
 class _Sign_UpState extends State<Sign_Up> {
-  var url = "https://8f5a-59-92-197-197.ngrok-free.app/register";
+  var url = "https://303c-59-92-204-108.ngrok-free.app//register/";
   bool _obscureText = true;
 
   var userId;
@@ -208,7 +208,7 @@ class _Sign_UpState extends State<Sign_Up> {
       print("Response Status Code: ${response.statusCode}");
       print("Response Body: ${response.body}");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         ScaffoldMessenger.of(scaffoldContext).showSnackBar(
           SnackBar(
             content: Text('Registered Successfully.'),

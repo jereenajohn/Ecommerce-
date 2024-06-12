@@ -53,7 +53,7 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/profile-view/";
+      "https://303c-59-92-204-108.ngrok-free.app//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

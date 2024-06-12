@@ -23,7 +23,7 @@ class _Login_PageState extends State<Login_Page> {
 
   List<dynamic> data = [];
 
-  var url = "https://8f5a-59-92-197-197.ngrok-free.app/";
+  var url = "https://303c-59-92-204-108.ngrok-free.app//";
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _Login_PageState extends State<Login_Page> {
               Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Text(
-                  'Log In',
+                  'Login Now',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

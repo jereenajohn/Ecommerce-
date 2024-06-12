@@ -5,6 +5,7 @@ import 'package:bepocart/filterhightolow.dart';
 import 'package:bepocart/filterlowtohigh.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
+import 'package:bepocart/pricefilter.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -35,6 +36,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   List<bool> isFavorite = [];
   List<Map<String, dynamic>> searchResults = [];
   bool loading = true;
+  RangeValues _priceFilter = RangeValues(20.0, 80.0);
 
   void aa() {
     print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF${widget.subcategoryId}");
@@ -43,20 +45,25 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/subcategory/";
+      "https://303c-59-92-204-108.ngrok-free.app//subcategory/";
   final String wishlisturl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/add-wishlist/";
+      "https://303c-59-92-204-108.ngrok-free.app/add-wishlist/";
 
   final String searchproducturl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/search-products/?q=";
+      "https://303c-59-92-204-108.ngrok-free.app//search-products/?q=";
   final String lowtohigh =
-      "https://8f5a-59-92-197-197.ngrok-free.app/low-products/";
+      "https://303c-59-92-204-108.ngrok-free.app//low-products/";
   final String hightolow =
-      "https://8f5a-59-92-197-197.ngrok-free.app/high-products/";
+      "https://303c-59-92-204-108.ngrok-free.app//high-products/";
+
+  final String pricefilter =
+      "https://303c-59-92-204-108.ngrok-free.app/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
   var tokenn;
+  var start;
+  var end;
 
   bool _isSearching = false;
   int _index = 0;
@@ -77,6 +84,77 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
     searchproduct();
   }
 
+  Future<void> pricefilterr() async {
+  print('Start Price: $start');
+  print('End Price: $end');
+  try {
+    final token = await gettokenFromPrefs();
+    
+    final url = Uri.parse('$pricefilter${widget.subcategoryId}/');
+    final headers = {
+      'Authorization': '$token',
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({
+      'min_price': start,
+      'max_price': end
+    });
+
+    print("Request URL: $url");
+    print("Request Headers: $headers");
+    print("Request Body: $body");
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+
+    print("Response Status Code: ${response.statusCode}");
+    print("Response Body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      final filter = jsonDecode(response.body);
+      final List<dynamic> pfill = filter['data'];
+
+      List<Map<String, dynamic>> offersList = [];
+
+        for (var pfilter in pfill) {
+          String imageUrl =
+              "https://303c-59-92-204-108.ngrok-free.app${pfilter['image']}";
+          offersList.add({
+            'id': pfilter['id'],
+            'name': pfilter['name'],
+            'salePrice':pfilter['salePrice'],
+            'image': imageUrl,
+            
+          });
+        }
+
+        setState(() {
+          pricefilterresult = offersList;
+        });
+      
+      print("Filtered Data: $pfill");
+      print('Profile data fetched successfully');
+
+
+      // Assuming you have a context variable available
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => pricefilterpage(filterresult: pricefilterresult),
+        ),
+      );
+    } else {
+      print('Failed to fetch profile data: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error fetching profile data: $error');
+  }
+}
+List<Map<String, dynamic>> pricefilterresult = [];
+
   Future<void> LowtoHigh(int subcategoryId) async {
     print(subcategoryId);
     final token = await gettokenFromPrefs();
@@ -95,7 +173,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -137,7 +215,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -191,7 +269,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -299,7 +377,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -490,39 +568,123 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
               SizedBox(
                 width: 20,
               ),
-              Container(
-                width: 100,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                    color: Colors.black, // Specify the color of the border here
-                    width: 1.0, // Specify the width of the border here
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      spreadRadius: 2,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  
+                  
+
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              padding: EdgeInsets.all(16.0),
+              height: 170,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20.0),
                 ),
-                child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Center the text horizontally
-                  children: [
-                    Text("Filter"),
-                    SizedBox(
-                      width: 5,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Price Filter',
+                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  ),
+                  RangeSlider(
+                    values: _priceFilter,
+                    min: 0,
+                    max: 5000,
+                    divisions: 5000,
+                    labels: RangeLabels(
+                      '\$${_priceFilter.start.toStringAsFixed(0)}',
+                      '\$${_priceFilter.end.toStringAsFixed(0)}',
                     ),
-                    Image.asset(
-                      "lib/assets/filter.png",
-                      width: 24,
-                      height: 24,
+                    activeColor: Colors.black,
+                    inactiveColor: Colors.black38,
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _priceFilter = values;
+                        start=_priceFilter.start.toStringAsFixed(0);
+                        end=_priceFilter.end.toStringAsFixed(0);
+
+                      });
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                                child: TextButton(
+                                  onPressed: () async {
+
+                                   pricefilterr();
+                                  },
+                                  child: Text(
+                                    "Apply",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  
+
+                },
+                child: Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                      color: Colors.black, // Specify the color of the border here
+                      width: 1.0, // Specify the width of the border here
                     ),
-                  ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        spreadRadius: 2,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center the text horizontally
+                    children: [
+                      Text("Filter"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset(
+                        "lib/assets/filter.png",
+                        width: 24,
+                        height: 24,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -799,8 +961,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                                                             toggleFavorite(
                                                                 secondItemIndex);
                                                           }
-                                                          toggleFavorite(
-                                                              secondItemIndex);
+                                                         
                                                         },
                                                         child: Padding(
                                                           padding:

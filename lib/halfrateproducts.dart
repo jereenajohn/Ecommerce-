@@ -26,14 +26,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/offers/";
+      "https://303c-59-92-204-108.ngrok-free.app//offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/products/search/?q=";
+      "https://303c-59-92-204-108.ngrok-free.app//products/search/?q=";
 
   final String wishlisturl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/whishlist/";
+      "https://303c-59-92-204-108.ngrok-free.app//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -136,7 +136,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -227,7 +227,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/recommendedproducts.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
@@ -24,24 +25,31 @@ class Product_big_View extends StatefulWidget {
 }
 
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl = "https://8f5a-59-92-197-197.ngrok-free.app/category/";
+  final producturl = "https://303c-59-92-204-108.ngrok-free.app//category/";
 
   final multipleimageurl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/product-images/";
+      "https://303c-59-92-204-108.ngrok-free.app//product-images/";
 
-  final String addtocarturl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/Cart/";
-
+ final String addtocarturl =
+      "https://303c-59-92-204-108.ngrok-free.app/cart/";
   final String wishlisturl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/add-wishlist/";
+      "https://303c-59-92-204-108.ngrok-free.app//add-wishlist/";
 
   final String discountsurl =
-      "https://8f5a-59-92-197-197.ngrok-free.app/discount-sale/";
+      "https://303c-59-92-204-108.ngrok-free.app//discount-sale/";
+
+  var recentlyviewedurl =
+      "https://303c-59-92-204-108.ngrok-free.app//recently-viewed/";
+
+  final String recommendedproductsurl =
+      "https://303c-59-92-204-108.ngrok-free.app//recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
   List<Map<String, dynamic>> products = [];
   List<Map<String, dynamic>> discountproducts = [];
+  List<Map<String, dynamic>> recenlyviewd = [];
+  List<Map<String, dynamic>> recommendedproducts = [];
 
   List<bool> isFavorite = [];
   int _selectedIndex = 0;
@@ -63,7 +71,114 @@ class _Product_big_ViewState extends State<Product_big_View> {
     fetchproductdata();
     multipleimage();
     fetchDiscountProducts();
+    recentlyviewed();
+    fetchRecommendedProducts();
     super.initState();
+  }
+
+  Future<void> fetchRecommendedProducts() async {
+    try {
+      final token = await gettokenFromPrefs();
+
+      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+
+      final response = await http.post(
+        Uri.parse(recommendedproductsurl),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': ' $token',
+        },
+        body: jsonEncode({
+          'token': token,
+        }),
+      );
+      print(
+          "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
+      print(
+          "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['data'];
+
+        print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
+
+        List<Map<String, dynamic>> productRecommendedList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
+          productRecommendedList.add({
+            'id': productData['id'],
+            'mainCategory': productData['mainCategory'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+          });
+        }
+
+        setState(() {
+          recommendedproducts = productRecommendedList;
+          print(
+              "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
+        });
+      } else {
+        throw Exception('Failed to load recommended products');
+      }
+    } catch (error) {
+      print('Error fetching recommended products: $error');
+    }
+  }
+
+  Future<void> recentlyviewed() async {
+    try {
+      final token = await gettokenFromPrefs();
+
+      var response = await http.post(
+        Uri.parse('$recentlyviewedurl'),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print(
+          "viewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww ${response.body}");
+
+      if (response.statusCode == 200) {
+        final recent = jsonDecode(response.body);
+
+        final List<dynamic> recentproductsData = recent['data'];
+        List<Map<String, dynamic>> Recentlylist = [];
+
+        print(
+            "RRRRRRRRRRREEEEEEEEECCCCCCCCCCCCEEEEEEEEENNNNNNNTTTTTTTTTTTT$recentproductsData");
+
+        for (var recentproductsData in recentproductsData) {
+          String imageUrl =
+              "https://303c-59-92-204-108.ngrok-free.app/${recentproductsData['image']}";
+          Recentlylist.add({
+            'id': recentproductsData['id'],
+            'mainCategory': recentproductsData['mainCategory'],
+            'name': recentproductsData['name'],
+            'salePrice': recentproductsData['salePrice'],
+            'image': imageUrl,
+          });
+        }
+
+        setState(() {
+          recenlyviewd = Recentlylist;
+
+          print(
+              "RRRRRRRRRRRRRRRRRRTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT$recenlyviewd");
+        });
+
+        print('Profile data fetched successfully');
+      } else {
+        print('Failed to fetch profile data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching profile data: $error');
+    }
   }
 
   Future<void> fetchDiscountProducts() async {
@@ -79,7 +194,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -89,7 +204,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
             'image': imageUrl,
           });
         }
-
         setState(() {
           discountproducts = productDiscountList;
           print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$discountproducts");
@@ -121,7 +235,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
           'product': productId,
         }),
       );
-
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -131,6 +244,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
           ),
         );
       } else if (response.statusCode == 400) {
+
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -174,7 +288,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
       color: isFavorite[index] ? Colors.red : Colors.black,
     );
   }
-
+  
   Future<void> addProductToCart(int productId, var name, var price) async {
     try {
       final token = await gettokenFromPrefs();
@@ -501,6 +615,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          
                           addProductToCart(widget.product_id, name, price);
                         },
                         style: ElevatedButton.styleFrom(
@@ -745,7 +860,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 GestureDetector(
                   onTap: () {},
                   child: Container(
-                    // color: Color.fromARGB(255, 217, 219, 221),
+                    color: Color.fromARGB(255, 217, 219, 221),
                     child: Column(
                       children: [
                         Row(
@@ -770,16 +885,19 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color.fromARGB(255, 0, 0, 0), // Set white background color
+                                  backgroundColor: Color.fromARGB(255, 0, 0,
+                                      0), // Set white background color
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
-                                    side: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(255, 0, 0, 0)),
                                   ),
                                 ),
                                 child: Text(
                                   'See More',
                                   style: TextStyle(
-                                    color: const Color.fromARGB(255, 255, 255, 255),
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
                                   ),
                                 ),
                               ),
@@ -823,7 +941,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                   child: Column(
                                     children: [
@@ -873,6 +991,288 @@ class _Product_big_ViewState extends State<Product_big_View> {
                     ),
                   ),
                 ),
+
+              if (recenlyviewd.isNotEmpty)
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, bottom: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Recently Viewed",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Container(
+                          height:
+                              220, // Adjusted height to accommodate the images
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 5, top: 5),
+                            child: SizedBox(
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: recenlyviewd.length >= 5
+                                    ? 5
+                                    : recenlyviewd.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final product = recenlyviewd[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Product_big_View(
+                                            product_id: product['id'],
+                                            Category_id:
+                                                product['mainCategory'],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 150, // Adjust the width as needed
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                              255, 173, 173, 173),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height:
+                                                160, // Adjusted height to accommodate the images
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: NetworkImage(recenlyviewd[
+                                                        index][
+                                                    'image']), // Using NetworkImage directly
+                                                // fit: BoxFit.cover,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              recenlyviewd[index]['name'],
+                                              style: TextStyle(fontSize: 12),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          SizedBox(height: 2),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Text(
+                                                  '\₹${recenlyviewd[index]['salePrice']}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                  Column(
+                      children: [
+                        if (recommendedproducts.isNotEmpty)
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                                color: Color.fromARGB(255, 196, 220, 193),
+                                child: Column(
+                                  children: [
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.start,
+                                    //   children: [
+                                    //     Text("Discounts for you",
+                                    //   style: TextStyle(fontWeight: FontWeight.bold)),
+                                    //   ],
+                                    // ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text("Recommended Products",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10, top: 10),
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Recommended_products(),
+                                                ),
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: const Color.fromARGB(255, 255, 255, 255), // Set white background color
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                side: BorderSide(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              'See More',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    GridView.count(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      crossAxisCount: 2,
+                                      children: List.generate(
+                                        (recommendedproducts.length > 4)
+                                            ? 4
+                                            : recommendedproducts.length,
+                                        (index) {
+                                          final product =
+                                              recommendedproducts[index];
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Product_big_View(
+                                                      product_id: product['id'],
+                                                      Category_id: product[
+                                                          'mainCategory'],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                height: 200,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Color.fromARGB(255, 211, 211, 211),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  color: Colors.white,
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Image.network(
+                                                      recommendedproducts[index]
+                                                          ['image'],
+                                                      width: 100,
+                                                      height: 100,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Text(
+                                                        recommendedproducts[
+                                                            index]['name'],
+                                                        style: TextStyle(
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
+                                                      ),
+                                                    ),
+                                                    if (recommendedproducts[
+                                                            index]['price'] !=
+                                                        null)
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Text(
+                                                          '\₹${recommendedproducts[index]['price']}',
+                                                          style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough),
+                                                        ),
+                                                      ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Text(
+                                                        ' \₹${recommendedproducts[index]['salePrice']}',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                      ),
+                                                    ),
+                                                    if (product['discount'] !=
+                                                        null)
+                                                      Text(
+                                                          'Discount: ${recommendedproducts[index]['discount']}'),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -953,7 +1353,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://8f5a-59-92-197-197.ngrok-free.app${productData['image']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1009,11 +1409,10 @@ class _Product_big_ViewState extends State<Product_big_View> {
     try {
       final response =
           await http.get(Uri.parse('$multipleimageurl${widget.product_id}/'));
-print("statussssssssssssssssssssssssss${response.statusCode}");
+      print("statussssssssssssssssssssssssss${response.statusCode}");
       if (response.statusCode == 200) {
-        final List<dynamic> imageData =
-            jsonDecode(response.body)['product'];
-            print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
+        final List<dynamic> imageData = jsonDecode(response.body)['product'];
+        print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
         // product = jsonDecode(response.body)['product'];
 
@@ -1021,15 +1420,15 @@ print("statussssssssssssssssssssssssss${response.statusCode}");
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image1']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image1']}";
           String imageUrl2 =
-              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image2']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image2']}";
           String imageUrl3 =
-              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image3']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image3']}";
           String imageUrl4 =
-              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image4']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image4']}";
           String imageUrl5 =
-              "https://8f5a-59-92-197-197.ngrok-free.app${imageData['image5']}";
+              "https://303c-59-92-204-108.ngrok-free.app/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -1044,7 +1443,8 @@ print("statussssssssssssssssssssssssss${response.statusCode}");
 
         setState(() {
           images = productsList;
-          print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$images");
+          print(
+              "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$images");
           colors = colorsSet.toList();
           selectedColor = colors.isNotEmpty ? colors[0] : null;
         });
