@@ -815,7 +815,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                               '\$${product['price']}',
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: Colors.green,
+                                                color: Colors.grey,
                                                 decoration:
                                                     TextDecoration.lineThrough,
                                                 decorationColor: Colors
@@ -825,7 +825,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                           Text(
                                             'Sale Price: \$${product['salePrice']}',
                                             style: TextStyle(
-                                              color: Colors.red,
+                                              color: Colors.green,
+                                              fontSize: 12
                                             ),
                                           ),
                                         ],
@@ -942,7 +943,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                         child: Text(
                                           product['name'],
                                           style: TextStyle(
-                                              overflow: TextOverflow.ellipsis),
+                                              overflow: TextOverflow.ellipsis,
+                                              
+                                              fontSize: 12),
                                         ),
                                       ),
                                       Padding(

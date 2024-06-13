@@ -1094,6 +1094,7 @@ class _HomePageState extends State<HomePage> {
                                               child: Text(
                                                 product['name'],
                                                 style: TextStyle(
+                                                  
                                                     overflow:
                                                         TextOverflow.ellipsis),
                                               ),

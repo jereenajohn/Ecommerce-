@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-
 class OrderBigView extends StatefulWidget {
   var orderids;
   OrderBigView({super.key, required this.productid, required this.orderids});
@@ -24,7 +23,6 @@ class _OrderBigViewState extends State<OrderBigView> {
   void initState() {
     super.initState();
     myOrderDetails();
-
     print(
         "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${widget.productid}");
   }
@@ -44,7 +42,8 @@ class _OrderBigViewState extends State<OrderBigView> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
-var quantity;
+
+  var quantity;
   Future<void> myOrderDetails() async {
     try {
       final token = await getTokenFromPrefs();
@@ -76,11 +75,9 @@ var quantity;
         List<int> ids = [];
 
         for (var productData in productsData) {
-          if(widget.productid == productData['product']) {
-            quantity=productData['quantity'];
-
+          if (widget.productid == productData['product']) {
+            quantity = productData['quantity'];
           }
-         
         }
 
         setState(() {
@@ -163,69 +160,69 @@ var quantity;
               itemBuilder: (context, index) {
                 final product = products[index];
                 return Container(
-  height: 170,
-  margin: EdgeInsets.all(8.0),
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(10),
-    boxShadow: [
-      BoxShadow(
-        color: const Color.fromARGB(255, 188, 187, 187).withOpacity(0.3),
-        spreadRadius: 5,
-        blurRadius: 7,
-        offset: Offset(0, 3), // changes position of shadow
-      ),
-    ],
-  ),
-  child: Row(
-    children: [
-      Column(
-        children: [
-          Container(
-            child: Image.network(
-              product['image'],
-              height: 140,
-              width: 150,
-            ),
-          )
-        ],
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              product['name'],
-              style: TextStyle(
-                fontSize: 13,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Text(
-              '\$${product['salePrice']}',
-              style: TextStyle(
-                color: Color.fromARGB(255, 27, 154, 44),
-                fontSize: 12,
-              ),
-            ),
-            Text(
-              'Quantity:$productquantity',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
-      )
-    ],
-  ),
-);
-
+                  height: 170,
+                  margin: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 188, 187, 187)
+                            .withOpacity(0.3),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            child: Image.network(
+                              product['image'],
+                              height: 140,
+                              width: 150,
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product['name'],
+                              style: TextStyle(
+                                fontSize: 13,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Text(
+                              '\$${product['salePrice']}',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 27, 154, 44),
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              'Quantity:$productquantity',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
               },
             ),
-              bottomNavigationBar: Container(
+      bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
