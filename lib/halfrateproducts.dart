@@ -26,14 +26,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//offers/";
+      "https://sample-houston-cet-travel.trycloudflare.com/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//products/search/?q=";
+      "https://sample-houston-cet-travel.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//whishlist/";
+      "https://sample-houston-cet-travel.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -136,7 +136,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -227,7 +227,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -389,7 +389,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                                 halfrateproducts[firstItemIndex]
                                                     ['name'],
                                                 style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -416,6 +416,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                                 'Sale Price: \$${halfrateproducts[firstItemIndex]['salePrice']}',
                                                 style: TextStyle(
                                                   color: Colors.green,
+                                                  fontSize: 12
                                                 ),
                                               ),
                                             ),
@@ -536,7 +537,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                                 halfrateproducts[
                                                     secondItemIndex]['name'],
                                                 style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -562,6 +563,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                                 'Sale Price: \$${halfrateproducts[secondItemIndex]['salePrice']}',
                                                 style: TextStyle(
                                                   color: Colors.green,
+                                                  fontSize: 12
                                                 ),
                                               ),
                                             ),

@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//subcategory/";
+      "https://sample-houston-cet-travel.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/add-wishlist/";
+      "https://sample-houston-cet-travel.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//search-products/?q=";
+      "https://sample-houston-cet-travel.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//low-products/";
+      "https://sample-houston-cet-travel.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//high-products/";
+      "https://sample-houston-cet-travel.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/filtered-products/";
+      "https://sample-houston-cet-travel.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com${pfilter['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

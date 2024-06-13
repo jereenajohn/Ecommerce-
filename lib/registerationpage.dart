@@ -13,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 }
 
 class _Sign_UpState extends State<Sign_Up> {
-  var url = "https://stylus-interracial-floppy-msn.trycloudflare.com//register/";
+  var url = "https://sample-houston-cet-travel.trycloudflare.com/register/";
   bool _obscureText = true;
 
   var userId;
@@ -22,8 +22,6 @@ class _Sign_UpState extends State<Sign_Up> {
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +131,6 @@ class _Sign_UpState extends State<Sign_Up> {
                           password.text,
                           scaffoldContext,
                         );
-
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -222,8 +219,9 @@ class _Sign_UpState extends State<Sign_Up> {
         // Show alert box for validation errors
         Map<String, dynamic> responseData = jsonDecode(response.body);
         Map<String, dynamic> data = responseData['data'];
-       
-        String errorMessage = data.entries.map((entry) => entry.value[0]).join('\n');
+
+        String errorMessage =
+            data.entries.map((entry) => entry.value[0]).join('\n');
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -249,9 +247,9 @@ class _Sign_UpState extends State<Sign_Up> {
         );
       }
 
-    Map<String, dynamic> responseData = jsonDecode(response.body);
-     userId = responseData['data']['id'];
-    print('User ID is $userId');
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+      userId = responseData['data']['id'];
+      print('User ID is $userId');
     } catch (e) {
       print("Error: $e");
       // Show SnackBar for network error

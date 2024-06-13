@@ -28,13 +28,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//recommended/";
+      "https://sample-houston-cet-travel.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//products/search/?q=";
+      "https://sample-houston-cet-travel.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//add-wishlist/";
+      "https://sample-houston-cet-travel.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -143,7 +143,7 @@ class _Recommended_productsState extends State<Recommended_products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -254,7 +254,7 @@ class _Recommended_productsState extends State<Recommended_products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

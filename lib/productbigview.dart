@@ -24,25 +24,26 @@ class Product_big_View extends StatefulWidget {
   State<Product_big_View> createState() => _Product_big_ViewState();
 }
 
+
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl = "https://stylus-interracial-floppy-msn.trycloudflare.com/category/";
+  final producturl = "https://sample-houston-cet-travel.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/product-images/";
+      "https://sample-houston-cet-travel.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/cart/";
+      "https://sample-houston-cet-travel.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/add-wishlist/";
+      "https://sample-houston-cet-travel.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/discount-sale/";
+      "https://sample-houston-cet-travel.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/recently-viewed/";
+      "https://sample-houston-cet-travel.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com/recommended/";
+      "https://sample-houston-cet-travel.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -106,7 +107,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -155,7 +156,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${recentproductsData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -194,7 +195,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1338,7 +1339,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1405,15 +1406,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image1']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image2']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image3']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image4']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${imageData['image5']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

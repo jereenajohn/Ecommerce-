@@ -25,7 +25,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//products/search/?q=";
+      "https://sample-houston-cet-travel.trycloudflare.com/products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -42,7 +42,7 @@ class _hightolowpageState extends State<hightolowpage> {
     print("Search results: ${widget.result}");
   }
 
-  final String lowtohigh = "https://stylus-interracial-floppy-msn.trycloudflare.com//low-products/";
+  final String lowtohigh = "https://sample-houston-cet-travel.trycloudflare.com//low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -62,7 +62,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+          String imageUrl = "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -85,7 +85,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://stylus-interracial-floppy-msn.trycloudflare.com//whishlist/";
+  final String wishlisturl = "https://sample-houston-cet-travel.trycloudflare.com//whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
@@ -166,7 +166,7 @@ class _hightolowpageState extends State<hightolowpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

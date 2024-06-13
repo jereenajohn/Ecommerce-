@@ -19,7 +19,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var url = "https://stylus-interracial-floppy-msn.trycloudflare.com//profile/";
+  var url = "https://sample-houston-cet-travel.trycloudflare.com/profile/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();

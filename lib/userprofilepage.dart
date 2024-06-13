@@ -7,6 +7,7 @@ import 'package:bepocart/editprofile.dart';
 import 'package:bepocart/forgotpassword.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
+import 'package:bepocart/myorders.dart';
 import 'package:bepocart/returnandrefundsdetails.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/settings.dart';
@@ -53,7 +54,7 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//profile-view/";
+      "https://sample-houston-cet-travel.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -152,7 +153,7 @@ var viewprofileurl =
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Add onTap functionality here
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyOrder()));
                   },
                   child: Card(
                     color: Colors.white,

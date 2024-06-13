@@ -31,9 +31,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//whishlist/";
+      "https://sample-houston-cet-travel.trycloudflare.com//whishlist/";
   final String searchproducturl =
-      "https://stylus-interracial-floppy-msn.trycloudflare.com//search-products/?q=";
+      "https://sample-houston-cet-travel.trycloudflare.com//search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -89,7 +89,7 @@ class _SearchState extends State<Search> {
           print(
               "cattttttttttttttttttttttttttttttttppppppppppppppppppppppp$productData");
           String imageUrl =
-              "https://stylus-interracial-floppy-msn.trycloudflare.com/${productData['image']}";
+              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
