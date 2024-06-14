@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://sample-houston-cet-travel.trycloudflare.com//subcategory/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://sample-houston-cet-travel.trycloudflare.com/add-wishlist/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://sample-houston-cet-travel.trycloudflare.com//search-products/?q=";
+      "https://flex-hiring-trailers-spy.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://sample-houston-cet-travel.trycloudflare.com//low-products/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://sample-houston-cet-travel.trycloudflare.com//high-products/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://sample-houston-cet-travel.trycloudflare.com/filtered-products/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com${pfilter['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

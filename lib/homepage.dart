@@ -7,10 +7,12 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/flashsaleproducts.dart';
 import 'package:bepocart/halfrateproducts.dart';
+import 'package:bepocart/myorders.dart';
 import 'package:bepocart/offerproducts.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/recommendedproducts.dart';
 import 'package:bepocart/search.dart';
+import 'package:bepocart/settings.dart';
 import 'package:bepocart/subcategories.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/waitingpagebeforelogin.dart';
@@ -20,6 +22,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'package:draggable_fab/draggable_fab.dart';
 
 class HomePage extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
@@ -55,43 +59,45 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> offers = [];
 
-  final String bannerurl = "https://sample-houston-cet-travel.trycloudflare.com/banners/";
-  final String baseUrl = "https://sample-houston-cet-travel.trycloudflare.com/";
+  final String bannerurl =
+      "https://flex-hiring-trailers-spy.trycloudflare.com/banners/";
+  final String baseUrl = "https://flex-hiring-trailers-spy.trycloudflare.com/";
   final String categoryUrl =
-      "https://sample-houston-cet-travel.trycloudflare.com/category/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/category/";
   final String productsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/products/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/products/";
   final String offersurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/offer-banner/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/discount-sale/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/buy-1-get-1/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/best-sale-products/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/flash-sale/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/buy-2-get-1/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/offers/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://sample-houston-cet-travel.trycloudflare.com/search-products/?q=";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/recommended/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/recently-viewed/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -138,6 +144,20 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  Widget _buildFabButton(
+      String assetPath, Color color, VoidCallback onPressed) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 8.0),
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        heroTag: null,
+        backgroundColor: color,
+        mini: true,
+        child: Image.asset(assetPath, height: 24, width: 24),
+      ),
+    );
+  }
+
   void _startTimer() {
     const Duration duration =
         Duration(seconds: 5); // Adjust the duration as needed
@@ -180,7 +200,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${recentproductsData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -227,7 +247,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -262,7 +282,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${offerData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -293,7 +313,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -326,7 +346,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -364,7 +384,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -403,7 +423,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -439,7 +459,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -476,7 +496,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -535,7 +555,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -568,7 +588,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -604,7 +624,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${bannerData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -633,7 +653,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${categoryData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -881,8 +901,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only( right: 10),
+                              padding: const EdgeInsets.only(right: 10),
                               child: Container(
                                 height:
                                     220, // Adjusted height to accommodate the images
@@ -1094,7 +1113,6 @@ class _HomePageState extends State<HomePage> {
                                               child: Text(
                                                 product['name'],
                                                 style: TextStyle(
-                                                  
                                                     overflow:
                                                         TextOverflow.ellipsis),
                                               ),
@@ -1154,8 +1172,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                   right: 10, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(right: 10, bottom: 10),
                               child: SizedBox(
                                 height:
                                     220, // Adjusted height to accommodate the images
@@ -1907,10 +1925,11 @@ class _HomePageState extends State<HomePage> {
                                         double itemWidth =
                                             (constraints.maxWidth - 32) / 3;
                                         double itemHeight = itemWidth + 60;
-                                    
+
                                         return GridView.builder(
                                           shrinkWrap: true,
-                                          physics: NeverScrollableScrollPhysics(),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           itemCount:
                                               (buytwogetoneproducts.length > 6)
                                                   ? 6
@@ -1923,11 +1942,11 @@ class _HomePageState extends State<HomePage> {
                                             childAspectRatio:
                                                 itemWidth / itemHeight,
                                           ),
-                                          itemBuilder:
-                                              (BuildContext context, int index) {
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
                                             final product =
                                                 buytwogetoneproducts[index];
-                                    
+
                                             return GestureDetector(
                                               onTap: () {
                                                 Navigator.push(
@@ -1936,8 +1955,8 @@ class _HomePageState extends State<HomePage> {
                                                     builder: (context) =>
                                                         Product_big_View(
                                                       product_id: product['id'],
-                                                      Category_id:
-                                                          product['mainCategory'],
+                                                      Category_id: product[
+                                                          'mainCategory'],
                                                     ),
                                                   ),
                                                 );
@@ -1952,7 +1971,8 @@ class _HomePageState extends State<HomePage> {
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(10.0),
+                                                      BorderRadius.circular(
+                                                          10.0),
                                                   color: Colors.white,
                                                 ),
                                                 child: Column(
@@ -2236,8 +2256,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                   right: 10, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(right: 10, bottom: 10),
                               child: SizedBox(
                                 height:
                                     220, // Adjusted height to accommodate the images
@@ -2382,6 +2402,52 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+
+
+        floatingActionButton: DraggableFab(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isExpanded) ...[
+              _buildFabButton('lib/assets/booking.png',
+                  const Color.fromARGB(255, 255, 255, 255), () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyOrder()));
+                // Add your onPressed code for the first button here!
+                print('First button pressed');
+              }),
+              _buildFabButton('lib/assets/settings.png',
+                  const Color.fromARGB(255, 255, 255, 255), () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>usersettings()));
+
+                // Add your onPressed code for the second button here!
+                print('Second button pressed');
+              }),
+              _buildFabButton(
+                  'lib/assets/tracking.png', Color.fromARGB(255, 255, 255, 255),
+                  () {
+                // Add your onPressed code for the third button here!
+                print('Third button pressed');
+              }),
+            ],
+            Container(
+              width: 45, // Width of the button before expand
+              height: 45, // Height of the button before expand
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), // Border radius
+              ),
+              child: FloatingActionButton(
+                backgroundColor: Color.fromARGB(255, 226, 226, 226),
+                onPressed: () {
+                  setState(() {
+                    isExpanded = !isExpanded;
+                  });
+                },
+                child: Icon(isExpanded ? Icons.close : Icons.menu),
+              ),
+            ),
+          ],
+        ),
+      ),
         bottomNavigationBar: Container(
           color: Color.fromARGB(255, 244, 244, 244),
           child: Padding(

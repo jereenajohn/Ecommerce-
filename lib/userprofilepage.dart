@@ -32,9 +32,42 @@ class _UserProfilePageState extends State<UserProfilePage> {
    void initState() {
     super.initState();
     getprofiledata();
+     getimage();
   }
+var userimage;
+            String imageUrl='';
+  Future<void> getimage() async {
+    print("Fetching profile image...");
+    try {
+      final token = await gettokenFromPrefs();
 
-  
+      var response = await http.post(
+        Uri.parse(viewimage),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print("Response: ${response.body}");
+
+      if (response.statusCode == 200) {
+        userimage = jsonDecode(response.body);
+
+        setState(() {
+
+            imageUrl =
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${userimage['image']}";
+        });
+print("$imageUrl");
+        print('Profile data fetched successfully');
+      } else {
+        print('Failed to fetch profile data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching profile data: $error');
+    }
+  }
 
    void logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,11 +83,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
 var userdata;
+
 var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://sample-houston-cet-travel.trycloudflare.com//profile-view/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com//profile-view/";
+      var viewimage =
+      "https://flex-hiring-trailers-spy.trycloudflare.com//profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -94,66 +130,75 @@ var viewprofileurl =
 }
   @override
   Widget build(BuildContext context) {
+      String imageUrl =
+        userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
+            ? "https://flex-hiring-trailers-spy.trycloudflare.com/${userimage['image']}"
+            : '';
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
       ),
-      body: SingleChildScrollView(
+      body:
+      SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              // color: Colors.amber,
               height: 100,
               child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      'lib/assets/user.png',
-                      width: 70,
-                      height: 70,
+                    child: imageUrl.isNotEmpty
+                        ? ClipOval(
+  child: Image.network(
+    imageUrl,
+    width:75,
+    height: 75,
+    fit: BoxFit.cover, // Ensure the image covers the circle
+  ),
+)
+
+                        : Image.asset(
+                            'lib/assets/user.png',
+                            width: 70,
+                            height: 70,
+                          ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "$username",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(height: 3),
+                        Text("$email"),
+                      ],
                     ),
                   ),
-                 Padding(
-                   padding: const EdgeInsets.only(top: 15),
-                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                                       Text("$username",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                                       SizedBox(height: 3,),
-                                       Text("$email"),
-                                      
-                   
-                   
-                   
-                   
-                   
-                    ],
-                   ),
-                 ),
-                
                   Expanded(
                     child: SizedBox(),
                   ),
                   IconButton(
                     onPressed: () {
-                        
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile()));
-                  
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => EditProfile()));
                     },
                     icon: Icon(Icons.edit),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10), // Add spacing between containers
+            SizedBox(height: 10),
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly, // Adjust to your needs
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyOrder()));
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => MyOrder()));
                   },
                   child: Card(
                     color: Colors.white,
@@ -172,7 +217,8 @@ var viewprofileurl =
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Add onTap functionality here
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => Wishlist()));
                   },
                   child: Card(
                     color: Colors.white,
@@ -181,25 +227,24 @@ var viewprofileurl =
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Container(
-                      width: MediaQuery.of(context).size.width / 2 -
-                          20, // Adjust width as needed
+                      width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
                         child: Text("Wishlist"),
-                      ), // Adjust container height
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10), // Add spacing between rows
+            SizedBox(height: 10),
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly, // Adjust to your needs
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Add onTap functionality here
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => Cart()));
                   },
                   child: Card(
                     color: Colors.white,
@@ -208,12 +253,11 @@ var viewprofileurl =
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Container(
-                      width: MediaQuery.of(context).size.width / 2 -
-                          20, // Adjust width as needed
+                      width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
                         child: Text("Cart"),
-                      ), // Adjust container height
+                      ),
                     ),
                   ),
                 ),
@@ -228,21 +272,17 @@ var viewprofileurl =
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Container(
-                      width: MediaQuery.of(context).size.width / 2 -
-                          20, // Adjust width as needed
+                      width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
                         child: Text("Track Order"),
-                      ), // Adjust container height
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
-
+            SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(right: 220),
               child: Text(
@@ -250,14 +290,9 @@ var viewprofileurl =
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
-
-            SizedBox(
-              height: 30,
-            ),
-
+            SizedBox(height: 30),
             Column(
               children: [
-              
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context,
@@ -275,9 +310,8 @@ var viewprofileurl =
                               Icon(
                                 Icons.location_on,
                                 size: 30,
-                              ), // Address Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
+                              ),
+                              SizedBox(width: 10),
                               Text("Address"),
                             ],
                           ),
@@ -291,14 +325,10 @@ var viewprofileurl =
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Return_Refund_Details()));
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Return_Refund_Details()));
                   },
                   child: Container(
                     child: Padding(
@@ -312,9 +342,8 @@ var viewprofileurl =
                               Icon(
                                 Icons.refresh,
                                 size: 30,
-                              ), // Return and Refunds Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
+                              ),
+                              SizedBox(width: 10),
                               Text("Return and Refunds"),
                             ],
                           ),
@@ -328,49 +357,11 @@ var viewprofileurl =
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Terms_and_conditions()));
-
-                  },
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.library_books,
-                                size: 30,
-                              ), // Terms and Conditions Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Terms and Conditions"),
-                            ],
-                          ),
-                          Image.asset(
-                            'lib/assets/right-arrow.png',
-                            width: 18,
-                            height: 18,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Shipping_Policy_Details()));
-
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Shipping_Policy_Details()));
                   },
                   child: Container(
                     child: Padding(
@@ -384,10 +375,9 @@ var viewprofileurl =
                               Icon(
                                 Icons.local_shipping,
                                 size: 30,
-                              ), // Shipping Policies Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Shipping Policies"),
+                              ),
+                              SizedBox(width: 10),
+                              Text("Shipping Policy"),
                             ],
                           ),
                           Image.asset(
@@ -400,13 +390,11 @@ var viewprofileurl =
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>()));
-
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Terms_and_conditions()));
                   },
                   child: Container(
                     child: Padding(
@@ -418,12 +406,11 @@ var viewprofileurl =
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
-                                Icons.payment,
+                                Icons.description,
                                 size: 30,
-                              ), // Payment Methods Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Payment Methods"),
+                              ),
+                              SizedBox(width: 10),
+                              Text("Terms and Conditions"),
                             ],
                           ),
                           Image.asset(
@@ -436,45 +423,11 @@ var viewprofileurl =
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>usersettings()));
-
-                  },
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(Icons.settings), // Settings Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Settings"),
-                            ],
-                          ),
-                          Image.asset(
-                            'lib/assets/right-arrow.png',
-                            width: 18,
-                            height: 18,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Contact_Us()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Contact_Us()));
                   },
                   child: Container(
                     child: Padding(
@@ -486,12 +439,11 @@ var viewprofileurl =
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
-                                Icons.help,
+                                Icons.phone,
                                 size: 30,
-                              ), // Help & Support Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Help & Support"),
+                              ),
+                              SizedBox(width: 10),
+                              Text("Contact Us"),
                             ],
                           ),
                           Image.asset(
@@ -504,9 +456,7 @@ var viewprofileurl =
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
                     logout();
@@ -523,30 +473,27 @@ var viewprofileurl =
                               Icon(
                                 Icons.logout,
                                 size: 30,
-                              ), // Logout Icon
-                              SizedBox(
-                                  width: 10), // Add space between icon and text
-                              Text("Logout"),
-                              SizedBox(
-                                height: 50,
                               ),
+                              SizedBox(width: 10),
+                              Text("Logout"),
                             ],
                           ),
-                          // Image.asset(
-                          //   'lib/assets/right-arrow.png',
-                          //   width: 30,
-                          //   height: 30,
-                          // ),
+                          Image.asset(
+                            'lib/assets/right-arrow.png',
+                            width: 18,
+                            height: 18,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
+      
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(

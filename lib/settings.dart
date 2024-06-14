@@ -11,7 +11,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/widgets.dart';
 
 class usersettings extends StatefulWidget {
-  const usersettings({Key? key}) : super(key: key);
+   usersettings({Key? key}) : super(key: key);
 
   @override
   State<usersettings> createState() => _usersettingsState();

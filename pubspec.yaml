@@ -40,6 +40,13 @@ dependencies:
   google_nav_bar: ^5.0.6
   google_fonts: ^6.2.1
   smooth_page_indicator: ^1.0.0 
+  animated_floating_buttons: 0.0.2
+  draggable_fab: 0.1.4
+  flutter_local_notifications: ^12.0.4
+  photo_view: ^0.14.0
+  file_picker :
+  path_provider :
+  permission_handler: ^8.3.0
 
 
 
@@ -103,6 +110,11 @@ flutter:
    - lib/assets/pass2.png
    - lib/assets/hert.png
    - lib/assets/safe.png
+   - lib/assets/booking.png
+   - lib/assets/settings.png
+   - lib/assets/tracking.png
+   - lib/assets/upload.png
+
 
 
 

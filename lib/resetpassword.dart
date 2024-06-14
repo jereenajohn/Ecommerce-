@@ -21,7 +21,7 @@ class _resetpasswordState extends State<resetpassword> {
     TextEditingController newpass1=TextEditingController();
 
   TextEditingController newpass2=TextEditingController();
-    var url = "https://sample-houston-cet-travel.trycloudflare.com//reset-password/";
+    var url = "https://flex-hiring-trailers-spy.trycloudflare.com//reset-password/";
 
 
   Future<void> resetpassword() async {

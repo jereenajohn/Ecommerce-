@@ -28,13 +28,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/recommended/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://sample-houston-cet-travel.trycloudflare.com/products/search/?q=";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://sample-houston-cet-travel.trycloudflare.com/add-wishlist/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -143,7 +143,7 @@ class _Recommended_productsState extends State<Recommended_products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -254,7 +254,7 @@ class _Recommended_productsState extends State<Recommended_products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

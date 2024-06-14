@@ -26,10 +26,10 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://sample-houston-cet-travel.trycloudflare.com/orders/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://sample-houston-cet-travel.trycloudflare.com/products/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   List<dynamic> orderIds = [];
@@ -108,7 +108,7 @@ class _MyOrderState extends State<MyOrder> {
         for (var productData in productsData) {
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+                "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               
               'productid': productData['id'],

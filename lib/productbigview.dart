@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
+import 'package:bepocart/fullscreenimage.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/recommendedproducts.dart';
 import 'package:bepocart/search.dart';
@@ -10,6 +11,7 @@ import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,26 +26,26 @@ class Product_big_View extends StatefulWidget {
   State<Product_big_View> createState() => _Product_big_ViewState();
 }
 
-
 class _Product_big_ViewState extends State<Product_big_View> {
-  final producturl = "https://sample-houston-cet-travel.trycloudflare.com/category/";
+  final producturl =
+      "https://flex-hiring-trailers-spy.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/product-images/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://sample-houston-cet-travel.trycloudflare.com/cart/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://sample-houston-cet-travel.trycloudflare.com/add-wishlist/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/discount-sale/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/recently-viewed/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://sample-houston-cet-travel.trycloudflare.com/recommended/";
+      "https://flex-hiring-trailers-spy.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -54,6 +56,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
   List<bool> isFavorite = [];
   int _selectedIndex = 0;
+
+  List<String> sizeNames = [];
+  String? selectedSize;
 
   var name;
   var image;
@@ -107,7 +112,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -156,7 +161,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${recentproductsData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -195,7 +200,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -245,7 +250,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
           ),
         );
       } else if (response.statusCode == 400) {
-
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -289,8 +293,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
       color: isFavorite[index] ? Colors.red : Colors.black,
     );
   }
-  
-    Future<void> addProductToCart(int productId, var name, var price) async {
+
+  Future<void> addProductToCart(int productId, var name, var price) async {
     try {
       print('AAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLL$addtocarturl$productId/');
       final token = await gettokenFromPrefs();
@@ -386,15 +390,25 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 ),
                 child: Stack(
                   children: [
-                    ClipRRect(
-                      child: image != null
-                          ? Image.network(
-                              (image), // Decode base64 image
-                              fit: BoxFit.fill,
-                            )
-                          : Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FullScreenImage(image: image),
+                          ),
+                        );
+                      },
+                      child: ClipRRect(
+                        child: image != null
+                            ? Image.network(
+                                (image), // Decode base64 image
+                                fit: BoxFit.fill,
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                      ),
                     ),
                     if (offer_type != null &&
                         offer_type !=
@@ -601,7 +615,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          
                           addProductToCart(widget.product_id, name, price);
                         },
                         style: ElevatedButton.styleFrom(
@@ -651,6 +664,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
                               onPressed: () {
                                 setState(() {
                                   selectedColor = color;
+                                  sizeNames = images.firstWhere((image) =>
+                                          image['color'] ==
+                                          selectedColor)['size_names'] ??
+                                      [];
+                                  selectedSize = sizeNames.isNotEmpty
+                                      ? sizeNames[0]
+                                      : null;
+                                  print("colorrrrrrrrrrr$selectedColor");
 
                                   updateDisplayedImage(selectedColor);
                                 });
@@ -661,6 +682,52 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+
+              if (selectedColor != null && sizeNames.isNotEmpty)
+                Container(
+                  height: 80,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: sizeNames.map((size) {
+                        return Container(
+                          width: 40.0, // Adjust the width and height as needed
+                          height: 40.0, // Adjust the width and height as needed
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets
+                                  .zero, // Remove default button padding
+                              foregroundColor: selectedSize == size
+                                  ? Color.fromARGB(255, 1, 80, 12)
+                                  : Colors.black,
+                              side: BorderSide(
+                                color: selectedSize == size
+                                    ? Color.fromARGB(255, 28, 146, 1)
+                                    : Colors.black,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    30.0), // Half of width/height
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                selectedSize = size;
+                                print("sizeeeeeeeeeee$selectedSize");
+                              });
+                            },
+                            child: Center(
+                              // Center the text inside the button
+                              child: Text(size.toUpperCase()),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
 
@@ -815,7 +882,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                               '\$${product['price']}',
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: Colors.grey,
+                                                color: Colors.green,
                                                 decoration:
                                                     TextDecoration.lineThrough,
                                                 decorationColor: Colors
@@ -825,8 +892,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                           Text(
                                             'Sale Price: \$${product['salePrice']}',
                                             style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 12
+                                              color: Colors.red,
                                             ),
                                           ),
                                         ],
@@ -943,9 +1009,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                         child: Text(
                                           product['name'],
                                           style: TextStyle(
-                                              overflow: TextOverflow.ellipsis,
-                                              
-                                              fontSize: 12),
+                                              overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Padding(
@@ -999,7 +1063,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only( right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Container(
                           height:
                               220, // Adjusted height to accommodate the images
@@ -1097,171 +1161,163 @@ class _Product_big_ViewState extends State<Product_big_View> {
                     ],
                   ),
                 ),
-                  Column(
-                      children: [
-                        if (recommendedproducts.isNotEmpty)
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                                color: Color.fromARGB(255, 196, 220, 193),
-                                child: Column(
-                                  children: [
-                                    // Row(
-                                    //   mainAxisAlignment: MainAxisAlignment.start,
-                                    //   children: [
-                                    //     Text("Discounts for you",
-                                    //   style: TextStyle(fontWeight: FontWeight.bold)),
-                                    //   ],
-                                    // ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: Text("Recommended Products",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        Spacer(),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10, top: 10),
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Recommended_products(),
-                                                ),
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: const Color.fromARGB(255, 255, 255, 255), // Set white background color
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                side: BorderSide(
-                                                    color: Colors.black),
-                                              ),
-                                            ),
-                                            child: Text(
-                                              'See More',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
+              Column(
+                children: [
+                  if (recommendedproducts.isNotEmpty)
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                          color: Color.fromARGB(255, 196, 220, 193),
+                          child: Column(
+                            children: [
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.start,
+                              //   children: [
+                              //     Text("Discounts for you",
+                              //   style: TextStyle(fontWeight: FontWeight.bold)),
+                              //   ],
+                              // ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text("Recommended Products",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10, top: 10),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Recommended_products(),
                                           ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255,
+                                            255,
+                                            255,
+                                            255), // Set white background color
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          side: BorderSide(color: Colors.black),
                                         ),
-                                      ],
+                                      ),
+                                      child: Text(
+                                        'See More',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
-                                    GridView.count(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      crossAxisCount: 2,
-                                      children: List.generate(
-                                        (recommendedproducts.length > 4)
-                                            ? 4
-                                            : recommendedproducts.length,
-                                        (index) {
-                                          final product =
-                                              recommendedproducts[index];
-                                          return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Product_big_View(
-                                                      product_id: product['id'],
-                                                      Category_id: product[
-                                                          'mainCategory'],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                height: 200,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Color.fromARGB(255, 211, 211, 211),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  color: Colors.white,
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Image.network(
-                                                      recommendedproducts[index]
-                                                          ['image'],
-                                                      width: 100,
-                                                      height: 100,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10,
-                                                              right: 10),
-                                                      child: Text(
-                                                        recommendedproducts[
-                                                            index]['name'],
-                                                        style: TextStyle(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis),
-                                                      ),
-                                                    ),
-                                                    if (recommendedproducts[
-                                                            index]['price'] !=
-                                                        null)
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                left: 10,
-                                                                right: 10),
-                                                        child: Text(
-                                                          '\₹${recommendedproducts[index]['price']}',
-                                                          style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough),
-                                                        ),
-                                                      ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10,
-                                                              right: 10),
-                                                      child: Text(
-                                                        ' \₹${recommendedproducts[index]['salePrice']}',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.green),
-                                                      ),
-                                                    ),
-                                                    if (product['discount'] !=
-                                                        null)
-                                                      Text(
-                                                          'Discount: ${recommendedproducts[index]['discount']}'),
-                                                  ],
-                                                ),
+                                  ),
+                                ],
+                              ),
+                              GridView.count(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                children: List.generate(
+                                  (recommendedproducts.length > 4)
+                                      ? 4
+                                      : recommendedproducts.length,
+                                  (index) {
+                                    final product = recommendedproducts[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Product_big_View(
+                                                product_id: product['id'],
+                                                Category_id:
+                                                    product['mainCategory'],
                                               ),
                                             ),
                                           );
                                         },
+                                        child: Container(
+                                          height: 200,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Color.fromARGB(
+                                                  255, 211, 211, 211),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            color: Colors.white,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Image.network(
+                                                recommendedproducts[index]
+                                                    ['image'],
+                                                width: 100,
+                                                height: 100,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: Text(
+                                                  recommendedproducts[index]
+                                                      ['name'],
+                                                  style: TextStyle(
+                                                      overflow: TextOverflow
+                                                          .ellipsis),
+                                                ),
+                                              ),
+                                              if (recommendedproducts[index]
+                                                      ['price'] !=
+                                                  null)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10, right: 10),
+                                                  child: Text(
+                                                    '\₹${recommendedproducts[index]['price']}',
+                                                    style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough),
+                                                  ),
+                                                ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: Text(
+                                                  ' \₹${recommendedproducts[index]['salePrice']}',
+                                                  style: TextStyle(
+                                                      color: Colors.green),
+                                                ),
+                                              ),
+                                              if (product['discount'] != null)
+                                                Text(
+                                                    'Discount: ${recommendedproducts[index]['discount']}'),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )),
-                          ),
-                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
+                ],
+              ),
             ],
           ),
         ),
@@ -1342,7 +1398,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sample-houston-cet-travel.trycloudflare.com/${productData['image']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1409,15 +1465,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image1']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image2']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image3']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image4']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://sample-houston-cet-travel.trycloudflare.com/${imageData['image5']}";
+              "https://flex-hiring-trailers-spy.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -1426,16 +1482,20 @@ class _Product_big_ViewState extends State<Product_big_View> {
             'image4': imageUrl4,
             'image5': imageUrl5,
             'color': imageData['color'],
+            'size_names': List<String>.from(
+                imageData['size_names']), // Cast to List<String>
           });
           colorsSet.add(imageData['color']);
         }
 
         setState(() {
           images = productsList;
-          print(
-              "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$images");
           colors = colorsSet.toList();
           selectedColor = colors.isNotEmpty ? colors[0] : null;
+          sizeNames = images.firstWhere(
+                  (image) => image['color'] == selectedColor)['size_names'] ??
+              [];
+          selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
         });
       } else {
         throw Exception('Error fetching product image');

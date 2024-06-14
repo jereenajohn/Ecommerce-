@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
 
 class EditProfile extends StatefulWidget {
   final String? userId;
@@ -19,11 +20,60 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var url = "https://sample-houston-cet-travel.trycloudflare.com/profile/";
+
+   @override
+   void initState() {
+    super.initState();
+    getprofiledata();
+  }
+  var url = "https://flex-hiring-trailers-spy.trycloudflare.com/profile/";
+  var url2="https://flex-hiring-trailers-spy.trycloudflare.com/profile-image/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
+  var tokkenn;
 
+var userdata;
+
+var viewprofileurl =
+      "https://flex-hiring-trailers-spy.trycloudflare.com//profile-view/";
+  Future<void> getprofiledata() async {
+    print("jvnxsssssssssssssssssssssssssssssssssssssss");
+    try {
+      final token = await gettokenFromPrefs();
+
+      var response = await http.post(
+        Uri.parse('$viewprofileurl'),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      print(
+          "Responserrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.body}");
+
+      if (response.statusCode == 200) {
+        userdata = jsonDecode(response.body);
+        print(
+            "999999999999999999999999999${userdata['username']}");
+            setState(() {
+              name.text=userdata['username'];
+              email.text=userdata['email'];
+              phone.text=userdata['phone'];
+              print(
+            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$name");
+
+            });
+
+        print('Profile data fetched successfully');
+      } else {
+        print('Failed to fetch profile data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching profile data: $error');
+}
+}
   Future<void> updateprofile() async {
     try {
       final token = await gettokenFromPrefs();
@@ -172,6 +222,7 @@ class _EditProfileState extends State<EditProfile> {
                                           height: 15,
                                         ),
                                         TextField(
+                                          
                                           controller: email,
                                           decoration: InputDecoration(
                                             labelText: 'Email',
@@ -245,6 +296,39 @@ class _EditProfileState extends State<EditProfile> {
                                         SizedBox(
                                           height: 15,
                                         ),
+
+
+                                          GestureDetector(
+                  onTap: () {
+                    imageSelect();
+                  },
+                   child: Container(
+                    
+                     height: 55,
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(10),
+                       color: Color.fromARGB(255, 224, 223, 223),
+                     ),
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Image.asset(
+                           'lib/assets/upload.png', // Replace 'upload_icon.png' with your image asset path
+                           width: 24, // Adjust the width of the image
+                           height: 24, // Adjust the height of the image
+                           color: Color.fromARGB(255, 2, 2, 2), // Adjust the color of the image
+                         ),
+                         SizedBox(width: 10), // Spacer between icon and text
+                         Text(
+                           "Select Image",
+                           style: TextStyle(color: const Color.fromARGB(255, 116, 116, 116)),
+                         ),
+                       ],
+                     ),
+                     
+                   ),
+                 ),
+
                                       ],
                                     ),
                                   ),
@@ -264,6 +348,9 @@ class _EditProfileState extends State<EditProfile> {
                             child: TextButton(
                               onPressed: () async {
                                 updateprofile();
+
+                                 tokkenn = await gettokenFromPrefs();
+                                  RegisterUserData(url2,selectedImage,scaffoldContext,tokkenn!);
                               },
                               child: Text(
                                 "Update",
@@ -345,4 +432,106 @@ class _EditProfileState extends State<EditProfile> {
         ),
     );
   }
+
+
+  File? selectedImage;
+
+    void imageSelect() async {
+    try {
+      print("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+      );
+      if (result != null) {
+        setState(() {
+          selectedImage = File(result.files.single.path!);
+          print("================$selectedImage");
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("image1 selected successfully."),
+          backgroundColor: Color.fromARGB(173, 120, 249, 126),
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Error while selecting the file."),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
+
+
+  void RegisterUserData(
+  String url,
+  File? image1,
+  BuildContext scaffoldContext,
+  String token, 
+) async {
+  
+  try {
+    print("00000000000000000000000000000000000$token");
+    print("imageeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$image1");
+    var request = http.MultipartRequest('PUT', Uri.parse(url));
+    
+    // Add headers to the request
+    request.headers['Content-type'] = 'application/json';
+    request.headers['Authorization'] = '$token';
+
+
+    if (image1 != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', image1.path));
+    }
+
+   
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+ print("statttttttttttttttttttsssssssssssssssssssssssttttttttt${response.body}");
+    
+    // Handle response based on status code
+    if (response.statusCode == 200) {
+      // Registration successful
+      ScaffoldMessenger.of(scaffoldContext).showSnackBar(
+        SnackBar(
+          content: Text('Data Added Successfully.'),
+        ),
+      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => add_product()),
+      // );
+    } else if (response.statusCode == 400) {
+      // Handle validation errors or other specific errors from the server
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+      if (responseData.containsKey('image2') && responseData.containsKey('image3')) {
+        // Show error dialog for specific image validation errors
+      } else {
+        ScaffoldMessenger.of(scaffoldContext).showSnackBar(
+          SnackBar(
+            content: Text('Something went wrong. Please try again later.'),
+          ),
+        );
+      }
+    } else {
+      // Handle other status codes
+      ScaffoldMessenger.of(scaffoldContext).showSnackBar(
+        SnackBar(
+          content: Text('Something went wrong. Please try again later.'),
+        ),
+      );
+    }
+  } catch (e) {
+    // Handle network errors or exceptions
+    print("Error: $e");
+    ScaffoldMessenger.of(scaffoldContext).showSnackBar(
+      SnackBar(
+        content: Text('Network error. Please check your connection.'),
+      ),
+    );
+  }
+}
+
+
+
 }
