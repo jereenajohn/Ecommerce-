@@ -34,18 +34,18 @@ class _CartState extends State<Cart> {
 
   int _selectedIndex = 0;
 
-  var CartUrl = "https://flex-hiring-trailers-spy.trycloudflare.com/cart-products/";
+  var CartUrl = "https://varied-assured-rt-hearing.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/products/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/cart/increment/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/cart/decrement/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/cart-delete/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -84,7 +84,7 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://flex-hiring-trailers-spy.trycloudflare.com/${item['image']}";
+          String imageUrl ="https://varied-assured-rt-hearing.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],

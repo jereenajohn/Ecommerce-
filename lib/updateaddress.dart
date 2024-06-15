@@ -37,11 +37,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController note = TextEditingController();
 
   String updateaddressurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com//update-address/";
+      "https://varied-assured-rt-hearing.trycloudflare.com//update-address/";
 
-  String durl = "https://flex-hiring-trailers-spy.trycloudflare.com//delete-address/";
+  String durl = "https://varied-assured-rt-hearing.trycloudflare.com//delete-address/";
 
-  String url = "https://flex-hiring-trailers-spy.trycloudflare.com//get-address/";
+  String url = "https://varied-assured-rt-hearing.trycloudflare.com//get-address/";
 
   List<Map<String, dynamic>> addressList = [];
 

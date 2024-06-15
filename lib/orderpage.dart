@@ -37,12 +37,16 @@ class order extends StatefulWidget {
   State<order> createState() => _orderState();
 }
 
+enum PaymentMethod { cod, razorpay }
+
 class _orderState extends State<order> {
   String? userId;
   String fetchaddressurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/get-address/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
+  TextEditingController coupon = TextEditingController();
+  int CODAMOUNT =40;
 
   @override
   void initState() {
@@ -69,12 +73,15 @@ class _orderState extends State<order> {
     return prefs.getString('token');
   }
 
-  var CartUrl = "https://flex-hiring-trailers-spy.trycloudflare.com//cart-products/";
+  var CartUrl =
+      "https://varied-assured-rt-hearing.trycloudflare.com//cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
   var discount;
   var deliverycharge;
+  PaymentMethod _selectedMethod = PaymentMethod.razorpay;
+  var selectedpaymentmethod;
 
   Future<void> fetchCartData() async {
     print("Fetching cart data...");
@@ -99,7 +106,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://flex-hiring-trailers-spy.trycloudflare.com/${item['image']}";
+              "https://varied-assured-rt-hearing.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -273,6 +280,109 @@ class _orderState extends State<order> {
                   _buildCartItems(),
 
                   Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                          Row(
+                          children: <Widget>[
+                            Radio<PaymentMethod>(
+                              value: PaymentMethod.razorpay,
+                              groupValue: _selectedMethod,
+                              onChanged: (PaymentMethod? value) {
+                                setState(() {
+                                  _selectedMethod = value!;
+                                  print(_selectedMethod);
+                                  selectedpaymentmethod = "RAZORPAY";
+                                  print(selectedpaymentmethod);
+                                  sellingprice = sellingprice - CODAMOUNT;
+                                  print("RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$sellingprice");
+                                });
+                              },
+                              activeColor:
+                                  Colors.black, // Set the active color to black
+                            ),
+                            const Text(
+                              'Razorpay',
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Radio<PaymentMethod>(
+                              value: PaymentMethod.cod,
+                              groupValue: _selectedMethod,
+                              onChanged: (PaymentMethod? value) {
+                                setState(() {
+                                  _selectedMethod = value!;
+                                  print(_selectedMethod);
+                                  selectedpaymentmethod = "COD";
+                                  print(selectedpaymentmethod);
+                                  sellingprice = sellingprice + CODAMOUNT;
+                                  print("CCCCCCCCCCCCOOOOOOOOOOOOOODDDDDDDDDDDDDDDDDDDAAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMM$sellingprice");
+
+
+                                });
+                              },
+                              activeColor:
+                                  Colors.black, // Set the active color to black
+                            ),
+                            const Text(
+                              'Cash on Delivery (COD)',
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      
+                      ],
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.only(left: 10,right: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            controller: coupon,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              hintText: 'Enter Coupon Code',
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Define what the button should do here
+                            print('Button Pressed');
+                          },
+                          child: Text(
+                            'Apply',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black, // Button color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  5.0), // Rectangular shape
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 10,),
+
+                  Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -341,6 +451,26 @@ class _orderState extends State<order> {
                             ],
                           ),
                         ),
+
+                          Visibility(
+            visible: _selectedMethod == PaymentMethod.cod,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: Row(
+                children: [
+                  Text(
+                    "COD Charge",
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  Spacer(),
+                  Text(
+                    "+₹${CODAMOUNT}",
+                    style: TextStyle(fontSize: 13, color: Colors.green),
+                  ),
+                ],
+              ),
+            ),
+          ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 10, left: 10, right: 10),
@@ -462,9 +592,11 @@ class _orderState extends State<order> {
             child: InkWell(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Select_Delivery_Address()));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Select_Delivery_Address(),
+                  ),
+                );
               },
               child: Container(
                 height: 50,
@@ -475,7 +607,9 @@ class _orderState extends State<order> {
                 ),
                 child: Center(
                   child: Text(
-                    "Payment",
+                    _selectedMethod == PaymentMethod.cod
+                        ? "Order Now"
+                        : "Payment",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
@@ -631,7 +765,7 @@ class _orderState extends State<order> {
                     Text(
                       '\₹${product['price'] != 0 ? product['price'] : 'No offer available'}',
                       style: TextStyle(
-                        color: product['price'] != 0
+                        color: product['price'] != 0 
                             ? Colors.grey
                             : Colors.green, // Text color change
                         decoration: product['price'] != 0

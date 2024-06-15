@@ -25,7 +25,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/category/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -34,11 +34,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/search-products/?q=";
+      "https://varied-assured-rt-hearing.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/products/filter/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/products/filter/";
   final String hightolow =
-      "https://flex-hiring-trailers-spy.trycloudflare.com/products/filtering/";
+      "https://varied-assured-rt-hearing.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -76,7 +76,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
+              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -115,7 +115,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://flex-hiring-trailers-spy.trycloudflare.com/${productData['image']}";
+              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -224,7 +224,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://flex-hiring-trailers-spy.trycloudflare.com//${productData['image']}";
+  //             "https://varied-assured-rt-hearing.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -270,7 +270,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://flex-hiring-trailers-spy.trycloudflare.com//${productData['image']}";
+  //             "https://varied-assured-rt-hearing.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],

@@ -57,7 +57,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://flex-hiring-trailers-spy.trycloudflare.com/${userimage['image']}";
+              "https://varied-assured-rt-hearing.trycloudflare.com/${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -88,9 +88,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://flex-hiring-trailers-spy.trycloudflare.com//profile-view/";
+      "https://varied-assured-rt-hearing.trycloudflare.com//profile-view/";
       var viewimage =
-      "https://flex-hiring-trailers-spy.trycloudflare.com//profile-image/";
+      "https://varied-assured-rt-hearing.trycloudflare.com//profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -132,7 +132,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://flex-hiring-trailers-spy.trycloudflare.com/${userimage['image']}"
+            ? "https://varied-assured-rt-hearing.trycloudflare.com/${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(
@@ -284,10 +284,15 @@ var viewprofileurl =
             ),
             SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.only(right: 220),
-              child: Text(
-                "Account Settings",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Account Settings",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 30),
