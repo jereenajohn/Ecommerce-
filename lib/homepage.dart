@@ -60,40 +60,40 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/banners/";
-  final String baseUrl = "https://varied-assured-rt-hearing.trycloudflare.com/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/banners/";
+  final String baseUrl = "https://pavilion-shelter-terrorists-smart.trycloudflare.com/";
   final String categoryUrl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/category/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/category/";
   final String productsurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/products/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/products/";
   final String offersurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/offer-banner/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/discount-sale/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/buy-1-get-1/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/best-sale-products/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/flash-sale/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/buy-2-get-1/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/offers/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/search-products/?q=";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/recommended/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/recently-viewed/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${recentproductsData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -282,7 +282,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${offerData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -313,7 +313,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -346,7 +346,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -384,7 +384,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -423,7 +423,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -459,7 +459,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -496,7 +496,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -555,7 +555,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -588,7 +588,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -624,7 +624,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${bannerData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -653,7 +653,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${categoryData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],

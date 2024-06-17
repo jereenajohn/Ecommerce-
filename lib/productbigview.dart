@@ -28,24 +28,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/category/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/product-images/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/cart/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/add-wishlist/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/discount-sale/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/recently-viewed/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/recommended/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -112,7 +112,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -161,7 +161,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${recentproductsData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -200,7 +200,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1398,7 +1398,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${productData['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1465,15 +1465,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${imageData['image1']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${imageData['image2']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${imageData['image3']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${imageData['image4']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${imageData['image5']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

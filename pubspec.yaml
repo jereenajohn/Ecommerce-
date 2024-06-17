@@ -47,6 +47,8 @@ dependencies:
   file_picker :
   path_provider :
   permission_handler: ^8.3.0
+  razorpay_web: ^1.4.2
+
 
 
 

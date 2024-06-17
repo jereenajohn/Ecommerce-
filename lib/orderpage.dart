@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/ordersuccesspage.dart';
+
 import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:razorpay_web/razorpay_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -42,11 +46,12 @@ enum PaymentMethod { cod, razorpay }
 class _orderState extends State<order> {
   String? userId;
   String fetchaddressurl =
-      "https://varied-assured-rt-hearing.trycloudflare.com/get-address/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   TextEditingController coupon = TextEditingController();
   int CODAMOUNT =40;
+  late Razorpay razorpay;
 
   @override
   void initState() {
@@ -54,6 +59,10 @@ class _orderState extends State<order> {
     _initData();
     print(widget.name);
     print(widget.addressid);
+     razorpay = Razorpay();
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, errorHandler);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, successHandler);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, externalWalletHandler);
   }
 
   Future<void> _initData() async {
@@ -74,7 +83,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://varied-assured-rt-hearing.trycloudflare.com//cart-products/";
+      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -82,6 +91,43 @@ class _orderState extends State<order> {
   var deliverycharge;
   PaymentMethod _selectedMethod = PaymentMethod.razorpay;
   var selectedpaymentmethod;
+
+
+void openCheckout() {
+    var options = {
+      "key": "rzp_test_m3k00iFqtte9HH",
+      "amount": sellingprice * 100,
+      "name": "Bepocart",
+      "description": " this is the test payment",
+      "timeout": "180",
+      "currency": "INR",
+      "prefill": {
+        "contact": "11111111111",
+        "email": "test@abc.com",
+      }
+    };
+    razorpay.open(options);
+  }
+void errorHandler(PaymentFailureResponse response) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(response.message!),
+      backgroundColor: Colors.red,
+    ));
+  }
+
+  void successHandler(PaymentSuccessResponse response) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(response.paymentId!),
+      backgroundColor: Colors.green,
+    ));
+  }
+
+  void externalWalletHandler(ExternalWalletResponse response) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(response.walletName!),
+      backgroundColor: Colors.green,
+    ));
+  }
 
   Future<void> fetchCartData() async {
     print("Fetching cart data...");
@@ -106,7 +152,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://varied-assured-rt-hearing.trycloudflare.com/${item['image']}";
+              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -554,8 +600,7 @@ class _orderState extends State<order> {
                                 width: 30,
                               ),
                               SizedBox(
-                                  width:
-                                      15), // Add some space between the image and text
+                                  width: 15), // Add some space between the image and text
                               Expanded(
                                 child: RichText(
                                   text: TextSpan(
@@ -591,12 +636,20 @@ class _orderState extends State<order> {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Select_Delivery_Address(),
-                  ),
-                );
+
+                if (selectedpaymentmethod == "COD") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderConfirmationScreen(),
+                    ),
+                  );
+                }
+                else{
+                  openCheckout();
+                   
+ }
+              
               },
               child: Container(
                 height: 50,
@@ -626,6 +679,7 @@ class _orderState extends State<order> {
             gap: 20,
             onTabChange: (index) {
               setState(() {
+                
                 // _index = index;
                 // if (index == 2) {
                 //   _showSearchDialog(context);
@@ -765,7 +819,7 @@ class _orderState extends State<order> {
                     Text(
                       '\₹${product['price'] != 0 ? product['price'] : 'No offer available'}',
                       style: TextStyle(
-                        color: product['price'] != 0 
+                        color: product['price'] != 0
                             ? Colors.grey
                             : Colors.green, // Text color change
                         decoration: product['price'] != 0
