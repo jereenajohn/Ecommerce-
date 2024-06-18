@@ -50,7 +50,7 @@ class _orderState extends State<order> {
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   TextEditingController coupon = TextEditingController();
-  int CODAMOUNT =40;
+  int CODAMOUNT = 40;
   late Razorpay razorpay;
 
   @override
@@ -59,7 +59,7 @@ class _orderState extends State<order> {
     _initData();
     print(widget.name);
     print(widget.addressid);
-     razorpay = Razorpay();
+    razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, errorHandler);
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, successHandler);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, externalWalletHandler);
@@ -92,8 +92,7 @@ class _orderState extends State<order> {
   PaymentMethod _selectedMethod = PaymentMethod.razorpay;
   var selectedpaymentmethod;
 
-
-void openCheckout() {
+  void openCheckout() {
     var options = {
       "key": "rzp_test_m3k00iFqtte9HH",
       "amount": sellingprice * 100,
@@ -108,7 +107,8 @@ void openCheckout() {
     };
     razorpay.open(options);
   }
-void errorHandler(PaymentFailureResponse response) {
+
+  void errorHandler(PaymentFailureResponse response) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(response.message!),
       backgroundColor: Colors.red,
@@ -330,7 +330,7 @@ void errorHandler(PaymentFailureResponse response) {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                          Row(
+                        Row(
                           children: <Widget>[
                             Radio<PaymentMethod>(
                               value: PaymentMethod.razorpay,
@@ -342,7 +342,8 @@ void errorHandler(PaymentFailureResponse response) {
                                   selectedpaymentmethod = "RAZORPAY";
                                   print(selectedpaymentmethod);
                                   sellingprice = sellingprice - CODAMOUNT;
-                                  print("RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$sellingprice");
+                                  print(
+                                      "RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$sellingprice");
                                 });
                               },
                               activeColor:
@@ -367,9 +368,8 @@ void errorHandler(PaymentFailureResponse response) {
                                   selectedpaymentmethod = "COD";
                                   print(selectedpaymentmethod);
                                   sellingprice = sellingprice + CODAMOUNT;
-                                  print("CCCCCCCCCCCCOOOOOOOOOOOOOODDDDDDDDDDDDDDDDDDDAAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMM$sellingprice");
-
-
+                                  print(
+                                      "CCCCCCCCCCCCOOOOOOOOOOOOOODDDDDDDDDDDDDDDDDDDAAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMM$sellingprice");
                                 });
                               },
                               activeColor:
@@ -382,13 +382,12 @@ void errorHandler(PaymentFailureResponse response) {
                             ),
                           ],
                         ),
-                      
                       ],
                     ),
                   ),
 
                   Container(
-                    padding: EdgeInsets.only(left: 10,right: 10),
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     child: Row(
                       children: <Widget>[
                         Expanded(
@@ -426,7 +425,9 @@ void errorHandler(PaymentFailureResponse response) {
                     ),
                   ),
 
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
 
                   Container(
                     width: double.infinity,
@@ -497,26 +498,27 @@ void errorHandler(PaymentFailureResponse response) {
                             ],
                           ),
                         ),
-
-                          Visibility(
-            visible: _selectedMethod == PaymentMethod.cod,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-              child: Row(
-                children: [
-                  Text(
-                    "COD Charge",
-                    style: TextStyle(fontSize: 13),
-                  ),
-                  Spacer(),
-                  Text(
-                    "+₹${CODAMOUNT}",
-                    style: TextStyle(fontSize: 13, color: Colors.green),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                        Visibility(
+                          visible: _selectedMethod == PaymentMethod.cod,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 10),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "COD Charge",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "+₹${CODAMOUNT}",
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.green),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 10, left: 10, right: 10),
@@ -600,7 +602,8 @@ void errorHandler(PaymentFailureResponse response) {
                                 width: 30,
                               ),
                               SizedBox(
-                                  width: 15), // Add some space between the image and text
+                                  width:
+                                      15), // Add some space between the image and text
                               Expanded(
                                 child: RichText(
                                   text: TextSpan(
@@ -636,7 +639,6 @@ void errorHandler(PaymentFailureResponse response) {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-
                 if (selectedpaymentmethod == "COD") {
                   Navigator.push(
                     context,
@@ -644,12 +646,9 @@ void errorHandler(PaymentFailureResponse response) {
                       builder: (context) => OrderConfirmationScreen(),
                     ),
                   );
-                }
-                else{
+                } else {
                   openCheckout();
-                   
- }
-              
+                }
               },
               child: Container(
                 height: 50,
@@ -679,7 +678,6 @@ void errorHandler(PaymentFailureResponse response) {
             gap: 20,
             onTabChange: (index) {
               setState(() {
-                
                 // _index = index;
                 // if (index == 2) {
                 //   _showSearchDialog(context);
