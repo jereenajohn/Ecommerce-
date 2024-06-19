@@ -29,11 +29,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//category/";
+      "https://hats-joseph-chair-villa.trycloudflare.com//category/";
   final String productsurl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//category/";
+      "https://hats-joseph-chair-villa.trycloudflare.com//category/";
   final String searchproducturl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//search-products/?q=";
+      "https://hats-joseph-chair-villa.trycloudflare.com//search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -120,7 +120,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
+              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -165,7 +165,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
+              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -205,7 +205,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${subcategoryData['image']}";
+              "https://hats-joseph-chair-villa.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

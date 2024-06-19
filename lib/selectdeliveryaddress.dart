@@ -13,23 +13,25 @@ class Select_Delivery_Address extends StatefulWidget {
   const Select_Delivery_Address({Key? key, this.user_id}) : super(key: key);
 
   @override
-  State<Select_Delivery_Address> createState() => _Select_Delivery_AddressState();
+  State<Select_Delivery_Address> createState() =>
+      _Select_Delivery_AddressState();
 }
 
 class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
   String? userId;
-  String fetchaddressurl = "https://pavilion-shelter-terrorists-smart.trycloudflare.com//get-address/";
+  String fetchaddressurl =
+      "https://hats-joseph-chair-villa.trycloudflare.com//get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   var selectedAddressId;
-    var selectedAddressname;
-    var selectedAddressemail;
-    var selectedAddressphone;
-    var selectedAddresspincode;
-    var selectedAddresscity;
-    var selectedAddressstate;
-    var selectedAddressnote;
-    var selectedAddressuserid;
+  var selectedAddressname;
+  var selectedAddressemail;
+  var selectedAddressphone;
+  var selectedAddresspincode;
+  var selectedAddresscity;
+  var selectedAddressstate;
+  var selectedAddressnote;
+  var selectedAddressuserid;
 
   @override
   void initState() {
@@ -95,7 +97,8 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
                   onTap: () {
                     setState(() {
                       selectedAddressIndex = index;
-                      selectedAddressId = address['id'];  // Store the selected address ID
+                      selectedAddressId =
+                          address['id']; // Store the selected address ID
                       print("Selected address ID: $selectedAddressId");
                     });
                   },
@@ -119,22 +122,21 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
                       onChanged: (value) {
                         setState(() {
                           selectedAddressIndex = index;
-                          selectedAddressId = address['id'];  // Store the selected address ID
-                          selectedAddressname=address['address'];
-                          selectedAddresscity=address['city'];
-                          selectedAddressstate=address['state'];
-                          selectedAddresspincode=address['phone'];
-                          selectedAddressnote=address['note'];
-                          selectedAddressuserid=address['user'];
+                          selectedAddressId =
+                              address['id']; // Store the selected address ID
+                          selectedAddressname = address['address'];
+                          selectedAddresscity = address['city'];
+                          selectedAddressstate = address['state'];
+                          selectedAddresspincode = address['phone'];
+                          selectedAddressnote = address['note'];
+                          selectedAddressuserid = address['user'];
 
-                          selectedAddressphone=address['pincode'];
+                          selectedAddressphone = address['pincode'];
 
-                          
-                          selectedAddressemail=address['email'];
-                          
-                          
+                          selectedAddressemail = address['email'];
+
                           print("Selected address ID: $selectedAddressId");
-                           print("Selected address name: $selectedAddressname");
+                          print("Selected address name: $selectedAddressname");
                         });
                       },
                       title: Text(address['address']),
@@ -201,10 +203,29 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
             // onTap: submitAddress, // Add your submit address logic here
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => order(addressid:selectedAddressId,name:selectedAddressname,city:selectedAddresscity,state:selectedAddressstate,pincode:selectedAddresspincode,number:selectedAddressphone,email:selectedAddressemail,note:selectedAddressnote,userid:selectedAddressuserid)),
-                    );
+                if (selectedAddressIndex == -1) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('Please select an address first'),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => order(
+                            addressid: selectedAddressId,
+                            name: selectedAddressname,
+                            city: selectedAddresscity,
+                            state: selectedAddressstate,
+                            pincode: selectedAddresspincode,
+                            number: selectedAddressphone,
+                            email: selectedAddressemail,
+                            note: selectedAddressnote,
+                            userid: selectedAddressuserid)),
+                  );
+                }
               },
               child: Container(
                 height: 70,

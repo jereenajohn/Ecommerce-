@@ -46,7 +46,7 @@ enum PaymentMethod { cod, razorpay }
 class _orderState extends State<order> {
   String? userId;
   String fetchaddressurl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/get-address/";
+      "https://hats-joseph-chair-villa.trycloudflare.com/get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   TextEditingController coupon = TextEditingController();
@@ -83,7 +83,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//cart-products/";
+      "https://hats-joseph-chair-villa.trycloudflare.com//cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -152,7 +152,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${item['image']}";
+              "https://hats-joseph-chair-villa.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;

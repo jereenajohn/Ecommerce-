@@ -17,7 +17,7 @@ class forgotpassword extends StatefulWidget {
 }
 
 class _forgotpasswordState extends State<forgotpassword> {
-  var url="https://pavilion-shelter-terrorists-smart.trycloudflare.com/forgot-password/";
+  var url="https://hats-joseph-chair-villa.trycloudflare.com/forgot-password/";
   TextEditingController email=TextEditingController();
   var emailres;
 

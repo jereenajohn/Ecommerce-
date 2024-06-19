@@ -57,7 +57,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${userimage['image']}";
+              "https://hats-joseph-chair-villa.trycloudflare.com/${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -88,9 +88,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//profile-view/";
+      "https://hats-joseph-chair-villa.trycloudflare.com//profile-view/";
       var viewimage =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com//profile-image/";
+      "https://hats-joseph-chair-villa.trycloudflare.com//profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -132,7 +132,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${userimage['image']}"
+            ? "https://hats-joseph-chair-villa.trycloudflare.com/${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(

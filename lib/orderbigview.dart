@@ -28,10 +28,10 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   final String orders =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/orders/";
+      "https://hats-joseph-chair-villa.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://pavilion-shelter-terrorists-smart.trycloudflare.com/products/";
+      "https://hats-joseph-chair-villa.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -108,7 +108,7 @@ class _OrderBigViewState extends State<OrderBigView> {
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
-                "https://pavilion-shelter-terrorists-smart.trycloudflare.com/${productData['image']}";
+                "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

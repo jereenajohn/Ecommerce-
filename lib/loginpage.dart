@@ -23,7 +23,7 @@ class _Login_PageState extends State<Login_Page> {
 
   List<dynamic> data = [];
 
-  var url = "https://pavilion-shelter-terrorists-smart.trycloudflare.com/";
+  var url = "https://hats-joseph-chair-villa.trycloudflare.com/";
 
   @override
   void initState() {
@@ -100,7 +100,10 @@ class _Login_PageState extends State<Login_Page> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>forgotpassword()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => forgotpassword()));
                     },
                     child: Text(
                       'Forgot Password?',
@@ -170,12 +173,11 @@ class _Login_PageState extends State<Login_Page> {
     );
   }
 
-Future<void> storeUserData(String userId, String token) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('userId', userId);
-  await prefs.setString('token', token);
-}
-
+  Future<void> storeUserData(String userId, String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userId', userId);
+    await prefs.setString('token', token);
+  }
 
   void showSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -186,39 +188,37 @@ Future<void> storeUserData(String userId, String token) async {
     );
   }
 
-Future<void> UserLogin() async {
-  try {
-    var response = await http.post(
-      Uri.parse(url),
-      body: {"email": email.text, "password": password.text},
-    );
+  Future<void> UserLogin() async {
+    try {
+      var response = await http.post(
+        Uri.parse(url),
+        body: {"email": email.text, "password": password.text},
+      );
 
-    if (response.statusCode == 200) {
-      var responseData = jsonDecode(response.body);
-      var status = responseData['status'];
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['status'];
 
-      if (status == 'success') {
-        var token = responseData['token']; // Extract token
-        var userId = responseData['id'];
+        if (status == 'success') {
+          var token = responseData['token']; // Extract token
+          var userId = responseData['id'];
 
-        await storeUserData(userId.toString(), token);
+          await storeUserData(userId.toString(), token);
 
-        // Navigate to HomePage
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
+          // Navigate to HomePage
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        } else {
+          showSnackbar('Login failed: $status');
+        }
       } else {
-        showSnackbar('Login failed: $status');
+        showSnackbar('HTTP Error: ${response.statusCode}');
       }
-    } else {
-      showSnackbar('HTTP Error: ${response.statusCode}');
+    } catch (e) {
+      print("erorrrrrrrrrrrrrrrr$e");
+      showSnackbar('Error: $e');
     }
-  } catch (e) {
-    print("erorrrrrrrrrrrrrrrr$e");
-    showSnackbar('Error: $e');
   }
-}
-
-
 }
