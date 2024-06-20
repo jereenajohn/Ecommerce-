@@ -25,7 +25,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/category/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -34,11 +34,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/search-products/?q=";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "https://hats-joseph-chair-villa.trycloudflare.com/products/filter/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/products/filter/";
   final String hightolow =
-      "https://hats-joseph-chair-villa.trycloudflare.com/products/filtering/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -76,7 +76,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -115,7 +115,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -224,7 +224,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://hats-joseph-chair-villa.trycloudflare.com//${productData['image']}";
+  //             "https://pit-currently-fashion-stockings.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -270,7 +270,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://hats-joseph-chair-villa.trycloudflare.com//${productData['image']}";
+  //             "https://pit-currently-fashion-stockings.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],

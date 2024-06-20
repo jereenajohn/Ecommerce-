@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://hats-joseph-chair-villa.trycloudflare.com//subcategory/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/add-wishlist/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com//search-products/?q=";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://hats-joseph-chair-villa.trycloudflare.com//low-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://hats-joseph-chair-villa.trycloudflare.com//high-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://hats-joseph-chair-villa.trycloudflare.com/filtered-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com${pfilter['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

@@ -28,13 +28,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/recommended/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/products/search/?q=";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/add-wishlist/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -143,7 +143,7 @@ class _Recommended_productsState extends State<Recommended_products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -254,7 +254,7 @@ class _Recommended_productsState extends State<Recommended_products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

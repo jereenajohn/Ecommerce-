@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com//search-products/?q=";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com//offer-banner/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com//add-wishlist/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//add-wishlist/";
 
    final String lowtohigh =
-      "https://hats-joseph-chair-villa.trycloudflare.com//low-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://hats-joseph-chair-villa.trycloudflare.com//high-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com//high-products/";
 
 
   Future<String?> getUserIdFromPrefs() async {
@@ -102,7 +102,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -144,7 +144,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -249,7 +249,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}",
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}",
               'price':productData['price'],
           
           'salePrice': productData['salePrice'],
@@ -286,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

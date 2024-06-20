@@ -60,40 +60,40 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/banners/";
-  final String baseUrl = "https://hats-joseph-chair-villa.trycloudflare.com/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/banners/";
+  final String baseUrl = "https://pit-currently-fashion-stockings.trycloudflare.com/";
   final String categoryUrl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/category/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/category/";
   final String productsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/products/";
   final String offersurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/offer-banner/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/discount-sale/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/buy-1-get-1/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/best-sale-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/flash-sale/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/buy-2-get-1/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/offers/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/search-products/?q=";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/recommended/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://hats-joseph-chair-villa.trycloudflare.com/recently-viewed/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${recentproductsData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -282,7 +282,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${offerData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final response = await http.get(Uri.parse(productsurl));
       print('Response: ${response.statusCode}');
-
+  
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['products'];
@@ -313,7 +313,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -346,7 +346,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -384,7 +384,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -423,7 +423,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -459,7 +459,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -496,7 +496,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -555,7 +555,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -588,7 +588,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${productData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -624,7 +624,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${bannerData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -653,7 +653,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://hats-joseph-chair-villa.trycloudflare.com/${categoryData['image']}";
+              "https://pit-currently-fashion-stockings.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -2475,7 +2475,7 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: Icons.shopping_bag,
                   onPressed: () {
-                    
+
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Cart()));
                     // Navigate to Cart page
