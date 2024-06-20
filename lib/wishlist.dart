@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -33,7 +34,7 @@ class _WishlistState extends State<Wishlist> {
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
   int _selectedIndex = 0;
-
+  var tokenn;
   @override
   void initState() {
     super.initState();
@@ -42,6 +43,8 @@ class _WishlistState extends State<Wishlist> {
 
   Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
+        tokenn = await gettokenFromPrefs();
+
     print("--------------------------------------------R$userId");
     FetchWishlistData();
     fetchProducts();
@@ -194,6 +197,7 @@ class _WishlistState extends State<Wishlist> {
       print('Error adding product to cart: $error');
     }
   }
+  
 
   void removeProduct(int index) {
     setState(() {
@@ -212,6 +216,10 @@ class _WishlistState extends State<Wishlist> {
         actions: [
           IconButton(
             onPressed: () {
+              if(tokenn==null)
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+              }
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Cart()));
             },
@@ -400,13 +408,21 @@ class _WishlistState extends State<Wishlist> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

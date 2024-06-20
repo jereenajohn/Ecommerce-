@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -29,7 +30,19 @@ class _UserAddressState extends State<UserAddress> {
   TextEditingController state = TextEditingController();
   TextEditingController note = TextEditingController();
 
-  String url = "https://pit-currently-fashion-stockings.trycloudflare.com/add-address/";
+  String url =
+      "https://pit-currently-fashion-stockings.trycloudflare.com/add-address/";
+  var tokenn;
+
+  @override
+  void initState() {
+    super.initState();
+    _initData();
+  }
+
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +65,8 @@ class _UserAddressState extends State<UserAddress> {
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => viewAddress()));
-              },
+                    
+              }, 
               child: Text(
                 "View Address", // Your address text here
                 style: TextStyle(
@@ -552,8 +566,14 @@ class _UserAddressState extends State<UserAddress> {
               GButton(
                 icon: Icons.shopping_bag,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
+
                   // Navigate to Cart page
                 },
               ),

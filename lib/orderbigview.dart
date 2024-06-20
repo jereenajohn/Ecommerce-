@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,23 @@ class OrderBigView extends StatefulWidget {
 }
 
 class _OrderBigViewState extends State<OrderBigView> {
+  var tokenn;
   @override
   void initState() {
     super.initState();
+    _initData();
     myOrderDetails();
     print(
         "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${widget.productid}");
+  }
+
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+  }
+
+  Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   final String orders =
@@ -142,8 +154,13 @@ class _OrderBigViewState extends State<OrderBigView> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Cart()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Cart()));
+              }
             },
             icon: Image.asset(
               "lib/assets/bag.png",
@@ -250,8 +267,14 @@ class _OrderBigViewState extends State<OrderBigView> {
               GButton(
                 icon: Icons.shopping_bag,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
+
                   // Navigate to Cart page
                 },
               ),

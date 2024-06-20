@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -41,11 +42,18 @@ class _Recommended_productsState extends State<Recommended_products> {
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> searchResults = [];
+  var tokenn;
 
   @override
   void initState() {
     super.initState();
+     _initData();
     fetchRecommendedProducts();
+  }
+
+Future<void> _initData() async {
+        tokenn = await gettokenFromPrefs();
+
   }
 
   void toggleFavorite(int index) {
@@ -291,8 +299,13 @@ class _Recommended_productsState extends State<Recommended_products> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -620,14 +633,22 @@ class _Recommended_productsState extends State<Recommended_products> {
                   // Navigate to Home page
                 },
               ),
-              GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+               GButton(
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

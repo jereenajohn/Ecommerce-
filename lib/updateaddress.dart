@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bepocart/addaddress.dart';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,11 +23,21 @@ class UpdateAddress extends StatefulWidget {
 }
 
 class _UpdateAddressState extends State<UpdateAddress> {
+  var tokenn;
   @override
   void initState() {
     super.initState();
     fetchAddress();
+     _initData();
   }
+
+   Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    // Use userId after getting the value
+    
+  }
+
 
   TextEditingController address = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -471,13 +482,21 @@ class _UpdateAddressState extends State<UpdateAddress> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

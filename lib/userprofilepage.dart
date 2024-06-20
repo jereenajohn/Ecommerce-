@@ -20,19 +20,36 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 class UserProfilePage extends StatefulWidget {
-  
-  UserProfilePage({Key? key}) : super(key: key);
+    final String? user_id; // Receive user_id as a parameter
+
+  UserProfilePage({Key? key, this.user_id}) : super(key: key);
 
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+    String? userId; // Declare userId variable to store user ID
+
+  var tokenn;
   @override
    void initState() {
     super.initState();
+     _initData();
     getprofiledata();
      getimage();
+  }
+
+  Future<void> _initData() async {
+    userId = await getUserIdFromPrefs();
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$userId");
+    // Use userId after getting the value
+  }
+   Future<String?> getUserIdFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userId');
   }
 var userimage;
             String imageUrl='';
@@ -524,14 +541,22 @@ var viewprofileurl =
                   // Navigate to Home page
                 },
               ),
-              GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+             GButton(
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.favorite,
                 onPressed: () {

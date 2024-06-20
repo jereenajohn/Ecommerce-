@@ -3,11 +3,12 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/filterhightolow.dart';
 import 'package:bepocart/filterlowtohigh.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
-import 'package:flutter/material.dart';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,6 @@ class OfferProducts extends StatefulWidget {
   OfferProducts({Key? key, this.user_id, required this.offerId})
       : super(key: key);
   final int offerId;
- 
 
   @override
   State<OfferProducts> createState() => _OfferProductsState();
@@ -27,7 +27,7 @@ class _OfferProductsState extends State<OfferProducts> {
   String? userId;
   List<Map<String, dynamic>> products = [];
   List<Map<String, dynamic>> searchResults = [];
-    List<Map<String, dynamic>> lowtohighresult = [];
+  List<Map<String, dynamic>> lowtohighresult = [];
   List<Map<String, dynamic>> hightolowresult = [];
 
   TextEditingController searchitem = TextEditingController();
@@ -44,26 +44,28 @@ class _OfferProductsState extends State<OfferProducts> {
   final String wishlisturl =
       "https://pit-currently-fashion-stockings.trycloudflare.com//add-wishlist/";
 
-   final String lowtohigh =
+  final String lowtohigh =
       "https://pit-currently-fashion-stockings.trycloudflare.com//low-products/";
   final String hightolow =
       "https://pit-currently-fashion-stockings.trycloudflare.com//high-products/";
-
+  var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('userId');
   }
 
-  Future<void> _initData() async {
-    userId = await getUserIdFromPrefs();
-    fetchOfferProducts();
-  }
-
   @override
   void initState() {
     super.initState();
     _initData();
+  }
+
+  Future<void> _initData() async {
+    userId = await getUserIdFromPrefs();
+    tokenn = await gettokenFromPrefs();
+
+    fetchOfferProducts();
   }
 
   void toggleFavorite(int index) {
@@ -83,8 +85,7 @@ class _OfferProductsState extends State<OfferProducts> {
     }
   }
 
-
- Future<void> LowtoHigh(int subcategoryId) async {
+  Future<void> LowtoHigh(int subcategoryId) async {
     print(subcategoryId);
     final token = await gettokenFromPrefs();
     try {
@@ -188,7 +189,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
-         ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
             backgroundColor: Colors.green,
@@ -227,7 +228,8 @@ class _OfferProductsState extends State<OfferProducts> {
 
   Future<void> fetchOfferProducts() async {
     final token = await gettokenFromPrefs();
-    print('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQWWWWWWWWWWWWWWWWWEEEEEEEEEEEEEEEEEEEEEEEEE$offerproductsurl${widget.offerId}/products/');
+    print(
+        'QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQWWWWWWWWWWWWWWWWWEEEEEEEEEEEEEEEEEEEEEEEEE$offerproductsurl${widget.offerId}/products/');
     var response = await http.post(
       Uri.parse('$offerproductsurl${widget.offerId}/products/'),
       headers: {
@@ -250,8 +252,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'name': productData['name'],
           'image':
               "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}",
-              'price':productData['price'],
-          
+          'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
       }
@@ -372,8 +373,13 @@ class _OfferProductsState extends State<OfferProducts> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -384,402 +390,409 @@ class _OfferProductsState extends State<OfferProducts> {
         ],
       ),
       body: SingleChildScrollView(
-        
-        child:Column(
-
+        child: Column(
           children: [
+            //    Row(
+            //   children: [
+            //     SizedBox(
+            //       width: 10,
+            //     ),
+            //     GestureDetector(
+            //       onTap: () {
+            //         showModalBottomSheet(
+            //           context: context,
+            //           builder: (BuildContext context) {
+            //             return Container(
+            //               height: 130,
+            //               child: Column(
+            //                 children: [
+            //                   ListTile(
+            //                     title: Text('High to Low'),
+            //                     onTap: () async {
+            //                       await HightoLow(widget.subcategoryId);
+            //                       Navigator.push(
+            //                           context,
+            //                           MaterialPageRoute(
+            //                               builder: (context) => hightolowpage(
+            //                                   result: hightolowresult,
+            //                                   SubcatId: widget.subcategoryId)));
+            //                     },
+            //                   ),
+            //                   ListTile(
+            //                     title: Text('Low to High'),
+            //                     onTap: () async {
+            //                       await LowtoHigh(widget.subcategoryId);
+            //                       Navigator.push(
+            //                           context,
+            //                           MaterialPageRoute(
+            //                               builder: (context) => lowtohighpage(
+            //                                   result: lowtohighresult,
+            //                                   SubcatId: widget.subcategoryId)));
+            //                     },
+            //                   ),
+            //                 ],
+            //               ),
+            //             );
+            //           },
+            //         );
+            //       },
+            //       child: Container(
+            //         width: 100,
+            //         height: 40,
+            //         decoration: BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.circular(10.0),
+            //           border: Border.all(
+            //             color:
+            //                 Colors.black, // Specify the color of the border here
+            //             width: 1.0, // Specify the width of the border here
+            //           ),
+            //           boxShadow: [
+            //             BoxShadow(
+            //               color: Colors.black.withOpacity(0.1),
+            //               blurRadius: 3,
+            //               spreadRadius: 2,
+            //               offset: Offset(0, 2),
+            //             ),
+            //           ],
+            //         ),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment
+            //               .center, // Center the text horizontally
+            //           children: [
+            //             Text("Sort By"),
+            //             SizedBox(width: 5),
+            //             Image.asset(
+            //               "lib/assets/sort.png",
+            //               width: 24,
+            //               height: 24,
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: 20,
+            //     ),
+            //     Container(
+            //       width: 100,
+            //       height: 40,
+            //       decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         borderRadius: BorderRadius.circular(10.0),
+            //         border: Border.all(
+            //           color: Colors.black, // Specify the color of the border here
+            //           width: 1.0, // Specify the width of the border here
+            //         ),
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.black.withOpacity(0.1),
+            //             blurRadius: 3,
+            //             spreadRadius: 2,
+            //             offset: Offset(0, 2),
+            //           ),
+            //         ],
+            //       ),
+            //       child: Row(
+            //         mainAxisAlignment:
+            //             MainAxisAlignment.center, // Center the text horizontally
+            //         children: [
+            //           Text("Filter"),
+            //           SizedBox(
+            //             width: 5,
+            //           ),
+            //           Image.asset(
+            //             "lib/assets/filter.png",
+            //             width: 24,
+            //             height: 24,
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
-          //    Row(
-          //   children: [
-          //     SizedBox(
-          //       width: 10,
-          //     ),
-          //     GestureDetector(
-          //       onTap: () {
-          //         showModalBottomSheet(
-          //           context: context,
-          //           builder: (BuildContext context) {
-          //             return Container(
-          //               height: 130,
-          //               child: Column(
-          //                 children: [
-          //                   ListTile(
-          //                     title: Text('High to Low'),
-          //                     onTap: () async {
-          //                       await HightoLow(widget.subcategoryId);
-          //                       Navigator.push(
-          //                           context,
-          //                           MaterialPageRoute(
-          //                               builder: (context) => hightolowpage(
-          //                                   result: hightolowresult,
-          //                                   SubcatId: widget.subcategoryId)));
-          //                     },
-          //                   ),
-          //                   ListTile(
-          //                     title: Text('Low to High'),
-          //                     onTap: () async {
-          //                       await LowtoHigh(widget.subcategoryId);
-          //                       Navigator.push(
-          //                           context,
-          //                           MaterialPageRoute(
-          //                               builder: (context) => lowtohighpage(
-          //                                   result: lowtohighresult,
-          //                                   SubcatId: widget.subcategoryId)));
-          //                     },
-          //                   ),
-          //                 ],
-          //               ),
-          //             );
-          //           },
-          //         );
-          //       },
-          //       child: Container(
-          //         width: 100,
-          //         height: 40,
-          //         decoration: BoxDecoration(
-          //           color: Colors.white,
-          //           borderRadius: BorderRadius.circular(10.0),
-          //           border: Border.all(
-          //             color:
-          //                 Colors.black, // Specify the color of the border here
-          //             width: 1.0, // Specify the width of the border here
-          //           ),
-          //           boxShadow: [
-          //             BoxShadow(
-          //               color: Colors.black.withOpacity(0.1),
-          //               blurRadius: 3,
-          //               spreadRadius: 2,
-          //               offset: Offset(0, 2),
-          //             ),
-          //           ],
-          //         ),
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment
-          //               .center, // Center the text horizontally
-          //           children: [
-          //             Text("Sort By"),
-          //             SizedBox(width: 5),
-          //             Image.asset(
-          //               "lib/assets/sort.png",
-          //               width: 24,
-          //               height: 24,
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //     SizedBox(
-          //       width: 20,
-          //     ),
-          //     Container(
-          //       width: 100,
-          //       height: 40,
-          //       decoration: BoxDecoration(
-          //         color: Colors.white,
-          //         borderRadius: BorderRadius.circular(10.0),
-          //         border: Border.all(
-          //           color: Colors.black, // Specify the color of the border here
-          //           width: 1.0, // Specify the width of the border here
-          //         ),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: Colors.black.withOpacity(0.1),
-          //             blurRadius: 3,
-          //             spreadRadius: 2,
-          //             offset: Offset(0, 2),
-          //           ),
-          //         ],
-          //       ),
-          //       child: Row(
-          //         mainAxisAlignment:
-          //             MainAxisAlignment.center, // Center the text horizontally
-          //         children: [
-          //           Text("Filter"),
-          //           SizedBox(
-          //             width: 5,
-          //           ),
-          //           Image.asset(
-          //             "lib/assets/filter.png",
-          //             width: 24,
-          //             height: 24,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: (products.length / 2).ceil(),
+                itemBuilder: (BuildContext context, int index) {
+                  int firstItemIndex = index * 2;
+                  int secondItemIndex = firstItemIndex + 1;
 
-          Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: (products.length / 2).ceil(),
-            itemBuilder: (BuildContext context, int index) {
-              int firstItemIndex = index * 2;
-              int secondItemIndex = firstItemIndex + 1;
+                  // Check if this is the last row
+                  bool isLastRow = index == (products.length / 2).ceil() - 1;
 
-              // Check if this is the last row
-              bool isLastRow = index == (products.length / 2).ceil() - 1;
-
-              return Column(
-                children: [
-                  Row(
+                  return Column(
                     children: [
-                      if (firstItemIndex < products.length) ...[
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              try {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Product_big_View(
-                                      product_id: products[firstItemIndex]
-                                          ['id'],
-                                      Category_id: int.parse(
-                                          products[firstItemIndex]
-                                              ['mainCategory']),
-                                    ),
+                      Row(
+                        children: [
+                          if (firstItemIndex < products.length) ...[
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  try {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Product_big_View(
+                                          product_id: products[firstItemIndex]
+                                              ['id'],
+                                          Category_id: int.parse(
+                                              products[firstItemIndex]
+                                                  ['mainCategory']),
+                                        ),
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    print('Error navigating: $e');
+                                  }
+                                },
+                                child: Container(
+                                  height: 250,
+                                  margin: EdgeInsets.only(
+                                    right: (secondItemIndex < products.length ||
+                                            isLastRow)
+                                        ? 5
+                                        : 0,
                                   ),
-                                );
-                              } catch (e) {
-                                print('Error navigating: $e');
-                              }
-                            },
-                            child: Container(
-                              height: 250,
-                              margin: EdgeInsets.only(
-                                right: (secondItemIndex < products.length ||
-                                        isLastRow)
-                                    ? 5
-                                    : 0,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 3,
-                                    spreadRadius: 2,
-                                    offset: Offset(0, 2),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 3,
+                                        spreadRadius: 2,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Stack(
-                                      alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          child: Container(
-                                            width: 150,
-                                            height: 150,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                  products[firstItemIndex]
-                                                      ['image'],
+                                        Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: Container(
+                                                width: 150,
+                                                height: 150,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      products[firstItemIndex]
+                                                          ['image'],
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                toggleFavorite(firstItemIndex);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: buildFavoriteIcon(
+                                                    firstItemIndex),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            toggleFavorite(firstItemIndex);
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: buildFavoriteIcon(
-                                                firstItemIndex),
-                                          ),
-                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                products[firstItemIndex]
+                                                    ['name'],
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                              ),
+                                            ),
+                                            if (products[firstItemIndex]
+                                                    ['price'] !=
+                                                null)
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: Text(
+                                                  '\$${products[firstItemIndex]['price']}',
+                                                  style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .lineThrough, // Add strikethrough decoration
+                                                    color: Colors
+                                                        .grey, // You can adjust the color according to your design
+                                                  ),
+                                                ),
+                                              ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                'Sale Price: \$${products[firstItemIndex]['salePrice']}',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     ),
-                                    SizedBox(height: 10),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            products[firstItemIndex]['name'],
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
-                                          ),
-                                        ),
-                                        if(products[firstItemIndex]['price']!=null)
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${products[firstItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            'Sale Price: \$${products[firstItemIndex]['salePrice']}',
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                      if (secondItemIndex < products.length) ...[
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Product_big_View(
-                                            product_id:
-                                                products[secondItemIndex]['id'],
-                                            Category_id: int.parse(
-                                                products[secondItemIndex]
-                                                    ['mainCategory']),
-                                          )));
-                            },
-                            child: Container(
-                              height: 250,
-                              margin: EdgeInsets.only(
-                                left: (firstItemIndex < products.length ||
-                                        isLastRow)
-                                    ? 5
-                                    : 0,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 3,
-                                    spreadRadius: 2,
-                                    offset: Offset(0, 2),
                                   ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Stack(
-                                      alignment: Alignment.topRight,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          child: Image.network(
-                                            products[secondItemIndex]['image'],
-                                            width: 150,
-                                            height: 150,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            toggleFavorite(secondItemIndex);
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: buildFavoriteIcon(
-                                                secondItemIndex),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            products[secondItemIndex]['name'],
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
-                                          ),
-                                        ),
-                                        if(products[secondItemIndex]['price']!=null)
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${products[secondItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            'Sale Price: \$${products[secondItemIndex]['salePrice']}',
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                              
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
+                          ],
+                          if (secondItemIndex < products.length) ...[
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Product_big_View(
+                                                product_id:
+                                                    products[secondItemIndex]
+                                                        ['id'],
+                                                Category_id: int.parse(
+                                                    products[secondItemIndex]
+                                                        ['mainCategory']),
+                                              )));
+                                },
+                                child: Container(
+                                  height: 250,
+                                  margin: EdgeInsets.only(
+                                    left: (firstItemIndex < products.length ||
+                                            isLastRow)
+                                        ? 5
+                                        : 0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 3,
+                                        spreadRadius: 2,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: Image.network(
+                                                products[secondItemIndex]
+                                                    ['image'],
+                                                width: 150,
+                                                height: 150,
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                toggleFavorite(secondItemIndex);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: buildFavoriteIcon(
+                                                    secondItemIndex),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                products[secondItemIndex]
+                                                    ['name'],
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                              ),
+                                            ),
+                                            if (products[secondItemIndex]
+                                                    ['price'] !=
+                                                null)
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: Text(
+                                                  '\$${products[secondItemIndex]['price']}',
+                                                  style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .lineThrough, // Add strikethrough decoration
+                                                    color: Colors
+                                                        .grey, // You can adjust the color according to your design
+                                                  ),
+                                                ),
+                                              ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                'Sale Price: \$${products[secondItemIndex]['salePrice']}',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      SizedBox(height: 10),
                     ],
-                  ),
-                  SizedBox(height: 10),
-                ],
-              );
-            },
-          ),
-        ),
+                  );
+                },
+              ),
+            ),
           ],
-
         ),
-        
       ),
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
@@ -809,8 +822,14 @@ class _OfferProductsState extends State<OfferProducts> {
               GButton(
                 icon: Icons.shopping_bag,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
+
                   // Navigate to Cart page
                 },
               ),

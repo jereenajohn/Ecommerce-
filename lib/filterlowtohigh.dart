@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +33,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
    bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
+      var tokenn;
 
 
   @override
@@ -40,6 +42,13 @@ class _lowtohighpageState extends State<lowtohighpage> {
     isFavorite = List<bool>.filled(widget.result.length, false);
     print("Initialized favorites: $isFavorite");
     print("Search results: ${widget.result}");
+  }
+
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
   }
 
   final String hightolow = "https://pit-currently-fashion-stockings.trycloudflare.com//high-products/";
@@ -538,13 +547,21 @@ class _lowtohighpageState extends State<lowtohighpage> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

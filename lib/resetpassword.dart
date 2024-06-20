@@ -22,7 +22,18 @@ class _resetpasswordState extends State<resetpassword> {
 
   TextEditingController newpass2=TextEditingController();
     var url = "https://pit-currently-fashion-stockings.trycloudflare.com//reset-password/";
+var tokenn;
 
+ @override
+  void initState() {
+    super.initState();
+     _initData();
+  }
+
+Future<void> _initData() async {
+        tokenn = await gettokenFromPrefs();
+
+  }
 
   Future<void> resetpassword() async {
     try {
@@ -270,8 +281,16 @@ class _resetpasswordState extends State<resetpassword> {
                 GButton(
                   icon: Icons.shopping_bag,
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Cart()));
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
                     // Navigate to Cart page
                   },
                 ),

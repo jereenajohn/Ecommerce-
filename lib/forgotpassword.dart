@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/otp.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class forgotpassword extends StatefulWidget {
@@ -16,10 +18,32 @@ class forgotpassword extends StatefulWidget {
   State<forgotpassword> createState() => _forgotpasswordState();
 }
 
+
+
 class _forgotpasswordState extends State<forgotpassword> {
   var url="https://pit-currently-fashion-stockings.trycloudflare.com/forgot-password/";
   TextEditingController email=TextEditingController();
+  var tokenn;
   var emailres;
+ @override
+  void initState() {
+    super.initState();
+    _initData();
+  }
+
+   Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
+  }
+
+   Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  
 
 
   Future<void> sendemail() async {
@@ -185,11 +209,19 @@ class _forgotpasswordState extends State<forgotpassword> {
                     // Navigate to Home page
                   },
                 ),
-                GButton(
+                 GButton(
                   icon: Icons.shopping_bag,
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Cart()));
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
                     // Navigate to Cart page
                   },
                 ),

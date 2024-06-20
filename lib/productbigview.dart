@@ -5,6 +5,7 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/fullscreenimage.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/recommendedproducts.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -69,17 +70,26 @@ class _Product_big_ViewState extends State<Product_big_View> {
   var offer_type;
 
   bool isDataLoaded = false;
+  var tokenn;
 
   @override
   void initState() {
     print("product_iddddddddddddddd${widget.product_id}");
     print("category_idddddddddddddd${widget.Category_id}");
+    _initData();
     fetchproductdata();
     multipleimage();
     fetchDiscountProducts();
     recentlyviewed();
     fetchRecommendedProducts();
     super.initState();
+  }
+
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
   }
 
   Future<void> fetchRecommendedProducts() async {
@@ -353,8 +363,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -1350,8 +1365,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
               GButton(
                 icon: Icons.shopping_bag,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
+
                   // Navigate to Cart page
                 },
               ),

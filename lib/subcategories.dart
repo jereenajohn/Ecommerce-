@@ -3,6 +3,7 @@ import 'package:bepocart/SubcategoryProductsPage.dart';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/categoryproductsview.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -10,9 +11,13 @@ import 'package:bepocart/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubcategoriesPage extends StatefulWidget {
-  const SubcategoriesPage({required this.categoryId});
+    final String? user_id; // Receive user_id as a parameter
+
+    const SubcategoriesPage({Key? key, this.user_id,required this.categoryId}) : super(key: key);
+
 
   final int categoryId;
 
@@ -23,6 +28,8 @@ class SubcategoriesPage extends StatefulWidget {
 class _SubcategoriesPageState extends State<SubcategoriesPage> {
   List<Map<String, dynamic>> subcategories = [];
   List<Map<String, dynamic>> categoryProducts = [];
+    String? userId; // Declare userId variable to store user ID
+
 
   void aa() {
     print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii${widget.categoryId}");
@@ -40,13 +47,33 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   int _index = 0;
   List<Map<String, dynamic>> searchResults = [];
   TextEditingController searchitem = TextEditingController();
+  var tokenn;
 
   @override
   void initState() {
     super.initState();
+    _initData();
     fetchSubcategories();
     fetchCategoryProducts();
     aa();
+  }
+
+   Future<void> _initData() async {
+    userId = await getUserIdFromPrefs();
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
+  }
+
+   Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  Future<String?> getUserIdFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userId');
   }
 
 
@@ -235,8 +262,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+             if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -544,14 +576,22 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                   // Navigate to Home page
                 },
               ),
-              GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+            GButton(
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

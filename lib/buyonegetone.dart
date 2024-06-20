@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -24,6 +25,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   String? userId; // Declare userId variable to store user ID
   int _selectedIndex = 0; // Index of the selected tab
   List<bool> isFavorite = [];
+  var tokenn;
 
   final String buyonegetoneurl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/buy-1-get-1/";
@@ -44,7 +46,13 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   @override
   void initState() {
     super.initState();
+    _initData();
     fetchbuyonegetoneProducts();
+  }
+
+   Future<void> _initData() async {
+        tokenn = await gettokenFromPrefs();
+
   }
 
   void toggleFavorite(int index) {
@@ -269,8 +277,17 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+               if (tokenn == null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login_Page()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wishlist()));
+                        }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -576,13 +593,21 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

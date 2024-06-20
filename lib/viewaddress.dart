@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/updateaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -22,11 +23,19 @@ class viewAddress extends StatefulWidget {
 }
 
 class _viewAddressState extends State<viewAddress> {
+  var tokenn;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+     _initData();
     fetchAddress();
+  }
+
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    // Use userId after getting the value
   }
 
   String durl =
@@ -240,14 +249,22 @@ class _viewAddressState extends State<viewAddress> {
                   // Navigate to Home page
                 },
               ),
-              GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+               GButton(
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

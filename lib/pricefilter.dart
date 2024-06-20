@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
@@ -29,6 +30,7 @@ class _pricefilterpageState extends State<pricefilterpage> {
   List<Map<String, dynamic>> products = [];
   bool _isSearching = false;
   int _index = 0;
+  var tokenn;
   TextEditingController searchitem = TextEditingController();
  final String wishlisturl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/add-wishlist/";
@@ -39,10 +41,17 @@ class _pricefilterpageState extends State<pricefilterpage> {
   @override
   void initState() {
     super.initState();
+     _initData();
     isFavorite = List<bool>.filled(widget.filterresult.length, false);
     print(
         "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB${widget.filterresult}");
   }
+
+   Future<void> _initData() async {
+        tokenn = await gettokenFromPrefs();
+
+  }
+
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -414,13 +423,21 @@ class _pricefilterpageState extends State<pricefilterpage> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

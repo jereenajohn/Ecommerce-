@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/filterlowtohigh.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _hightolowpageState extends State<hightolowpage> {
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
+      var tokenn;
 
 
 
@@ -37,10 +39,19 @@ class _hightolowpageState extends State<hightolowpage> {
   @override
   void initState() {
     super.initState();
+     _initData();
     isFavorite = List<bool>.filled(widget.result.length, false);
     print("Initialized favorites: $isFavorite");
     print("Search results: ${widget.result}");
   }
+
+   Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
+  }
+
 
   final String lowtohigh = "https://pit-currently-fashion-stockings.trycloudflare.com//low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -247,7 +258,7 @@ class _hightolowpageState extends State<hightolowpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Results'),
+        title: Text('High to Low Price'),
       ),
       body: Column(
         children: [
@@ -541,13 +552,21 @@ class _hightolowpageState extends State<hightolowpage> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

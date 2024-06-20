@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
@@ -36,13 +37,24 @@ class _SearchState extends State<Search> {
       "https://pit-currently-fashion-stockings.trycloudflare.com//search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
+  var tokenn;
   @override
   void initState() {
     super.initState();
+    _initData();
     isFavorite = List<bool>.filled(widget.searchresults.length, false);
     print(
         "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB${widget.searchresults}");
   }
+
+   Future<void> _initData() async {
+    userId = await getUserIdFromPrefs();
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$userId");
+    // Use userId after getting the value
+  }
+
 
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -222,8 +234,13 @@ class _SearchState extends State<Search> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -453,14 +470,22 @@ class _SearchState extends State<Search> {
                   // Navigate to Home page
                 },
               ),
-              GButton(
-                icon: Icons.shopping_bag,
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
-                },
-              ),
+             GButton(
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),  
               GButton(
                 icon: Icons.search,
                 onPressed: () {

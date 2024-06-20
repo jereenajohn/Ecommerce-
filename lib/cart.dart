@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/checkout.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/selectdeliveryaddress.dart';
@@ -33,6 +34,7 @@ class _CartState extends State<Cart> {
   List<dynamic> pages = [HomePage(), Cart(), UserProfilePage()];
 
   int _selectedIndex = 0;
+  var tokenn;
 
   var CartUrl = "https://pit-currently-fashion-stockings.trycloudflare.com/cart-products/";
   final String productsurl =
@@ -56,10 +58,16 @@ class _CartState extends State<Cart> {
 
   Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
+    tokenn =await gettokenFromPrefs();
     print("--------------------------------------------R$userId");
 
     fetchCartData();
     calculateTotalPrice();
+  }
+
+   Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   Future<void> fetchCartData() async {
@@ -194,10 +202,10 @@ class _CartState extends State<Cart> {
     return prefs.getString('userId');
   }
 
-  Future<String?> gettokenFromPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
-  }
+  // Future<String?> gettokenFromPrefs() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString('token');
+  // }
 
   double calculateTotalPrice() {
     double totalPrice = 0.0;
@@ -223,8 +231,17 @@ class _CartState extends State<Cart> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+              if (tokenn == null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login_Page()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wishlist()));
+                        }
             },
             icon: Image.asset(
               "lib/assets/heart.png",

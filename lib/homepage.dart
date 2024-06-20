@@ -7,6 +7,7 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/flashsaleproducts.dart';
 import 'package:bepocart/halfrateproducts.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/myorders.dart';
 import 'package:bepocart/offerproducts.dart';
 import 'package:bepocart/productbigview.dart';
@@ -61,7 +62,8 @@ class _HomePageState extends State<HomePage> {
 
   final String bannerurl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/banners/";
-  final String baseUrl = "https://pit-currently-fashion-stockings.trycloudflare.com/";
+  final String baseUrl =
+      "https://pit-currently-fashion-stockings.trycloudflare.com/";
   final String categoryUrl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/category/";
   final String productsurl =
@@ -98,10 +100,12 @@ class _HomePageState extends State<HomePage> {
   bool _isSearching = false;
   int _index = 0;
   bool isExpanded = false;
-
+  var tokenn;
   @override
   void initState() {
     super.initState();
+    _initData();
+
     fetchBanners();
     fetchCategories();
     fetchProducts();
@@ -123,6 +127,14 @@ class _HomePageState extends State<HomePage> {
         print("555555555555555R5555555555555555555555555$userId");
       });
     });
+  }
+
+  Future<void> _initData() async {
+    userId = await getUserIdFromPrefs();
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
   }
 
   void logout() async {
@@ -305,7 +317,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final response = await http.get(Uri.parse(productsurl));
       print('Response: ${response.statusCode}');
-  
+
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['products'];
@@ -762,10 +774,17 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.only(left: 170),
                     child: IconButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Wishlist()));
+                        if (tokenn == null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login_Page()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wishlist()));
+                        }
                       },
                       icon: Image.asset(
                         "lib/assets/heart.png",
@@ -2475,9 +2494,16 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: Icons.shopping_bag,
                   onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Cart()));
                     // Navigate to Cart page
                   },
                 ),

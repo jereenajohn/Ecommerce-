@@ -4,6 +4,7 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/filterhightolow.dart';
 import 'package:bepocart/filterlowtohigh.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -43,12 +44,25 @@ class _CategoryProductViewState extends State<CategoryProductView> {
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
   List<Map<String, dynamic>> hightolowresult = [];
+  var tokenn;
   @override
   void initState() {
     super.initState();
     fetchCatProducts();
+    _initData();
     bbb();
   }
+
+   Future<void> _initData() async {
+        tokenn = await gettokenFromPrefs();
+
+  }
+
+Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
 
   void bbb() {
     print(
@@ -304,8 +318,17 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Wishlist()));
+              if (tokenn == null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login_Page()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wishlist()));
+                        }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -747,11 +770,27 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                 },
               ),
               GButton(
-                icon: Icons.shopping_bag,
+                  icon: Icons.shopping_bag,
+                  onPressed: () {
+                    if (tokenn == null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login_Page()));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Cart()));
+                    }
+
+                    // Navigate to Cart page
+                  },
+                ),
+              GButton(
+                icon: Icons.search,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
-                  // Navigate to Cart page
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => search()));
+                  // Show search dialog if tapped
                 },
               ),
               GButton(

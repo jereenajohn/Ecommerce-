@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/orderbigview.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
@@ -22,7 +23,22 @@ class _MyOrderState extends State<MyOrder> {
   @override
   void initState() {
     super.initState();
+    _initData();
     myOrderDetails();
+  }
+
+  var tokenn;
+
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
+    print("--------------------------------------------R$tokenn");
+    // Use userId after getting the value
+  }
+
+  Future<String?> gettokenFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   final String orders =
@@ -75,12 +91,11 @@ class _MyOrderState extends State<MyOrder> {
         for (var productData in productsData) {
           ids.add(productData['product']);
           orderids.add(productData['id']);
-
         }
 
         setState(() {
           productIds = ids;
-          orderIds=orderids;
+          orderIds = orderids;
         });
 
         // Fetch product details after getting order details
@@ -110,7 +125,6 @@ class _MyOrderState extends State<MyOrder> {
             String imageUrl =
                 "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
-              
               'productid': productData['id'],
               'name': productData['name'],
               'salePrice': productData['salePrice'],
@@ -124,7 +138,8 @@ class _MyOrderState extends State<MyOrder> {
           products = filteredProducts;
           isLoading = false; // Set loading state to false
 
-          print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$products");
+          print(
+              "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$products");
         });
       } else {
         throw Exception('Failed to load wishlist products');
@@ -145,8 +160,13 @@ class _MyOrderState extends State<MyOrder> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Cart()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Cart()));
+              }
             },
             icon: Image.asset(
               "lib/assets/bag.png",
@@ -166,7 +186,12 @@ class _MyOrderState extends State<MyOrder> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderBigView(productid:product['productid'],orderids:orderIds)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OrderBigView(
+                                    productid: product['productid'],
+                                    orderids: orderIds)));
                       },
                       child: Container(
                         height: 90,
@@ -228,8 +253,14 @@ class _MyOrderState extends State<MyOrder> {
               GButton(
                 icon: Icons.shopping_bag,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
+
                   // Navigate to Cart page
                 },
               ),

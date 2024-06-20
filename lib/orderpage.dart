@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/ordersuccesspage.dart';
 
 import 'package:bepocart/selectdeliveryaddress.dart';
@@ -46,11 +47,12 @@ enum PaymentMethod { cod, razorpay }
 class _orderState extends State<order> {
   var couponcode;
   String? userId;
+   bool isCouponApplied = false;
   String fetchaddressurl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/get-address/";
-      String orderurl =
+  String orderurl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/order/create/";
-        String cuponurl =
+  String cuponurl =
       "https://pit-currently-fashion-stockings.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
@@ -58,6 +60,7 @@ class _orderState extends State<order> {
   TextEditingController coupon = TextEditingController();
   int CODAMOUNT = 40;
   late Razorpay razorpay;
+  var tokenn;
 
   @override
   void initState() {
@@ -65,7 +68,7 @@ class _orderState extends State<order> {
     _initData();
     print(widget.name);
     print(widget.addressid);
-   
+
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, errorHandler);
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, successHandler);
@@ -73,10 +76,13 @@ class _orderState extends State<order> {
   }
 
   Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
+
     userId = await getUserIdFromPrefs();
-     fetchcupons();
+    fetchcupons();
 
     fetchCartData();
+    orderpayment();
     // calculateTotalPrice();
   }
 
@@ -91,7 +97,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//cart-products/";
+      "https://pit-currently-fashion-stockings.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -125,7 +131,10 @@ class _orderState extends State<order> {
     ));
   }
 
+  var id;
+
   void successHandler(PaymentSuccessResponse response) {
+    id = response.paymentId;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(response.paymentId!),
       backgroundColor: Colors.green,
@@ -139,8 +148,6 @@ class _orderState extends State<order> {
     ));
   }
 
-
-
 //coupons
   List<Map<String, dynamic>> cupondata = [];
   void fetchcupons() async {
@@ -152,14 +159,11 @@ class _orderState extends State<order> {
         List<Map<String, dynamic>> cuponList = [];
 
         for (var coupon in productsData) {
-          
           cuponList.add({
             'id': coupon['id'],
             'code': coupon['code'],
             'coupon_type': coupon['coupon_type'],
             'discount': coupon['discount'],
-            
-           
           });
         }
 
@@ -176,59 +180,111 @@ class _orderState extends State<order> {
     }
   }
 
-
-
-
 //Order create
 
+  Future<void> ordercreate() async {
+    try {
+      final token = await gettokenFromPrefs();
+      print(
+          '****************************************************************$orderurl${widget.addressid}/');
+      print(
+          '****************************************************************Coupon Code: $couponcode');
+      print(
+          '****************************************************************Payment Method: $selectedpaymentmethod');
 
-   Future<void> ordercreate() async {
-  try {
-    final token = await gettokenFromPrefs();
-    print('****************************************************************$orderurl${widget.addressid}/');
-    print('****************************************************************Coupon Code: $couponcode');
-    print('****************************************************************Payment Method: $selectedpaymentmethod');
+      final url = Uri.parse('$orderurl${widget.addressid}/');
+      final headers = {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      };
+      final body = jsonEncode({
+        'coupon_code': couponcode,
+        'payment_method': selectedpaymentmethod,
+      });
 
-    final url = Uri.parse('$orderurl${widget.addressid}/');
-    final headers = {
-      'Authorization': '$token',
-      'Content-Type': 'application/json',
-    };
-    final body = jsonEncode({
-      'coupon_code': couponcode,
-      'payment_method': selectedpaymentmethod,
-    });
+      print('Request URL: $url');
+      print('Request Headers: $headers');
+      print('Request Body: $body');
 
-    print('Request URL: $url');
-    print('Request Headers: $headers');
-    print('Request Body: $body');
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
 
-    var response = await http.post(
-      url,
-      headers: headers,
-      body: body,
-    );
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
 
-    print('Response Status Code: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-
-    if (response.statusCode == 201) {
-      final recent = jsonDecode(response.body);
-       Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OrderConfirmationScreen(),
-                    ),
-                  );
-      print('Order created successfully: $recent');
-    } else {
-      print('Failed to create order: ${response.statusCode}');
-      print('Error Message: ${jsonDecode(response.body)['message']}');
+      if (response.statusCode == 201) {
+        final recent = jsonDecode(response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OrderConfirmationScreen(),
+          ),
+        );
+        print('Order created successfully: $recent');
+      } else {
+        print('Failed to create order: ${response.statusCode}');
+        print('Error Message: ${jsonDecode(response.body)['message']}');
+      }
+    } catch (error) {
+      print('Error creating order: $error');
     }
-  } catch (error) {
-    print('Error creating order: $error');
   }
-}
+
+  Future<void> orderpayment() async {
+    try {
+      final token = await gettokenFromPrefs();
+      print(
+          '****************************************************************$orderurl${widget.addressid}/');
+      print(
+          '****************************************************************Coupon Code: $couponcode');
+      print(
+          '****************************************************************Payment Method: $selectedpaymentmethod');
+
+      final url = Uri.parse('$orderurl${widget.addressid}/');
+      final headers = {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      };
+      final body = jsonEncode({
+        'coupon_code': couponcode,
+        'payment_method': selectedpaymentmethod,
+        'payment_id': id
+      });
+
+      print('Request URL: $url');
+      print('Request Headers: $headers');
+      print('Request Body: $body');
+
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 201) {
+        final recent = jsonDecode(response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OrderConfirmationScreen(),
+          ),
+        );
+        print('Order created successfully: $recent');
+      } else {
+        print('Failed to create order: ${response.statusCode}');
+        print('Error Message: ${jsonDecode(response.body)['message']}');
+      }
+    } catch (error) {
+      print('Error creating order: $error');
+    }
+  }
+
   Future<void> fetchCartData() async {
     print("Fetching cart data...");
     try {
@@ -486,59 +542,77 @@ class _orderState extends State<order> {
                     ),
                   ),
 
-                Container(
-      padding: EdgeInsets.only(left: 10, right: 10),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              controller: coupon,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                hintText: 'Enter Coupon Code',
-              ),
-            ),
-          ),
-          SizedBox(width: 8),
-          ElevatedButton(
-            onPressed: isButtonDisabled ? null : () {
-              setState(() {
-                couponcode = coupon.text;
-                print('Button Pressed $couponcode');
-                for (int i = 0; i < cupondata.length; i++) {
-                  if (couponcode == cupondata[i]['code']) {
-                    if (cupondata[i]['coupon_type'] == "Fixed Amount") {
-                      sellingprice = sellingprice - double.parse(cupondata[i]['discount']);
-                      cupondiscount = double.parse(cupondata[i]['discount']);
-                      print("After Apply coupon: $sellingprice");
-                    } else {
-                      sellingprice = sellingprice - (sellingprice * double.parse(cupondata[i]['discount']) / 100);
-                      cupondiscount = (sellingprice * double.parse(cupondata[i]['discount']) / 100);
-                      print("After Apply coupon percentage: $sellingprice");
-                    }
-                    isButtonDisabled = true;
-                    coupon.clear();
-                  }
-                }
-              });
-            },
-            child: Text(
-              'Apply',
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            controller: coupon,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              hintText: 'Enter Coupon Code',
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: isButtonDisabled
+                              ? null
+                              : () {
+                                  setState(() {
+                                    couponcode = coupon.text;
+                                    print('Button Pressed $couponcode');
+                                    for (int i = 0; i < cupondata.length; i++) {
+                                      if (couponcode == cupondata[i]['code']) {
+                                        if (cupondata[i]['coupon_type'] ==
+                                            "Fixed Amount") {
+                                          sellingprice = sellingprice -
+                                              double.parse(
+                                                  cupondata[i]['discount']);
+                                          cupondiscount = double.parse(
+                                              cupondata[i]['discount']);
+                                          print(
+                                              "After Apply coupon: $sellingprice");
+                                        } else {
+                                          sellingprice = sellingprice -
+                                              (sellingprice *
+                                                  double.parse(cupondata[i]
+                                                      ['discount']) /
+                                                  100);
+                                          cupondiscount = (sellingprice *
+                                              double.parse(
+                                                  cupondata[i]['discount']) /
+                                              100);
+                                          print(
+                                              "After Apply coupon percentage: $sellingprice");
+                                        }
+                                        isButtonDisabled = true;
+                                        isCouponApplied = true;
+                                        coupon.clear();
+                                      }
+                                    }
+                                  });
+                                },
+                          child:Text(
+              isCouponApplied ? 'Applied' : 'Apply',
               style: TextStyle(color: Colors.white),
             ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black, // Button color
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0), // Rectangular shape
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black, // Button color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  5.0), // Rectangular shape
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
                   SizedBox(
                     height: 10,
@@ -634,32 +708,25 @@ class _orderState extends State<order> {
                             ),
                           ),
                         ),
-                      if(cupondiscount!=null)
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 10, right: 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Coupon Discount",
-                                style: TextStyle(fontSize: 13),
-                              ),
-                              Spacer(),
-                              Text(
-                                "-₹${cupondiscount}",
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.green),
-                              ),
-                            ],
+                        if (cupondiscount != null)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 10),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Coupon Discount",
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "-₹${cupondiscount}",
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.green),
+                                ),
+                              ],
+                            ),
                           ),
-                      ),
-
-                        
-
-                        
-
-                        
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 10, left: 10, right: 10),
@@ -781,9 +848,7 @@ class _orderState extends State<order> {
             child: InkWell(
               onTap: () {
                 if (selectedpaymentmethod == "COD") {
-
                   ordercreate();
-                 
                 } else {
                   openCheckout();
                 }
@@ -836,8 +901,14 @@ class _orderState extends State<order> {
               GButton(
                 icon: Icons.shopping_bag,
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
+
                   // Navigate to Cart page
                 },
               ),
