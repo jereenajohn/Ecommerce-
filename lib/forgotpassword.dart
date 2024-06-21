@@ -21,7 +21,7 @@ class forgotpassword extends StatefulWidget {
 
 
 class _forgotpasswordState extends State<forgotpassword> {
-  var url="https://pit-currently-fashion-stockings.trycloudflare.com/forgot-password/";
+  var url="https://lake-badge-stephen-proc.trycloudflare.com/forgot-password/";
   TextEditingController email=TextEditingController();
   var tokenn;
   var emailres;

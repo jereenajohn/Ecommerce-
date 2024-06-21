@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//best-sale-products/";
+      "https://lake-badge-stephen-proc.trycloudflare.com//best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//products/search/?q=";
+      "https://lake-badge-stephen-proc.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//whishlist/";
+      "https://lake-badge-stephen-proc.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -108,6 +108,8 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
         }),
       );
 
+      
+
       print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
       if (response.statusCode == 200) {
@@ -148,7 +150,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -244,7 +246,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

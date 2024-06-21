@@ -27,14 +27,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/flash-sale/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/products/search/?q=";
+      "https://lake-badge-stephen-proc.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/whishlist/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 

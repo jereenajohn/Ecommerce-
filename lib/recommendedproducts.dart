@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/recommended/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/products/search/?q=";
+      "https://lake-badge-stephen-proc.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/add-wishlist/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -262,7 +262,7 @@ Future<void> _initData() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

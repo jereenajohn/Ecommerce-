@@ -26,7 +26,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/category/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -35,11 +35,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/search-products/?q=";
+      "https://lake-badge-stephen-proc.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/products/filter/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/products/filter/";
   final String hightolow =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/products/filtering/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -90,7 +90,7 @@ Future<String?> gettokenFromPrefs() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -129,7 +129,7 @@ Future<String?> gettokenFromPrefs() async {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -238,7 +238,7 @@ Future<String?> gettokenFromPrefs() async {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://pit-currently-fashion-stockings.trycloudflare.com//${productData['image']}";
+  //             "https://lake-badge-stephen-proc.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -284,7 +284,7 @@ Future<String?> gettokenFromPrefs() async {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://pit-currently-fashion-stockings.trycloudflare.com//${productData['image']}";
+  //             "https://lake-badge-stephen-proc.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],

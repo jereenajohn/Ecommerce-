@@ -47,13 +47,12 @@ enum PaymentMethod { cod, razorpay }
 class _orderState extends State<order> {
   var couponcode;
   String? userId;
-   bool isCouponApplied = false;
+  bool isCouponApplied = false;
   String fetchaddressurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/get-address/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/get-address/";
   String orderurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/order/create/";
-  String cuponurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/cupons/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/order/create/";
+  String cuponurl = "https://lake-badge-stephen-proc.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -82,7 +81,7 @@ class _orderState extends State<order> {
     fetchcupons();
 
     fetchCartData();
-    orderpayment();
+
     // calculateTotalPrice();
   }
 
@@ -97,14 +96,14 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/cart-products/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
   var discount;
   var deliverycharge;
   PaymentMethod _selectedMethod = PaymentMethod.razorpay;
-  var selectedpaymentmethod;
+  var selectedpaymentmethod = 'razorpay';
   var cupondiscount;
   bool isButtonDisabled = false;
 
@@ -135,6 +134,31 @@ class _orderState extends State<order> {
 
   void successHandler(PaymentSuccessResponse response) {
     id = response.paymentId;
+
+    // Show an alert dialog with a "Done" button
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dismissing by tapping outside
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false, // Prevent dismissing by back button
+          child: AlertDialog(
+            title: Text("Payment Successful"),
+            content: Text("Your payment ID is ${response.paymentId!}"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  orderpayment();
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text("Done"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(response.paymentId!),
       backgroundColor: Colors.green,
@@ -236,12 +260,15 @@ class _orderState extends State<order> {
   Future<void> orderpayment() async {
     try {
       final token = await gettokenFromPrefs();
+
       print(
-          '****************************************************************$orderurl${widget.addressid}/');
+          "QWWWWWWWWWWWWWWWWWWWWEEEEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRRRRRR$token");
       print(
-          '****************************************************************Coupon Code: $couponcode');
+          '##################################################YYYYYYYYYYYYYYYYYYYYYYYYYY$orderurl${widget.addressid}/');
       print(
-          '****************************************************************Payment Method: $selectedpaymentmethod');
+          '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Coupon Code: $couponcode');
+      print(
+          '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Payment Method: $selectedpaymentmethod');
 
       final url = Uri.parse('$orderurl${widget.addressid}/');
       final headers = {
@@ -251,7 +278,7 @@ class _orderState extends State<order> {
       final body = jsonEncode({
         'coupon_code': couponcode,
         'payment_method': selectedpaymentmethod,
-        'payment_id': id
+        'id': id
       });
 
       print('Request URL: $url');
@@ -308,7 +335,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${item['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -496,7 +523,8 @@ class _orderState extends State<order> {
                                   _selectedMethod = value!;
                                   print(_selectedMethod);
                                   selectedpaymentmethod = "razorpay";
-                                  print(selectedpaymentmethod);
+                                  print(
+                                      "selectedpaymentmethod:$selectedpaymentmethod");
                                   sellingprice = sellingprice - CODAMOUNT;
                                   print(
                                       "RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$sellingprice");
@@ -598,10 +626,10 @@ class _orderState extends State<order> {
                                     }
                                   });
                                 },
-                          child:Text(
-              isCouponApplied ? 'Applied' : 'Apply',
-              style: TextStyle(color: Colors.white),
-            ),
+                          child: Text(
+                            isCouponApplied ? 'Applied' : 'Apply',
+                            style: TextStyle(color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black, // Button color
                             shape: RoundedRectangleBorder(
@@ -851,6 +879,7 @@ class _orderState extends State<order> {
                   ordercreate();
                 } else {
                   openCheckout();
+                  //  orderpayment();
                 }
               },
               child: Container(

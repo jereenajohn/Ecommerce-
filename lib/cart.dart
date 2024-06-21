@@ -36,18 +36,18 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://pit-currently-fashion-stockings.trycloudflare.com/cart-products/";
+  var CartUrl = "https://lake-badge-stephen-proc.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/products/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/cart/increment/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/cart/decrement/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/cart-delete/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -87,12 +87,12 @@ class _CartState extends State<Cart> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final data = responseData['data'];
-        print("AAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHDEEEEEEEEEEEEEEEEEEEEE$data");
+        print("AAAAAAAAAAAA AAAAAAAAAAHHHHHHHHHHHDEEEEEEEEEEEEEEEEEEEEE$data");
 
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://pit-currently-fashion-stockings.trycloudflare.com/${item['image']}";
+          String imageUrl ="https://lake-badge-stephen-proc.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],

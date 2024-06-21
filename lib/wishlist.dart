@@ -21,15 +21,15 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://pit-currently-fashion-stockings.trycloudflare.com/wishlist/";
+  var wishlisturl = "https://lake-badge-stephen-proc.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/products/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/wishlist-delete/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com/cart/";
+      "https://lake-badge-stephen-proc.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -107,7 +107,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+                "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

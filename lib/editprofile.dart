@@ -26,8 +26,8 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     getprofiledata();
   }
-  var url = "https://pit-currently-fashion-stockings.trycloudflare.com/profile/";
-  var url2="https://pit-currently-fashion-stockings.trycloudflare.com/profile-image/";
+  var url = "https://lake-badge-stephen-proc.trycloudflare.com/profile/";
+  var url2="https://lake-badge-stephen-proc.trycloudflare.com/profile-image/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -36,7 +36,7 @@ class _EditProfileState extends State<EditProfile> {
 var userdata;
 
 var viewprofileurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//profile-view/";
+      "https://lake-badge-stephen-proc.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

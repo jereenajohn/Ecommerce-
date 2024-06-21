@@ -18,7 +18,7 @@ class changepassword extends StatefulWidget {
 class _changepasswordState extends State<changepassword> {
   TextEditingController newpass = TextEditingController();
   TextEditingController confirmpass = TextEditingController();
-  var url = "https://pit-currently-fashion-stockings.trycloudflare.com/change-password/";
+  var url = "https://lake-badge-stephen-proc.trycloudflare.com/change-password/";
 
   Future<void> change() async {
     try {

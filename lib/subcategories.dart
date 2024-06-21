@@ -36,11 +36,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//category/";
+      "https://lake-badge-stephen-proc.trycloudflare.com//category/";
   final String productsurl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//category/";
+      "https://lake-badge-stephen-proc.trycloudflare.com//category/";
   final String searchproducturl =
-      "https://pit-currently-fashion-stockings.trycloudflare.com//search-products/?q=";
+      "https://lake-badge-stephen-proc.trycloudflare.com//search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -147,7 +147,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -192,7 +192,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${productData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -232,7 +232,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://pit-currently-fashion-stockings.trycloudflare.com/${subcategoryData['image']}";
+              "https://lake-badge-stephen-proc.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

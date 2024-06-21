@@ -21,7 +21,7 @@ class _resetpasswordState extends State<resetpassword> {
     TextEditingController newpass1=TextEditingController();
 
   TextEditingController newpass2=TextEditingController();
-    var url = "https://pit-currently-fashion-stockings.trycloudflare.com//reset-password/";
+    var url = "https://lake-badge-stephen-proc.trycloudflare.com//reset-password/";
 var tokenn;
 
  @override
