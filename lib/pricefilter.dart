@@ -33,9 +33,9 @@ class _pricefilterpageState extends State<pricefilterpage> {
   var tokenn;
   TextEditingController searchitem = TextEditingController();
  final String wishlisturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/add-wishlist/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/add-wishlist/";
   final String searchproducturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/search-products/?q=";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -96,7 +96,7 @@ class _pricefilterpageState extends State<pricefilterpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

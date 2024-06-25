@@ -27,14 +27,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/offers/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/products/search/?q=";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/whishlist/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -147,7 +147,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -238,7 +238,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

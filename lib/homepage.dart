@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:bepocart/aaa.dart';
 import 'package:bepocart/bestsaleproducts.dart';
 import 'package:bepocart/buyonegetone.dart';
 import 'package:bepocart/buytwogetone.dart';
@@ -61,41 +62,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/banners/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/";
   final String categoryUrl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/category/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/category/";
   final String productsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/products/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/products/";
   final String offersurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/offer-banner/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/discount-sale/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/buy-1-get-1/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/best-sale-products/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/flash-sale/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/buy-2-get-1/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/offers/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/search-products/?q=";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/recommended/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/recently-viewed/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -212,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${recentproductsData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -259,7 +260,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -294,7 +295,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${offerData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -325,7 +326,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -358,7 +359,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -396,7 +397,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -435,7 +436,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -471,7 +472,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -508,7 +509,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -538,57 +539,106 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchRecommendedProducts() async {
-    try {
-      final token = await gettokenFromPrefs();
+  try {
+    final token = await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+    print("Token: $token");
 
-      final response = await http.post(
-        Uri.parse(recommendedproductsurl),
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': ' $token',
-        },
-        body: jsonEncode({
-          'token': token,
-        }),
-      );
-      print(
-          "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
-      print(
-          "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['data'];
+    final response = await http.get(
+      Uri.parse(recommendedproductsurl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      },
+    );
 
-        print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
+    print("Response Body: ${response.body}");
+    print("Response Status Code: ${response.statusCode}");
 
-        List<Map<String, dynamic>> productRecommendedList = [];
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      final List<dynamic> productsData = parsed['data'];
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
-          productRecommendedList.add({
-            'id': productData['id'],
-            'mainCategory': productData['mainCategory'],
-            'name': productData['name'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-          });
-        }
+      print("Products Data: $productsData");
 
-        setState(() {
-          recommendedproducts = productRecommendedList;
-          print(
-              "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
+      List<Map<String, dynamic>> productRecommendedList = [];
+
+      for (var productData in productsData) {
+        String imageUrl = "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+        productRecommendedList.add({
+          'id': productData['id'],
+          'mainCategory': productData['mainCategory'],
+          'name': productData['name'],
+          'salePrice': productData['salePrice'],
+          'image': imageUrl,
         });
-      } else {
-        throw Exception('Failed to load recommended products');
       }
-    } catch (error) {
-      print('Error fetching recommended products: $error');
+
+      setState(() {
+        recommendedproducts = productRecommendedList;
+        print("Recommended Products: $recommendedproducts");
+      });
+    } else {
+      throw Exception('Failed to load recommended products');
     }
+  } catch (error) {
+    print('Error fetching recommended products: $error');
   }
+}
+
+
+  // Future<void> fetchRecommendedProducts() async {
+  //   try {
+  //     final token = await gettokenFromPrefs();
+
+  //     print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+
+  //     final response = await http.post(
+  //       Uri.parse(recommendedproductsurl),
+  //       headers: {
+  //         'Content-type': 'application/json',
+  //         'Authorization': ' $token',
+  //       },
+  //       body: jsonEncode({
+  //         'token': token,
+  //       }),
+  //     );
+  //     print(
+  //         "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
+  //     print(
+  //         "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
+  //     if (response.statusCode == 200) {
+  //       final parsed = jsonDecode(response.body);
+  //       final List<dynamic> productsData = parsed['data'];
+
+  //       print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
+
+  //       List<Map<String, dynamic>> productRecommendedList = [];
+
+  //       for (var productData in productsData) {
+  //         String imageUrl =
+  //             "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+  //         productRecommendedList.add({
+  //           'id': productData['id'],
+  //           'mainCategory': productData['mainCategory'],
+  //           'name': productData['name'],
+  //           'salePrice': productData['salePrice'],
+  //           'image': imageUrl,
+  //         });
+  //       }
+
+  //       setState(() {
+  //         recommendedproducts = productRecommendedList;
+  //         print(
+  //             "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
+  //       });
+  //     } else {
+  //       throw Exception('Failed to load recommended products');
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching recommended products: $error');
+  //   }
+  // }
 
   void halfratedProducts() async {
     try {
@@ -600,7 +650,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -636,7 +686,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${bannerData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -665,7 +715,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${categoryData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -2510,9 +2560,9 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: Icons.search,
                   onPressed: () {
-                    //  Navigator.push(
-                    //     context, MaterialPageRoute(builder: (context) => search()));
-                    // Show search dialog if tapped
+                     Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => MyWidget()));
+                    
                   },
                 ),
                 GButton(

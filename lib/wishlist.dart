@@ -21,15 +21,15 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://lake-badge-stephen-proc.trycloudflare.com/wishlist/";
+  var wishlisturl = "https://audio-travesti-imposed-versions.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/products/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/wishlist-delete/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/cart/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -89,7 +89,203 @@ class _WishlistState extends State<Wishlist> {
       print("Failed to fetch wishlist data");
     }
   }
+final multipleimageurl =
+      "https://audio-travesti-imposed-versions.trycloudflare.com/product-images/";
+        List<Map<String, dynamic>> images = [];
+         String? selectedColor;
+  List<String> colors = [];
+    List<String> sizeNames = [];
+  String? selectedSize;
 
+
+    Future<void> multipleimage(int id) async {
+    print('======================$multipleimageurl${id}/r');
+    Set<String> colorsSet = {};
+    try {
+      final response =
+          await http.get(Uri.parse('$multipleimageurl${id}/'));
+      print("statussssssssssssssssssssssssss${response.statusCode}");
+      if (response.statusCode == 200) {
+        final List<dynamic> imageData = jsonDecode(response.body)['product'];
+        print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
+
+        // product = jsonDecode(response.body)['product'];
+
+        List<Map<String, dynamic>> productsList = [];
+
+        for (var imageData in imageData) {
+          String imageUrl1 =
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image1']}";
+          String imageUrl2 =
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image2']}";
+          String imageUrl3 =
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image3']}";
+          String imageUrl4 =
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image4']}";
+          String imageUrl5 =
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image5']}";
+          productsList.add({
+            'id': imageData['id'],
+            'image1': imageUrl1,
+            'image2': imageUrl2,
+            'image3': imageUrl3,
+            'image4': imageUrl4,
+            'image5': imageUrl5,
+            'color': imageData['color'],
+            'size_names': List<String>.from(
+                imageData['size_names']), // Cast to List<String>
+          });
+          colorsSet.add(imageData['color']);
+        }
+
+        setState(() {
+          images = productsList;
+          colors = colorsSet.toList();
+          selectedColor = colors.isNotEmpty ? colors[0] : null;
+          sizeNames = images.firstWhere(
+                  (image) => image['color'] == selectedColor)['size_names'] ??
+              [];
+          selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
+        });
+        print("dddddddddddddddddddddddddddddddddddddd$sizeNames");
+      } else {
+        throw Exception('Error fetching product image');
+      }
+    } catch (error) {
+      print('Error fetching product image : $error');
+    }
+  }
+
+
+
+ void _showBottomSheet(BuildContext context,int index) {
+  print("iddddddddddddddddddddd$index");
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(
+          heightFactor: 0.3, // Adjust the height as needed
+          widthFactor: 0.99, // Set the width to 95% of the screen
+          child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                padding: EdgeInsets.all(16.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                               Text(
+                        'Select Color',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      Wrap(
+                        spacing: 8.0,
+                        children: colors.map((color) {
+                          return ChoiceChip(
+                            label: Text(color),
+                            selected: selectedColor == color,
+                            onSelected: (bool selected) {
+                              setState(() {
+                                selectedColor = selected ? color : null;
+                                sizeNames = images.firstWhere(
+                                        (image) => image['color'] == selectedColor)['size_names'] ??
+                                    [];
+                                selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
+                                print(selectedColor);
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+
+                            ],
+                          )
+                        ],
+                      ),
+                     
+                      SizedBox(height: 16.0),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                               Text(
+                        'Select Size',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      Wrap(
+                        spacing: 8.0,
+                        children: sizeNames.map((size) {
+                          return ChoiceChip(
+                            label: Text(size),
+                            selected: selectedSize == size,
+                            onSelected: (bool selected) {
+                              setState(() {
+                                selectedSize = selected ? size : null;
+                                print(selectedSize);
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+
+                            ],
+                          )
+                        ],
+                      ),
+                     
+                      SizedBox(height: 16.0),
+                      ElevatedButton(
+  onPressed: () {
+     addProductToCart(
+                                  products[index]['id'],
+                                  products[index]['name'],
+                                  products[index]['price'],);
+                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Wishlist()));
+    print('Selected Color: $selectedColor');
+    print('Selected Size: $selectedSize');
+  },
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 0, 0)), // Background color
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18.0), // Border radius
+        side: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)), // Border color
+      ),
+    ),
+  ),
+  child: Container(
+    alignment: Alignment.center,
+    padding: EdgeInsets.symmetric(vertical: 12.0), // Adjust padding as needed
+    child: Text(
+      'Confirm',
+      style: TextStyle(
+        color: Colors.white, // Text color
+        fontSize: 16.0, // Adjust font size as needed
+      ),
+    ),
+  ),
+),
+
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
@@ -107,7 +303,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+                "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -162,6 +358,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   Future<void> addProductToCart(int productId, var name, var price) async {
+    print(productId);
     try {
       print('AAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLL$addtocarturl$productId/');
       final token = await gettokenFromPrefs();
@@ -176,7 +373,9 @@ class _WishlistState extends State<Wishlist> {
           'token': token,
           'product': productId,
           'name': name,
-          'price': price
+          'price': price,
+          'color':selectedColor,
+          'size':selectedSize,
         }),
       );
 
@@ -313,11 +512,25 @@ class _WishlistState extends State<Wishlist> {
                           ),
 
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
+
+                              
+
+                               await multipleimage(products[index]['id']);
+                            if (colors.isNotEmpty) {
+                                    _showBottomSheet(context,index);
+                                  }
+
+                                else{
+                                   multipleimage(products[index]['id']);
                               addProductToCart(
                                   products[index]['id'],
                                   products[index]['name'],
-                                  products[index]['price']);
+                                  products[index]['price'],);
+
+                                }
+
+                             
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,

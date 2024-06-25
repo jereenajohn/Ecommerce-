@@ -36,18 +36,18 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://lake-badge-stephen-proc.trycloudflare.com/cart-products/";
+  var CartUrl = "https://audio-travesti-imposed-versions.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/products/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/cart/increment/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/cart/decrement/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/cart-delete/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://lake-badge-stephen-proc.trycloudflare.com/${item['image']}";
+          String imageUrl ="https://audio-travesti-imposed-versions.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -103,6 +103,8 @@ class _CartState extends State<Cart> {
             'price': item['salePrice'],
             'name': item['name'],
             'image': imageUrl,
+            'color':item['color'],
+            'size':item['size']
 
             // Update with correct price value
           });
@@ -339,6 +341,28 @@ class _CartState extends State<Cart> {
                                     fontSize: 14,
                                     color: Colors.green
                                   ),
+                                ),
+                                if(cartProducts[index]['color']!=null && cartProducts[index]['size']!=null)
+                                  Row(
+                                    children: [
+                                      Text(
+                                    '${cartProducts[index]['color']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: const Color.fromARGB(255, 115, 115, 115)
+                                    ),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                    '${cartProducts[index]['size']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color:  const Color.fromARGB(255, 115, 115, 115)
+                                    ),
+                                  ),
+
+                                    ],
+
                                 ),
                                
                                 // Inside the ListView.builder itemBuilder method

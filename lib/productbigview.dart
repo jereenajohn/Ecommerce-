@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/category/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/product-images/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/cart/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/add-wishlist/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/discount-sale/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/recently-viewed/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/recommended/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -93,57 +93,52 @@ class _Product_big_ViewState extends State<Product_big_View> {
   }
 
   Future<void> fetchRecommendedProducts() async {
-    try {
-      final token = await gettokenFromPrefs();
+  try {
+    final token = await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+    print("Token: $token");
 
-      final response = await http.post(
-        Uri.parse(recommendedproductsurl),
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': ' $token',
-        },
-        body: jsonEncode({
-          'token': token,
-        }),
-      );
-      print(
-          "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
-      print(
-          "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['data'];
+    final response = await http.get(
+      Uri.parse(recommendedproductsurl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      },
+    );
 
-        print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
+    print("Response Body: ${response.body}");
+    print("Response Status Code: ${response.statusCode}");
 
-        List<Map<String, dynamic>> productRecommendedList = [];
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      final List<dynamic> productsData = parsed['data'];
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
-          productRecommendedList.add({
-            'id': productData['id'],
-            'mainCategory': productData['mainCategory'],
-            'name': productData['name'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-          });
-        }
+      print("Products Data: $productsData");
 
-        setState(() {
-          recommendedproducts = productRecommendedList;
-          print(
-              "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
+      List<Map<String, dynamic>> productRecommendedList = [];
+
+      for (var productData in productsData) {
+        String imageUrl = "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+        productRecommendedList.add({
+          'id': productData['id'],
+          'mainCategory': productData['mainCategory'],
+          'name': productData['name'],
+          'salePrice': productData['salePrice'],
+          'image': imageUrl,
         });
-      } else {
-        throw Exception('Failed to load recommended products');
       }
-    } catch (error) {
-      print('Error fetching recommended products: $error');
+
+      setState(() {
+        recommendedproducts = productRecommendedList;
+        print("Recommended Products: $recommendedproducts");
+      });
+    } else {
+      throw Exception('Failed to load recommended products');
     }
+  } catch (error) {
+    print('Error fetching recommended products: $error');
   }
+}
 
   Future<void> recentlyviewed() async {
     try {
@@ -171,7 +166,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${recentproductsData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -210,7 +205,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -319,8 +314,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
           'token': token,
           'product': productId,
           'name': name,
-          'price': price
+          'price': price,
+          'color': selectedColor,
+          'size':selectedSize
         }),
+      );
+      print(
+        'statsssssssssssssssssssssssssssssssssssssssss${response.body}'
       );
 
       if (response.statusCode == 201) {
@@ -777,7 +777,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         children: [
                           Flexible(
                             child: Text(
-                              "* ${description}",
+                              "*${description}",
                               maxLines:
                                   null, // Set maxLines to null for unlimited lines
                             ),
@@ -1419,7 +1419,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1486,15 +1486,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${imageData['image1']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${imageData['image2']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${imageData['image3']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${imageData['image4']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${imageData['image5']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

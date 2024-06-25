@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/recommended/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/products/search/?q=";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com/add-wishlist/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -233,59 +233,52 @@ Future<void> _initData() async {
   }
 
   Future<void> fetchRecommendedProducts() async {
-    try {
-      final token = await gettokenFromPrefs();
+  try {
+    final token = await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+    print("Token: $token");
 
-      final response = await http.post(
-        Uri.parse(recommendedproductsurl),
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': ' $token',
-        },
-        body: jsonEncode({
-          'token': token,
-        }),
-      );
-      print(
-          "00000000000000008888888888888888888888888888888777777777777777777777777777777${response.body}");
-      print(
-          "222222222222222222222222222222222222222222222222222222222222222222222222222${response.statusCode}");
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['data'];
+    final response = await http.get(
+      Uri.parse(recommendedproductsurl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      },
+    );
 
-        print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDYYYYYYYYYYYYYYYYY$productsData");
+    print("Response Body: ${response.body}");
+    print("Response Status Code: ${response.statusCode}");
 
-        List<Map<String, dynamic>> productRecommendedList = [];
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      final List<dynamic> productsData = parsed['data'];
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
-          productRecommendedList.add({
-            'id': productData['id'],
-            'mainCategory': productData['mainCategory'],
-            'name': productData['name'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-          });
-        }
+      print("Products Data: $productsData");
 
-        setState(() {
-          recommendedproducts = productRecommendedList;
-           isFavorite =
-              List.generate(recommendedproducts.length, (index) => false);
-          print(
-              "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
+      List<Map<String, dynamic>> productRecommendedList = [];
+
+      for (var productData in productsData) {
+        String imageUrl = "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+        productRecommendedList.add({
+          'id': productData['id'],
+          'mainCategory': productData['mainCategory'],
+          'name': productData['name'],
+          'salePrice': productData['salePrice'],
+          'image': imageUrl,
         });
-      } else {
-        throw Exception('Failed to load recommended products');
       }
-    } catch (error) {
-      print('Error fetching recommended products: $error');
+
+      setState(() {
+        recommendedproducts = productRecommendedList;
+        print("Recommended Products: $recommendedproducts");
+      });
+    } else {
+      throw Exception('Failed to load recommended products');
     }
+  } catch (error) {
+    print('Error fetching recommended products: $error');
   }
+}
 
 
   @override

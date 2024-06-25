@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com//search-products/?q=";
+      "https://audio-travesti-imposed-versions.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://lake-badge-stephen-proc.trycloudflare.com//offer-banner/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://lake-badge-stephen-proc.trycloudflare.com//add-wishlist/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://lake-badge-stephen-proc.trycloudflare.com//low-products/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://lake-badge-stephen-proc.trycloudflare.com//high-products/";
+      "https://audio-travesti-imposed-versions.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}",
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -287,7 +287,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://lake-badge-stephen-proc.trycloudflare.com/${productData['image']}";
+              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
