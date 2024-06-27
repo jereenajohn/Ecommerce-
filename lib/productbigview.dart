@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/category/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/product-images/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/add-wishlist/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/discount-sale/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/recently-viewed/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/recommended/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -93,52 +93,54 @@ class _Product_big_ViewState extends State<Product_big_View> {
   }
 
   Future<void> fetchRecommendedProducts() async {
-  try {
-    final token = await gettokenFromPrefs(); // Make sure this method returns your token correctly
+    try {
+      final token =
+          await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-    print("Token: $token");
+      print("Token: $token");
 
-    final response = await http.get(
-      Uri.parse(recommendedproductsurl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': '$token',
-      },
-    );
+      final response = await http.get(
+        Uri.parse(recommendedproductsurl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
-    print("Response Body: ${response.body}");
-    print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+      print("Response Status Code: ${response.statusCode}");
 
-    if (response.statusCode == 200) {
-      final parsed = jsonDecode(response.body);
-      final List<dynamic> productsData = parsed['data'];
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['data'];
 
-      print("Products Data: $productsData");
+        print("Products Data: $productsData");
 
-      List<Map<String, dynamic>> productRecommendedList = [];
+        List<Map<String, dynamic>> productRecommendedList = [];
 
-      for (var productData in productsData) {
-        String imageUrl = "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
-        productRecommendedList.add({
-          'id': productData['id'],
-          'mainCategory': productData['mainCategory'],
-          'name': productData['name'],
-          'salePrice': productData['salePrice'],
-          'image': imageUrl,
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+          productRecommendedList.add({
+            'id': productData['id'],
+            'mainCategory': productData['mainCategory'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+          });
+        }
+
+        setState(() {
+          recommendedproducts = productRecommendedList;
+          print("Recommended Products: $recommendedproducts");
         });
+      } else {
+        throw Exception('Failed to load recommended products');
       }
-
-      setState(() {
-        recommendedproducts = productRecommendedList;
-        print("Recommended Products: $recommendedproducts");
-      });
-    } else {
-      throw Exception('Failed to load recommended products');
+    } catch (error) {
+      print('Error fetching recommended products: $error');
     }
-  } catch (error) {
-    print('Error fetching recommended products: $error');
   }
-}
 
   Future<void> recentlyviewed() async {
     try {
@@ -166,7 +168,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${recentproductsData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -205,7 +207,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -316,12 +318,10 @@ class _Product_big_ViewState extends State<Product_big_View> {
           'name': name,
           'price': price,
           'color': selectedColor,
-          'size':selectedSize
+          'size': selectedSize
         }),
       );
-      print(
-        'statsssssssssssssssssssssssssssssssssssssssss${response.body}'
-      );
+      print('statsssssssssssssssssssssssssssssssssssssssss${response.body}');
 
       if (response.statusCode == 201) {
         print('Product added to cart: $productId');
@@ -628,19 +628,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       SizedBox(
                         height: 8,
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          addProductToCart(widget.product_id, name, price);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text("ADD TO CART"),
-                      )
                     ],
                   ),
                 ),
@@ -745,6 +732,30 @@ class _Product_big_ViewState extends State<Product_big_View> {
                     ),
                   ),
                 ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 140,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          addProductToCart(widget.product_id, name, price);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text("ADD TO CART"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
               SizedBox(height: 5),
 
@@ -1419,7 +1430,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1486,15 +1497,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image1']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image2']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image3']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image4']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image5']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

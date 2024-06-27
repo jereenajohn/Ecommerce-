@@ -27,14 +27,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/flash-sale/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/search/?q=";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/whishlist/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 

@@ -36,11 +36,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com//category/";
+      "https://telecharger-find-residence-levy.trycloudflare.com//category/";
   final String productsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com//category/";
+      "https://telecharger-find-residence-levy.trycloudflare.com//category/";
   final String searchproducturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com//search-products/?q=";
+      "https://telecharger-find-residence-levy.trycloudflare.com//search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -147,7 +147,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -192,7 +192,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -232,7 +232,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${subcategoryData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

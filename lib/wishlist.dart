@@ -21,15 +21,15 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://michelle-miniature-depot-studied.trycloudflare.com/wishlist/";
+  var wishlisturl = "https://telecharger-find-residence-levy.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/wishlist-delete/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -88,7 +88,7 @@ class _WishlistState extends State<Wishlist> {
     }
   }
 final multipleimageurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/product-images/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/product-images/";
         List<Map<String, dynamic>> images = [];
          String? selectedColor;
   List<String> colors = [];
@@ -113,15 +113,15 @@ final multipleimageurl =
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image1']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image2']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image3']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image4']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image5']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -301,7 +301,7 @@ final multipleimageurl =
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+                "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

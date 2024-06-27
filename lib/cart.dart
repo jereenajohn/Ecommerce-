@@ -36,18 +36,18 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://michelle-miniature-depot-studied.trycloudflare.com/cart-products/";
+  var CartUrl = "https://telecharger-find-residence-levy.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/increment/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/decrement/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/cart-delete/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://michelle-miniature-depot-studied.trycloudflare.com/${item['image']}";
+          String imageUrl ="https://telecharger-find-residence-levy.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],

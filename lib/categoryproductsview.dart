@@ -26,7 +26,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/category/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -35,11 +35,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/search-products/?q=";
+      "https://telecharger-find-residence-levy.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/filter/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/filter/";
   final String hightolow =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/filtering/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -90,7 +90,7 @@ Future<String?> gettokenFromPrefs() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -129,7 +129,7 @@ Future<String?> gettokenFromPrefs() async {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -238,7 +238,7 @@ Future<String?> gettokenFromPrefs() async {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://michelle-miniature-depot-studied.trycloudflare.com//${productData['image']}";
+  //             "https://telecharger-find-residence-levy.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -284,7 +284,7 @@ Future<String?> gettokenFromPrefs() async {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://michelle-miniature-depot-studied.trycloudflare.com//${productData['image']}";
+  //             "https://telecharger-find-residence-levy.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],

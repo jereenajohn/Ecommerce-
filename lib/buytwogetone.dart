@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/buy-2-get-1/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/search/?q=";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/whishlist/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -144,7 +144,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -235,7 +235,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

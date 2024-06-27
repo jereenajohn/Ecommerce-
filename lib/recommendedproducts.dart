@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/recommended/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/search/?q=";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/add-wishlist/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,7 +258,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],

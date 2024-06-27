@@ -62,41 +62,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/banners/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/";
   final String categoryUrl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/category/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/category/";
   final String productsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/products/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
   final String offersurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/offer-banner/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/discount-sale/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/buy-1-get-1/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/best-sale-products/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/flash-sale/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/buy-2-get-1/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/offers/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/search-products/?q=";
+      "https://telecharger-find-residence-levy.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/recommended/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://michelle-miniature-depot-studied.trycloudflare.com/recently-viewed/";
+      "https://telecharger-find-residence-levy.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${recentproductsData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${offerData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -326,7 +326,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -397,7 +397,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -436,7 +436,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -472,7 +472,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -509,7 +509,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -565,7 +565,7 @@ class _HomePageState extends State<HomePage> {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],
@@ -618,7 +618,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+  //             "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -651,7 +651,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -687,7 +687,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${bannerData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -716,7 +716,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://michelle-miniature-depot-studied.trycloudflare.com/${categoryData['image']}";
+              "https://telecharger-find-residence-levy.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
