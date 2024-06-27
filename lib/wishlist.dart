@@ -21,15 +21,15 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://audio-travesti-imposed-versions.trycloudflare.com/wishlist/";
+  var wishlisturl = "https://michelle-miniature-depot-studied.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/products/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/wishlist-delete/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -59,11 +59,9 @@ class _WishlistState extends State<Wishlist> {
     final token = await gettokenFromPrefs();
     print("--------------------------------------------R$token");
 
-    var response = await http.post(Uri.parse(wishlisturl), headers: {
+    var response = await http.get(Uri.parse(wishlisturl), headers: {
       'Authorization': '$token',
-    }, body: {
-      'token': token,
-    });
+    },);
 
     print("FetchWishlistData status code: ${response.body}");
 
@@ -90,7 +88,7 @@ class _WishlistState extends State<Wishlist> {
     }
   }
 final multipleimageurl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/product-images/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/product-images/";
         List<Map<String, dynamic>> images = [];
          String? selectedColor;
   List<String> colors = [];
@@ -115,15 +113,15 @@ final multipleimageurl =
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image1']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image2']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image3']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image4']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${imageData['image5']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -303,7 +301,7 @@ final multipleimageurl =
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+                "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

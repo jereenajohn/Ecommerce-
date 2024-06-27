@@ -36,18 +36,18 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://audio-travesti-imposed-versions.trycloudflare.com/cart-products/";
+  var CartUrl = "https://michelle-miniature-depot-studied.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/products/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/increment/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/cart/decrement/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/cart-delete/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -76,11 +76,9 @@ class _CartState extends State<Cart> {
       final token = await gettokenFromPrefs();
       print("Token: $token");
 
-      final response = await http.post(Uri.parse(CartUrl), headers: {
+      final response = await http.get(Uri.parse(CartUrl), headers: {
         'Authorization': '$token',
-      }, body: {
-        'token': token,
-      });
+      }, );
 
       print("Response: ${response.body}");
 
@@ -92,7 +90,7 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://audio-travesti-imposed-versions.trycloudflare.com/${item['image']}";
+          String imageUrl ="https://michelle-miniature-depot-studied.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],

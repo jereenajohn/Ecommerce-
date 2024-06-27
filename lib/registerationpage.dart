@@ -13,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 }
 
 class _Sign_UpState extends State<Sign_Up> {
-  var url = "https://audio-travesti-imposed-versions.trycloudflare.com/register/";
+  var url = "https://michelle-miniature-depot-studied.trycloudflare.com/register/";
   bool _obscureText = true;
 
   var userId;

@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com//subcategory/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/add-wishlist/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://audio-travesti-imposed-versions.trycloudflare.com//search-products/?q=";
+      "https://michelle-miniature-depot-studied.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://audio-travesti-imposed-versions.trycloudflare.com//low-products/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://audio-travesti-imposed-versions.trycloudflare.com//high-products/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://audio-travesti-imposed-versions.trycloudflare.com/filtered-products/";
+      "https://michelle-miniature-depot-studied.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://audio-travesti-imposed-versions.trycloudflare.com${pfilter['image']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://audio-travesti-imposed-versions.trycloudflare.com/${productData['image']}";
+              "https://michelle-miniature-depot-studied.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
