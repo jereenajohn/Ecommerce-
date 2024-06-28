@@ -62,41 +62,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/banners/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/";
   final String categoryUrl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/category/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/category/";
   final String productsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/";
   final String offersurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/offer-banner/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/discount-sale/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/buy-1-get-1/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/best-sale-products/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/flash-sale/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/buy-2-get-1/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/offers/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/search-products/?q=";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/recommended/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/recently-viewed/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final token = await gettokenFromPrefs();
 
-      var response = await http.post(
+      var response = await http.get(
         Uri.parse('$recentlyviewedurl'),
         headers: {
           'Authorization': '$token',
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${recentproductsData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${offerData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -326,7 +326,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -397,7 +397,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -436,7 +436,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -467,12 +467,13 @@ class _HomePageState extends State<HomePage> {
       print(
           "ressssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
-        final List<dynamic> productsData = jsonDecode(response.body);
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['data'];
         List<Map<String, dynamic>> productbuyonegetoneList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -509,7 +510,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -539,54 +540,54 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchRecommendedProducts() async {
-  try {
-    final token = await gettokenFromPrefs(); // Make sure this method returns your token correctly
+    try {
+      final token =
+          await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-    print("Token: $token");
+      print("Token: $token");
 
-    final response = await http.get(
-      Uri.parse(recommendedproductsurl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': '$token',
-      },
-    );
+      final response = await http.get(
+        Uri.parse(recommendedproductsurl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
+      print("Response Body: ${response.body}");
+      print("Response Status Code: ${response.statusCode}");
 
-    print("Response Body: ${response.body}");
-    print("Response Status Code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['data'];
 
-    if (response.statusCode == 200) {
-      final parsed = jsonDecode(response.body);
-      final List<dynamic> productsData = parsed['data'];
+        print("Products Data: $productsData");
 
-      print("Products Data: $productsData");
+        List<Map<String, dynamic>> productRecommendedList = [];
 
-      List<Map<String, dynamic>> productRecommendedList = [];
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+          productRecommendedList.add({
+            'id': productData['id'],
+            'mainCategory': productData['mainCategory'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+          });
+        }
 
-      for (var productData in productsData) {
-        String imageUrl = "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
-        productRecommendedList.add({
-          'id': productData['id'],
-          'mainCategory': productData['mainCategory'],
-          'name': productData['name'],
-          'salePrice': productData['salePrice'],
-          'image': imageUrl,
+        setState(() {
+          recommendedproducts = productRecommendedList;
+          print("Recommended Products: $recommendedproducts");
         });
+      } else {
+        throw Exception('Failed to load recommended products');
       }
-
-      setState(() {
-        recommendedproducts = productRecommendedList;
-        print("Recommended Products: $recommendedproducts");
-      });
-    } else {
-      throw Exception('Failed to load recommended products');
+    } catch (error) {
+      print('Error fetching recommended products: $error');
     }
-  } catch (error) {
-    print('Error fetching recommended products: $error');
   }
-}
-
 
   // Future<void> fetchRecommendedProducts() async {
   //   try {
@@ -618,7 +619,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+  //             "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -651,7 +652,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -687,7 +688,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${bannerData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -716,7 +717,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${categoryData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -2561,9 +2562,8 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: Icons.search,
                   onPressed: () {
-                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => MyWidget()));
-                    
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => MyWidget()));
                   },
                 ),
                 GButton(

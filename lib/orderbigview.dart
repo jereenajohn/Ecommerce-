@@ -40,10 +40,10 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   final String orders =
-      "https://telecharger-find-residence-levy.trycloudflare.com/orders/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -120,7 +120,7 @@ class _OrderBigViewState extends State<OrderBigView> {
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
-                "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+                "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

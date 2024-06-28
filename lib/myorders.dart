@@ -42,10 +42,10 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://telecharger-find-residence-levy.trycloudflare.com/orders/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   List<dynamic> orderIds = [];
@@ -123,7 +123,7 @@ class _MyOrderState extends State<MyOrder> {
         for (var productData in productsData) {
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+                "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'productid': productData['id'],
               'name': productData['name'],

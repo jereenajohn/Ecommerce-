@@ -49,10 +49,10 @@ class _orderState extends State<order> {
   String? userId;
   bool isCouponApplied = false;
   String fetchaddressurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/get-address/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/get-address/";
   String orderurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/order/create/";
-  String cuponurl = "https://telecharger-find-residence-levy.trycloudflare.com/cupons/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/order/create/";
+  String cuponurl = "https://smaller-priced-comply-coordinator.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -96,7 +96,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/cart-products/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -319,11 +319,9 @@ class _orderState extends State<order> {
       final token = await gettokenFromPrefs();
       print("Token: $token");
 
-      final response = await http.post(Uri.parse(CartUrl), headers: {
+      final response = await http.get(Uri.parse(CartUrl), headers: {
         'Authorization': '$token',
-      }, body: {
-        'token': token,
-      });
+      },);
 
       print("Response: ${response.body}");
 
@@ -337,7 +335,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${item['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;

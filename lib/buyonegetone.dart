@@ -28,14 +28,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   final String buyonegetoneurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/buy-1-get-1/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/buy-1-get-1/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/products/search/?q=";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/add-wishlist/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -150,7 +150,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -236,12 +236,13 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
       final response = await http.get(Uri.parse(buyonegetoneurl));
 
       if (response.statusCode == 200) {
-        final List<dynamic> productsData = jsonDecode(response.body);
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['data'];
         List<Map<String, dynamic>> productbuyonegetoneList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

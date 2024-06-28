@@ -36,18 +36,18 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://telecharger-find-residence-levy.trycloudflare.com/cart-products/";
+  var CartUrl = "https://smaller-priced-comply-coordinator.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/products/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/cart/increment/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/cart/decrement/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/cart-delete/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://telecharger-find-residence-levy.trycloudflare.com/${item['image']}";
+          String imageUrl ="https://smaller-priced-comply-coordinator.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -102,7 +102,8 @@ class _CartState extends State<Cart> {
             'name': item['name'],
             'image': imageUrl,
             'color':item['color'],
-            'size':item['size']
+            'size':item['size'],
+            'offer_type':item['offer_type'],
 
             // Update with correct price value
           });
@@ -274,7 +275,7 @@ class _CartState extends State<Cart> {
                                 );
                   },
                   child: Container(
-                    height: 150,
+                    height: 160,
                     margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     decoration: BoxDecoration(
                       color: Colors.white,

@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/category/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/product-images/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/cart/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/add-wishlist/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/discount-sale/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/recently-viewed/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://telecharger-find-residence-levy.trycloudflare.com/recommended/";
+      "https://smaller-priced-comply-coordinator.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -120,7 +120,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -146,7 +146,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
     try {
       final token = await gettokenFromPrefs();
 
-      var response = await http.post(
+      var response = await http.get(
         Uri.parse('$recentlyviewedurl'),
         headers: {
           'Authorization': '$token',
@@ -168,7 +168,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${recentproductsData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -207,7 +207,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1430,7 +1430,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${productData['image']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1497,15 +1497,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image1']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image2']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image3']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image4']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://telecharger-find-residence-levy.trycloudflare.com/${imageData['image5']}";
+              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
