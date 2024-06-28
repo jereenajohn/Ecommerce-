@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//subcategory/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/add-wishlist/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//search-products/?q=";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//low-products/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//high-products/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/filtered-products/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com${pfilter['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

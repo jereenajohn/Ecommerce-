@@ -40,10 +40,10 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   final String orders =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/orders/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -120,7 +120,7 @@ class _OrderBigViewState extends State<OrderBigView> {
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
-                "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+                "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -194,46 +194,51 @@ class _OrderBigViewState extends State<OrderBigView> {
                   ),
                   child: Row(
                     children: [
-                      Column(
-                        children: [
-                          Container(
-                            child: Image.network(
-                              product['image'],
-                              height: 140,
-                              width: 150,
-                            ),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product['name'],
-                              style: TextStyle(
-                                fontSize: 13,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Text(
-                              '\$${product['salePrice']}',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 27, 154, 44),
-                                fontSize: 12,
-                              ),
-                            ),
-                            Text(
-                              'Quantity:$productquantity',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Image.network(
+                          product['image'],
+                          height: 140,
+                          width: 150,
+                          fit: BoxFit.cover,
                         ),
-                      )
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product['name'],
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                              Text(
+                                '\$${product['salePrice']}',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 27, 154, 44),
+                                  fontSize: 12,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                              Text(
+                                'Quantity:$productquantity',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );

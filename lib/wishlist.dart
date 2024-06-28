@@ -21,15 +21,15 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://smaller-priced-comply-coordinator.trycloudflare.com/wishlist/";
+  var wishlisturl = "https://knowledge-cartoon-economy-co.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/wishlist-delete/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -88,7 +88,7 @@ class _WishlistState extends State<Wishlist> {
     }
   }
 final multipleimageurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/product-images/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/product-images/";
         List<Map<String, dynamic>> images = [];
          String? selectedColor;
   List<String> colors = [];
@@ -113,15 +113,15 @@ final multipleimageurl =
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image1']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image2']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image3']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image4']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${imageData['image5']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -301,7 +301,7 @@ final multipleimageurl =
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+                "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

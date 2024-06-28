@@ -27,14 +27,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/offers/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/products/search/?q=";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/whishlist/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -147,7 +147,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -238,7 +238,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

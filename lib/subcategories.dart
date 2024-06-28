@@ -36,11 +36,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//category/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//category/";
   final String productsurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//category/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//category/";
   final String searchproducturl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//search-products/?q=";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -147,7 +147,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -192,7 +192,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${productData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -232,7 +232,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${subcategoryData['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

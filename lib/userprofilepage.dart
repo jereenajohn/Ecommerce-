@@ -74,7 +74,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${userimage['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -105,9 +105,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//profile-view/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//profile-view/";
       var viewimage =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com//profile-image/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com//profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -149,7 +149,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://smaller-priced-comply-coordinator.trycloudflare.com/${userimage['image']}"
+            ? "https://knowledge-cartoon-economy-co.trycloudflare.com/${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(

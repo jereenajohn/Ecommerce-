@@ -49,10 +49,10 @@ class _orderState extends State<order> {
   String? userId;
   bool isCouponApplied = false;
   String fetchaddressurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/get-address/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/get-address/";
   String orderurl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/order/create/";
-  String cuponurl = "https://smaller-priced-comply-coordinator.trycloudflare.com/cupons/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/order/create/";
+  String cuponurl = "https://knowledge-cartoon-economy-co.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -96,7 +96,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://smaller-priced-comply-coordinator.trycloudflare.com/cart-products/";
+      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -335,7 +335,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://smaller-priced-comply-coordinator.trycloudflare.com/${item['image']}";
+              "https://knowledge-cartoon-economy-co.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
