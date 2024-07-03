@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//best-sale-products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//products/search/?q=";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//whishlist/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -150,7 +150,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -246,7 +246,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

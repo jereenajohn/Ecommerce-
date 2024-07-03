@@ -39,9 +39,9 @@ class _viewAddressState extends State<viewAddress> {
   }
 
   String durl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//delete-address/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//delete-address/";
 
-  String url = "https://knowledge-cartoon-economy-co.trycloudflare.com//get-address/";
+  String url = "https://latina-warcraft-welsh-arcade.trycloudflare.com//get-address/";
   List<Map<String, dynamic>> address = [];
 
   List<Map<String, dynamic>> addressList = [];
@@ -50,11 +50,9 @@ class _viewAddressState extends State<viewAddress> {
     final token = await gettokenFromPrefs();
     print("--------------------------------------------R$token");
 
-    var response = await http.post(Uri.parse(url), headers: {
+    var response = await http.get(Uri.parse(url), headers: {
       'Authorization': '$token',
-    }, body: {
-      'token': token,
-    });
+    },);
 
     print("FetchWishlistData status code: ${response.body}");
 

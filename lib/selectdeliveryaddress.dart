@@ -20,7 +20,7 @@ class Select_Delivery_Address extends StatefulWidget {
 class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
   String? userId;
   String fetchaddressurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//get-address/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   var selectedAddressId;
@@ -59,11 +59,9 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
     final token = await gettokenFromPrefs();
     print("--------------------------------------------R$token");
 
-    var response = await http.post(Uri.parse(fetchaddressurl), headers: {
+    var response = await http.get(Uri.parse(fetchaddressurl), headers: {
       'Authorization': '$token',
-    }, body: {
-      'token': token,
-    });
+    },);
 
     print("Fetch address: ${response.body}");
 

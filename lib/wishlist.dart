@@ -21,15 +21,16 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://knowledge-cartoon-economy-co.trycloudflare.com/wishlist/";
+  var wishlisturl =
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/wishlist-delete/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -43,7 +44,7 @@ class _WishlistState extends State<Wishlist> {
 
   Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
-        tokenn = await gettokenFromPrefs();
+    tokenn = await gettokenFromPrefs();
 
     print("--------------------------------------------R$userId");
     FetchWishlistData();
@@ -59,9 +60,12 @@ class _WishlistState extends State<Wishlist> {
     final token = await gettokenFromPrefs();
     print("--------------------------------------------R$token");
 
-    var response = await http.get(Uri.parse(wishlisturl), headers: {
-      'Authorization': '$token',
-    },);
+    var response = await http.get(
+      Uri.parse(wishlisturl),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
 
     print("FetchWishlistData status code: ${response.body}");
 
@@ -87,21 +91,20 @@ class _WishlistState extends State<Wishlist> {
       print("Failed to fetch wishlist data");
     }
   }
-final multipleimageurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/product-images/";
-        List<Map<String, dynamic>> images = [];
-         String? selectedColor;
+
+  final multipleimageurl =
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/product-images/";
+  List<Map<String, dynamic>> images = [];
+  String? selectedColor;
   List<String> colors = [];
-    List<String> sizeNames = [];
+  List<String> sizeNames = [];
   String? selectedSize;
 
-
-    Future<void> multipleimage(int id) async {
+  Future<void> multipleimage(int id) async {
     print('======================$multipleimageurl${id}/r');
     Set<String> colorsSet = {};
     try {
-      final response =
-          await http.get(Uri.parse('$multipleimageurl${id}/'));
+      final response = await http.get(Uri.parse('$multipleimageurl${id}/'));
       print("statussssssssssssssssssssssssss${response.statusCode}");
       if (response.statusCode == 200) {
         final List<dynamic> imageData = jsonDecode(response.body)['product'];
@@ -113,15 +116,15 @@ final multipleimageurl =
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image1']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image2']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image3']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image4']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${imageData['image5']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -154,10 +157,8 @@ final multipleimageurl =
     }
   }
 
-
-
- void _showBottomSheet(BuildContext context,int index) {
-  print("iddddddddddddddddddddd$index");
+  void _showBottomSheet(BuildContext context, int index) {
+    print("iddddddddddddddddddddd$index");
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -179,101 +180,110 @@ final multipleimageurl =
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
-                               Text(
-                        'Select Color',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Wrap(
-                        spacing: 8.0,
-                        children: colors.map((color) {
-                          return ChoiceChip(
-                            label: Text(color),
-                            selected: selectedColor == color,
-                            onSelected: (bool selected) {
-                              setState(() {
-                                selectedColor = selected ? color : null;
-                                sizeNames = images.firstWhere(
-                                        (image) => image['color'] == selectedColor)['size_names'] ??
-                                    [];
-                                selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
-                                print(selectedColor);
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-
+                              Text(
+                                'Select Color',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Wrap(
+                                spacing: 8.0,
+                                children: colors.map((color) {
+                                  return ChoiceChip(
+                                    label: Text(color),
+                                    selected: selectedColor == color,
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        selectedColor = selected ? color : null;
+                                        sizeNames = images.firstWhere((image) =>
+                                                image['color'] ==
+                                                selectedColor)['size_names'] ??
+                                            [];
+                                        selectedSize = sizeNames.isNotEmpty
+                                            ? sizeNames[0]
+                                            : null;
+                                        print(selectedColor);
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ),
                             ],
                           )
                         ],
                       ),
-                     
                       SizedBox(height: 16.0),
                       Row(
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
-                               Text(
-                        'Select Size',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Wrap(
-                        spacing: 8.0,
-                        children: sizeNames.map((size) {
-                          return ChoiceChip(
-                            label: Text(size),
-                            selected: selectedSize == size,
-                            onSelected: (bool selected) {
-                              setState(() {
-                                selectedSize = selected ? size : null;
-                                print(selectedSize);
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-
+                              Text(
+                                'Select Size',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Wrap(
+                                spacing: 8.0,
+                                children: sizeNames.map((size) {
+                                  return ChoiceChip(
+                                    label: Text(size),
+                                    selected: selectedSize == size,
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        selectedSize = selected ? size : null;
+                                        print(selectedSize);
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ),
                             ],
                           )
                         ],
                       ),
-                     
                       SizedBox(height: 16.0),
                       ElevatedButton(
-  onPressed: () {
-     addProductToCart(
-                                  products[index]['id'],
-                                  products[index]['name'],
-                                  products[index]['price'],);
-                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Wishlist()));
-    print('Selected Color: $selectedColor');
-    print('Selected Size: $selectedSize');
-  },
-  style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 0, 0)), // Background color
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0), // Border radius
-        side: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)), // Border color
-      ),
-    ),
-  ),
-  child: Container(
-    alignment: Alignment.center,
-    padding: EdgeInsets.symmetric(vertical: 12.0), // Adjust padding as needed
-    child: Text(
-      'Confirm',
-      style: TextStyle(
-        color: Colors.white, // Text color
-        fontSize: 16.0, // Adjust font size as needed
-      ),
-    ),
-  ),
-),
-
+                        onPressed: () {
+                          addProductToCart(
+                            products[index]['id'],
+                            products[index]['name'],
+                            products[index]['price'],
+                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wishlist()));
+                          print('Selected Color: $selectedColor');
+                          print('Selected Size: $selectedSize');
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(
+                                  255, 0, 0, 0)), // Background color
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(18.0), // Border radius
+                              side: BorderSide(
+                                  color: const Color.fromARGB(
+                                      255, 0, 0, 0)), // Border color
+                            ),
+                          ),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12.0), // Adjust padding as needed
+                          child: Text(
+                            'Confirm',
+                            style: TextStyle(
+                              color: Colors.white, // Text color
+                              fontSize: 16.0, // Adjust font size as needed
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -284,6 +294,7 @@ final multipleimageurl =
       },
     );
   }
+
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
@@ -301,7 +312,7 @@ final multipleimageurl =
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+                "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -372,8 +383,8 @@ final multipleimageurl =
           'product': productId,
           'name': name,
           'price': price,
-          'color':selectedColor,
-          'size':selectedSize,
+          'color': selectedColor,
+          'size': selectedSize,
         }),
       );
 
@@ -394,7 +405,6 @@ final multipleimageurl =
       print('Error adding product to cart: $error');
     }
   }
-  
 
   void removeProduct(int index) {
     setState(() {
@@ -413,9 +423,9 @@ final multipleimageurl =
         actions: [
           IconButton(
             onPressed: () {
-              if(tokenn==null)
-              {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
               }
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Cart()));
@@ -510,25 +520,18 @@ final multipleimageurl =
                           ),
 
                           ElevatedButton(
-                            onPressed: () async{
-
-                              
-
-                               await multipleimage(products[index]['id']);
-                            if (colors.isNotEmpty) {
-                                    _showBottomSheet(context,index);
-                                  }
-
-                                else{
-                                   multipleimage(products[index]['id']);
-                              addProductToCart(
+                            onPressed: () async {
+                              await multipleimage(products[index]['id']);
+                              if (colors.isNotEmpty) {
+                                _showBottomSheet(context, index);
+                              } else {
+                                multipleimage(products[index]['id']);
+                                addProductToCart(
                                   products[index]['id'],
                                   products[index]['name'],
-                                  products[index]['price'],);
-
-                                }
-
-                             
+                                  products[index]['price'],
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
@@ -555,7 +558,8 @@ final multipleimageurl =
                       children: [
                         GestureDetector(
                           onTap: () {
-                            print("delettttttttttttttttttttttttttttttttttttttiddd${WishlistIds[index]}");
+                            print(
+                                "delettttttttttttttttttttttttttttttttttttttiddd${WishlistIds[index]}");
                             deleteWishlistProduct(WishlistIds[index]);
                             removeProduct(index);
                           },
@@ -619,21 +623,19 @@ final multipleimageurl =
                 },
               ),
               GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

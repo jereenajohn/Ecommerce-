@@ -74,7 +74,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${userimage['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -105,15 +105,15 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//profile-view/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//profile-view/";
       var viewimage =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//profile-image/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
       final token = await gettokenFromPrefs();
 
-      var response = await http.post(
+      var response = await http.get(
         Uri.parse('$viewprofileurl'),
         headers: {
           'Authorization': '$token',
@@ -125,13 +125,15 @@ var viewprofileurl =
           "Responserrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.body}");
 
       if (response.statusCode == 200) {
-        userdata = jsonDecode(response.body);
+        // userdata = jsonDecode(response.body);
+         final parsed = jsonDecode(response.body);
+        var productsData = parsed['data'];
         print(
-            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa${userdata['username']}");
+            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$productsData");
             setState(() {
-              username=userdata['username'];
-              email=userdata['email'];
-              phone=userdata['phone'];
+              username=productsData['first_name'];
+              email=productsData['email'];
+              phone=productsData['phone'];
               print(
             "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$email");
 
@@ -149,7 +151,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://knowledge-cartoon-economy-co.trycloudflare.com/${userimage['image']}"
+            ? "https://latina-warcraft-welsh-arcade.trycloudflare.com/${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(
@@ -478,7 +480,43 @@ var viewprofileurl =
                     ),
                   ),
                 ),
+
+                 SizedBox(height: 30),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => usersettings()));
+                  },
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.settings,
+                                size: 30,
+                              ),
+                              SizedBox(width: 10),
+                              Text("Settings"),
+                            ],
+                          ),
+                          Image.asset(
+                            'lib/assets/right-arrow.png',
+                            width: 18,
+                            height: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 30),
+
+
                 GestureDetector(
                   onTap: () {
                     logout();

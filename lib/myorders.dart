@@ -42,10 +42,10 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/orders/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   List<dynamic> orderIds = [];
@@ -63,15 +63,13 @@ class _MyOrderState extends State<MyOrder> {
 
       print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
 
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse(orders),
         headers: {
           'Content-type': 'application/json',
           'Authorization': ' $token',
         },
-        body: jsonEncode({
-          'token': token,
-        }),
+       
       );
 
       print(
@@ -123,7 +121,7 @@ class _MyOrderState extends State<MyOrder> {
         for (var productData in productsData) {
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+                "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'productid': productData['id'],
               'name': productData['name'],

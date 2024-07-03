@@ -40,10 +40,10 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   final String orders =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/orders/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -62,15 +62,13 @@ class _OrderBigViewState extends State<OrderBigView> {
 
       print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
 
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse(orders),
         headers: {
           'Content-type': 'application/json',
           'Authorization': ' $token',
         },
-        body: jsonEncode({
-          'token': token,
-        }),
+       
       );
 
       print(
@@ -120,7 +118,7 @@ class _OrderBigViewState extends State<OrderBigView> {
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
-                "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+                "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

@@ -26,8 +26,8 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     getprofiledata();
   }
-  var url = "https://knowledge-cartoon-economy-co.trycloudflare.com/profile/";
-  var url2="https://knowledge-cartoon-economy-co.trycloudflare.com/profile-image/";
+  var url = "https://latina-warcraft-welsh-arcade.trycloudflare.com/profile/";
+  var url2="https://latina-warcraft-welsh-arcade.trycloudflare.com/profile-image/";
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -36,13 +36,13 @@ class _EditProfileState extends State<EditProfile> {
 var userdata;
 
 var viewprofileurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//profile-view/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
       final token = await gettokenFromPrefs();
 
-      var response = await http.post(
+      var response = await http.get(
         Uri.parse('$viewprofileurl'),
         headers: {
           'Authorization': '$token',
@@ -54,13 +54,14 @@ var viewprofileurl =
           "Responserrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.body}");
 
       if (response.statusCode == 200) {
-        userdata = jsonDecode(response.body);
+        final parsed = jsonDecode(response.body);
+        var productsData = parsed['data'];
         print(
-            "999999999999999999999999999${userdata['username']}");
+            "999999999999999999999999999${productsData['first_name']}");
             setState(() {
-              name.text=userdata['username'];
-              email.text=userdata['email'];
-              phone.text=userdata['phone'];
+              name.text=productsData['first_name'];
+              email.text=productsData['email'];
+              phone.text=productsData['phone'];
               print(
             "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$name");
 
@@ -86,7 +87,7 @@ var viewprofileurl =
         },
         body: jsonEncode(
           {
-            'username': name.text,
+            'first_name': name.text,
             'email': email.text,
             'phone': phone.text,
           },

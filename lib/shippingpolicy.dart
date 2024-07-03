@@ -72,16 +72,16 @@ class _Shipping_Policy_DetailsState extends State<Shipping_Policy_Details> {
         child: Container(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  "SHIPPING POLICY",
-                  style: TextStyle(
-                    fontSize: 16,
-                    height: 1.5, // Adjust line spacing as needed
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20),
+              //   child: Text(
+              //     "SHIPPING POLICY",
+              //     style: TextStyle(
+              //       fontSize: 16,
+              //       height: 1.5, // Adjust line spacing as needed
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Column(

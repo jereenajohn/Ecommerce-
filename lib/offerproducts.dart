@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//search-products/?q=";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//offer-banner/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//add-wishlist/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//low-products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//high-products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}",
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -287,7 +287,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

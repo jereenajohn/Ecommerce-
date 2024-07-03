@@ -27,14 +27,14 @@ class _Discount_ProductsState extends State<Discount_Products> {
   List<bool> isFavorite = [];
 
   final String discountsurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/discount-sale/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/discount-sale/";
   List<Map<String, dynamic>> discountproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/search/?q=";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/add-wishlist/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -153,7 +153,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -249,7 +249,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'], // Changed to int
             'mainCategory': productData['mainCategory'], // Changed to int

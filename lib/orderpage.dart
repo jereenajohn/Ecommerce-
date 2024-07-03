@@ -49,10 +49,11 @@ class _orderState extends State<order> {
   String? userId;
   bool isCouponApplied = false;
   String fetchaddressurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/get-address/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/get-address/";
   String orderurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/order/create/";
-  String cuponurl = "https://knowledge-cartoon-economy-co.trycloudflare.com/cupons/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/order/create/";
+  String cuponurl =
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -96,7 +97,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart-products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -312,21 +313,22 @@ class _orderState extends State<order> {
     }
   }
 
-  Future<void> fetchCartData() async 
-  {
+  Future<void> fetchCartData() async {
     print("Fetching cart data...");
     try {
       final token = await gettokenFromPrefs();
       print("Token: $token");
 
-      final response = await http.get(Uri.parse(CartUrl), headers: {
-        'Authorization': '$token',
-      },);
+      final response = await http.get(
+        Uri.parse(CartUrl),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
 
       print("Response: ${response.body}");
 
-      if (response.statusCode == 200)
-       {
+      if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final data = responseData['data'];
         print("data: $data");
@@ -335,7 +337,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${item['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -349,8 +351,8 @@ class _orderState extends State<order> {
             'price': price,
             'name': item['name'],
             'image': imageUrl,
-            'color':item['color'],
-            'size':item['size']
+            'color': item['color'],
+            'size': item['size']
           });
         }
 
@@ -374,8 +376,7 @@ class _orderState extends State<order> {
     }
   }
 
-  double calculateOriginalPrice() 
-  {
+  double calculateOriginalPrice() {
     double totalPrice = 0.0;
     for (int i = 0; i < cartProducts.length; i++) {
       double price = cartProducts[i]['price'] is String
@@ -907,7 +908,7 @@ class _orderState extends State<order> {
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: GNav(
+          child: GNav(  
             gap: 20,
             onTabChange: (index) {
               setState(() {
@@ -1052,18 +1053,19 @@ class _orderState extends State<order> {
                     SizedBox(height: 5.0),
                     Text('Quantity: ${product['quantity']}'),
                     SizedBox(height: 5.0),
-
-                    if(product['color']!=null)
-                     Row(
-                      children: [
-                          Text('${product['color']}',style: TextStyle(color: Colors.grey),),
-                          SizedBox(width: 10,),
-                            Text('${product['size']}'),
-
-
-                      ],
-                    ),
-                   
+                    if (product['color'] != null)
+                      Row(
+                        children: [
+                          Text(
+                            '${product['color']}',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text('${product['size']}'),
+                        ],
+                      ),
                     SizedBox(height: 5.0),
                     Text('\₹${product['saleprice']}'),
                     Text(

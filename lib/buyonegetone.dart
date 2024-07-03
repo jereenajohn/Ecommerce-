@@ -28,14 +28,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   final String buyonegetoneurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/buy-1-get-1/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/buy-1-get-1/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/search/?q=";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/add-wishlist/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -150,7 +150,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -242,7 +242,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://knowledge-cartoon-economy-co.trycloudflare.com/${productData['image']}";
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

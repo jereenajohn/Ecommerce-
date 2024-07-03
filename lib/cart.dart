@@ -30,24 +30,26 @@ class _CartState extends State<Cart> {
   List<Map<String, dynamic>> cartProducts = [];
   List<dynamic> quantities = [];
   List<dynamic> productPrice = [];
+  
 
   List<dynamic> pages = [HomePage(), Cart(), UserProfilePage()];
 
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://knowledge-cartoon-economy-co.trycloudflare.com/cart-products/";
+  var CartUrl =
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/products/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart/increment/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart/decrement/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com/cart-delete/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -58,14 +60,14 @@ class _CartState extends State<Cart> {
 
   Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
-    tokenn =await gettokenFromPrefs();
+    tokenn = await gettokenFromPrefs();
     print("--------------------------------------------R$userId");
 
     fetchCartData();
     calculateTotalPrice();
   }
 
-   Future<String?> gettokenFromPrefs() async {
+  Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
@@ -76,9 +78,12 @@ class _CartState extends State<Cart> {
       final token = await gettokenFromPrefs();
       print("Token: $token");
 
-      final response = await http.get(Uri.parse(CartUrl), headers: {
-        'Authorization': '$token',
-      }, );
+      final response = await http.get(
+        Uri.parse(CartUrl),
+        headers: {
+          'Authorization': '$token',
+        },
+      );
 
       print("Response: ${response.body}");
 
@@ -90,20 +95,21 @@ class _CartState extends State<Cart> {
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
-          String imageUrl ="https://knowledge-cartoon-economy-co.trycloudflare.com/${item['image']}";
+          String imageUrl =
+              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
             'productId': item['product'],
-            'mainCategory':item['mainCategory'],
+            'mainCategory': item['mainCategory'],
             'quantity': item['quantity'],
-            'actualprice':item['price'],
+            'actualprice': item['price'],
             'price': item['salePrice'],
             'name': item['name'],
             'image': imageUrl,
-            'color':item['color'],
-            'size':item['size'],
-            'offer_type':item['offer_type'],
+            'color': item['color'],
+            'size': item['size'],
+            'offer_type': item['offer_type'],
 
             // Update with correct price value
           });
@@ -128,8 +134,7 @@ class _CartState extends State<Cart> {
 
       var response = await http.put(
         Uri.parse('$quantityincrementurl$cartProductId/'),
-        headers:
-         {'Authorization': '$token'},
+        headers: {'Authorization': '$token'},
         body: jsonEncode({'quantity': newQuantity}),
       );
 
@@ -233,16 +238,12 @@ class _CartState extends State<Cart> {
           IconButton(
             onPressed: () {
               if (tokenn == null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_Page()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                        }
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -260,23 +261,21 @@ class _CartState extends State<Cart> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                     Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Product_big_View(
-                                      product_id:
-                                          cartProducts[index]
-                                              ['productId'],
-                                      Category_id: int.parse(
-                                          cartProducts[index]
-                                              ['mainCategory']),
-                                    ),
-                                  ),
-                                );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Product_big_View(
+                          product_id: cartProducts[index]['productId'],
+                          Category_id:
+                              int.parse(cartProducts[index]['mainCategory']),
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 160,
-                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),
@@ -323,47 +322,45 @@ class _CartState extends State<Cart> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                 SizedBox(height: 5),
-                                 if(cartProducts[index]['actualprice']!=null)
-                                Text(
-                                  '\$${cartProducts[index]['actualprice']}',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 14,
-                                    color: Colors.grey
+                                SizedBox(height: 5),
+                                if (cartProducts[index]['actualprice'] != null)
+                                  Text(
+                                    '\$${cartProducts[index]['actualprice']}',
+                                    style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        fontSize: 14,
+                                        color: Colors.grey),
                                   ),
-                                ),
                                 SizedBox(height: 5),
                                 Text(
                                   '\$${cartProducts[index]['price']}',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.green
-                                  ),
+                                      fontSize: 14, color: Colors.green),
                                 ),
-                                if(cartProducts[index]['color']!=null && cartProducts[index]['size']!=null)
+                                if (cartProducts[index]['color'] != null &&
+                                    cartProducts[index]['size'] != null)
                                   Row(
                                     children: [
                                       Text(
-                                    '${cartProducts[index]['color']}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: const Color.fromARGB(255, 115, 115, 115)
-                                    ),
-                                  ),
-                                  SizedBox(width: 10,),
-                                  Text(
-                                    '${cartProducts[index]['size']}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color:  const Color.fromARGB(255, 115, 115, 115)
-                                    ),
-                                  ),
-
+                                        '${cartProducts[index]['color']}',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: const Color.fromARGB(
+                                                255, 115, 115, 115)),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        '${cartProducts[index]['size']}',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: const Color.fromARGB(
+                                                255, 115, 115, 115)),
+                                      ),
                                     ],
+                                  ),
 
-                                ),
-                               
                                 // Inside the ListView.builder itemBuilder method
                                 Container(
                                   // decoration: BoxDecoration(
@@ -379,7 +376,7 @@ class _CartState extends State<Cart> {
                                               cartProducts[index]['id'],
                                               cartProducts[index]["quantity"] +
                                                   1);
-                  
+
                                           setState(() {
                                             calculateTotalPrice();
                                             fetchCartData();
@@ -397,12 +394,12 @@ class _CartState extends State<Cart> {
                                       IconButton(
                                         onPressed: () {
                                           print(cartProducts[index]['id']);
-                  
+
                                           incrementquantity(
                                               cartProducts[index]['id'],
                                               cartProducts[index]["quantity"] +
                                                   1);
-                  
+
                                           setState(() {
                                             calculateTotalPrice();
                                             fetchCartData();
@@ -455,8 +452,10 @@ class _CartState extends State<Cart> {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Select_Delivery_Address()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Select_Delivery_Address()));
               },
               child: Container(
                 height: 50,

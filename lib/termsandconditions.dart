@@ -72,16 +72,16 @@ class _Terms_and_conditionsState extends State<Terms_and_conditions> {
         child: Container(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  "TERMS AND CONDITIONS",
-                  style: TextStyle(
-                    fontSize: 16,
-                    height: 1.5, // Adjust line spacing as needed
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20),
+              //   child: Text(
+              //     "TERMS AND CONDITIONS",
+              //     style: TextStyle(
+              //       fontSize: 16,
+              //       height: 1.5, // Adjust line spacing as needed
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Column(

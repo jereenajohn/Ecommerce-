@@ -68,6 +68,7 @@ class _Contact_UsState extends State<Contact_Us> {
         title: Text(
           'Contact Us',
           
+          
         ),
       ),
       body: SingleChildScrollView(
@@ -75,13 +76,13 @@ class _Contact_UsState extends State<Contact_Us> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "BEPOCART SUPPORT",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Text(
+              //     "BEPOCART SUPPORT",
+              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              //   ),
+              // ),
               SizedBox(
                 height: 10,
               ),

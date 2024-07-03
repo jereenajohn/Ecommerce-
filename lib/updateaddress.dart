@@ -7,6 +7,7 @@ import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
+import 'package:bepocart/viewaddress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -48,11 +49,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController note = TextEditingController();
 
   String updateaddressurl =
-      "https://knowledge-cartoon-economy-co.trycloudflare.com//update-address/";
+      "https://latina-warcraft-welsh-arcade.trycloudflare.com//update-address/";
 
-  String durl = "https://knowledge-cartoon-economy-co.trycloudflare.com//delete-address/";
+  String durl = "https://latina-warcraft-welsh-arcade.trycloudflare.com//delete-address/";
 
-  String url = "https://knowledge-cartoon-economy-co.trycloudflare.com//get-address/";
+  String url = "https://latina-warcraft-welsh-arcade.trycloudflare.com//get-address/";
 
   List<Map<String, dynamic>> addressList = [];
 
@@ -60,11 +61,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
     final token = await gettokenFromPrefs();
     print("--------------------------------------------R$token");
 
-    var response = await http.post(Uri.parse(url), headers: {
+    var response = await http.get(Uri.parse(url), headers: {
       'Authorization': '$token',
-    }, body: {
-      'token': token,
-    });
+    },);
 
     print("FetchWishlistData status code: ${response.body}");
 
@@ -433,6 +432,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                             child: TextButton(
                               onPressed: () async {
                                 updateaddress(widget.id);
+                                
                               },
                               child: Text(
                                 "Add",
@@ -551,6 +551,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
 
       if (response.statusCode == 200) {
         print('Address updated successfully');
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>viewAddress()));
       } else {
         print('Failed to update address: ${response.statusCode}');
       }
