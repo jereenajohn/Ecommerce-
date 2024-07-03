@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/recommended/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/search/?q=";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/add-wishlist/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,7 +258,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],

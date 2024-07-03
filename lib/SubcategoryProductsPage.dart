@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//subcategory/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/add-wishlist/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//search-products/?q=";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//low-products/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//high-products/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/filtered-products/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com${pfilter['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

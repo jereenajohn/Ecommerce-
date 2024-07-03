@@ -74,7 +74,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com${userimage['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -105,9 +105,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//profile-view/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//profile-view/";
       var viewimage =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//profile-image/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -151,7 +151,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://latina-warcraft-welsh-arcade.trycloudflare.com/${userimage['image']}"
+            ? "https://reliance-appropriations-capital-information.trycloudflare.com/${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(

@@ -39,9 +39,9 @@ class _viewAddressState extends State<viewAddress> {
   }
 
   String durl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com//delete-address/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com//delete-address/";
 
-  String url = "https://latina-warcraft-welsh-arcade.trycloudflare.com//get-address/";
+  String url = "https://reliance-appropriations-capital-information.trycloudflare.com//get-address/";
   List<Map<String, dynamic>> address = [];
 
   List<Map<String, dynamic>> addressList = [];

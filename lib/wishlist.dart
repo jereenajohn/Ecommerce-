@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/wishlist/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/wishlist-delete/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -93,7 +93,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final multipleimageurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/product-images/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/product-images/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -116,15 +116,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image1']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image2']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image3']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image4']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image5']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -312,11 +312,12 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+                "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
               'SalePrice': productData['salePrice'],
+              'stock': productData['stock'],
               'image': imageUrl,
               'mainCategory': productData['mainCategory']
             });
@@ -481,8 +482,8 @@ class _WishlistState extends State<Wishlist> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    height: 150,
-                    width: 150,
+                    height: 120,
+                    width: 120,
                     child: Image.network(
                       products[index]['image'],
                       width: 150, // Specific width for the image
@@ -503,7 +504,7 @@ class _WishlistState extends State<Wishlist> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(
-                              fontSize: 16, // Adjust font size as needed
+                              fontSize: 10, // Adjust font size as needed
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -512,30 +513,55 @@ class _WishlistState extends State<Wishlist> {
                           Text(
                             '\$${products[index]['SalePrice']}',
                             style: TextStyle(
-                              fontSize: 14, // Adjust font size as needed
+                              fontSize: 12, // Adjust font size as needed
                             ),
                           ),
+                          SizedBox(height: 5),
+                          // Add spacing between name and price
+                          if (products[index]['stock'] != null &&
+                              products[index]['stock'] > 0)
+                            Text(
+                              "stock ${products[index]['stock']}",
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Color.fromARGB(255, 217, 29, 29),
+                              ),
+                            )
+                          else
+                            Text(
+                              "Out of Stock",
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Color.fromARGB(255, 217, 29, 29),
+                              ),
+                            ),
                           SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
 
                           ElevatedButton(
-                            onPressed: () async {
-                              await multipleimage(products[index]['id']);
-                              if (colors.isNotEmpty) {
-                                _showBottomSheet(context, index);
-                              } else {
-                                multipleimage(products[index]['id']);
-                                addProductToCart(
-                                  products[index]['id'],
-                                  products[index]['name'],
-                                  products[index]['price'],
-                                );
-                              }
-                            },
+                            onPressed: (products[index]['stock'] ?? 0) > 0
+                                ? () async {
+                                    await multipleimage(products[index]['id']);
+                                    if (colors.isNotEmpty) {
+                                      _showBottomSheet(context, index);
+                                    } else {
+                                      await multipleimage(products[index][
+                                          'id']); // Add await here to ensure the async call is completed
+                                      addProductToCart(
+                                        products[index]['id'],
+                                        products[index]['name'],
+                                        products[index]['price'],
+                                      );
+                                    }
+                                  }
+                                : null,
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
+                              backgroundColor:
+                                  (products[index]['stock'] ?? 0) > 0
+                                      ? Colors.black
+                                      : Colors.grey,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -544,7 +570,7 @@ class _WishlistState extends State<Wishlist> {
                             ),
                             child: Text(
                               "ADD TO CART",
-                              style: TextStyle(fontSize: 8),
+                              style: TextStyle(fontSize: 7),
                             ),
                           ),
                         ],

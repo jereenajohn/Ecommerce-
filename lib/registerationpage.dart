@@ -13,14 +13,20 @@ class Sign_Up extends StatefulWidget {
 }
 
 class _Sign_UpState extends State<Sign_Up> {
-  var url = "https://latina-warcraft-welsh-arcade.trycloudflare.com/register/";
+  var url =
+      "https://reliance-appropriations-capital-information.trycloudflare.com/register/";
   bool _obscureText = true;
 
   var userId;
 
-  TextEditingController name = TextEditingController();
+  TextEditingController firstname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController place = TextEditingController();
+  TextEditingController zipcode = TextEditingController();
+
   TextEditingController password = TextEditingController();
 
   @override
@@ -52,20 +58,37 @@ class _Sign_UpState extends State<Sign_Up> {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(left: 20,right: 20),
                     child: TextField(
-                      controller: name,
+                      controller: firstname,
                       decoration: InputDecoration(
-                        labelText: 'Full Name',
-                        hintText: 'Enter Full Name',
+                        labelText: 'First Name',
+                        hintText: 'Enter First Name',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
                     ),
                   ),
+                   SizedBox(height: 10),
+
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: TextField(
+                      controller: lastname,
+                      decoration: InputDecoration(
+                        labelText: 'Last Name',
+                        hintText: 'Enter Last Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                                     SizedBox(height: 10),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
                     child: TextField(
                       controller: phone,
                       keyboardType: TextInputType.phone,
@@ -78,8 +101,10 @@ class _Sign_UpState extends State<Sign_Up> {
                       ),
                     ),
                   ),
+                                     SizedBox(height: 10),
+
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(left: 20,right: 20),
                     child: TextField(
                       controller: email,
                       keyboardType: TextInputType.emailAddress,
@@ -92,8 +117,40 @@ class _Sign_UpState extends State<Sign_Up> {
                       ),
                     ),
                   ),
+                                     SizedBox(height: 10),
+
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: TextField(
+                      controller: place,
+                      decoration: InputDecoration(
+                        labelText: 'Place',
+                        hintText: 'Enter Place',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                                     SizedBox(height: 10),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: TextField(
+                      controller: zipcode,
+                      decoration: InputDecoration(
+                        labelText: 'Zipcode',
+                        hintText: 'Enter Zipcode',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                                     SizedBox(height: 10),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
                     child: TextField(
                       controller: password,
                       obscureText: _obscureText,
@@ -120,14 +177,17 @@ class _Sign_UpState extends State<Sign_Up> {
                     height: 10,
                   ),
                   SizedBox(
-                    width: 300,
+                    width: 250,
                     child: ElevatedButton(
                       onPressed: () {
                         RegisterUserData(
                           url,
-                          name.text,
+                          firstname.text,
+                          lastname.text,
                           int.tryParse(phone.text) ?? 0,
                           email.text,
+                          place.text,
+                          int.tryParse(zipcode.text) ?? 0,
                           password.text,
                           scaffoldContext,
                         );
@@ -143,7 +203,7 @@ class _Sign_UpState extends State<Sign_Up> {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Text(
                           "Sign Up",
                           style: TextStyle(
@@ -166,13 +226,22 @@ class _Sign_UpState extends State<Sign_Up> {
 
   void RegisterUserData(
     String url,
-    String name,
+    String firstname,
+    String lastname,
     int phone,
     String email,
+    String place,
+    int zipcode,
     String password,
     BuildContext scaffoldContext,
   ) async {
-    if (name.isEmpty || phone == 0 || email.isEmpty || password.isEmpty) {
+    if (firstname.isEmpty ||
+        lastname.isEmpty ||
+        phone == 0 ||
+        email.isEmpty ||
+        place.isEmpty ||
+        zipcode ==0 ||
+        password.isEmpty) {
       // Show SnackBar if any field is empty
       ScaffoldMessenger.of(scaffoldContext).showSnackBar(
         SnackBar(
@@ -196,9 +265,13 @@ class _Sign_UpState extends State<Sign_Up> {
       var response = await http.post(Uri.parse(url),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
-            "username": name,
+            "image": null,
+            "first_name": firstname,
+            "last_name": lastname,
             "email": email,
             "phone": phone,
+            "place": place,
+            "zip_code": zipcode,
             "password": password
           }));
 

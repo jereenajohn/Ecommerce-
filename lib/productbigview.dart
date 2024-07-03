@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/category/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/product-images/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/cart/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/add-wishlist/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/discount-sale/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/recently-viewed/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/recommended/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -64,6 +64,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
   var name;
   var image;
   var price;
+  var stock;
   var shortdescription;
   var description;
   var salePrice;
@@ -120,7 +121,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -168,7 +169,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${recentproductsData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -207,7 +208,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -628,6 +629,22 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       SizedBox(
                         height: 8,
                       ),
+                      if (stock != null && stock > 0)
+                        Text(
+                          "Stock Available $stock",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 217, 29, 29),
+                          ),
+                        )
+                      else
+                        Text(
+                          "Out of Stock",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 217, 29, 29),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -738,14 +755,18 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 child: Row(
                   children: [
                     Container(
-                      width: 140,
+                      width: 150,
                       child: ElevatedButton(
-                        onPressed: () {
-                          addProductToCart(widget.product_id, name, price);
-                        },
+                        onPressed: (stock ?? 0) > 0
+                            ? () {
+                                addProductToCart(
+                                    widget.product_id, name, price);
+                              }
+                            : null,
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: Colors.black,
+                          backgroundColor:
+                              (stock ?? 0) > 0 ? Colors.black : Colors.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -1430,12 +1451,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
+            'stock': productData['stock'],
             'shortDescription': productData['short_description'],
             'description': productData['description'],
             'mainCategory': productData['mainCategory'],
@@ -1453,6 +1475,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
               image = productsList[i]['image'];
               name = productsList[i]['name'];
               price = productsList[i]['price'];
+              stock = productsList[i]['stock'];
               salePrice = productsList[i]['salePrice'];
               shortdescription = productsList[i]['shortDescription'];
               description = productsList[i]['description'];
@@ -1462,6 +1485,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
           print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$price");
 
           print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS$salePrice");
+          print(
+              "SSSTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOCCCCCCCCCCCCCCCCKKKKKKKKKK$stock");
+
           print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT$shortdescription");
           categoryProducts = productsList;
           isDataLoaded = true;
@@ -1497,15 +1523,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image1']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image2']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image3']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image4']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://latina-warcraft-welsh-arcade.trycloudflare.com/${imageData['image5']}";
+              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

@@ -42,10 +42,10 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/orders/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://latina-warcraft-welsh-arcade.trycloudflare.com/products/";
+      "https://reliance-appropriations-capital-information.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   List<dynamic> orderIds = [];
@@ -121,7 +121,7 @@ class _MyOrderState extends State<MyOrder> {
         for (var productData in productsData) {
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://latina-warcraft-welsh-arcade.trycloudflare.com/${productData['image']}";
+                "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'productid': productData['id'],
               'name': productData['name'],
