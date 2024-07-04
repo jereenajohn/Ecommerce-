@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/category/";
+      "https://med-champions-assisted-written.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/product-images/";
+      "https://med-champions-assisted-written.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/cart/";
+      "https://med-champions-assisted-written.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/add-wishlist/";
+      "https://med-champions-assisted-written.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/discount-sale/";
+      "https://med-champions-assisted-written.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/recently-viewed/";
+      "https://med-champions-assisted-written.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/recommended/";
+      "https://med-champions-assisted-written.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -121,7 +121,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -169,7 +169,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${recentproductsData['image']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -208,7 +208,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1451,7 +1451,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1523,15 +1523,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image1']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image2']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image3']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image4']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image5']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

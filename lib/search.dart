@@ -32,9 +32,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com//whishlist/";
+      "https://med-champions-assisted-written.trycloudflare.com//whishlist/";
   final String searchproducturl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com//search-products/?q=";
+      "https://med-champions-assisted-written.trycloudflare.com//search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   var tokenn;
@@ -101,7 +101,7 @@ class _SearchState extends State<Search> {
           print(
               "cattttttttttttttttttttttttttttttttppppppppppppppppppppppp$productData");
           String imageUrl =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

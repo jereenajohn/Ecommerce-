@@ -26,7 +26,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/products/search/?q=";
+      "https://med-champions-assisted-written.trycloudflare.com/products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -53,7 +53,7 @@ class _hightolowpageState extends State<hightolowpage> {
   }
 
 
-  final String lowtohigh = "https://reliance-appropriations-capital-information.trycloudflare.com//low-products/";
+  final String lowtohigh = "https://med-champions-assisted-written.trycloudflare.com//low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -73,7 +73,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
+          String imageUrl = "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -96,7 +96,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://reliance-appropriations-capital-information.trycloudflare.com//whishlist/";
+  final String wishlisturl = "https://med-champions-assisted-written.trycloudflare.com//whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
@@ -177,7 +177,7 @@ class _hightolowpageState extends State<hightolowpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${productData['image']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

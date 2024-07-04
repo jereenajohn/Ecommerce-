@@ -14,7 +14,7 @@ class Sign_Up extends StatefulWidget {
 
 class _Sign_UpState extends State<Sign_Up> {
   var url =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/register/";
+      "https://med-champions-assisted-written.trycloudflare.com/register/";
   bool _obscureText = true;
 
   var userId;

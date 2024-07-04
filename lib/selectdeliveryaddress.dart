@@ -20,7 +20,7 @@ class Select_Delivery_Address extends StatefulWidget {
 class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
   String? userId;
   String fetchaddressurl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com//get-address/";
+      "https://med-champions-assisted-written.trycloudflare.com//get-address/";
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   var selectedAddressId;

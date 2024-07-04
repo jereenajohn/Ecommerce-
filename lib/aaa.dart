@@ -9,7 +9,7 @@ class MyWidget extends StatefulWidget {
 
 class _MyWidgetState extends State<MyWidget> {
   final multipleimageurl =
-      "https://reliance-appropriations-capital-information.trycloudflare.com/product-images/";
+      "https://med-champions-assisted-written.trycloudflare.com/product-images/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -35,15 +35,15 @@ class _MyWidgetState extends State<MyWidget> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image1']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image2']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image3']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image4']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://reliance-appropriations-capital-information.trycloudflare.com/${imageData['image5']}";
+              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
