@@ -62,41 +62,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://med-champions-assisted-written.trycloudflare.com/banners/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://med-champions-assisted-written.trycloudflare.com/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/";
   final String categoryUrl =
-      "https://med-champions-assisted-written.trycloudflare.com/category/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/category/";
   final String productsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/products/";
   final String offersurl =
-      "https://med-champions-assisted-written.trycloudflare.com/offer-banner/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/discount-sale/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://med-champions-assisted-written.trycloudflare.com/buy-1-get-1/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://med-champions-assisted-written.trycloudflare.com/best-sale-products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://med-champions-assisted-written.trycloudflare.com/flash-sale/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://med-champions-assisted-written.trycloudflare.com/buy-2-get-1/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/offers/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://med-champions-assisted-written.trycloudflare.com/search-products/?q=";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/recommended/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://med-champions-assisted-written.trycloudflare.com/recently-viewed/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${recentproductsData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${offerData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -326,7 +326,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -397,7 +397,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -436,7 +436,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -473,7 +473,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -510,7 +510,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -567,7 +567,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -619,7 +619,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+  //             "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -652,7 +652,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -688,7 +688,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${bannerData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -717,7 +717,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${categoryData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],

@@ -36,18 +36,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://med-champions-assisted-written.trycloudflare.com/cart-products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://med-champions-assisted-written.trycloudflare.com/cart/increment/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://med-champions-assisted-written.trycloudflare.com/cart/decrement/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://med-champions-assisted-written.trycloudflare.com/cart-delete/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${item['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -395,6 +395,7 @@ class _CartState extends State<Cart> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
+                
                 Row(
                   children: [
                     Radio<String>(
@@ -490,7 +491,7 @@ class _CartState extends State<Cart> {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontSize: 14,                                      
-                                    
+
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -533,7 +534,7 @@ class _CartState extends State<Cart> {
                                               255, 115, 115, 115),
                                         ),
                                       ),
-                                    ],
+                                    ], 
                                   ),
                                 // Inside the ListView.builder itemBuilder method
                                 Container(
@@ -596,7 +597,7 @@ class _CartState extends State<Cart> {
                                               'BUY 2 GET 1'
                                           ? 'Special Offer: ${cartProducts[index]['offer_type']}'
                                           : 'Special Offer: ${cartProducts[index]['offer_type']} - Get ${calculateOfferQuantity(cartProducts[index]['offer_type'], cartProducts[index]['quantity'])} items',
-                                      style: TextStyle(
+                                      style: TextStyle(  
                                         fontSize: 11,
                                         color: Colors.red,
                                       ),

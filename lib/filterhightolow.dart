@@ -26,7 +26,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://med-champions-assisted-written.trycloudflare.com/products/search/?q=";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -53,7 +53,7 @@ class _hightolowpageState extends State<hightolowpage> {
   }
 
 
-  final String lowtohigh = "https://med-champions-assisted-written.trycloudflare.com//low-products/";
+  final String lowtohigh = "https://hourly-mv-mo-virtual.trycloudflare.com//low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -73,7 +73,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+          String imageUrl = "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -96,7 +96,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://med-champions-assisted-written.trycloudflare.com//whishlist/";
+  final String wishlisturl = "https://hourly-mv-mo-virtual.trycloudflare.com//whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
@@ -177,7 +177,7 @@ class _hightolowpageState extends State<hightolowpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

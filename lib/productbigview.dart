@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://med-champions-assisted-written.trycloudflare.com/category/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://med-champions-assisted-written.trycloudflare.com/product-images/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://med-champions-assisted-written.trycloudflare.com/cart/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://med-champions-assisted-written.trycloudflare.com/add-wishlist/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/discount-sale/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://med-champions-assisted-written.trycloudflare.com/recently-viewed/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/recommended/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -121,7 +121,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -169,7 +169,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${recentproductsData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -208,7 +208,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -326,6 +326,12 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
       if (response.statusCode == 201) {
         print('Product added to cart: $productId');
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Product added to cart'),
+            backgroundColor: Colors.green,
+          ),
+        );
       } else if (response.statusCode == 400) {
         // Product already in cart, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -1451,7 +1457,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1523,15 +1529,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image1']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image2']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image3']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image4']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image5']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,

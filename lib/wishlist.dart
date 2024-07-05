@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://med-champions-assisted-written.trycloudflare.com/wishlist/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://med-champions-assisted-written.trycloudflare.com/wishlist-delete/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://med-champions-assisted-written.trycloudflare.com/cart/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -93,7 +93,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final multipleimageurl =
-      "https://med-champions-assisted-written.trycloudflare.com/product-images/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/product-images/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -116,15 +116,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image1']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image2']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image3']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image4']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://med-champions-assisted-written.trycloudflare.com/${imageData['image5']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -312,7 +312,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(productData['id'])) {
             String imageUrl =
-                "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+                "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://med-champions-assisted-written.trycloudflare.com//search-products/?q=";
+      "https://hourly-mv-mo-virtual.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://med-champions-assisted-written.trycloudflare.com//offer-banner/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://med-champions-assisted-written.trycloudflare.com//add-wishlist/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://med-champions-assisted-written.trycloudflare.com//low-products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://med-champions-assisted-written.trycloudflare.com//high-products/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}",
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -287,7 +287,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

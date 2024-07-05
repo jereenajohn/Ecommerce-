@@ -27,14 +27,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://med-champions-assisted-written.trycloudflare.com/offers/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://med-champions-assisted-written.trycloudflare.com/products/search/?q=";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://med-champions-assisted-written.trycloudflare.com/whishlist/";
+      "https://hourly-mv-mo-virtual.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -147,7 +147,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -238,7 +238,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://med-champions-assisted-written.trycloudflare.com/${productData['image']}";
+              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
