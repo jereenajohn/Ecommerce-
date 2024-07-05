@@ -45,19 +45,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//subcategory/";
+      "https://row-causes-deny-field.trycloudflare.com//subcategory/";
   final String wishlisturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/add-wishlist/";
+      "https://row-causes-deny-field.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//search-products/?q=";
+      "https://row-causes-deny-field.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//low-products/";
+      "https://row-causes-deny-field.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//high-products/";
+      "https://row-causes-deny-field.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/filtered-products/";
+      "https://row-causes-deny-field.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +121,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com${pfilter['image']}";
+              "https://row-causes-deny-field.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +173,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +215,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -269,7 +269,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -331,7 +331,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
           'product': productId,
         }),
       );
-
+print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLGGGGGGGGGGGGGGGGGGGGGG${response.body}");
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -377,7 +377,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

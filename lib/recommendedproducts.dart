@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/recommended/";
+      "https://row-causes-deny-field.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/products/search/?q=";
+      "https://row-causes-deny-field.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/add-wishlist/";
+      "https://row-causes-deny-field.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,7 +258,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],

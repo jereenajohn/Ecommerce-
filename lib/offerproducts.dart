@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//search-products/?q=";
+      "https://row-causes-deny-field.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//offer-banner/";
+      "https://row-causes-deny-field.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//add-wishlist/";
+      "https://row-causes-deny-field.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//low-products/";
+      "https://row-causes-deny-field.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://hourly-mv-mo-virtual.trycloudflare.com//high-products/";
+      "https://row-causes-deny-field.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}",
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -287,7 +287,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

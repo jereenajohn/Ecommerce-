@@ -35,19 +35,18 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/cart-products/";
+  var CartUrl = "https://row-causes-deny-field.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/products/";
+      "https://row-causes-deny-field.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/increment/";
+      "https://row-causes-deny-field.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/decrement/";
+      "https://row-causes-deny-field.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/cart-delete/";
+      "https://row-causes-deny-field.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -68,6 +67,19 @@ class _CartState extends State<Cart> {
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
+  }
+
+  var option = false;
+
+  void optionselect() {
+    for (int i = 0; i < cartProducts.length; i++) {
+      if (cartProducts[i]['offer_type'] == "BUY 1 GET 1" ||
+          cartProducts[i]['offer_type'] == "BUY 2 GET 1") {
+        option = true;
+      } else {
+        option = false;
+      }
+    }
   }
 
   Future<void> fetchCartData() async {
@@ -94,7 +106,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com${item['image']}";
+              "https://row-causes-deny-field.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -116,6 +128,16 @@ class _CartState extends State<Cart> {
 
         setState(() {
           cartProducts = cartItems;
+
+          for (int i = 0; i < cartProducts.length; i++) {
+            if (cartProducts[i]['offer_type'] == "BUY 1 GET 1" ||
+                cartProducts[i]['offer_type'] == "BUY 2 GET 1") {
+              option = true;
+            } else {
+              option = false;
+              print(option);
+            }
+          }
         });
         print(cartProducts.length);
         print("cccccccccccccccccccccccCart Products: $cartProducts");
@@ -391,42 +413,42 @@ class _CartState extends State<Cart> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'Option 1',
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value;
-                        });
-                      },
-                    ),
-                    Text('Option 1'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'Option 2',
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value;
-                        });
-                      },
-                    ),
-                    Text('Option 2'),
-                  ],
-                ),
-              ],
+          if (option == true)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      Radio<String>(
+                        value: 'Option 1',
+                        groupValue: selectedOption,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedOption = value;
+                          });
+                        },
+                      ),
+                      Text('Option 1'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio<String>(
+                        value: 'Option 2',
+                        groupValue: selectedOption,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedOption = value;
+                          });
+                        },
+                      ),
+                      Text('Option 2'),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: cartProducts.length,
@@ -490,8 +512,7 @@ class _CartState extends State<Cart> {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
-                                    fontSize: 14,                                      
-
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -534,7 +555,7 @@ class _CartState extends State<Cart> {
                                               255, 115, 115, 115),
                                         ),
                                       ),
-                                    ], 
+                                    ],
                                   ),
                                 // Inside the ListView.builder itemBuilder method
                                 Container(
@@ -597,7 +618,7 @@ class _CartState extends State<Cart> {
                                               'BUY 2 GET 1'
                                           ? 'Special Offer: ${cartProducts[index]['offer_type']}'
                                           : 'Special Offer: ${cartProducts[index]['offer_type']} - Get ${calculateOfferQuantity(cartProducts[index]['offer_type'], cartProducts[index]['quantity'])} items',
-                                      style: TextStyle(  
+                                      style: TextStyle(
                                         fontSize: 11,
                                         color: Colors.red,
                                       ),
@@ -616,6 +637,10 @@ class _CartState extends State<Cart> {
                                 onTap: () {
                                   deleteCartProduct(cartProducts[index]['id']);
                                   removeProduct(index);
+
+                                  setState(() {
+                                    optionselect();
+                                  });
                                 },
                                 child: ImageIcon(
                                   AssetImage('lib/assets/close.png'),

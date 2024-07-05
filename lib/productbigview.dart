@@ -29,24 +29,24 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/category/";
+      "https://row-causes-deny-field.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/product-images/";
+      "https://row-causes-deny-field.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/cart/";
+      "https://row-causes-deny-field.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/add-wishlist/";
+      "https://row-causes-deny-field.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/discount-sale/";
+      "https://row-causes-deny-field.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/recently-viewed/";
+      "https://row-causes-deny-field.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://hourly-mv-mo-virtual.trycloudflare.com/recommended/";
+      "https://row-causes-deny-field.trycloudflare.com/recommended/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -121,7 +121,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -169,7 +169,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${recentproductsData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -208,7 +208,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1457,7 +1457,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${productData['image']}";
+              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1529,15 +1529,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image1']}";
+              "https://row-causes-deny-field.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image2']}";
+              "https://row-causes-deny-field.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image3']}";
+              "https://row-causes-deny-field.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image4']}";
+              "https://row-causes-deny-field.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://hourly-mv-mo-virtual.trycloudflare.com/${imageData['image5']}";
+              "https://row-causes-deny-field.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
