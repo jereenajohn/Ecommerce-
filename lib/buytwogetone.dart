@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://row-causes-deny-field.trycloudflare.com/buy-2-get-1/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://row-causes-deny-field.trycloudflare.com/products/search/?q=";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://row-causes-deny-field.trycloudflare.com/whishlist/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -144,7 +144,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -235,7 +235,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

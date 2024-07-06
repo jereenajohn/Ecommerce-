@@ -28,9 +28,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   var url =
-      "https://row-causes-deny-field.trycloudflare.com/profile/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/profile/";
   var url2 =
-      "https://row-causes-deny-field.trycloudflare.com/profile-image/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -42,7 +42,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "https://row-causes-deny-field.trycloudflare.com/profile-view/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

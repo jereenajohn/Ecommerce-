@@ -14,7 +14,7 @@ class Sign_Up extends StatefulWidget {
 
 class _Sign_UpState extends State<Sign_Up> {
   var url =
-      "https://row-causes-deny-field.trycloudflare.com/register/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/register/";
   bool _obscureText = true;
 
   var userId;

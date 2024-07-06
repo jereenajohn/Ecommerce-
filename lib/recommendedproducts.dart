@@ -29,19 +29,19 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://row-causes-deny-field.trycloudflare.com/recommended/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://row-causes-deny-field.trycloudflare.com/products/search/?q=";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://row-causes-deny-field.trycloudflare.com/add-wishlist/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
   bool _isSearching = false;
   int _index = 0;
-  List<Map<String, dynamic>> searchResults = [];
+  List<Map<String, dynamic>> searchResults = [];  
   var tokenn;
 
   @override
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,7 +258,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],

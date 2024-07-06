@@ -35,18 +35,19 @@ class _CartState extends State<Cart> {
   int _selectedIndex = 0;
   var tokenn;
 
-  var CartUrl = "https://row-causes-deny-field.trycloudflare.com/cart-products/";
+  var CartUrl =
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://row-causes-deny-field.trycloudflare.com/products/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://row-causes-deny-field.trycloudflare.com/cart/increment/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://row-causes-deny-field.trycloudflare.com/cart/decrement/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://row-causes-deny-field.trycloudflare.com/cart-delete/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -106,7 +107,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://row-causes-deny-field.trycloudflare.com${item['image']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -133,6 +134,7 @@ class _CartState extends State<Cart> {
             if (cartProducts[i]['offer_type'] == "BUY 1 GET 1" ||
                 cartProducts[i]['offer_type'] == "BUY 2 GET 1") {
               option = true;
+              break;
             } else {
               option = false;
               print(option);
@@ -618,12 +620,12 @@ class _CartState extends State<Cart> {
                                               'BUY 2 GET 1'
                                           ? 'Special Offer: ${cartProducts[index]['offer_type']}'
                                           : 'Special Offer: ${cartProducts[index]['offer_type']} - Get ${calculateOfferQuantity(cartProducts[index]['offer_type'], cartProducts[index]['quantity'])} items',
-                                      style: TextStyle(
+                                      style: TextStyle( 
                                         fontSize: 11,
                                         color: Colors.red,
                                       ),
                                     ),
-                                  )
+                                  ),
                               ],
                             ),
                           ),
@@ -639,7 +641,7 @@ class _CartState extends State<Cart> {
                                   removeProduct(index);
 
                                   setState(() {
-                                    optionselect();
+                                    fetchCartData();
                                   });
                                 },
                                 child: ImageIcon(

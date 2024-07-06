@@ -21,20 +21,19 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl =
-      "https://row-causes-deny-field.trycloudflare.com/wishlist/";
+  var wishlisturl = "https://table-quantities-filled-therapeutic.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://row-causes-deny-field.trycloudflare.com/products/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://row-causes-deny-field.trycloudflare.com/wishlist-delete/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://row-causes-deny-field.trycloudflare.com/cart/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
-      Map<int, int> productWishlistMap = {};
+  Map<int, int> productWishlistMap = {};
 
   int _selectedIndex = 0;
   var tokenn;
@@ -58,99 +57,99 @@ class _WishlistState extends State<Wishlist> {
     return prefs.getString('userId');
   }
 
-Future<void> FetchWishlistData() async {
-  final token = await gettokenFromPrefs();
-  print("--------------------------------------------R$token");
+  Future<void> FetchWishlistData() async {
+    final token = await gettokenFromPrefs();
+    print("--------------------------------------------R$token");
 
-  var response = await http.get(
-    Uri.parse(wishlisturl),
-    headers: {
-      'Authorization': '$token',
-    },
-  );
+    var response = await http.get(
+      Uri.parse(wishlisturl),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
 
-  print("FetchWishlistData status code: ${response.body}");
-
-  if (response.statusCode == 200) {
-    var responseData = jsonDecode(response.body);
-    var data = responseData['data'];
-
-    List<int> ids = [];
-    List<int> wishlistIds = [];
-
-    Map<int, int> localProductWishlistMap = {};
-
-    for (var item in data) {
-      int productId = item['product'];
-      int wishlistItemId = item['id'];
-      ids.add(productId);
-      wishlistIds.add(wishlistItemId);
-      localProductWishlistMap[productId] = wishlistItemId;
-
-      print("Item::::::::::::::::::::::::::::::::::: $item");
-    }
-
-    setState(() {
-      productIds = ids;
-      wishlistIds = wishlistIds;
-      productWishlistMap = localProductWishlistMap;
-      print("Product IDs: $productIds");
-      print("Wishlist IDs: $wishlistIds");
-      print("Product-Wishlist Map: $productWishlistMap");
-    });
-  } else {
-    print("Failed to fetch wishlist data");
-  }
-}
-
-Future<void> fetchProducts() async {
-  try {
-    final response = await http.get(Uri.parse(productsurl));
-    print('fetchProducts Response: ${response.statusCode}');
+    print("FetchWishlistData status code: ${response.body}");
 
     if (response.statusCode == 200) {
-      final parsed = jsonDecode(response.body);
-      final List<dynamic> productsData = parsed['products'];
-      List<Map<String, dynamic>> filteredProducts = [];
+      var responseData = jsonDecode(response.body);
+      var data = responseData['data'];
 
-      for (var productData in productsData) {
-        var idd = productData['id'];
-       
+      List<int> ids = [];
+      List<int> wishlistIds = [];
 
-        if (productIds.contains(idd)) {
-          String imageUrl = "https://row-causes-deny-field.trycloudflare.com/${productData['image']}";
-          int? wishlistId = productWishlistMap[idd];
-          print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
+      Map<int, int> localProductWishlistMap = {};
 
-          filteredProducts.add({
-            'id': productData['id'],
-            'name': productData['name'],
-            'SalePrice': productData['salePrice'],
-            'stock': productData['stock'],
-            'image': imageUrl,
-            'mainCategory': productData['mainCategory'],
-            'wishlistId': wishlistId
-          });
-        }
+      for (var item in data) {
+        int productId = item['product'];
+        int wishlistItemId = item['id'];
+        ids.add(productId);
+        wishlistIds.add(wishlistItemId);
+        localProductWishlistMap[productId] = wishlistItemId;
+
+        print("Item::::::::::::::::::::::::::::::::::: $item");
       }
 
-      print("Filtered Products Before SetState: $filteredProducts");
       setState(() {
-        products = filteredProducts;
-        print("Filtered Products After SetState: $products");
+        productIds = ids;
+        wishlistIds = wishlistIds;
+        productWishlistMap = localProductWishlistMap;
+        print("Product IDs: $productIds");
+        print("Wishlist IDs: $wishlistIds");
+        print("Product-Wishlist Map: $productWishlistMap");
       });
-
-      print("-------------------------------$products");
     } else {
-      throw Exception('Failed to load wishlist products');
+      print("Failed to fetch wishlist data");
     }
-  } catch (error) {
-    print('Error fetching wishlist products: $error');
   }
-}
+
+  Future<void> fetchProducts() async {
+    try {
+      final response = await http.get(Uri.parse(productsurl));
+      print('fetchProducts Response: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['products'];
+        List<Map<String, dynamic>> filteredProducts = [];
+
+        for (var productData in productsData) {
+          var idd = productData['id'];
+
+          if (productIds.contains(idd)) {
+            String imageUrl =
+                "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+            int? wishlistId = productWishlistMap[idd];
+            print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
+
+            filteredProducts.add({
+              'id': productData['id'],
+              'name': productData['name'],
+              'SalePrice': productData['salePrice'],
+              'stock': productData['stock'],
+              'image': imageUrl,
+              'mainCategory': productData['mainCategory'],
+              'wishlistId': wishlistId
+            });
+          }
+        }
+
+        print("Filtered Products Before SetState: $filteredProducts");
+        setState(() {
+          products = filteredProducts;
+          print("Filtered Products After SetState: $products");
+        });
+
+        print("-------------------------------$products");
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
 
   final multipleimageurl =
-      "https://row-causes-deny-field.trycloudflare.com/product-images/";
+      "https://table-quantities-filled-therapeutic.trycloudflare.com/product-images/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -173,15 +172,15 @@ Future<void> fetchProducts() async {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://row-causes-deny-field.trycloudflare.com/${imageData['image1']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://row-causes-deny-field.trycloudflare.com/${imageData['image2']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://row-causes-deny-field.trycloudflare.com/${imageData['image3']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://row-causes-deny-field.trycloudflare.com/${imageData['image4']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://row-causes-deny-field.trycloudflare.com/${imageData['image5']}";
+              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image5']}";
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -351,8 +350,6 @@ Future<void> fetchProducts() async {
       },
     );
   }
-
-  
 
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -602,7 +599,8 @@ Future<void> fetchProducts() async {
                           onTap: () {
                             print(
                                 "delettttttttttttttttttttttttttttttttttttttiddd${products[index]['wishlistId']}");
-                            deleteWishlistProduct(products[index]['wishlistId']);
+                            deleteWishlistProduct(
+                                products[index]['wishlistId']);
                             removeProduct(index);
                           },
                           child: ImageIcon(
