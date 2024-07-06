@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> {
           searchResults = searchList;
           print("8888888888888888888$searchResults");
         });
-      } else { 
+      } else {
         print('Failed to search item: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
@@ -800,6 +800,14 @@ class _HomePageState extends State<HomePage> {
         fetchProducts();
         _startTimer();
         fetchOffers();
+        fetchDiscountProducts();
+        fetchbuyonegetoneProducts();
+        fetchBestSaleProducts();
+        fetchFlashSaleProducts();
+        fetchbuytwogetoneProducts();
+        halfratedProducts();
+        fetchRecommendedProducts();
+        recentlyviewed();
       },
       child: Scaffold(
         body: Column(

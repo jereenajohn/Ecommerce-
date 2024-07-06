@@ -159,12 +159,12 @@ List<Map<String, dynamic>> pricefilterresult = [];
     print(subcategoryId);
     final token = await gettokenFromPrefs();
     try {
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$lowtohigh$subcategoryId/'),
         headers: {
           'Authorization': '$token',
         },
-        body: ({'pk': subcategoryId.toString()}),
+        // body: ({'pk': subcategoryId.toString()}),
       );
 
       if (response.statusCode == 200) {
@@ -201,12 +201,12 @@ List<Map<String, dynamic>> pricefilterresult = [];
     print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$hightolow$subcategoryId/');
     final token = await gettokenFromPrefs();
     try {
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$hightolow$subcategoryId/'),
         headers: {
           'Authorization': '$token',
         },
-        body: ({'pk': subcategoryId.toString()}),
+        // body: ({'pk': subcategoryId.toString()}),
       );
 
       if (response.statusCode == 200) {
@@ -387,7 +387,7 @@ print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLGGGGGGGGGGGGGGGG
             'category_id': productData['mainCategory'],
           });
         }
-        setState(() {
+        setState(() {              
           searchResults = searchList;
           print("8888888888888888888$searchResults");
         });
