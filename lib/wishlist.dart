@@ -21,15 +21,16 @@ class Wishlist extends StatefulWidget {
 
 class _WishlistState extends State<Wishlist> {
   String? userId;
-  var wishlisturl = "https://table-quantities-filled-therapeutic.trycloudflare.com/wishlist/";
+  var wishlisturl =
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/wishlist-delete/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -117,7 +118,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+                "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
             print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
@@ -148,39 +149,49 @@ class _WishlistState extends State<Wishlist> {
     }
   }
 
-  final multipleimageurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/product-images/";
+  final imageurl =
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/product/";
+ 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
   List<String> sizeNames = [];
   String? selectedSize;
-
-  Future<void> multipleimage(int id) async {
-    print('======================$multipleimageurl${id}/r');
+  var sizes;
+  int? selectedstock;
+  Future<void> sizecolor(int id) async {
+    print('======================$imageurl${id}/r');
     Set<String> colorsSet = {};
     try {
-      final response = await http.get(Uri.parse('$multipleimageurl${id}/'));
-      print("statussssssssssssssssssssssssss${response.statusCode}");
+      final response = await http.get(Uri.parse('$imageurl${id}/'));
+      print("statussssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
-        final List<dynamic> imageData = jsonDecode(response.body)['product'];
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        final List<dynamic> imageData = data['images'];
+        final List<dynamic> variantsData = data['variants'];
         print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
-
-        // product = jsonDecode(response.body)['product'];
 
         List<Map<String, dynamic>> productsList = [];
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image1']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image2']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image3']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image4']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image5']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image5']}";
+
+          List<Map<String, dynamic>> sizes = variantsData
+              .where((variant) => variant['color'] == imageData['id'])
+              .map<Map<String, dynamic>>((variant) =>
+                  {'size': variant['size'], 'stock': variant['stock']})
+              .toList();
+          print("sizeeeeee${sizes}");
+
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -189,8 +200,7 @@ class _WishlistState extends State<Wishlist> {
             'image4': imageUrl4,
             'image5': imageUrl5,
             'color': imageData['color'],
-            'size_names': List<String>.from(
-                imageData['size_names']), // Cast to List<String>
+            'sizes': sizes,
           });
           colorsSet.add(imageData['color']);
         }
@@ -198,13 +208,15 @@ class _WishlistState extends State<Wishlist> {
         setState(() {
           images = productsList;
           colors = colorsSet.toList();
+
+          print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
           selectedColor = colors.isNotEmpty ? colors[0] : null;
-          sizeNames = images.firstWhere(
-                  (image) => image['color'] == selectedColor)['size_names'] ??
+          sizes = images.firstWhere(
+                  (image) => image['color'] == selectedColor)['sizes'] ??
               [];
-          selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
+          selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+          selectedstock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
         });
-        print("dddddddddddddddddddddddddddddddddddddd$sizeNames");
       } else {
         throw Exception('Error fetching product image');
       }
@@ -212,144 +224,308 @@ class _WishlistState extends State<Wishlist> {
       print('Error fetching product image : $error');
     }
   }
-
-  void _showBottomSheet(BuildContext context, int index) {
-    print("iddddddddddddddddddddd$index");
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return FractionallySizedBox(
-          heightFactor: 0.3, // Adjust the height as needed
-          widthFactor: 0.99, // Set the width to 95% of the screen
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                padding: EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+void showBottomSheet(
+  int id,
+  var name,
+  var price,
+  BuildContext context,
+  List<String> colors,
+  List<Map<String, dynamic>> images,
+  String? selectedColor,
+  List<Map<String, dynamic>> sizes,
+  String? selectedSize,
+  int? selectedStock,
+  Function(String color, List<Map<String, dynamic>> sizeList, String? size, int? stock) onColorSizeChanged,
+) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Allow the bottom sheet to be scrollable
+    builder: (BuildContext context) {
+      return Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(8.0),
+        child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (colors.isNotEmpty)
+                    Container(
+                      color: Colors.white,
+                      child: Row(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Select Color',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              Wrap(
-                                spacing: 8.0,
-                                children: colors.map((color) {
-                                  return ChoiceChip(
-                                    label: Text(color),
-                                    selected: selectedColor == color,
-                                    onSelected: (bool selected) {
-                                      setState(() {
-                                        selectedColor = selected ? color : null;
-                                        sizeNames = images.firstWhere((image) =>
-                                                image['color'] ==
-                                                selectedColor)['size_names'] ??
-                                            [];
-                                        selectedSize = sizeNames.isNotEmpty
-                                            ? sizeNames[0]
-                                            : null;
-                                        print(selectedColor);
-                                      });
-                                    },
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          )
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Wrap(
+                              spacing: 8.0,
+                              children: colors.map<Widget>((color) {
+                                return OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: selectedColor == color
+                                        ? Color.fromARGB(255, 1, 80, 12)
+                                        : Colors.black,
+                                    side: BorderSide(
+                                      color: selectedColor == color
+                                          ? Color.fromARGB(255, 28, 146, 1)
+                                          : Colors.black,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setModalState(() {
+                                      selectedColor = color;
+                                      print("selectedcolorrrr$selectedColor");
+                                      sizes = images.firstWhere(
+                                          (image) => image['color'] == selectedColor)['sizes'] ?? [];
+                                      selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+                                      selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
+                                      onColorSizeChanged(selectedColor!, sizes, selectedSize, selectedStock);
+                                    });
+                                  },
+                                  child: Text(color.toUpperCase()),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         ],
                       ),
-                      SizedBox(height: 16.0),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Select Size',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              Wrap(
-                                spacing: 8.0,
-                                children: sizeNames.map((size) {
-                                  return ChoiceChip(
-                                    label: Text(size),
-                                    selected: selectedSize == size,
-                                    onSelected: (bool selected) {
-                                      setState(() {
-                                        selectedSize = selected ? size : null;
-                                        print(selectedSize);
-                                      });
-                                    },
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 16.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          addProductToCart(
-                            products[index]['id'],
-                            products[index]['name'],
-                            products[index]['price'],
-                          );
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                          print('Selected Color: $selectedColor');
-                          print('Selected Size: $selectedSize');
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromARGB(
-                                  255, 0, 0, 0)), // Background color
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(18.0), // Border radius
-                              side: BorderSide(
-                                  color: const Color.fromARGB(
-                                      255, 0, 0, 0)), // Border color
+                    ),
+                  if (selectedColor != null && sizes.isNotEmpty)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Wrap(
+                              spacing: 8.0,
+                              children: sizes.map<Widget>((sizeData) {
+                                return Container(
+                                  width: 40.0,
+                                  height: 40.0,
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      foregroundColor: selectedSize == sizeData['size']
+                                          ? Color.fromARGB(255, 1, 80, 12)
+                                          : Colors.black,
+                                      side: BorderSide(
+                                        color: selectedSize == sizeData['size']
+                                            ? Color.fromARGB(255, 28, 146, 1)
+                                            : Colors.black,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30.0),
+                                      ),
+                                    ),
+                                    onPressed: sizeData['stock'] > 0
+                                        ? () {
+                                            setModalState(() {
+                                              selectedSize = sizeData['size'];
+                                              selectedStock = sizeData['stock'];
+                                              print("selectedcolorrrr$selectedSize");
+                                              print("selectedcolorrrr$selectedStock");
+                                              onColorSizeChanged(selectedColor!, sizes, selectedSize, selectedStock);
+                                            });
+                                          }
+                                        : null,
+                                    child: Center(
+                                      child: Text(
+                                        sizeData['size'].toUpperCase(),
+                                        style: TextStyle(
+                                          decoration: sizeData['stock'] == 0
+                                              ? TextDecoration.lineThrough
+                                              : TextDecoration.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
                             ),
                           ),
                         ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12.0), // Adjust padding as needed
-                          child: Text(
-                            'Confirm',
-                            style: TextStyle(
-                              color: Colors.white, // Text color
-                              fontSize: 16.0, // Adjust font size as needed
+                      ],
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: (selectedStock ?? 0) > 0
+                                ? () {
+                                    addProductToCart(id, name, price);
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: (selectedStock ?? 0) > 0
+                                  ? Colors.black
+                                  : Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
+                            child: Text("ADD TO CART"),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    },
+  );
+}
+
+
+  // void _showBottomSheet(BuildContext context, int index) {
+  //   print("iddddddddddddddddddddd$index");
+  //   showModalBottomSheet(
+  //     isScrollControlled: true,
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return FractionallySizedBox(
+  //         heightFactor: 0.3, // Adjust the height as needed
+  //         widthFactor: 0.99, // Set the width to 95% of the screen
+  //         child: StatefulBuilder(
+  //           builder: (BuildContext context, StateSetter setState) {
+  //             return Container(
+  //               padding: EdgeInsets.all(16.0),
+  //               child: SingleChildScrollView(
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: [
+  //                     Row(
+  //                       mainAxisAlignment: MainAxisAlignment.start,
+  //                       children: [
+  //                         Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             Text(
+  //                               'Select Color',
+  //                               style: TextStyle(
+  //                                   fontSize: 14, fontWeight: FontWeight.bold),
+  //                             ),
+  //                             Wrap(
+  //                               spacing: 8.0,
+  //                               children: colors.map((color) {
+  //                                 return ChoiceChip(
+  //                                   label: Text(color),
+  //                                   selected: selectedColor == color,
+  //                                   onSelected: (bool selected) {
+  //                                     setState(() {
+  //                                       selectedColor = selected ? color : null;
+  //                                       sizeNames = images.firstWhere((image) =>
+  //                                               image['color'] ==
+  //                                               selectedColor)['size_names'] ??
+  //                                           [];
+  //                                       selectedSize = sizeNames.isNotEmpty
+  //                                           ? sizeNames[0]
+  //                                           : null;
+  //                                       print(selectedColor);
+  //                                     });
+  //                                   },
+  //                                 );
+  //                               }).toList(),
+  //                             ),
+  //                           ],
+  //                         )
+  //                       ],
+  //                     ),
+  //                     SizedBox(height: 16.0),
+  //                     Row(
+  //                       children: [
+  //                         Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             Text(
+  //                               'Select Size',
+  //                               style: TextStyle(
+  //                                   fontSize: 14, fontWeight: FontWeight.bold),
+  //                             ),
+  //                             Wrap(
+  //                               spacing: 8.0,
+  //                               children: sizeNames.map((size) {
+  //                                 return ChoiceChip(
+  //                                   label: Text(size),
+  //                                   selected: selectedSize == size,
+  //                                   onSelected: (bool selected) {
+  //                                     setState(() {
+  //                                       selectedSize = selected ? size : null;
+  //                                       print(selectedSize);
+  //                                     });
+  //                                   },
+  //                                 );
+  //                               }).toList(),
+  //                             ),
+  //                           ],
+  //                         )
+  //                       ],
+  //                     ),
+  //                     SizedBox(height: 16.0),
+  //                     ElevatedButton(
+  //                       onPressed: () {
+  //                         addProductToCart(
+  //                           products[index]['id'],
+  //                           products[index]['name'],
+  //                           products[index]['price'],
+  //                         );
+  //                         Navigator.push(
+  //                             context,
+  //                             MaterialPageRoute(
+  //                                 builder: (context) => Wishlist()));
+  //                         print('Selected Color: $selectedColor');
+  //                         print('Selected Size: $selectedSize');
+  //                       },
+  //                       style: ButtonStyle(
+  //                         backgroundColor: MaterialStateProperty.all<Color>(
+  //                             const Color.fromARGB(
+  //                                 255, 0, 0, 0)), // Background color
+  //                         shape:
+  //                             MaterialStateProperty.all<RoundedRectangleBorder>(
+  //                           RoundedRectangleBorder(
+  //                             borderRadius:
+  //                                 BorderRadius.circular(18.0), // Border radius
+  //                             side: BorderSide(
+  //                                 color: const Color.fromARGB(
+  //                                     255, 0, 0, 0)), // Border color
+  //                           ),
+  //                         ),
+  //                       ),
+  //                       child: Container(
+  //                         alignment: Alignment.center,
+  //                         padding: EdgeInsets.symmetric(
+  //                             vertical: 12.0), // Adjust padding as needed
+  //                         child: Text(
+  //                           'Confirm',
+  //                           style: TextStyle(
+  //                             color: Colors.white, // Text color
+  //                             fontSize: 16.0, // Adjust font size as needed
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -401,6 +577,7 @@ class _WishlistState extends State<Wishlist> {
           'size': selectedSize,
         }),
       );
+      print("Response status code: ${response.statusCode}");
 
       if (response.statusCode == 201) {
         print('Product added to cart: $productId');
@@ -531,50 +708,65 @@ class _WishlistState extends State<Wishlist> {
                           ),
                           SizedBox(height: 5),
                           // Add spacing between name and price
-                          if (products[index]['stock'] != null &&
-                              products[index]['stock'] > 0)
-                            Text(
-                              "stock ${products[index]['stock']}",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Color.fromARGB(255, 217, 29, 29),
-                              ),
-                            )
-                          else
-                            Text(
-                              "Out of Stock",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Color.fromARGB(255, 217, 29, 29),
-                              ),
-                            ),
+                          // if (products[index]['stock'] != null &&
+                          //     products[index]['stock'] > 0)
+                          //   Text(
+                          //     "stock ${products[index]['stock']}",
+                          //     style: TextStyle(
+                          //       fontSize: 10,
+                          //       color: Color.fromARGB(255, 217, 29, 29),
+                          //     ),
+                          //   )
+                          // else
+                          //   Text(
+                          //     "Out of Stock",
+                          //     style: TextStyle(
+                          //       fontSize: 10,
+                          //       color: Color.fromARGB(255, 217, 29, 29),
+                          //     ),
+                          //   ),
                           SizedBox(
                             height: 5,
                           ),
 
                           ElevatedButton(
-                            onPressed: (products[index]['stock'] ?? 0) > 0
-                                ? () async {
-                                    await multipleimage(products[index]['id']);
-                                    if (colors.isNotEmpty) {
-                                      _showBottomSheet(context, index);
-                                    } else {
-                                      await multipleimage(products[index][
-                                          'id']); // Add await here to ensure the async call is completed
-                                      addProductToCart(
-                                        products[index]['id'],
-                                        products[index]['name'],
-                                        products[index]['price'],
-                                      );
-                                    }
-                                  }
-                                : null,
+                            onPressed: () async {
+                              await sizecolor(products[index]['id']);
+                              if (colors.isNotEmpty) {
+                               showBottomSheet(
+                                products[index]['id'],
+                                products[index]['name'],
+                                products[index]['SalePrice'],
+
+              context,
+              colors,
+              images,
+              selectedColor,
+              sizes,
+              selectedSize,
+              selectedstock,
+              (color, sizeList, size, stock) {
+                setState(() {
+                  selectedColor = color;
+                  sizes = sizeList;
+                  selectedSize = size;
+                  selectedstock = stock;
+                });
+              },
+            );
+                              } else {
+                                await sizecolor(products[index][
+                                    'id']); // Add await here to ensure the async call is completed
+                                addProductToCart(
+                                  products[index]['id'],
+                                  products[index]['name'],
+                                  products[index]['price'],
+                                );
+                              }
+                            },
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor:
-                                  (products[index]['stock'] ?? 0) > 0
-                                      ? Colors.black
-                                      : Colors.grey,
+                              backgroundColor: Colors.black,
+                             
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -583,7 +775,7 @@ class _WishlistState extends State<Wishlist> {
                             ),
                             child: Text(
                               "ADD TO CART",
-                              style: TextStyle(fontSize: 7),
+                              style: TextStyle(fontSize: 7,color: Colors.white),
                             ),
                           ),
                         ],

@@ -31,7 +31,7 @@ class _UserAddressState extends State<UserAddress> {
   TextEditingController note = TextEditingController();
 
   String url =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/add-address/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/add-address/";
   var tokenn;
 
   @override
@@ -49,14 +49,7 @@ class _UserAddressState extends State<UserAddress> {
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Select_Delivery_Address()),
-            );
-          },
-          child: Text("Add Address"),
+        
         ),
         actions: <Widget>[
           Padding(

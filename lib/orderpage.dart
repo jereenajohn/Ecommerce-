@@ -1,9 +1,9 @@
 import 'dart:convert';
+
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/ordersuccesspage.dart';
-
 import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,27 +16,9 @@ import 'package:http/http.dart' as http;
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class order extends StatefulWidget {
-  var addressid;
-  var name;
-  var city;
-  var state;
-  var number;
-  var pincode;
-  var email;
-  var note;
-  var userid;
-
-  order(
-      {super.key,
-      required this.addressid,
-      required this.name,
-      required this.city,
-      required this.state,
-      required this.number,
-      required this.pincode,
-      required this.email,
-      required this.note,
-      required this.userid});
+  order({
+    super.key,
+  });
 
   @override
   State<order> createState() => _orderState();
@@ -48,26 +30,27 @@ class _orderState extends State<order> {
   var couponcode;
   String? userId;
   bool isCouponApplied = false;
+    int? selectedAddressId;
   String fetchaddressurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/get-address/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com//get-address/";
   String orderurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/order/create/";
-  String cuponurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cupons/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com//order/create/";
+  String cuponurl = "https://sr-shaped-exports-toolbar.trycloudflare.com//cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   TextEditingController coupon = TextEditingController();
   int CODAMOUNT = 40;
   late Razorpay razorpay;
+  Map<String, dynamic>? selectedAddress;
   var tokenn;
 
   @override
   void initState() {
     super.initState();
     _initData();
-    print(widget.name);
-    print(widget.addressid);
+    // print(widget.name);
+    // print(widget.addressid);
 
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, errorHandler);
@@ -82,6 +65,7 @@ class _orderState extends State<order> {
     fetchcupons();
 
     fetchCartData();
+    fetchAddress();
 
     // calculateTotalPrice();
   }
@@ -96,8 +80,34 @@ class _orderState extends State<order> {
     return prefs.getString('token');
   }
 
+ Future<void> fetchAddress() async {
+  final token = await gettokenFromPrefs();
+  print("--------------------------------------------R$token");
+
+  var response = await http.get(
+    Uri.parse(fetchaddressurl),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
+
+  print("Fetch address: ${response.body}");
+
+  if (response.statusCode == 200) {
+    var responseData = jsonDecode(response.body);
+    var data = responseData['address'];
+
+    setState(() {
+      addressList = List<Map<String, dynamic>>.from(data);
+    });
+  } else {
+    print("Failed to fetch address data");
+  }
+}
+
+
   var CartUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart-products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com//cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -149,7 +159,7 @@ class _orderState extends State<order> {
             actions: [
               TextButton(
                 onPressed: () {
-                  orderpayment();
+                  // orderpayment();
                   Navigator.of(context).pop(); // Close the dialog
                 },
                 child: Text("Done"),
@@ -172,6 +182,58 @@ class _orderState extends State<order> {
       backgroundColor: Colors.green,
     ));
   }
+void showAddressBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Adjust bottom sheet height based on content
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            color: Colors.white, // Set the background color to white
+            child: Wrap(
+              children: addressList.map((address) {
+                return Column(
+                  children: [
+                    RadioListTile<Map<String, dynamic>>(
+                      title: Text(address['address']),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('City: ${address['city']}'),
+                          Text('State: ${address['state']}'),
+                          Text('Pincode: ${address['pincode']}'),
+                          Text('Phone: ${address['phone']}'),
+                          Text('Email: ${address['email']}'),
+                        ],
+                      ),
+                      value: address,
+                      groupValue: selectedAddress,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedAddress = value;
+                          selectedAddressId = value?['id']; // Store the address ID
+                          fetchAddress();
+                        });
+                        // Optionally, close the bottom sheet immediately after selecting an address
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Divider(), // Add a divider after each address
+                  ],
+                );
+              }).toList(),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+
+
+
 
 //coupons
   List<Map<String, dynamic>> cupondata = [];
@@ -207,56 +269,55 @@ class _orderState extends State<order> {
 
 //Order create
 
-  Future<void> ordercreate() async {
-    try {
-      final token = await gettokenFromPrefs();
-      print(
-          '****************************************************************$orderurl${widget.addressid}/');
-      print(
-          '****************************************************************Coupon Code: $couponcode');
-      print(
-          '****************************************************************Payment Method: $selectedpaymentmethod');
+ Future<void> ordercreate() async {
+  try {
+    final token = await gettokenFromPrefs();
 
-      final url = Uri.parse('$orderurl${widget.addressid}/');
-      final headers = {
-        'Authorization': '$token',
-        'Content-Type': 'application/json',
-      };
-      final body = jsonEncode({
-        'coupon_code': couponcode,
-        'payment_method': selectedpaymentmethod,
-      });
+    print('**Coupon Code: $couponcode');
+    print('**Payment Method: $selectedpaymentmethod');
+    print('ooooooooooooooooooorrrrrrrrrrrrrrdddddddddddeeeeeeeerrrrrrccccccccrrrrreeeeeaaaaatttteeeeeeee:$orderurl$selectedAddressId/');
 
-      print('Request URL: $url');
-      print('Request Headers: $headers');
-      print('Request Body: $body');
+    final url = Uri.parse('$orderurl$selectedAddressId/'); // Use the selected address ID
+    final headers = {
+      'Authorization': '$token',
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({
+      'coupon_code': couponcode,
+      'payment_method': selectedpaymentmethod,
+    });
 
-      var response = await http.post(
-        url,
-        headers: headers,
-        body: body,
+    print('Request URL: $url');
+    print('Request Headers: $headers');
+    print('Request Body: $body');
+
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+
+    print('Response Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
+    if (response.statusCode == 201) {
+      final recent = jsonDecode(response.body);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OrderConfirmationScreen(),
+        ),
       );
-
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
-      if (response.statusCode == 201) {
-        final recent = jsonDecode(response.body);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OrderConfirmationScreen(),
-          ),
-        );
-        print('Order created successfully: $recent');
-      } else {
-        print('Failed to create order: ${response.statusCode}');
-        print('Error Message: ${jsonDecode(response.body)['message']}');
-      }
-    } catch (error) {
-      print('Error creating order: $error');
+      print('Order created successfully: $recent');
+    } else {
+      print('Failed to create order: ${response.statusCode}');
+      print('Error Message: ${jsonDecode(response.body)['message']}');
     }
+  } catch (error) {
+    print('Error creating order: $error');
   }
+}
+
 
   Future<void> orderpayment() async {
     try {
@@ -265,13 +326,13 @@ class _orderState extends State<order> {
       print(
           "QWWWWWWWWWWWWWWWWWWWWEEEEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRRRRRR$token");
       print(
-          '##################################################YYYYYYYYYYYYYYYYYYYYYYYYYY$orderurl${widget.addressid}/');
+          '##################################################YYYYYYYYYYYYYYYYYYYYYYYYYY$orderurl$selectedAddressId/');
       print(
           '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Coupon Code: $couponcode');
       print(
           '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Payment Method: $selectedpaymentmethod');
 
-      final url = Uri.parse('$orderurl${widget.addressid}/');
+      final url = Uri.parse('$orderurl$selectedAddressId/');
       final headers = {
         'Authorization': '$token',
         'Content-Type': 'application/json',
@@ -337,7 +398,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${item['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com//${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -453,60 +514,124 @@ class _orderState extends State<order> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 202, 201, 201)
-                                .withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 6),
-                            Text(
-                              widget.name,
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            Text(
-                              "${widget.city}, ${widget.state}, ${widget.number.toString()}",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            Text(
-                              widget.email,
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            Text(
-                              widget.pincode.toString(),
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                Row(
+  mainAxisAlignment: MainAxisAlignment.start, // Align to the start (left)
+  children: [
+    Padding(
+      padding: const EdgeInsets.all(10), // Add padding of 10
+      child: SizedBox(
+        // width: 150, // Set the desired width if needed
+        // height: 50, // Set the desired height if needed
+        child: ElevatedButton(
+          onPressed: () {
+            fetchAddress();
+            showAddressBottomSheet(context);
+          },
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.black, // Background color
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add), // Plus icon
+              SizedBox(width: 5), // Space between icon and text
+              Text("Select Address"),
+            ],
+          ),
+        ),
+      ),
+    ),
+  ],
+),
+
+                  SizedBox(height: 10),
+                 Padding(
+  padding: const EdgeInsets.all(4.0),
+  child: Container(
+    padding: EdgeInsets.all(16.0),
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.grey),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: selectedAddress != null
+      ? Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Selected Address:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              '${selectedAddress!['address']}, ${selectedAddress!['city']}, ${selectedAddress!['state']}, ${selectedAddress!['pincode']}, ${selectedAddress!['phone']}, ${selectedAddress!['email']}',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        )
+      : Text(
+          'No address selected',
+          style: TextStyle(fontSize: 16),
+        ),
+  ),
+),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       boxShadow: [
+                  //         BoxShadow(
+                  //           color: Color.fromARGB(255, 202, 201, 201)
+                  //               .withOpacity(0.5),
+                  //           spreadRadius: 2,
+                  //           blurRadius: 5,
+                  //           offset: Offset(0, 3),
+                  //         ),
+                  //       ],
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(left: 10),
+                  //       child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           SizedBox(height: 6),
+                  //           Text(
+                  //             widget.name,
+                  //             style: TextStyle(
+                  //               color: Color.fromARGB(255, 0, 0, 0),
+                  //             ),
+                  //           ),
+                  //           Text(
+                  //             "${widget.city}, ${widget.state}, ${widget.number.toString()}",
+                  //             style: TextStyle(
+                  //               color: Color.fromARGB(255, 0, 0, 0),
+                  //             ),
+                  //           ),
+                  //           Text(
+                  //             widget.email,
+                  //             style: TextStyle(
+                  //               color: Color.fromARGB(255, 0, 0, 0),
+                  //             ),
+                  //           ),
+                  //           Text(
+                  //             widget.pincode.toString(),
+                  //             style: TextStyle(
+                  //               color: Color.fromARGB(255, 0, 0, 0),
+                  //             ),
+                  //           ),
+                  //           SizedBox(height: 6),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: 20),
                   _buildCartItems(),
 
@@ -881,7 +1006,7 @@ class _orderState extends State<order> {
                   ordercreate();
                 } else {
                   openCheckout();
-                  //  orderpayment();
+                   orderpayment();
                 }
               },
               child: Container(
@@ -908,7 +1033,7 @@ class _orderState extends State<order> {
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: GNav(  
+          child: GNav(
             gap: 20,
             onTabChange: (index) {
               setState(() {

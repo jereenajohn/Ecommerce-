@@ -48,6 +48,7 @@ dependencies:
   path_provider :
   permission_handler: ^8.3.0
   razorpay_web: ^1.4.2
+  flutter_rating_bar:
 
 
 
@@ -116,6 +117,7 @@ flutter:
    - lib/assets/settings.png
    - lib/assets/tracking.png
    - lib/assets/upload.png
+   - lib/assets/coin.png
 
 
 

@@ -11,8 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class OrderBigView extends StatefulWidget {
-  var orderids;
-  OrderBigView({super.key, required this.productid, required this.orderids});
+ 
+  OrderBigView({super.key, required this.productid});
   final int productid;
 
   @override
@@ -40,10 +40,10 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   final String orders =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/orders/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/order-items/";
 
   final String productsUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -56,6 +56,9 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   var quantity;
+
+
+
   Future<void> myOrderDetails() async {
     try {
       final token = await getTokenFromPrefs();
@@ -79,23 +82,36 @@ class _OrderBigViewState extends State<OrderBigView> {
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
+          List<Map<String, dynamic>> orderProducts = [];
 
         print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
 
-        List<int> ids = [];
 
         for (var productData in productsData) {
-          if (widget.productid == productData['product']) {
-            quantity = productData['quantity'];
-          }
+
+          setState(() {
+            
+         if(widget.productid==productData['product']){
+
+                  quantity=productData['quantity'];
+                  print(quantity);
+
+                  fetchProducts();
+
+
+
+         }
+            
+          });
+
+         
         }
 
-        setState(() {
-          productquantity = quantity;
-        });
+      
 
         // Fetch product details after getting order details
-        fetchProducts();
+     
+
       } else {
         throw Exception('Failed to load recommended products');
       }
@@ -104,6 +120,7 @@ class _OrderBigViewState extends State<OrderBigView> {
     }
   }
 
+      
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsUrl));
@@ -118,7 +135,7 @@ class _OrderBigViewState extends State<OrderBigView> {
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
-                "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+                "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -132,7 +149,9 @@ class _OrderBigViewState extends State<OrderBigView> {
         setState(() {
           products = filteredProducts;
           isLoading = false; // Set loading state to false
+
         });
+        print("nnnnnnnnnnnnnnnnnnnnn$products");
       } else {
         throw Exception('Failed to load wishlist products');
       }
@@ -225,7 +244,7 @@ class _OrderBigViewState extends State<OrderBigView> {
                                 maxLines: 1,
                               ),
                               Text(
-                                'Quantity:$productquantity',
+                                'Quantity:$quantity',
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,

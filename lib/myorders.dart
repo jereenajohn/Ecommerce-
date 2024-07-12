@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class MyOrder extends StatefulWidget {
   const MyOrder({super.key});
@@ -42,10 +43,13 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/orders/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/order-items/";
 
   final String productsUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
+
+  final String ratingurl =
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/product-review/";
 
   List<dynamic> productIds = [];
   List<dynamic> orderIds = [];
@@ -69,7 +73,6 @@ class _MyOrderState extends State<MyOrder> {
           'Content-type': 'application/json',
           'Authorization': ' $token',
         },
-       
       );
 
       print(
@@ -80,24 +83,30 @@ class _MyOrderState extends State<MyOrder> {
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
+        List<Map<String, dynamic>> orderProducts = [];
 
         print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
 
-        List<int> ids = [];
-        List<int> orderids = [];
-
         for (var productData in productsData) {
-          ids.add(productData['product']);
-          orderids.add(productData['id']);
+          String imageUrl =
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+          orderProducts.add({
+            'id': productData['order'].toString(), // Ensure ID is a string
+            'productid': productData['product'].toString(), // Ensure product ID is a string
+            'name': productData['name'],
+            'salePrice': productData['sale_price'].toString(), // Ensure sale price is a string
+            'image': imageUrl,
+          });
         }
 
-        setState(() {
-          productIds = ids;
-          orderIds = orderids;
-        });
-
         // Fetch product details after getting order details
-        fetchProducts();
+        setState(() {
+          products = orderProducts;
+          isLoading = false; // Set loading state to false
+
+          print(
+              "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$products");
+        });
       } else {
         throw Exception('Failed to load recommended products');
       }
@@ -106,45 +115,136 @@ class _MyOrderState extends State<MyOrder> {
     }
   }
 
-  Future<void> fetchProducts() async {
-    try {
-      final response = await http.get(Uri.parse(productsUrl));
-      print('fetchProducts Response: ${response.statusCode}');
+  Future<void> postrating(String productid, double rating, String feedback) async {
+  try {
+    final token = await gettokenFromPrefs();
 
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['products'];
-        List<Map<String, dynamic>> filteredProducts = [];
+    var response = await http.post(
+      Uri.parse('$ratingurl$productid/'),
+      headers: {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(
+        {
+          'rating': rating.toInt(),
+          'review_text': feedback,
+        },
+      ),
+    );
 
-        print(
-            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIIIII$productsData");
-        for (var productData in productsData) {
-          if (productIds.contains(productData['id'])) {
-            String imageUrl =
-                "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
-            filteredProducts.add({
-              'productid': productData['id'],
-              'name': productData['name'],
-              'salePrice': productData['salePrice'],
-              'image': imageUrl,
-              'mainCategory': productData['mainCategory']
-            });
-          }
-        }
+    print('$ratingurl$productid/');
+    print("Response status: ${response.statusCode}");
+    print("Response body: ${response.body}");
 
-        setState(() {
-          products = filteredProducts;
-          isLoading = false; // Set loading state to false
-
-          print(
-              "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$products");
-        });
-      } else {
-        throw Exception('Failed to load wishlist products');
-      }
-    } catch (error) {
-      print('Error fetching wishlist products: $error');
+    if (response.statusCode == 201) {
+      print('Rating submitted successfully');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Rating submitted successfully'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      print('Failed to submit rating: ${response.statusCode}');
+      print('Error: ${response.body}'); // Print the error message from the server
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to submit rating: ${response.body}'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
+  } catch (error) {
+    print('Error submitting rating: $error');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error submitting rating'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+}
+
+  void _showRatingDialog(BuildContext context, String productid) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        double _rating = 4.0;
+        TextEditingController _feedbackController = TextEditingController();
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          ),
+          title: Text('Rate and review'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Rating (${_rating.toStringAsFixed(1)}/5)'),
+              SizedBox(height: 10),
+              RatingBar.builder(
+                initialRating: _rating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.teal,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              Text('Review'),
+              SizedBox(height: 10),
+              TextField(
+                controller: _feedbackController,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  hintText: 'Feeedback.',
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text(
+                'Post',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              onPressed: () {
+                // Handle rating and feedback submission here
+                postrating(productid, _rating, _feedbackController.text);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -184,12 +284,7 @@ class _MyOrderState extends State<MyOrder> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => OrderBigView(
-                                    productid: product['productid'],
-                                    orderids: orderIds)));
+                        _showRatingDialog(context, product['productid']);
                       },
                       child: Container(
                         height: 90,

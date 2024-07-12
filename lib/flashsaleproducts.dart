@@ -27,14 +27,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/flash-sale/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/search/?q=";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/whishlist/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -129,9 +129,9 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   Future<void> searchproduct() async {
     try {
       print('$searchproducturl${searchitem.text}');
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        body: ({'q': searchitem.text}),
+      
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(

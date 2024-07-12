@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 class Select_Delivery_Address extends StatefulWidget {
   final String? user_id;
+  
 
   const Select_Delivery_Address({Key? key, this.user_id}) : super(key: key);
 
@@ -20,9 +21,11 @@ class Select_Delivery_Address extends StatefulWidget {
 class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
   String? userId;
   String fetchaddressurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//get-address/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/get-address/";
   List<Map<String, dynamic>> addressList = [];
-  int selectedAddressIndex = -1;
+   Map<String, dynamic>? selectedAddress;
+
+  int selectedAddressIndex = -1; 
   var selectedAddressId;
   var selectedAddressname;
   var selectedAddressemail;
@@ -76,6 +79,48 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
       print("Failed to fetch address data");
     }
   }
+
+
+   void showAddressBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return ListView(
+              children: addressList.map((address) {
+                return RadioListTile<Map<String, dynamic>>(
+                  title: Text(address['address']),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('City: ${address['city']}'),
+                      Text('State: ${address['state']}'),
+                      Text('Pincode: ${address['pincode']}'),
+                      Text('Phone: ${address['phone']}'),
+                      Text('Email: ${address['email']}'),
+                    ],
+                  ),
+                  value: address,
+                  groupValue: selectedAddress,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAddress = value;
+                    });
+                    this.setState(() {
+                      selectedAddress = value;
+                    });
+                    Navigator.pop(context);
+                  },
+                );
+              }).toList(),
+            );
+          },
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -213,15 +258,17 @@ class _Select_Delivery_AddressState extends State<Select_Delivery_Address> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => order(
-                            addressid: selectedAddressId,
-                            name: selectedAddressname,
-                            city: selectedAddresscity,
-                            state: selectedAddressstate,
-                            pincode: selectedAddresspincode,
-                            number: selectedAddressphone,
-                            email: selectedAddressemail,
-                            note: selectedAddressnote,
-                            userid: selectedAddressuserid)),
+                            // addressid: selectedAddressId,
+                            // name: selectedAddressname,
+                            // city: selectedAddresscity,
+                            // state: selectedAddressstate,
+                            // pincode: selectedAddresspincode,
+                            // number: selectedAddressphone,
+                            // email: selectedAddressemail,
+                            // note: selectedAddressnote,
+                            // userid: selectedAddressuserid,
+                          
+                            )),
                   );
                 }
               },

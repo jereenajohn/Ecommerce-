@@ -28,14 +28,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   final String buyonegetoneurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/buy-1-get-1/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/buy-1-get-1/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/search/?q=";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/add-wishlist/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -133,9 +133,9 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   Future<void> searchproduct() async {
     try {
       print('$searchproducturl${searchitem.text}');
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        body: ({'q': searchitem.text}),
+      
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -150,7 +150,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -242,7 +242,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

@@ -2,48 +2,54 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class MyWidget extends StatefulWidget {
+class ParentWidget extends StatefulWidget {
   @override
-  _MyWidgetState createState() => _MyWidgetState();
+  _ParentWidgetState createState() => _ParentWidgetState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
-  final multipleimageurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/product-images/";
+class _ParentWidgetState extends State<ParentWidget> {
+  final imageurl = "https://sr-shaped-exports-toolbar.trycloudflare.com/product/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
-  List<String> sizeNames = [];
+  List<Map<String, dynamic>> sizes = [];
   String? selectedSize;
-  bool isLoading = false;
+  int? selectedStock;
 
-  Future<void> multipleimage(int id) async {
-    setState(() {
-      isLoading = true; // Set loading state
-    });
+  @override
+  void initState() {
+    super.initState();
+    sizecolor(1);  // Example ID, you can set this as per your requirement
+  }
 
-    print('======================$multipleimageurl${id}/r');
+  Future<void> sizecolor(int id) async {
+    print('======================$imageurl${id}/');
     Set<String> colorsSet = {};
     try {
-      final response = await http.get(Uri.parse('$multipleimageurl${id}/'));
-      print("statussssssssssssssssssssssssss${response.statusCode}");
+      final response = await http.get(Uri.parse('$imageurl${id}/'));
+      print("statussssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
-        final List<dynamic> imageData = jsonDecode(response.body)['product'];
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        final List<dynamic> imageData = data['images'];
+        final List<dynamic> variantsData = data['variants'];
         print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
         List<Map<String, dynamic>> productsList = [];
 
         for (var imageData in imageData) {
-          String imageUrl1 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image1']}";
-          String imageUrl2 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image2']}";
-          String imageUrl3 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image3']}";
-          String imageUrl4 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image4']}";
-          String imageUrl5 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image5']}";
+          String imageUrl1 = "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image1']}";
+          String imageUrl2 = "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image2']}";
+          String imageUrl3 = "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image3']}";
+          String imageUrl4 = "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image4']}";
+          String imageUrl5 = "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image5']}";
+
+          List<Map<String, dynamic>> sizes = variantsData
+              .where((variant) => variant['color'] == imageData['id'])
+              .map<Map<String, dynamic>>((variant) =>
+                  {'size': variant['size'], 'stock': variant['stock']})
+              .toList();
+          print("sizeeeeee${sizes}");
+
           productsList.add({
             'id': imageData['id'],
             'image1': imageUrl1,
@@ -52,8 +58,7 @@ class _MyWidgetState extends State<MyWidget> {
             'image4': imageUrl4,
             'image5': imageUrl5,
             'color': imageData['color'],
-            'size_names': List<String>.from(
-                imageData['size_names']), // Cast to List<String>
+            'sizes': sizes,
           });
           colorsSet.add(imageData['color']);
         }
@@ -61,165 +66,201 @@ class _MyWidgetState extends State<MyWidget> {
         setState(() {
           images = productsList;
           colors = colorsSet.toList();
+
+          print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
           selectedColor = colors.isNotEmpty ? colors[0] : null;
-          sizeNames = images.firstWhere(
-                  (image) => image['color'] == selectedColor)['size_names'] ??
-              [];
-          selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
-          isLoading = false; // Set loading state
+          sizes = images.firstWhere(
+                  (image) => image['color'] == selectedColor)['sizes'] ?? [];
+          selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+          selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
         });
-        print("dddddddddddddddddddddddddddddddddddddd$sizeNames");
       } else {
         throw Exception('Error fetching product image');
       }
     } catch (error) {
-      setState(() {
-        isLoading = false; // Set loading state
-      });
       print('Error fetching product image : $error');
     }
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return FractionallySizedBox(
-          heightFactor: 0.3, // Adjust the height as needed
-          widthFactor: 0.99, // Set the width to 95% of the screen
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                padding: EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                               Text(
-                        'Select Color',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Wrap(
-                        spacing: 8.0,
-                        children: colors.map((color) {
-                          return ChoiceChip(
-                            label: Text(color),
-                            selected: selectedColor == color,
-                            onSelected: (bool selected) {
-                              setState(() {
-                                selectedColor = selected ? color : null;
-                                sizeNames = images.firstWhere(
-                                        (image) => image['color'] == selectedColor)['size_names'] ??
-                                    [];
-                                selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
-                                print(selectedColor);
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-
-                            ],
-                          )
-                        ],
-                      ),
-                     
-                      SizedBox(height: 16.0),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                               Text(
-                        'Select Size',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Wrap(
-                        spacing: 8.0,
-                        children: sizeNames.map((size) {
-                          return ChoiceChip(
-                            label: Text(size),
-                            selected: selectedSize == size,
-                            onSelected: (bool selected) {
-                              setState(() {
-                                selectedSize = selected ? size : null;
-                                print(selectedSize);
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-
-                            ],
-                          )
-                        ],
-                      ),
-                     
-                      SizedBox(height: 16.0),
-                      ElevatedButton(
-  onPressed: () {
-    // Handle button press
-    Navigator.pop(context); // Close the bottom sheet
-    print('Selected Color: $selectedColor');
-    print('Selected Size: $selectedSize');
-  },
-  style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 0, 0)), // Background color
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0), // Border radius
-        side: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)), // Border color
-      ),
-    ),
-  ),
-  child: Container(
-    alignment: Alignment.center,
-    padding: EdgeInsets.symmetric(vertical: 12.0), // Adjust padding as needed
-    child: Text(
-      'Confirm',
-      style: TextStyle(
-        color: Colors.white, // Text color
-        fontSize: 16.0, // Adjust font size as needed
-      ),
-    ),
-  ),
-),
-
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product Details'),
-      ),
+      appBar: AppBar(title: Text("Parent Widget")),
       body: Center(
         child: ElevatedButton(
-          onPressed: () async {
-            await multipleimage(8); // Ensure data is fetched before showing bottom sheet
-            _showBottomSheet(context);
+          onPressed: () {
+            showBottomSheet(
+              context,
+              colors,
+              images,
+              selectedColor,
+              sizes,
+              selectedSize,
+              selectedStock,
+              (color, sizeList, size, stock) {
+                setState(() {
+                  selectedColor = color;
+                  sizes = sizeList;
+                  selectedSize = size;
+                  selectedStock = stock;
+                });
+              },
+            );
           },
-          child: Text('Show Options'),
+          child: Text("Show Bottom Sheet"),
         ),
       ),
     );
   }
+}
+
+void showBottomSheet(
+  BuildContext context,
+  List<String> colors,
+  List<Map<String, dynamic>> images,
+  String? selectedColor,
+  List<Map<String, dynamic>> sizes,
+  String? selectedSize,
+  int? selectedStock,
+  Function(String color, List<Map<String, dynamic>> sizeList, String? size, int? stock) onColorSizeChanged,
+) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (colors.isNotEmpty)
+                  Container(
+                    height: 70,
+                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Wrap(
+                            spacing: 8.0,
+                            children: colors.map<Widget>((color) {
+                              return OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: selectedColor == color
+                                      ? Color.fromARGB(255, 1, 80, 12)
+                                      : Colors.black,
+                                  side: BorderSide(
+                                    color: selectedColor == color
+                                        ? Color.fromARGB(255, 28, 146, 1)
+                                        : Colors.black,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setModalState(() {
+                                    selectedColor = color;
+                                    sizes = images.firstWhere(
+                                        (image) => image['color'] == selectedColor)['sizes'] ?? [];
+                                    selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+                                    selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
+                                    onColorSizeChanged(selectedColor!, sizes, selectedSize, selectedStock);
+                                  });
+                                },
+                                child: Text(color.toUpperCase()),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (selectedColor != null && sizes.isNotEmpty)
+                  Container(
+                    height: 80,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Wrap(
+                        spacing: 8.0,
+                        children: sizes.map<Widget>((sizeData) {
+                          return Container(
+                            width: 40.0,
+                            height: 40.0,
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                foregroundColor: selectedSize == sizeData['size']
+                                    ? Color.fromARGB(255, 1, 80, 12)
+                                    : Colors.black,
+                                side: BorderSide(
+                                  color: selectedSize == sizeData['size']
+                                      ? Color.fromARGB(255, 28, 146, 1)
+                                      : Colors.black,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                              onPressed: sizeData['stock'] > 0
+                                  ? () {
+                                      setModalState(() {
+                                        selectedSize = sizeData['size'];
+                                        selectedStock = sizeData['stock'];
+                                        onColorSizeChanged(selectedColor!, sizes, selectedSize, selectedStock);
+                                      });
+                                    }
+                                  : null,
+                              child: Center(
+                                child: Text(
+                                  sizeData['size'].toUpperCase(),
+                                  style: TextStyle(
+                                    decoration: sizeData['stock'] == 0
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: (selectedStock ?? 0) > 0
+                              ? () {
+                                  // addProductToCart(id, name, price);
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: (selectedStock ?? 0) > 0
+                                ? Colors.black
+                                : Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text("ADD TO CART"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    },
+  );
 }

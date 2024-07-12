@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/buy-2-get-1/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/search/?q=";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/whishlist/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -127,9 +127,9 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   Future<void> searchproduct() async {
     try {
       print('$searchproducturl${searchitem.text}');
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        body: ({'q': searchitem.text}),
+       
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -144,7 +144,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -235,7 +235,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

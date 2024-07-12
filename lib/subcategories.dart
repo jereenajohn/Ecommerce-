@@ -36,11 +36,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//category/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/category/";
   final String productsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//category/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/category/";
   final String searchproducturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//search-products/?q=";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -147,7 +147,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -175,9 +175,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        body: ({'q': searchitem.text}),
+      
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -192,7 +192,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -224,6 +224,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
           Uri.parse(subcategoriesurl + widget.categoryId.toString() + "/"));
       print('Response: ${response.statusCode}');
       print(widget.categoryId);
+      print("responsee subcategoryyyyyyyyyyyyyyyyyyyyyyy${response.body}");
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -232,11 +233,14 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${subcategoryData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],
             'image': imageUrl,
+            'slug':subcategoryData['slug']
+
+
           });
         }
 
@@ -311,6 +315,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                           subcategories[
                                                                   firstItemIndex]
                                                               ['id'],
+                                                              slug: subcategories[
+                                                                  firstItemIndex]
+                                                              ['slug'] ,
                                                     )));
                                       },
                                       child: Container(
@@ -369,10 +376,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     SubcategoryProductsPage(
-                                                      subcategoryId:
+                                                       subcategoryId:
                                                           subcategories[
-                                                                  secondItemIndex]
+                                                                  firstItemIndex]
                                                               ['id'],
+                                                              slug: subcategories[
+                                                                  firstItemIndex]
+                                                              ['slug'] ,
                                                     )));
                                       },
                                       child: Container(

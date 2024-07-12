@@ -20,9 +20,11 @@ class SubcategoryProductsPage extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
 
   const SubcategoryProductsPage(
-      {Key? key, this.user_id, required this.subcategoryId})
+      {Key? key, this.user_id, required this.slug,required this.subcategoryId})
+
       : super(key: key);
   final int subcategoryId;
+  final slug;
 
   @override
   State<SubcategoryProductsPage> createState() =>
@@ -39,25 +41,25 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   RangeValues _priceFilter = RangeValues(20.0, 80.0);
 
   void aa() {
-    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF${widget.subcategoryId}");
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF${widget.slug}");
   }
 
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//subcategory/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/subcategory/";
   final String wishlisturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/add-wishlist/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//search-products/?q=";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com//search-products/?q=";
   final String lowtohigh =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//low-products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com//high-products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com//high-products/";
 
   final String pricefilter =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/filtered-products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -121,7 +123,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${pfilter['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -173,7 +175,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -215,7 +217,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,9 +260,9 @@ List<Map<String, dynamic>> pricefilterresult = [];
   Future<dynamic> subcategoryproducts() async {
     try {
       print(
-          "oooooooooooooooooooooooooooooooooooooooooooooooooooooo$productsUrl${widget.subcategoryId}");
+          "oooooooooooooooooooooooooooooooooooooooooooooooooooooo$productsUrl${widget.slug}");
       final response =
-          await http.get(Uri.parse('$productsUrl${widget.subcategoryId}/'));
+          await http.get(Uri.parse('$productsUrl${widget.slug}/'));
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
             jsonDecode(response.body)['products'];
@@ -269,7 +271,7 @@ List<Map<String, dynamic>> pricefilterresult = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -360,9 +362,9 @@ print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLGGGGGGGGGGGGGGGG
     print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        body: ({'q': searchitem.text}),
+       
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -377,7 +379,7 @@ print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLGGGGGGGGGGGGGGGG
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

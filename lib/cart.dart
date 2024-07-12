@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
+import 'package:bepocart/orderpage.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
@@ -36,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart-products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/increment/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/decrement/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart-delete/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -62,6 +63,10 @@ class _CartState extends State<Cart> {
     print("--------------------------------------------R$userId");
 
     fetchCartData();
+
+  
+    
+    
     calculateTotalPrice();
   }
 
@@ -71,8 +76,10 @@ class _CartState extends State<Cart> {
   }
 
   var option = false;
-
+var total;
   void optionselect() {
+   
+    print("OOOOOOOOooooooooooooooooooooooooooooo$total");
     for (int i = 0; i < cartProducts.length; i++) {
       if (cartProducts[i]['offer_type'] == "BUY 1 GET 1" ||
           cartProducts[i]['offer_type'] == "BUY 2 GET 1") {
@@ -107,7 +114,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${item['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -125,9 +132,11 @@ class _CartState extends State<Cart> {
 
             // Update with correct price value
           });
+      
         }
 
         setState(() {
+
           cartProducts = cartItems;
 
           for (int i = 0; i < cartProducts.length; i++) {
@@ -660,9 +669,11 @@ class _CartState extends State<Cart> {
               },
             ),
           ),
+          
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
+                
               "Total Price: \$${calculateTotalPrice().toStringAsFixed(2)}",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -671,10 +682,12 @@ class _CartState extends State<Cart> {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
+                 total=calculateTotalPrice().toStringAsFixed(2);
+                 print("(((((((((((((((((((((((((((((((((((((((((((((((((((((((($total");
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Select_Delivery_Address()));
+                        builder: (context) => order()));
               },
               child: Container(
                 height: 50,

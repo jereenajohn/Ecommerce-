@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:ui';
 
+
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/fullscreenimage.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/recommendedproducts.dart';
-import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,24 +29,26 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/category/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/product-images/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/cart/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/add-wishlist/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/discount-sale/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/recently-viewed/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/recommended/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/recommended/";
+       final imageurl =
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/product/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -60,6 +62,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
   List<String> sizeNames = [];
   String? selectedSize;
+  int? selectedstock;
+  var sizes;
 
   var name;
   var image;
@@ -79,10 +83,12 @@ class _Product_big_ViewState extends State<Product_big_View> {
     print("category_idddddddddddddd${widget.Category_id}");
     _initData();
     fetchproductdata();
-    multipleimage();
+  ;
+    
     fetchDiscountProducts();
     recentlyviewed();
     fetchRecommendedProducts();
+    sizecolor();
     super.initState();
   }
 
@@ -90,7 +96,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
     tokenn = await gettokenFromPrefs();
 
     print("--------------------------------------------R$tokenn");
-    // Use userId after getting the value
+    // Use userId after getting the value
   }
 
   Future<void> fetchRecommendedProducts() async {
@@ -121,7 +127,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -169,7 +175,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${recentproductsData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -208,7 +214,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -326,9 +332,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
       if (response.statusCode == 201) {
         print('Product added to cart: $productId');
-         ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Product added to cart'),
+            content: Text('Product added to Cart'),
             backgroundColor: Colors.green,
           ),
         );
@@ -600,25 +606,37 @@ class _Product_big_ViewState extends State<Product_big_View> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "$name",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 87, 87, 87)),
-                      ),
+                    name != null 
+  ? Text(
+      "$name",
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(255, 87, 87, 87),
+      ),
+    ) 
+  : SizedBox.shrink(),
+
                       SizedBox(
                         height: 8,
                       ),
                       Row(
+
+                        
                         children: [
-                          Text(
-                            "\₹$salePrice",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold),
-                          ),
+
+                          salePrice != null 
+  ? Text(
+      "$salePrice",
+      style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(255, 87, 87, 87),
+      ),
+    ) 
+  : SizedBox.shrink(),
+
+                          
                           SizedBox(
                             width: 5,
                           ),
@@ -635,22 +653,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       SizedBox(
                         height: 8,
                       ),
-                      if (stock != null && stock > 0)
-                        Text(
-                          "Stock Available $stock",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 217, 29, 29),
-                          ),
-                        )
-                      else
-                        Text(
-                          "Out of Stock",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 217, 29, 29),
-                          ),
-                        ),
+                     
                     ],
                   ),
                 ),
@@ -660,129 +663,133 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 height: 5,
               ),
 
-              if (colors.isNotEmpty)
-                Container(
-                  height: 70,
-                  color: const Color.fromRGBO(255, 255, 255, 1),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Wrap(
-                          spacing: 8.0,
-                          children: colors.map((color) {
-                            return OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: selectedColor == color
-                                    ? Color.fromARGB(255, 1, 80, 12)
-                                    : Colors.black,
-                                side: BorderSide(
-                                  color: selectedColor == color
-                                      ? Color.fromARGB(255, 28, 146, 1)
-                                      : Colors.black,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      4.0), // Adjust the radius as needed
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  selectedColor = color;
-                                  sizeNames = images.firstWhere((image) =>
-                                          image['color'] ==
-                                          selectedColor)['size_names'] ??
-                                      [];
-                                  selectedSize = sizeNames.isNotEmpty
-                                      ? sizeNames[0]
-                                      : null;
-                                  print("colorrrrrrrrrrr$selectedColor");
-
-                                  updateDisplayedImage(selectedColor);
-                                });
-                              },
-                              child: Text(color.toUpperCase()),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
+           if (colors.isNotEmpty)
+  Container(
+    height: 70,
+    color: const Color.fromRGBO(255, 255, 255, 1),
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Wrap(
+            spacing: 8.0,
+            children: colors.map<Widget>((color) {  // Ensure type safety here
+              return OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: selectedColor == color
+                      ? Color.fromARGB(255, 1, 80, 12)
+                      : Colors.black,
+                  side: BorderSide(
+                    color: selectedColor == color
+                        ? Color.fromARGB(255, 28, 146, 1)
+                        : Colors.black,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0), // Adjust the radius as needed
                   ),
                 ),
+                onPressed: () {
+                  setState(() {
+                    selectedColor = color;
+                    sizes = images.firstWhere(
+                            (image) => image['color'] == selectedColor)['sizes'] ??
+                        [];
+                    selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+                    print("colorrrrrrrrrrr$selectedColor");
 
-              if (selectedColor != null && sizeNames.isNotEmpty)
-                Container(
-                  height: 80,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Wrap(
-                      spacing: 8.0,
-                      children: sizeNames.map((size) {
-                        return Container(
-                          width: 40.0, // Adjust the width and height as needed
-                          height: 40.0, // Adjust the width and height as needed
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              padding: EdgeInsets
-                                  .zero, // Remove default button padding
-                              foregroundColor: selectedSize == size
-                                  ? Color.fromARGB(255, 1, 80, 12)
-                                  : Colors.black,
-                              side: BorderSide(
-                                color: selectedSize == size
-                                    ? Color.fromARGB(255, 28, 146, 1)
-                                    : Colors.black,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    30.0), // Half of width/height
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                selectedSize = size;
-                                print("sizeeeeeeeeeee$selectedSize");
-                              });
-                            },
-                            child: Center(
-                              // Center the text inside the button
-                              child: Text(size.toUpperCase()),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                    updateDisplayedImage(selectedColor);
+                  });
+                },
+                child: Text(color.toUpperCase()),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    ),
+  ),
+
+if (selectedColor != null && sizes.isNotEmpty)
+  Container(
+    height: 80,
+    color: Colors.white,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Wrap(
+        spacing: 8.0,
+        children: sizes.map<Widget>((sizeData) {
+          return Container(
+            width: 40.0,
+            height: 40.0,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                foregroundColor: selectedSize == sizeData['size']
+                    ? Color.fromARGB(255, 1, 80, 12)
+                    : Colors.black,
+                side: BorderSide(
+                  color: selectedSize == sizeData['size']
+                      ? Color.fromARGB(255, 28, 146, 1)
+                      : Colors.black,
                 ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 150,
-                      child: ElevatedButton(
-                        onPressed: (stock ?? 0) > 0
-                            ? () {
-                                addProductToCart(
-                                    widget.product_id, name, price);
-                              }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor:
-                              (stock ?? 0) > 0 ? Colors.black : Colors.grey,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text("ADD TO CART"),
-                      ),
-                    ),
-                  ],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
+              onPressed: sizeData['stock'] > 0
+                  ? () {
+                      setState(() {
+                        selectedSize = sizeData['size'];
+                        selectedstock = sizeData['stock'];
+                        print("sizeeeeeeeeeee$selectedSize");
+                        print("stockeeeeeeeeee$selectedstock");
+                      });
+                    }
+                  : null,
+              child: Center(
+                child: Text(
+                  sizeData['size'].toUpperCase(),
+                  style: TextStyle(
+                    decoration: sizeData['stock'] == 0
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    ),
+  ),
+
+            if (name != null)
+  Padding(
+    padding: const EdgeInsets.only(left: 8),
+    child: Row(
+      children: [
+        Container(
+          width: 150,
+          child: ElevatedButton(
+            onPressed: (selectedstock ?? 0) > 0
+                ? () {
+                    addProductToCart(widget.product_id, name, price);
+                  }
+                : null,
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor:
+                  (selectedstock ?? 0) > 0 ? Colors.black : Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Text("ADD TO CART"),
+          ),
+        ),
+      ],
+    ),
+  ),
 
               SizedBox(height: 5),
 
@@ -798,6 +805,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          if(name!=null)
                           Text(
                             "Product Details",
                             style: TextStyle(
@@ -814,12 +822,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Flexible(
-                            child: Text(
-                              "*${description}",
-                              maxLines:
-                                  null, // Set maxLines to null for unlimited lines
-                            ),
-                          ),
+  child: description != null 
+    ? Text(
+        "*${description}",
+        maxLines: null, // Set maxLines to null for unlimited lines
+      )
+    : SizedBox.shrink(),
+),
+
                         ],
                       ),
                       SizedBox(
@@ -828,13 +838,17 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+
                           Flexible(
-                            child: Text(
-                              "* ${shortdescription}",
-                              maxLines:
-                                  null, // Set maxLines to null for unlimited lines
-                            ),
-                          ),
+  child: shortdescription != null 
+    ? Text(
+        "*${shortdescription}",
+        maxLines: null, // Set maxLines to null for unlimited lines
+      )
+    : SizedBox.shrink(),
+),
+
+                         
                         ],
                       ),
                       SizedBox(height: 15)
@@ -1457,7 +1471,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1488,13 +1502,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
               offer_type = productsList[i]['offer_type'];
             }
           }
-          print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$price");
+        
 
-          print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS$salePrice");
-          print(
-              "SSSTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOCCCCCCCCCCCCCCCCKKKKKKKKKK$stock");
-
-          print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT$shortdescription");
           categoryProducts = productsList;
           isDataLoaded = true;
         });
@@ -1512,60 +1521,73 @@ class _Product_big_ViewState extends State<Product_big_View> {
   String? selectedColor;
   List<String> colors = [];
 
-  Future<void> multipleimage() async {
-    print('======================$multipleimageurl${widget.product_id}/r');
-    Set<String> colorsSet = {};
-    try {
-      final response =
-          await http.get(Uri.parse('$multipleimageurl${widget.product_id}/'));
-      print("statussssssssssssssssssssssssss${response.statusCode}");
-      if (response.statusCode == 200) {
-        final List<dynamic> imageData = jsonDecode(response.body)['product'];
-        print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
+ Future<void> sizecolor() async {
+  print('======================$imageurl${widget.product_id}/r');
+  Set<String> colorsSet = {};
+  try {
+    final response = await http.get(Uri.parse('$imageurl${widget.product_id}/'));
+    print("statussssssssssssssssssssssssss${response.body}");
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final List<dynamic> imageData = data['images'];
+      final List<dynamic> variantsData = data['variants'];
+      print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
-        // product = jsonDecode(response.body)['product'];
+      List<Map<String, dynamic>> productsList = [];
 
-        List<Map<String, dynamic>> productsList = [];
-
-        for (var imageData in imageData) {
-          String imageUrl1 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image1']}";
-          String imageUrl2 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image2']}";
-          String imageUrl3 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image3']}";
-          String imageUrl4 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image4']}";
-          String imageUrl5 =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${imageData['image5']}";
-          productsList.add({
-            'id': imageData['id'],
-            'image1': imageUrl1,
-            'image2': imageUrl2,
-            'image3': imageUrl3,
-            'image4': imageUrl4,
-            'image5': imageUrl5,
-            'color': imageData['color'],
-            'size_names': List<String>.from(
-                imageData['size_names']), // Cast to List<String>
-          });
-          colorsSet.add(imageData['color']);
-        }
-
-        setState(() {
-          images = productsList;
-          colors = colorsSet.toList();
-          selectedColor = colors.isNotEmpty ? colors[0] : null;
-          sizeNames = images.firstWhere(
-                  (image) => image['color'] == selectedColor)['size_names'] ??
-              [];
-          selectedSize = sizeNames.isNotEmpty ? sizeNames[0] : null;
+      for (var imageData in imageData) {
+        String imageUrl1 =
+            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image1']}";
+        String imageUrl2 =
+            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image2']}";
+        String imageUrl3 =
+            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image3']}";
+        String imageUrl4 =
+            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image4']}";
+        String imageUrl5 =
+            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image5']}";
+        
+        List<Map<String, dynamic>> sizes = variantsData
+            .where((variant) => variant['color'] == imageData['id'])
+            .map<Map<String, dynamic>>((variant) => {
+              'size': variant['size'],
+              'stock': variant['stock']
+            })
+            .toList();
+            print("${sizes}");
+        
+        productsList.add({
+          'id': imageData['id'],
+          'image1': imageUrl1,
+          'image2': imageUrl2,
+          'image3': imageUrl3,
+          'image4': imageUrl4,
+          'image5': imageUrl5,
+          'color': imageData['color'],
+          'sizes': sizes,
         });
-      } else {
-        throw Exception('Error fetching product image');
+        colorsSet.add(imageData['color']);
       }
-    } catch (error) {
-      print('Error fetching product image : $error');
+
+      setState(() {
+        images = productsList;
+        colors = colorsSet.toList();
+
+        print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
+        selectedColor = colors.isNotEmpty ? colors[0] : null;
+        sizes = images.firstWhere(
+                (image) => image['color'] == selectedColor)['sizes'] ??
+            [];
+        selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+         selectedstock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
+      });
+    } else {
+      throw Exception('Error fetching product image');
     }
+  } 
+  catch (error){
+    print('Error fetching product image : $error');
   }
+}
+
 }

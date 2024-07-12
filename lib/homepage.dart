@@ -5,6 +5,7 @@ import 'package:bepocart/bestsaleproducts.dart';
 import 'package:bepocart/buyonegetone.dart';
 import 'package:bepocart/buytwogetone.dart';
 import 'package:bepocart/cart.dart';
+import 'package:bepocart/coin_page.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/flashsaleproducts.dart';
 import 'package:bepocart/halfrateproducts.dart';
@@ -62,41 +63,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/banners/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/";
   final String categoryUrl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/category/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/category/";
   final String productsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
   final String offersurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/offer-banner/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/discount-sale/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/buy-1-get-1/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/best-sale-products/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/flash-sale/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/buy-2-get-1/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/offers/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/search-products/?q=";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/recommended/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://table-quantities-filled-therapeutic.trycloudflare.com/recently-viewed/";
+      "https://sr-shaped-exports-toolbar.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -213,7 +214,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${recentproductsData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -243,9 +244,9 @@ class _HomePageState extends State<HomePage> {
     print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        body: ({'q': searchitem.text}),
+       
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -260,7 +261,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -295,7 +296,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${offerData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -326,7 +327,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -359,7 +360,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -397,7 +398,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -436,7 +437,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -473,7 +474,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -510,7 +511,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -567,7 +568,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -619,7 +620,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://table-quantities-filled-therapeutic.trycloudflare.com/${productData['image']}";
+  //             "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -652,7 +653,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${productData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -688,7 +689,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com${bannerData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -717,7 +718,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://table-quantities-filled-therapeutic.trycloudflare.com/${categoryData['image']}";
+              "https://sr-shaped-exports-toolbar.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -808,7 +809,7 @@ class _HomePageState extends State<HomePage> {
         halfratedProducts();
         fetchRecommendedProducts();
         recentlyviewed();
-      },
+      }, 
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -830,41 +831,40 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 170),
-                    child: IconButton(
-                      onPressed: () {
-                        if (tokenn == null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_Page()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                        }
-                      },
-                      icon: Image.asset(
-                        "lib/assets/heart.png",
-                        width: 24,
-                        height: 24,
-                      ),
+                  Spacer(),
+                   IconButton(
+                    onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>coin()));
+
+                      // Add your logout functionality here
+                    },
+                    icon: Image.asset(
+                      "lib/assets/coin.png",
+                      width: 35,
+                      height: 35,
                     ),
                   ),
-                  // IconButton(
-                  //   onPressed: () {
-                  //     logout();
-
-                  //     // Add your logout functionality here
-                  //   },
-                  //   icon: Image.asset(
-                  //     "lib/assets/logout.png",
-                  //     width: 25,
-                  //     height: 25,
-                  //   ),
-                  // ),
+                  IconButton(
+                    onPressed: () {
+                      if (tokenn == null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Login_Page()));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Wishlist()));
+                      }
+                    },
+                    icon: Image.asset(
+                      "lib/assets/heart.png",
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
+                 
                 ],
               ),
             ),
