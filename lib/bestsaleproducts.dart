@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//best-sale-products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com//best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//products/search/?q=";
+      "https://hot-states-obligation-dvds.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//whishlist/";
+      "https://hot-states-obligation-dvds.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -150,7 +150,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -246,7 +246,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

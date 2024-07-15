@@ -4,7 +4,6 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/ordersuccesspage.dart';
-import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class order extends StatefulWidget {
-  order({
-    super.key,
-  });
+  var total;
+  order({super.key, required this.total});
 
   @override
   State<order> createState() => _orderState();
@@ -30,12 +28,13 @@ class _orderState extends State<order> {
   var couponcode;
   String? userId;
   bool isCouponApplied = false;
-    int? selectedAddressId;
+  int? selectedAddressId;
   String fetchaddressurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//get-address/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/get-address/";
   String orderurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//order/create/";
-  String cuponurl = "https://sr-shaped-exports-toolbar.trycloudflare.com//cupons/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/order/create/";
+  String cuponurl =
+      "https://hot-states-obligation-dvds.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -44,13 +43,12 @@ class _orderState extends State<order> {
   late Razorpay razorpay;
   Map<String, dynamic>? selectedAddress;
   var tokenn;
-
   @override
   void initState() {
     super.initState();
     _initData();
     // print(widget.name);
-    // print(widget.addressid);
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY${widget.total}");
 
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, errorHandler);
@@ -66,6 +64,7 @@ class _orderState extends State<order> {
 
     fetchCartData();
     fetchAddress();
+    calculateTotalAmount();
 
     // calculateTotalPrice();
   }
@@ -80,34 +79,200 @@ class _orderState extends State<order> {
     return prefs.getString('token');
   }
 
- Future<void> fetchAddress() async {
-  final token = await gettokenFromPrefs();
-  print("--------------------------------------------R$token");
+  var Dquantity;
+  var totalPrice = 0.0;
+  double parsePrice(dynamic price) {
+    if (price is int) {
+      return price.toDouble();
+    } else if (price is double) {
+      return price;
+    } else if (price is String) {
+      return double.parse(price);
+    } else {
+      throw ArgumentError('Invalid price type');
+    }
+  }
 
-  var response = await http.get(
-    Uri.parse(fetchaddressurl),
-    headers: {
-      'Authorization': '$token',
-    },
-  );
-
-  print("Fetch address: ${response.body}");
-
-  if (response.statusCode == 200) {
-    var responseData = jsonDecode(response.body);
-    var data = responseData['address'];
+  double calculateTotalPrice() {
+    double? leastPrice;
+    int offerProductCount = 0;
 
     setState(() {
-      addressList = List<Map<String, dynamic>>.from(data);
-    });
-  } else {
-    print("Failed to fetch address data");
-  }
-}
+      totalPrice = 0.0;
 
+      if (widget.total == 'Option 1') {
+        for (int i = 0; i < cartProducts.length; i++) {
+          double price = (cartProducts[i]['saleprice'] is int)
+              ? (cartProducts[i]['saleprice'] as int).toDouble()
+              : double.parse(cartProducts[i]['saleprice'].toString());
+          int quantity = cartProducts[i]['quantity'] ?? 1;
+          print("priceeeeeeeeeeeeeeeeeeeeeeoption11111111======$price");
+                    print("priceeeeeeeeeeeeeeeeeeeeeeoption11111111======$quantity");
+
+
+          totalPrice += price * quantity;
+                    print("Totallllllllllpriceeeeeeeeeeeeeeeeeeeeeeoption11111111======$totalPrice");
+
+
+        }
+      } else {
+        for (int i = 0; i < cartProducts.length; i++) {
+          double price = double.parse(cartProducts[i]['saleprice']);
+          int quantity = cartProducts[i]['quantity'] ?? 1;
+
+          // Add price to total price
+          totalPrice += price * quantity;
+
+          print("totallllllllllllelseeeeeeeeeeeeeeeee$totalPrice");
+
+          // Check if this product has an offer
+          String? offerType = cartProducts[i]['offer_type'];
+          if (offerType == "BUY 1 GET 1" || offerType == "BUY 2 GET 1") {
+            print("ssssssssssssssssssssssssss");
+            // Count the offer products
+            offerProductCount += quantity;
+
+            // Determine the least priced offer product
+            if (leastPrice == null || price < leastPrice!) {
+              leastPrice = price;
+              Dquantity = quantity;
+              print("Quantity of least price product: $Dquantity");
+            }
+          }
+        }
+
+// Adjust the total price based on the offer type
+        if (leastPrice != null) {
+          for (int i = 0; i < cartProducts.length; i++) {
+            String? offerType = cartProducts[i]['offer_type'];
+            if (offerType == "BUY 1 GET 1") {
+              // For "BUY 1 GET 1", each pair gets one free
+              int freeItems = offerProductCount ~/ 2;
+              print("Free items: $freeItems");
+
+              while (freeItems > 0) {
+                int dQuantity = Dquantity ?? 0;
+
+                if (freeItems >= dQuantity) {
+                  totalPrice -= (leastPrice! * dQuantity);
+                  freeItems -= dQuantity;
+                  print(
+                      "Total after reduction: $totalPrice, remaining free items: $freeItems");
+
+                  // Find the next least priced product with the same offer
+                  double? nextLeastPrice;
+                  int nextDquantity = 0;
+                  for (int j = 0; j < cartProducts.length; j++) {
+                    double price = double.parse(cartProducts[j]['saleprice']);
+                    String? nextOfferType = cartProducts[j]['offer_type'];
+                    if ((nextLeastPrice == null || price < nextLeastPrice) &&
+                        (nextOfferType == "BUY 1 GET 1" ||
+                            nextOfferType == "BUY 2 GET 1") &&
+                        price > leastPrice!) {
+                      nextLeastPrice = price;
+                      nextDquantity = cartProducts[j]['quantity'] ?? 1;
+                    }
+                  }
+
+                  if (nextLeastPrice == null)
+                    break; // No more lower priced products
+
+                  leastPrice = nextLeastPrice;
+                  Dquantity = nextDquantity;
+                } else {
+                  totalPrice -= (leastPrice! * freeItems);
+                  freeItems = 0;
+                  print("Total after final reduction: $totalPrice");
+                }
+              }
+              break; // Exit the loop after processing the first offer type "BUY 1 GET 1"
+            } else if (offerType == "BUY 2 GET 1") {
+              // For "BUY 2 GET 1", every three items, one is free
+              int freeItems = offerProductCount ~/ 3;
+              print("Free items: $freeItems");
+
+              while (freeItems > 0) {
+                int dQuantity = Dquantity ?? 0;
+
+                if (freeItems >= dQuantity) {
+                  totalPrice -= (leastPrice! * dQuantity);
+                  freeItems -= dQuantity;
+                  print(
+                      "Total after reduction: $totalPrice, remaining free items: $freeItems");
+
+                  // Find the next least priced product with the same offer
+                  double? nextLeastPrice;
+                  int nextDquantity = 0;
+                  for (int j = 0; j < cartProducts.length; j++) {
+                    double price = double.parse(cartProducts[j]['saleprice']);
+                    String? nextOfferType = cartProducts[j]['offer_type'];
+                    if ((nextLeastPrice == null || price < nextLeastPrice) &&
+                        (nextOfferType == "BUY 1 GET 1" ||
+                            nextOfferType == "BUY 2 GET 1") &&
+                        price > leastPrice!) {
+                      nextLeastPrice = price;
+                      nextDquantity = cartProducts[j]['quantity'] ?? 1;
+                    }
+                  }
+
+                  if (nextLeastPrice == null)
+                    break; // No more lower priced products
+
+                  leastPrice = nextLeastPrice;
+                  Dquantity = nextDquantity;
+                } else {
+                  totalPrice -= (leastPrice! * freeItems);
+                  freeItems = 0;
+                  print("Total after final reduction: $totalPrice");
+                }
+              }
+              calculateTotalAmount();
+              break; // Exit the loop after processing the first offer type "BUY 2 GET 1"
+            }
+          }
+        }
+      }
+    });
+
+    print("Total price after applying offers: $totalPrice");
+    return totalPrice;
+  }
+
+  double? leastPrice = null;
+
+  int offerProductCount = 0;
+
+  Future<void> fetchAddress() async {
+    final token = await gettokenFromPrefs();
+    print("--------------------------------------------R$token");
+
+    var response = await http.get(
+      Uri.parse(fetchaddressurl),
+      headers: {
+        'Authorization': '$token',
+      },
+    );
+
+    print("Fetch address: ${response.body}");
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var data = responseData['address'];
+
+      setState(() {
+        addressList = List<Map<String, dynamic>>.from(data);
+      });
+    } else if (response.statusCode == 401) {
+      print("session expireddd");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Login_Page()));
+    } else {
+      print("Failed to fetch address data");
+    }
+  }
 
   var CartUrl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//cart-products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -182,58 +347,56 @@ class _orderState extends State<order> {
       backgroundColor: Colors.green,
     ));
   }
-void showAddressBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true, // Adjust bottom sheet height based on content
-    builder: (BuildContext context) {
-      return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            color: Colors.white, // Set the background color to white
-            child: Wrap(
-              children: addressList.map((address) {
-                return Column(
-                  children: [
-                    RadioListTile<Map<String, dynamic>>(
-                      title: Text(address['address']),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('City: ${address['city']}'),
-                          Text('State: ${address['state']}'),
-                          Text('Pincode: ${address['pincode']}'),
-                          Text('Phone: ${address['phone']}'),
-                          Text('Email: ${address['email']}'),
-                        ],
+
+  void showAddressBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Adjust bottom sheet height based on content
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              color: Colors.white, // Set the background color to white
+              child: Wrap(
+                children: addressList.map((address) {
+                  return Column(
+                    children: [
+                      RadioListTile<Map<String, dynamic>>(
+                        title: Text(address['address']),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('City: ${address['city']}'),
+                            Text('State: ${address['state']}'),
+                            Text('Pincode: ${address['pincode']}'),
+                            Text('Phone: ${address['phone']}'),
+                            Text('Email: ${address['email']}'),
+                          ],
+                        ),
+                        value: address,
+                        groupValue: selectedAddress,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedAddress = value;
+                            selectedAddressId =
+                                value?['id']; // Store the address ID
+                            fetchAddress();
+                          });
+                          // Optionally, close the bottom sheet immediately after selecting an address
+                          Navigator.pop(context);
+                        },
                       ),
-                      value: address,
-                      groupValue: selectedAddress,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedAddress = value;
-                          selectedAddressId = value?['id']; // Store the address ID
-                          fetchAddress();
-                        });
-                        // Optionally, close the bottom sheet immediately after selecting an address
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Divider(), // Add a divider after each address
-                  ],
-                );
-              }).toList(),
-            ),
-          );
-        },
-      );
-    },
-  );
-}
-
-
-
-
+                      Divider(), // Add a divider after each address
+                    ],
+                  );
+                }).toList(),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
 //coupons
   List<Map<String, dynamic>> cupondata = [];
@@ -269,55 +432,56 @@ void showAddressBottomSheet(BuildContext context) {
 
 //Order create
 
- Future<void> ordercreate() async {
-  try {
-    final token = await gettokenFromPrefs();
+  Future<void> ordercreate() async {
+    try {
+      final token = await gettokenFromPrefs();
 
-    print('**Coupon Code: $couponcode');
-    print('**Payment Method: $selectedpaymentmethod');
-    print('ooooooooooooooooooorrrrrrrrrrrrrrdddddddddddeeeeeeeerrrrrrccccccccrrrrreeeeeaaaaatttteeeeeeee:$orderurl$selectedAddressId/');
+      print('**Coupon Code: $couponcode');
+      print('**Payment Method: $selectedpaymentmethod');
+      print(
+          'ooooooooooooooooooorrrrrrrrrrrrrrdddddddddddeeeeeeeerrrrrrccccccccrrrrreeeeeaaaaatttteeeeeeee:$orderurl$selectedAddressId/');
 
-    final url = Uri.parse('$orderurl$selectedAddressId/'); // Use the selected address ID
-    final headers = {
-      'Authorization': '$token',
-      'Content-Type': 'application/json',
-    };
-    final body = jsonEncode({
-      'coupon_code': couponcode,
-      'payment_method': selectedpaymentmethod,
-    });
+      final url = Uri.parse(
+          '$orderurl$selectedAddressId/'); // Use the selected address ID
+      final headers = {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      };
+      final body = jsonEncode({
+        'coupon_code': couponcode,
+        'payment_method': selectedpaymentmethod,
+      });
 
-    print('Request URL: $url');
-    print('Request Headers: $headers');
-    print('Request Body: $body');
+      print('Request URL: $url');
+      print('Request Headers: $headers');
+      print('Request Body: $body');
 
-    var response = await http.post(
-      url,
-      headers: headers,
-      body: body,
-    );
-
-    print('Response Status Code: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-
-    if (response.statusCode == 201) {
-      final recent = jsonDecode(response.body);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OrderConfirmationScreen(),
-        ),
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: body,
       );
-      print('Order created successfully: $recent');
-    } else {
-      print('Failed to create order: ${response.statusCode}');
-      print('Error Message: ${jsonDecode(response.body)['message']}');
-    }
-  } catch (error) {
-    print('Error creating order: $error');
-  }
-}
 
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 201) {
+        final recent = jsonDecode(response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OrderConfirmationScreen(),
+          ),
+        );
+        print('Order created successfully: $recent');
+      } else {
+        print('Failed to create order: ${response.statusCode}');
+        print('Error Message: ${jsonDecode(response.body)['message']}');
+      }
+    } catch (error) {
+      print('Error creating order: $error');
+    }
+  }
 
   Future<void> orderpayment() async {
     try {
@@ -398,7 +562,7 @@ void showAddressBottomSheet(BuildContext context) {
 
         for (var item in data) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com//${item['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com//${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -413,22 +577,28 @@ void showAddressBottomSheet(BuildContext context) {
             'name': item['name'],
             'image': imageUrl,
             'color': item['color'],
-            'size': item['size']
+            'size': item['size'],
+            'offer_type':item['offer_type']
           });
         }
+        print(
+            "Cart Productssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss: $cartItems");
 
         setState(() {
           cartProducts = cartItems;
+          print(
+              "Cart Productssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss: $cartProducts");
+
           orginalprice = calculateOriginalPrice();
-          sellingprice = calculateTotalPrice();
-          discount = orginalprice - sellingprice;
+          totalPrice = calculateTotalPrice();
+          discount = orginalprice - totalPrice;
           print("Original Price: $orginalprice");
-          print("Selling Price: $sellingprice");
+          print("Selling Priceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: $totalPrice");
           print("Discount: $discount");
+          calculateTotalAmount();
         });
 
         print(cartProducts.length);
-        print("Cart Products: $cartProducts");
       } else {
         print("Failed to fetch cart data");
       }
@@ -457,17 +627,19 @@ void showAddressBottomSheet(BuildContext context) {
     return totalPrice;
   }
 
-  double calculateTotalPrice() {
-    double totalPrice = 0.0;
+  double calculateTotalAmount() {
+   
     setState(() {
-      for (int i = 0; i < cartProducts.length; i++) {
-        totalPrice += double.parse(cartProducts[i]['saleprice']) *
-            (cartProducts[i]['quantity'] ?? 1);
-        print("total::::::$totalPrice");
-      }
+      
+       
+        print("total::::::::::::::::::::::::::::::::::::::::::::::::::::::::::$totalPrice");
+      
       if (totalPrice < 500) {
         deliverycharge = 60;
         totalPrice = totalPrice + deliverycharge;
+      }
+      else{
+         deliverycharge = 0;
       }
     });
     return totalPrice;
@@ -480,11 +652,11 @@ void showAddressBottomSheet(BuildContext context) {
       appBar: AppBar(
         title: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Select_Delivery_Address()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //       builder: (context) => Select_Delivery_Address()),
+            // );
           },
           child: Text(
             "Order Summary",
@@ -514,69 +686,74 @@ void showAddressBottomSheet(BuildContext context) {
                       ],
                     ),
                   ),
-                Row(
-  mainAxisAlignment: MainAxisAlignment.start, // Align to the start (left)
-  children: [
-    Padding(
-      padding: const EdgeInsets.all(10), // Add padding of 10
-      child: SizedBox(
-        // width: 150, // Set the desired width if needed
-        // height: 50, // Set the desired height if needed
-        child: ElevatedButton(
-          onPressed: () {
-            fetchAddress();
-            showAddressBottomSheet(context);
-          },
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.black, // Background color
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.add), // Plus icon
-              SizedBox(width: 5), // Space between icon and text
-              Text("Select Address"),
-            ],
-          ),
-        ),
-      ),
-    ),
-  ],
-),
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.start, // Align to the start (left)
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10), // Add padding of 10
+                        child: SizedBox(
+                          // width: 150, // Set the desired width if needed
+                          // height: 50, // Set the desired height if needed
+                          child: ElevatedButton(
+                            onPressed: () {
+                              fetchAddress();
+                              showAddressBottomSheet(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black, // Background color
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Adjust the radius as needed
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add), // Plus icon
+                                SizedBox(
+                                    width: 5), // Space between icon and text
+                                Text("Select Address"),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
 
                   SizedBox(height: 10),
-                 Padding(
-  padding: const EdgeInsets.all(4.0),
-  child: Container(
-    padding: EdgeInsets.all(16.0),
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.grey),
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: selectedAddress != null
-      ? Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Selected Address:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              '${selectedAddress!['address']}, ${selectedAddress!['city']}, ${selectedAddress!['state']}, ${selectedAddress!['pincode']}, ${selectedAddress!['phone']}, ${selectedAddress!['email']}',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        )
-      : Text(
-          'No address selected',
-          style: TextStyle(fontSize: 16),
-        ),
-  ),
-),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: selectedAddress != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Selected Address:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '${selectedAddress!['address']}, ${selectedAddress!['city']}, ${selectedAddress!['state']}, ${selectedAddress!['pincode']}, ${selectedAddress!['phone']}, ${selectedAddress!['email']}',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              'No address selected',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                    ),
+                  ),
 
                   // Padding(
                   //   padding: const EdgeInsets.all(8.0),
@@ -652,7 +829,7 @@ void showAddressBottomSheet(BuildContext context) {
                                   selectedpaymentmethod = "razorpay";
                                   print(
                                       "selectedpaymentmethod:$selectedpaymentmethod");
-                                  sellingprice = sellingprice - CODAMOUNT;
+                                  totalPrice = totalPrice - CODAMOUNT;
                                   print(
                                       "RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR$sellingprice");
                                 });
@@ -678,7 +855,7 @@ void showAddressBottomSheet(BuildContext context) {
                                   print(_selectedMethod);
                                   selectedpaymentmethod = "COD";
                                   print(selectedpaymentmethod);
-                                  sellingprice = sellingprice + CODAMOUNT;
+                                  totalPrice = totalPrice + CODAMOUNT;
                                   print(
                                       "CCCCCCCCCCCCOOOOOOOOOOOOOODDDDDDDDDDDDDDDDDDDAAAAAAAAAAAMMMMMMMMMMMMMMMMMMMMM$sellingprice");
                                 });
@@ -922,7 +1099,7 @@ void showAddressBottomSheet(BuildContext context) {
                               ),
                               Spacer(),
                               Text(
-                                "₹${sellingprice}",
+                                "₹$totalPrice",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -1006,7 +1183,7 @@ void showAddressBottomSheet(BuildContext context) {
                   ordercreate();
                 } else {
                   openCheckout();
-                   orderpayment();
+                  orderpayment();
                 }
               },
               child: Container(

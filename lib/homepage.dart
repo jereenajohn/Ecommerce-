@@ -25,6 +25,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+
 
 import 'package:draggable_fab/draggable_fab.dart';
 
@@ -63,41 +65,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/banners/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/";
   final String categoryUrl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/category/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
   final String productsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
   final String offersurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/offer-banner/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/discount-sale/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/buy-1-get-1/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/best-sale-products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/flash-sale/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/buy-2-get-1/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/offers/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/search-products/?q=";
+      "https://hot-states-obligation-dvds.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/recommended/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/recently-viewed/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -188,6 +190,51 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+    void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: AlertDialog(
+            title: Text(
+              'Confirm Call',
+              style: TextStyle(color: Colors.black),
+            ),
+            content: Text(
+              'Do you want to connect with our customer support?',
+              style: TextStyle(color: Colors.black),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  'Call',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  FlutterPhoneDirectCaller.callNumber("9645848527");
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> recentlyviewed() async {
     try {
       final token = await gettokenFromPrefs();
@@ -214,7 +261,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${recentproductsData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -261,7 +308,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -296,7 +343,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${offerData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -327,7 +374,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -360,7 +407,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -398,7 +445,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -437,7 +484,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -474,7 +521,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -511,7 +558,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -568,7 +615,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -620,7 +667,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+  //             "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -653,7 +700,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -689,7 +736,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${bannerData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -718,7 +765,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${categoryData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -2501,9 +2548,9 @@ class _HomePageState extends State<HomePage> {
                   // Add your onPressed code for the second button here!
                   print('Second button pressed');
                 }),
-                _buildFabButton('lib/assets/tracking.png',
+                _buildFabButton('lib/assets/telephone.png',
                     Color.fromARGB(255, 255, 255, 255), () {
-                  // Add your onPressed code for the third button here!
+                _showConfirmationDialog();
                   print('Third button pressed');
                 }),
               ],

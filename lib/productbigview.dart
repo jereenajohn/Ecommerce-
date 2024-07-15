@@ -29,26 +29,26 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/category/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/product-images/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/add-wishlist/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/discount-sale/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/recently-viewed/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/recommended/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/recommended/";
        final imageurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/product/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/product/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -127,7 +127,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -175,7 +175,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${recentproductsData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -214,7 +214,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -345,7 +345,17 @@ class _Product_big_ViewState extends State<Product_big_View> {
             content: Text('Product already in Cart'),
           ),
         );
-      } else {
+      }
+      else if(response.statusCode== 401){
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('session expired'),
+          ),
+        );
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+
+      }
+       else {
         print('Failed to add product to cart: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
@@ -1471,7 +1481,7 @@ if (selectedColor != null && sizes.isNotEmpty)
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1537,15 +1547,15 @@ if (selectedColor != null && sizes.isNotEmpty)
 
       for (var imageData in imageData) {
         String imageUrl1 =
-            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image1']}";
+            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image1']}";
         String imageUrl2 =
-            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image2']}";
+            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image2']}";
         String imageUrl3 =
-            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image3']}";
+            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image3']}";
         String imageUrl4 =
-            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image4']}";
+            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image4']}";
         String imageUrl5 =
-            "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image5']}";
+            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image5']}";
         
         List<Map<String, dynamic>> sizes = variantsData
             .where((variant) => variant['color'] == imageData['id'])

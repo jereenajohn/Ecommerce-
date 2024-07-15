@@ -18,7 +18,7 @@ class changepassword extends StatefulWidget {
 class _changepasswordState extends State<changepassword> {
   TextEditingController newpass = TextEditingController();
   TextEditingController confirmpass = TextEditingController();
-  var url = "https://sr-shaped-exports-toolbar.trycloudflare.com/change-password/";
+  var url = "https://hot-states-obligation-dvds.trycloudflare.com/change-password/";
 
   Future<void> change() async {
     try {
@@ -34,6 +34,12 @@ class _changepasswordState extends State<changepassword> {
       if (response.statusCode == 200) {
         print("changed");
         logout();
+      }
+      else if(response.statusCode == 401){
+         print("session expired");
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+
+
       }
     } catch (e) {
       print("erorrrrrrrrrrrrrrrr$e");

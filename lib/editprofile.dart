@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
+import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   var url =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/profile/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/profile/";
   var url2 =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/profile-image/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -42,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/profile-view/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -76,7 +77,16 @@ class _EditProfileState extends State<EditProfile> {
         });
 
         print('Profile data fetched successfully');
-      } else {
+      }
+      else if(response.statusCode== 401){
+        print("session expired");
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+
+
+      }
+      
+      
+       else {
         print('Failed to fetch profile data: ${response.statusCode}');
       }
     } catch (error) {
@@ -107,6 +117,7 @@ class _EditProfileState extends State<EditProfile> {
       );
 
       print("Response: $response");
+      print(response.statusCode);
 
       if (response.statusCode == 200) {
         print('Profile updated successfully');
@@ -120,7 +131,9 @@ class _EditProfileState extends State<EditProfile> {
           context,
           MaterialPageRoute(builder: (context) => UserProfilePage()),
         );
-      } else {
+      }
+     
+       else {
         print('Failed to update profile: ${response.statusCode}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

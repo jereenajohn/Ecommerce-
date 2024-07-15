@@ -33,9 +33,9 @@ class _pricefilterpageState extends State<pricefilterpage> {
   var tokenn;
   TextEditingController searchitem = TextEditingController();
  final String wishlisturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/add-wishlist/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/add-wishlist/";
   final String searchproducturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/search-products/?q=";
+      "https://hot-states-obligation-dvds.trycloudflare.com/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -96,7 +96,7 @@ class _pricefilterpageState extends State<pricefilterpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

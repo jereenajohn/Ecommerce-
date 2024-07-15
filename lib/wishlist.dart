@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/wishlist/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/wishlist-delete/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -70,6 +70,8 @@ class _WishlistState extends State<Wishlist> {
     );
 
     print("FetchWishlistData status code: ${response.body}");
+        print("FetchWishlistData status code: ${response.statusCode}");
+
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -98,7 +100,14 @@ class _WishlistState extends State<Wishlist> {
         print("Wishlist IDs: $wishlistIds");
         print("Product-Wishlist Map: $productWishlistMap");
       });
-    } else {
+    }
+    else if(response.statusCode== 401){
+      print("session expired");
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+
+
+    }
+     else {
       print("Failed to fetch wishlist data");
     }
   }
@@ -118,7 +127,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://sr-shaped-exports-toolbar.trycloudflare.com/${productData['image']}";
+                "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
             print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
@@ -150,7 +159,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/product/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/product/";
  
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -175,15 +184,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image1']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image2']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image3']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image4']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com/${imageData['image5']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])
@@ -361,6 +370,7 @@ void showBottomSheet(
                             onPressed: (selectedStock ?? 0) > 0
                                 ? () {
                                     addProductToCart(id, name, price);
+                                    Navigator.pop(context);
                                   }
                                 : null,
                             style: ElevatedButton.styleFrom(
@@ -388,144 +398,6 @@ void showBottomSheet(
   );
 }
 
-
-  // void _showBottomSheet(BuildContext context, int index) {
-  //   print("iddddddddddddddddddddd$index");
-  //   showModalBottomSheet(
-  //     isScrollControlled: true,
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FractionallySizedBox(
-  //         heightFactor: 0.3, // Adjust the height as needed
-  //         widthFactor: 0.99, // Set the width to 95% of the screen
-  //         child: StatefulBuilder(
-  //           builder: (BuildContext context, StateSetter setState) {
-  //             return Container(
-  //               padding: EdgeInsets.all(16.0),
-  //               child: SingleChildScrollView(
-  //                 child: Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     Row(
-  //                       mainAxisAlignment: MainAxisAlignment.start,
-  //                       children: [
-  //                         Column(
-  //                           crossAxisAlignment: CrossAxisAlignment.start,
-  //                           children: [
-  //                             Text(
-  //                               'Select Color',
-  //                               style: TextStyle(
-  //                                   fontSize: 14, fontWeight: FontWeight.bold),
-  //                             ),
-  //                             Wrap(
-  //                               spacing: 8.0,
-  //                               children: colors.map((color) {
-  //                                 return ChoiceChip(
-  //                                   label: Text(color),
-  //                                   selected: selectedColor == color,
-  //                                   onSelected: (bool selected) {
-  //                                     setState(() {
-  //                                       selectedColor = selected ? color : null;
-  //                                       sizeNames = images.firstWhere((image) =>
-  //                                               image['color'] ==
-  //                                               selectedColor)['size_names'] ??
-  //                                           [];
-  //                                       selectedSize = sizeNames.isNotEmpty
-  //                                           ? sizeNames[0]
-  //                                           : null;
-  //                                       print(selectedColor);
-  //                                     });
-  //                                   },
-  //                                 );
-  //                               }).toList(),
-  //                             ),
-  //                           ],
-  //                         )
-  //                       ],
-  //                     ),
-  //                     SizedBox(height: 16.0),
-  //                     Row(
-  //                       children: [
-  //                         Column(
-  //                           crossAxisAlignment: CrossAxisAlignment.start,
-  //                           children: [
-  //                             Text(
-  //                               'Select Size',
-  //                               style: TextStyle(
-  //                                   fontSize: 14, fontWeight: FontWeight.bold),
-  //                             ),
-  //                             Wrap(
-  //                               spacing: 8.0,
-  //                               children: sizeNames.map((size) {
-  //                                 return ChoiceChip(
-  //                                   label: Text(size),
-  //                                   selected: selectedSize == size,
-  //                                   onSelected: (bool selected) {
-  //                                     setState(() {
-  //                                       selectedSize = selected ? size : null;
-  //                                       print(selectedSize);
-  //                                     });
-  //                                   },
-  //                                 );
-  //                               }).toList(),
-  //                             ),
-  //                           ],
-  //                         )
-  //                       ],
-  //                     ),
-  //                     SizedBox(height: 16.0),
-  //                     ElevatedButton(
-  //                       onPressed: () {
-  //                         addProductToCart(
-  //                           products[index]['id'],
-  //                           products[index]['name'],
-  //                           products[index]['price'],
-  //                         );
-  //                         Navigator.push(
-  //                             context,
-  //                             MaterialPageRoute(
-  //                                 builder: (context) => Wishlist()));
-  //                         print('Selected Color: $selectedColor');
-  //                         print('Selected Size: $selectedSize');
-  //                       },
-  //                       style: ButtonStyle(
-  //                         backgroundColor: MaterialStateProperty.all<Color>(
-  //                             const Color.fromARGB(
-  //                                 255, 0, 0, 0)), // Background color
-  //                         shape:
-  //                             MaterialStateProperty.all<RoundedRectangleBorder>(
-  //                           RoundedRectangleBorder(
-  //                             borderRadius:
-  //                                 BorderRadius.circular(18.0), // Border radius
-  //                             side: BorderSide(
-  //                                 color: const Color.fromARGB(
-  //                                     255, 0, 0, 0)), // Border color
-  //                           ),
-  //                         ),
-  //                       ),
-  //                       child: Container(
-  //                         alignment: Alignment.center,
-  //                         padding: EdgeInsets.symmetric(
-  //                             vertical: 12.0), // Adjust padding as needed
-  //                         child: Text(
-  //                           'Confirm',
-  //                           style: TextStyle(
-  //                             color: Colors.white, // Text color
-  //                             fontSize: 16.0, // Adjust font size as needed
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           },
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -580,6 +452,12 @@ void showBottomSheet(
       print("Response status code: ${response.statusCode}");
 
       if (response.statusCode == 201) {
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              backgroundColor: Colors.green,
+            content: Text('Product added to Cart'),
+          ),
+        );
         print('Product added to cart: $productId');
       } else if (response.statusCode == 400) {
         // Product already in cart, show SnackBar

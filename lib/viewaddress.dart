@@ -39,9 +39,9 @@ class _viewAddressState extends State<viewAddress> {
   }
 
   String durl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com//delete-address/";
+      "https://hot-states-obligation-dvds.trycloudflare.com//delete-address/";
 
-  String url = "https://sr-shaped-exports-toolbar.trycloudflare.com//get-address/";
+  String url = "https://hot-states-obligation-dvds.trycloudflare.com//get-address/";
   List<Map<String, dynamic>> address = [];
 
   List<Map<String, dynamic>> addressList = [];
@@ -55,6 +55,8 @@ class _viewAddressState extends State<viewAddress> {
     },);
 
     print("FetchWishlistData status code: ${response.body}");
+        print("FetchWishlistData status code: ${response.statusCode}");
+
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -63,6 +65,12 @@ class _viewAddressState extends State<viewAddress> {
       setState(() {
         addressList = List<Map<String, dynamic>>.from(data);
       });
+    }
+    else if(response.statusCode==401){
+      print("session expired");
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+
+
     } else {
       print("Failed to fetch address data");
     }

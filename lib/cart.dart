@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart-products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/products/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/increment/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart/decrement/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://sr-shaped-exports-toolbar.trycloudflare.com/cart-delete/";
+      "https://hot-states-obligation-dvds.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -104,6 +104,8 @@ var total;
       );
 
       print("Response: ${response.body}");
+      print(response.statusCode);
+    
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -114,7 +116,7 @@ var total;
 
         for (var item in data) {
           String imageUrl =
-              "https://sr-shaped-exports-toolbar.trycloudflare.com${item['image']}";
+              "https://hot-states-obligation-dvds.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -152,7 +154,18 @@ var total;
         });
         print(cartProducts.length);
         print("cccccccccccccccccccccccCart Products: $cartProducts");
-      } else {
+      }
+      else if(response.statusCode==401){
+
+        final responseData = jsonDecode(response.body);
+        final data = responseData['message'];
+        if(data=="Token has expired"){
+          print("Token has expired");
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
+        }
+
+      }
+       else {
         print("Failed to fetch cart data");
       }
     } catch (error) {
@@ -651,6 +664,7 @@ var total;
 
                                   setState(() {
                                     fetchCartData();
+                                    calculateTotalPrice();
                                   });
                                 },
                                 child: ImageIcon(
@@ -687,7 +701,7 @@ var total;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => order()));
+                        builder: (context) => order(total:selectedOption)));
               },
               child: Container(
                 height: 50,
