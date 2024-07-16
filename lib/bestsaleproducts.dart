@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//best-sale-products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//whishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -51,13 +51,9 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
     fetchBestSaleProducts();
   }
 
-   Future<void> _initData() async {
-        tokenn = await gettokenFromPrefs();
-
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
   }
-
-
-  
 
   void toggleFavorite(int index) {
     setState(() {
@@ -108,8 +104,6 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
         }),
       );
 
-      
-
       print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
       if (response.statusCode == 200) {
@@ -135,7 +129,6 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-        
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -150,7 +143,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -246,7 +239,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -254,6 +247,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug': productData['slug']
           });
         }
 
@@ -283,17 +277,13 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
         actions: [
           IconButton(
             onPressed: () {
-               if (tokenn == null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_Page()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                        }
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -334,9 +324,12 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
                                       product_id:
                                           bestsaleproducts[firstItemIndex]
                                               ['id'],
+                                      slug: bestsaleproducts[firstItemIndex]
+                                          ['id'],
                                       Category_id: int.parse(
-                                          bestsaleproducts[firstItemIndex]
-                                              ['mainCategory']),
+                                        bestsaleproducts[firstItemIndex]
+                                            ['mainCategory'],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -461,6 +454,9 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
                                       builder: (context) => Product_big_View(
                                             product_id: bestsaleproducts[
                                                 secondItemIndex]['id'],
+                                            slug:
+                                                bestsaleproducts[firstItemIndex]
+                                                    ['id'],
                                             Category_id: int.parse(
                                                 bestsaleproducts[
                                                         secondItemIndex]
@@ -601,21 +597,19 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
                 },
               ),
               GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

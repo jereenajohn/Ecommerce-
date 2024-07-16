@@ -29,9 +29,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   var url =
-      "https://hot-states-obligation-dvds.trycloudflare.com/profile/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/profile/";
   var url2 =
-      "https://hot-states-obligation-dvds.trycloudflare.com/profile-image/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -43,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/profile-view/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

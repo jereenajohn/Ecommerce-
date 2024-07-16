@@ -32,9 +32,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//whishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//whishlist/";
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/search-products/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   var tokenn;
@@ -101,7 +101,7 @@ class _SearchState extends State<Search> {
           print(
               "cattttttttttttttttttttttttttttttttppppppppppppppppppppppp$productData");
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -275,6 +275,7 @@ class _SearchState extends State<Search> {
                                 ['id'],
                             Category_id: widget.searchresults[productIndex1]
                                 ['category_id'],
+                                slug: widget.searchresults[productIndex1]['slug'],
                           ),
                         ),
                       );
@@ -362,6 +363,7 @@ class _SearchState extends State<Search> {
                                   Category_id:
                                       widget.searchresults[productIndex2]
                                           ['category_id'],
+                                slug: widget.searchresults[productIndex2]['slug'],
                                 ),
                               ),
                             );

@@ -8,7 +8,7 @@ class ParentWidget extends StatefulWidget {
 }
 
 class _ParentWidgetState extends State<ParentWidget> {
-  final imageurl = "https://hot-states-obligation-dvds.trycloudflare.com/product/";
+  final imageurl = "https://robert-crops-jews-kilometers.trycloudflare.com/product/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -37,11 +37,11 @@ class _ParentWidgetState extends State<ParentWidget> {
         List<Map<String, dynamic>> productsList = [];
 
         for (var imageData in imageData) {
-          String imageUrl1 = "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image1']}";
-          String imageUrl2 = "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image2']}";
-          String imageUrl3 = "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image3']}";
-          String imageUrl4 = "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image4']}";
-          String imageUrl5 = "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image5']}";
+          String imageUrl1 = "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image1']}";
+          String imageUrl2 = "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image2']}";
+          String imageUrl3 = "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image3']}";
+          String imageUrl4 = "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image4']}";
+          String imageUrl5 = "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

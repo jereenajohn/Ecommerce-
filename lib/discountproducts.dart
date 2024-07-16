@@ -27,14 +27,14 @@ class _Discount_ProductsState extends State<Discount_Products> {
   List<bool> isFavorite = [];
 
   final String discountsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/discount-sale/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/discount-sale/";
   List<Map<String, dynamic>> discountproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/add-wishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -46,15 +46,15 @@ class _Discount_ProductsState extends State<Discount_Products> {
   @override
   void initState() {
     super.initState();
-        _initData();
+    _initData();
 
     fetchDiscountProducts();
   }
 
-   Future<void> _initData() async {
+  Future<void> _initData() async {
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$tokenn"); 
+    print("--------------------------------------------R$tokenn");
     // Use userId after getting the value
   }
 
@@ -111,7 +111,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
-         ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
             backgroundColor: Colors.green,
@@ -138,7 +138,6 @@ class _Discount_ProductsState extends State<Discount_Products> {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-       
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -153,7 +152,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -249,7 +248,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'], // Changed to int
             'mainCategory': productData['mainCategory'], // Changed to int
@@ -285,16 +284,12 @@ class _Discount_ProductsState extends State<Discount_Products> {
           IconButton(
             onPressed: () {
               if (tokenn == null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_Page()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                        }
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -335,7 +330,9 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                       product_id:
                                           discountproducts[firstItemIndex]
                                               ['id'],
-                                      Category_id: 
+                                      slug: discountproducts[firstItemIndex]
+                                          ['slug'],
+                                      Category_id:
                                           discountproducts[firstItemIndex]
                                               ['mainCategory'],
                                     ),
@@ -407,6 +404,9 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                                             discountproducts[
                                                                     firstItemIndex]
                                                                 ['id'],
+                                                        slug: discountproducts[
+                                                                firstItemIndex]
+                                                            ['slug'],
                                                         Category_id:
                                                             discountproducts[
                                                                     firstItemIndex]
@@ -483,6 +483,8 @@ class _Discount_ProductsState extends State<Discount_Products> {
                                           product_id:
                                               discountproducts[secondItemIndex]
                                                   ['id'],
+                                          slug: discountproducts[firstItemIndex]
+                                              ['slug'],
                                           Category_id:
                                               discountproducts[secondItemIndex]
                                                   ['mainCategory'])));
@@ -623,21 +625,19 @@ class _Discount_ProductsState extends State<Discount_Products> {
                 },
               ),
               GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

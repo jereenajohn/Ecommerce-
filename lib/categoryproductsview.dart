@@ -26,7 +26,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -35,11 +35,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/search-products/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/filter/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/filter/";
   final String hightolow =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/filtering/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -53,16 +53,14 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     bbb();
   }
 
-   Future<void> _initData() async {
-        tokenn = await gettokenFromPrefs();
-
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
   }
 
-Future<String?> gettokenFromPrefs() async {
+  Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
-
 
   void bbb() {
     print(
@@ -75,7 +73,6 @@ Future<String?> gettokenFromPrefs() async {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-      
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -90,7 +87,7 @@ Future<String?> gettokenFromPrefs() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -129,7 +126,7 @@ Future<String?> gettokenFromPrefs() async {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -238,7 +235,7 @@ Future<String?> gettokenFromPrefs() async {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://hot-states-obligation-dvds.trycloudflare.com//${productData['image']}";
+  //             "https://robert-crops-jews-kilometers.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -284,7 +281,7 @@ Future<String?> gettokenFromPrefs() async {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://hot-states-obligation-dvds.trycloudflare.com//${productData['image']}";
+  //             "https://robert-crops-jews-kilometers.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -319,16 +316,12 @@ Future<String?> gettokenFromPrefs() async {
           IconButton(
             onPressed: () {
               if (tokenn == null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_Page()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                        }
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -490,6 +483,8 @@ Future<String?> gettokenFromPrefs() async {
                                         product_id:
                                             categoryProducts[firstItemIndex]
                                                 ['id'],
+                                        slug: categoryProducts[firstItemIndex]
+                                            ['slug'],
                                         Category_id: int.parse(
                                             categoryProducts[firstItemIndex]
                                                 ['category_id']),
@@ -623,6 +618,8 @@ Future<String?> gettokenFromPrefs() async {
                                         builder: (context) => Product_big_View(
                                               product_id: categoryProducts[
                                                   secondItemIndex]['id'],
+                                              slug: categoryProducts[
+                                                  firstItemIndex]['slug'],
                                               Category_id: int.parse(
                                                   categoryProducts[
                                                           secondItemIndex]
@@ -770,21 +767,19 @@ Future<String?> gettokenFromPrefs() async {
                 },
               ),
               GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {
@@ -793,7 +788,6 @@ Future<String?> gettokenFromPrefs() async {
                   // Show search dialog if tapped
                 },
               ),
-              
               GButton(
                 icon: Icons.person,
                 onPressed: () {

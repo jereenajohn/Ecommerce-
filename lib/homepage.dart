@@ -27,8 +27,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
-
 import 'package:draggable_fab/draggable_fab.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
@@ -65,41 +65,41 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> offers = [];
 
   final String bannerurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/banners/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/";
   final String categoryUrl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/category/";
   final String productsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
   final String offersurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/offer-banner/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/discount-sale/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/discount-sale/";
   final String buyonegetoneurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/buy-1-get-1/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/best-sale-products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/flash-sale/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/buy-2-get-1/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/offers/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/search-products/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/recommended/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/recently-viewed/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/recently-viewed/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -190,8 +190,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
-    void _showConfirmationDialog() {
+  void _showConfirmationDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -225,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  FlutterPhoneDirectCaller.callNumber("9645848527");
+                  FlutterPhoneDirectCaller.callNumber("8157845851");
                 },
               ),
             ],
@@ -233,6 +232,20 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  void launchWhatsApp({required String phone, required String message}) async {
+    final whatsappUrl =
+        "whatsapp://send?phone=$phone&text=${Uri.encodeComponent(message)}";
+    if (await canLaunch(whatsappUrl)) {
+      await launch(whatsappUrl);
+    } else {
+      showError();
+    }
+  }
+
+  void showError() {
+    print('Could not launch WhatsApp. Make sure WhatsApp is installed.');
   }
 
   Future<void> recentlyviewed() async {
@@ -261,7 +274,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${recentproductsData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -293,7 +306,6 @@ class _HomePageState extends State<HomePage> {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-       
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -308,7 +320,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -343,7 +355,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${offerData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -374,7 +386,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -407,7 +419,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -435,7 +447,7 @@ class _HomePageState extends State<HomePage> {
       final response = await http.get(Uri.parse(bestsaleurl));
       print('Response: ${response.statusCode}');
       print(
-          "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT${response.body}");
+          "BBBBBBBBBBBBBBBBBBBBEEEEEEEEEEEEEEEEEEESSSSSSSSSSSSSSSSSSSSSTTTTTTTTTTTTTTTTTTTT${response.body}");
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -445,7 +457,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -484,7 +496,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -521,7 +533,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -558,7 +570,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -615,7 +627,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -667,7 +679,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+  //             "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -700,7 +712,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -736,7 +748,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${bannerData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -765,7 +777,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${categoryData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -856,7 +868,7 @@ class _HomePageState extends State<HomePage> {
         halfratedProducts();
         fetchRecommendedProducts();
         recentlyviewed();
-      }, 
+      },
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -879,9 +891,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Spacer(),
-                   IconButton(
+                  IconButton(
                     onPressed: () {
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>coin()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => coin()));
 
                       // Add your logout functionality here
                     },
@@ -911,7 +924,6 @@ class _HomePageState extends State<HomePage> {
                       height: 24,
                     ),
                   ),
-                 
                 ],
               ),
             ),
@@ -1051,6 +1063,7 @@ class _HomePageState extends State<HomePage> {
                                                 builder: (context) =>
                                                     Product_big_View(
                                                   product_id: product['id'],
+                                                  slug: product['slug'],
                                                   Category_id:
                                                       product['mainCategory'],
                                                 ),
@@ -1208,6 +1221,7 @@ class _HomePageState extends State<HomePage> {
                                             builder: (context) =>
                                                 Product_big_View(
                                               product_id: product['id'],
+                                              slug: product['slug'],
                                               Category_id:
                                                   product['mainCategory'],
                                             ),
@@ -1308,68 +1322,86 @@ class _HomePageState extends State<HomePage> {
                                   itemCount: products.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Container(
-                                      width: 150, // Adjust the width as needed
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 5.0),
-                                      decoration: BoxDecoration(
-                                        // color: Color.fromARGB(255, 244, 238, 238),
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: const Color.fromARGB(
-                                                255, 173, 173, 173)),
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Product_big_View(
+                                              product_id: products[index]['id'],
+                                              slug: products[index]['id'],
+                                              Category_id: products[index]
+                                                  ['mainCategory'],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width:
+                                            150, // Adjust the width as needed
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        decoration: BoxDecoration(
+                                          // color: Color.fromARGB(255, 244, 238, 238),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  255, 173, 173, 173)),
 
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //     color: Colors.black.withOpacity(0.1),
-                                        //     blurRadius: 3,
-                                        //     spreadRadius: 2,
-                                        //     offset: Offset(0, 2),
-                                        //   ),
-                                        // ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height:
-                                                160, // Adjusted height to accommodate the images
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(products[
-                                                        index][
-                                                    'image']), // Using NetworkImage directly
-                                                // fit: BoxFit.cover,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                          SizedBox(height: 4),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              products[index]['name'],
-                                              style: TextStyle(fontSize: 12),
-                                              // maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              '\₹${products[index]['salePrice']}',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green,
-                                                fontSize: 12,
+                                          // boxShadow: [
+                                          //   BoxShadow(
+                                          //     color: Colors.black.withOpacity(0.1),
+                                          //     blurRadius: 3,
+                                          //     spreadRadius: 2,
+                                          //     offset: Offset(0, 2),
+                                          //   ),
+                                          // ],
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height:
+                                                  160, // Adjusted height to accommodate the images
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: NetworkImage(products[
+                                                          index][
+                                                      'image']), // Using NetworkImage directly
+                                                  // fit: BoxFit.cover,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(height: 4),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Text(
+                                                products[index]['name'],
+                                                style: TextStyle(fontSize: 12),
+                                                // maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Text(
+                                                '\₹${products[index]['salePrice']}',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
@@ -1452,6 +1484,7 @@ class _HomePageState extends State<HomePage> {
                                                   builder: (context) =>
                                                       Product_big_View(
                                                     product_id: product['id'],
+                                                    slug: product['slug'],
                                                     Category_id:
                                                         product['mainCategory'],
                                                   ),
@@ -1746,6 +1779,7 @@ class _HomePageState extends State<HomePage> {
                                                           Product_big_View(
                                                         product_id:
                                                             product['id'],
+                                                        slug: product['slug'],
                                                         Category_id: product[
                                                             'mainCategory'],
                                                       ),
@@ -1909,6 +1943,7 @@ class _HomePageState extends State<HomePage> {
                                                     builder: (context) =>
                                                         Product_big_View(
                                                       product_id: product['id'],
+                                                      slug: product['slug'],
                                                       Category_id: product[
                                                           'mainCategory'],
                                                     ),
@@ -2081,6 +2116,7 @@ class _HomePageState extends State<HomePage> {
                                                     builder: (context) =>
                                                         Product_big_View(
                                                       product_id: product['id'],
+                                                      slug: product['slug'],
                                                       Category_id: product[
                                                           'mainCategory'],
                                                     ),
@@ -2243,6 +2279,7 @@ class _HomePageState extends State<HomePage> {
                                                     builder: (context) =>
                                                         Product_big_View(
                                                       product_id: product['id'],
+                                                      slug: product['slug'],
                                                       Category_id: product[
                                                           'mainCategory'],
                                                     ),
@@ -2403,6 +2440,7 @@ class _HomePageState extends State<HomePage> {
                                             builder: (context) =>
                                                 Product_big_View(
                                               product_id: product['id'],
+                                              slug: product['slug'],
                                               Category_id:
                                                   product['mainCategory'],
                                             ),
@@ -2550,8 +2588,17 @@ class _HomePageState extends State<HomePage> {
                 }),
                 _buildFabButton('lib/assets/telephone.png',
                     Color.fromARGB(255, 255, 255, 255), () {
-                _showConfirmationDialog();
+                  _showConfirmationDialog();
                   print('Third button pressed');
+                }),
+                _buildFabButton('lib/assets/whatsapp.png',
+                    Color.fromARGB(255, 255, 255, 255), () {
+                  launchWhatsApp(
+                    phone:
+                        "+919645848527", // replace with the target phone number
+                    message: "can you help me out!",
+                  );
+                  print('Fourth button pressed');
                 }),
               ],
               Container(

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/discountproducts.dart';
 import 'package:bepocart/fullscreenimage.dart';
@@ -18,10 +17,12 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Product_big_View extends StatefulWidget {
-  Product_big_View({required this.product_id, required this.Category_id});
+  Product_big_View(
+      {required this.product_id, required this.Category_id, required this.slug});
 
   final product_id;
   final Category_id;
+  final slug;
 
   @override
   State<Product_big_View> createState() => _Product_big_ViewState();
@@ -29,26 +30,26 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/product-images/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/cart/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/add-wishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/discount-sale/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/recently-viewed/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/recommended/";
-       final imageurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/product/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/recommended/";
+  final imageurl =
+      "https://robert-crops-jews-kilometers.trycloudflare.com/product/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -83,8 +84,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
     print("category_idddddddddddddd${widget.Category_id}");
     _initData();
     fetchproductdata();
-  ;
-    
+    ;
+
     fetchDiscountProducts();
     recentlyviewed();
     fetchRecommendedProducts();
@@ -127,7 +128,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -175,7 +176,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${recentproductsData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -214,7 +215,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -345,17 +346,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
             content: Text('Product already in Cart'),
           ),
         );
-      }
-      else if(response.statusCode== 401){
-         ScaffoldMessenger.of(context).showSnackBar(
+      } else if (response.statusCode == 401) {
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('session expired'),
           ),
         );
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
-
-      }
-       else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Login_Page()));
+      } else {
         print('Failed to add product to cart: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
@@ -616,37 +615,31 @@ class _Product_big_ViewState extends State<Product_big_View> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    name != null 
-  ? Text(
-      "$name",
-      style: TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-        color: Color.fromARGB(255, 87, 87, 87),
-      ),
-    ) 
-  : SizedBox.shrink(),
-
+                      name != null
+                          ? Text(
+                              "$name",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 87, 87, 87),
+                              ),
+                            )
+                          : SizedBox.shrink(),
                       SizedBox(
                         height: 8,
                       ),
                       Row(
-
-                        
                         children: [
-
-                          salePrice != null 
-  ? Text(
-      "$salePrice",
-      style: TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-        color: Color.fromARGB(255, 87, 87, 87),
-      ),
-    ) 
-  : SizedBox.shrink(),
-
-                          
+                          salePrice != null
+                              ? Text(
+                                  "$salePrice",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 87, 87, 87),
+                                  ),
+                                )
+                              : SizedBox.shrink(),
                           SizedBox(
                             width: 5,
                           ),
@@ -663,7 +656,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       SizedBox(
                         height: 8,
                       ),
-                     
                     ],
                   ),
                 ),
@@ -673,133 +665,140 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 height: 5,
               ),
 
-           if (colors.isNotEmpty)
-  Container(
-    height: 70,
-    color: const Color.fromRGBO(255, 255, 255, 1),
-    child: Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Wrap(
-            spacing: 8.0,
-            children: colors.map<Widget>((color) {  // Ensure type safety here
-              return OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: selectedColor == color
-                      ? Color.fromARGB(255, 1, 80, 12)
-                      : Colors.black,
-                  side: BorderSide(
-                    color: selectedColor == color
-                        ? Color.fromARGB(255, 28, 146, 1)
-                        : Colors.black,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0), // Adjust the radius as needed
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    selectedColor = color;
-                    sizes = images.firstWhere(
-                            (image) => image['color'] == selectedColor)['sizes'] ??
-                        [];
-                    selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
-                    print("colorrrrrrrrrrr$selectedColor");
+              if (colors.isNotEmpty)
+                Container(
+                  height: 70,
+                  color: const Color.fromRGBO(255, 255, 255, 1),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Wrap(
+                          spacing: 8.0,
+                          children: colors.map<Widget>((color) {
+                            // Ensure type safety here
+                            return OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: selectedColor == color
+                                    ? Color.fromARGB(255, 1, 80, 12)
+                                    : Colors.black,
+                                side: BorderSide(
+                                  color: selectedColor == color
+                                      ? Color.fromARGB(255, 28, 146, 1)
+                                      : Colors.black,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      4.0), // Adjust the radius as needed
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  selectedColor = color;
+                                  sizes = images.firstWhere((image) =>
+                                          image['color'] ==
+                                          selectedColor)['sizes'] ??
+                                      [];
+                                  selectedSize = sizes.isNotEmpty
+                                      ? sizes[0]['size']
+                                      : null;
+                                  print("colorrrrrrrrrrr$selectedColor");
 
-                    updateDisplayedImage(selectedColor);
-                  });
-                },
-                child: Text(color.toUpperCase()),
-              );
-            }).toList(),
-          ),
-        ),
-      ],
-    ),
-  ),
-
-if (selectedColor != null && sizes.isNotEmpty)
-  Container(
-    height: 80,
-    color: Colors.white,
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Wrap(
-        spacing: 8.0,
-        children: sizes.map<Widget>((sizeData) {
-          return Container(
-            width: 40.0,
-            height: 40.0,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                foregroundColor: selectedSize == sizeData['size']
-                    ? Color.fromARGB(255, 1, 80, 12)
-                    : Colors.black,
-                side: BorderSide(
-                  color: selectedSize == sizeData['size']
-                      ? Color.fromARGB(255, 28, 146, 1)
-                      : Colors.black,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              onPressed: sizeData['stock'] > 0
-                  ? () {
-                      setState(() {
-                        selectedSize = sizeData['size'];
-                        selectedstock = sizeData['stock'];
-                        print("sizeeeeeeeeeee$selectedSize");
-                        print("stockeeeeeeeeee$selectedstock");
-                      });
-                    }
-                  : null,
-              child: Center(
-                child: Text(
-                  sizeData['size'].toUpperCase(),
-                  style: TextStyle(
-                    decoration: sizeData['stock'] == 0
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
+                                  updateDisplayedImage(selectedColor);
+                                });
+                              },
+                              child: Text(color.toUpperCase()),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    ),
-  ),
 
-            if (name != null)
-  Padding(
-    padding: const EdgeInsets.only(left: 8),
-    child: Row(
-      children: [
-        Container(
-          width: 150,
-          child: ElevatedButton(
-            onPressed: (selectedstock ?? 0) > 0
-                ? () {
-                    addProductToCart(widget.product_id, name, price);
-                  }
-                : null,
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor:
-                  (selectedstock ?? 0) > 0 ? Colors.black : Colors.grey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            child: Text("ADD TO CART"),
-          ),
-        ),
-      ],
-    ),
-  ),
+              if (selectedColor != null && sizes.isNotEmpty)
+                Container(
+                  height: 80,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: sizes.map<Widget>((sizeData) {
+                        return Container(
+                          width: 40.0,
+                          height: 40.0,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              foregroundColor: selectedSize == sizeData['size']
+                                  ? Color.fromARGB(255, 1, 80, 12)
+                                  : Colors.black,
+                              side: BorderSide(
+                                color: selectedSize == sizeData['size']
+                                    ? Color.fromARGB(255, 28, 146, 1)
+                                    : Colors.black,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                            onPressed: sizeData['stock'] > 0
+                                ? () {
+                                    setState(() {
+                                      selectedSize = sizeData['size'];
+                                      selectedstock = sizeData['stock'];
+                                      print("sizeeeeeeeeeee$selectedSize");
+                                      print("stockeeeeeeeeee$selectedstock");
+                                    });
+                                  }
+                                : null,
+                            child: Center(
+                              child: Text(
+                                sizeData['size'].toUpperCase(),
+                                style: TextStyle(
+                                  decoration: sizeData['stock'] == 0
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+
+              if (name != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: (selectedstock ?? 0) > 0
+                              ? () {
+                                  addProductToCart(
+                                      widget.product_id, name, price);
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: (selectedstock ?? 0) > 0
+                                ? Colors.black
+                                : Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text("ADD TO CART"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
               SizedBox(height: 5),
 
@@ -815,14 +814,14 @@ if (selectedColor != null && sizes.isNotEmpty)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          if(name!=null)
-                          Text(
-                            "Product Details",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                overflow: TextOverflow.ellipsis),
-                          ),
+                          if (name != null)
+                            Text(
+                              "Product Details",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  overflow: TextOverflow.ellipsis),
+                            ),
                         ],
                       ),
                       SizedBox(
@@ -832,14 +831,14 @@ if (selectedColor != null && sizes.isNotEmpty)
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Flexible(
-  child: description != null 
-    ? Text(
-        "*${description}",
-        maxLines: null, // Set maxLines to null for unlimited lines
-      )
-    : SizedBox.shrink(),
-),
-
+                            child: description != null
+                                ? Text(
+                                    "*${description}",
+                                    maxLines:
+                                        null, // Set maxLines to null for unlimited lines
+                                  )
+                                : SizedBox.shrink(),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -848,17 +847,15 @@ if (selectedColor != null && sizes.isNotEmpty)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-
                           Flexible(
-  child: shortdescription != null 
-    ? Text(
-        "*${shortdescription}",
-        maxLines: null, // Set maxLines to null for unlimited lines
-      )
-    : SizedBox.shrink(),
-),
-
-                         
+                            child: shortdescription != null
+                                ? Text(
+                                    "*${shortdescription}",
+                                    maxLines:
+                                        null, // Set maxLines to null for unlimited lines
+                                  )
+                                : SizedBox.shrink(),
+                          ),
                         ],
                       ),
                       SizedBox(height: 15)
@@ -907,10 +904,14 @@ if (selectedColor != null && sizes.isNotEmpty)
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => Product_big_View(
-                                            product_id: categoryProducts[index]
-                                                ['id'],
-                                            Category_id: categoryProducts[index]
-                                                ['mainCategory'])));
+                                              product_id:
+                                                  categoryProducts[index]['id'],
+                                              Category_id:
+                                                  categoryProducts[index]
+                                                      ['mainCategory'],
+                                              slug: categoryProducts[index]
+                                                  ['slug'],
+                                            )));
 
                                 // Handle tap on product
                               },
@@ -1059,6 +1060,7 @@ if (selectedColor != null && sizes.isNotEmpty)
                                       builder: (context) => Product_big_View(
                                         product_id: product['id'],
                                         Category_id: product['mainCategory'],
+                                        slug: categoryProducts[index]['slug'],
                                       ),
                                     ),
                                   );
@@ -1164,6 +1166,7 @@ if (selectedColor != null && sizes.isNotEmpty)
                                             product_id: product['id'],
                                             Category_id:
                                                 product['mainCategory'],
+                                            slug: product[index]['slug'],
                                           ),
                                         ),
                                       );
@@ -1320,6 +1323,8 @@ if (selectedColor != null && sizes.isNotEmpty)
                                                 product_id: product['id'],
                                                 Category_id:
                                                     product['mainCategory'],
+                                                slug: product[index]
+                                                    ['slug'],
                                               ),
                                             ),
                                           );
@@ -1481,7 +1486,7 @@ if (selectedColor != null && sizes.isNotEmpty)
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1512,7 +1517,6 @@ if (selectedColor != null && sizes.isNotEmpty)
               offer_type = productsList[i]['offer_type'];
             }
           }
-        
 
           categoryProducts = productsList;
           isDataLoaded = true;
@@ -1531,73 +1535,70 @@ if (selectedColor != null && sizes.isNotEmpty)
   String? selectedColor;
   List<String> colors = [];
 
- Future<void> sizecolor() async {
-  print('======================$imageurl${widget.product_id}/r');
-  Set<String> colorsSet = {};
-  try {
-    final response = await http.get(Uri.parse('$imageurl${widget.product_id}/'));
-    print("statussssssssssssssssssssssssss${response.body}");
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      final List<dynamic> imageData = data['images'];
-      final List<dynamic> variantsData = data['variants'];
-      print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
+  Future<void> sizecolor() async {
+    print('======================$imageurl${widget.slug}/');
+    Set<String> colorsSet = {};
+    try {
+      final response =
+          await http.get(Uri.parse('$imageurl${widget.slug}/'));
+      print("statussssssssssssssssssssssssss${response.body}");
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        final List<dynamic> imageData = data['images'];
+        final List<dynamic> variantsData = data['variants'];
+        print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
-      List<Map<String, dynamic>> productsList = [];
+        List<Map<String, dynamic>> productsList = [];
 
-      for (var imageData in imageData) {
-        String imageUrl1 =
-            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image1']}";
-        String imageUrl2 =
-            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image2']}";
-        String imageUrl3 =
-            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image3']}";
-        String imageUrl4 =
-            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image4']}";
-        String imageUrl5 =
-            "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image5']}";
-        
-        List<Map<String, dynamic>> sizes = variantsData
-            .where((variant) => variant['color'] == imageData['id'])
-            .map<Map<String, dynamic>>((variant) => {
-              'size': variant['size'],
-              'stock': variant['stock']
-            })
-            .toList();
-            print("${sizes}");
-        
-        productsList.add({
-          'id': imageData['id'],
-          'image1': imageUrl1,
-          'image2': imageUrl2,
-          'image3': imageUrl3,
-          'image4': imageUrl4,
-          'image5': imageUrl5,
-          'color': imageData['color'],
-          'sizes': sizes,
+        for (var imageData in imageData) {
+          String imageUrl1 =
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image1']}";
+          String imageUrl2 =
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image2']}";
+          String imageUrl3 =
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image3']}";
+          String imageUrl4 =
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image4']}";
+          String imageUrl5 =
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image5']}";
+
+          List<Map<String, dynamic>> sizes = variantsData
+              .where((variant) => variant['color'] == imageData['id'])
+              .map<Map<String, dynamic>>((variant) =>
+                  {'size': variant['size'], 'stock': variant['stock']})
+              .toList();
+          print("${sizes}");
+
+          productsList.add({
+            'id': imageData['id'],
+            'image1': imageUrl1,
+            'image2': imageUrl2,
+            'image3': imageUrl3,
+            'image4': imageUrl4,
+            'image5': imageUrl5,
+            'color': imageData['color'],
+            'sizes': sizes,
+          });
+          colorsSet.add(imageData['color']);
+        }
+
+        setState(() {
+          images = productsList;
+          colors = colorsSet.toList();
+
+          print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
+          selectedColor = colors.isNotEmpty ? colors[0] : null;
+          sizes = images.firstWhere(
+                  (image) => image['color'] == selectedColor)['sizes'] ??
+              [];
+          selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+          selectedstock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
         });
-        colorsSet.add(imageData['color']);
+      } else {
+        throw Exception('Error fetching product image');
       }
-
-      setState(() {
-        images = productsList;
-        colors = colorsSet.toList();
-
-        print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
-        selectedColor = colors.isNotEmpty ? colors[0] : null;
-        sizes = images.firstWhere(
-                (image) => image['color'] == selectedColor)['sizes'] ??
-            [];
-        selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
-         selectedstock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
-      });
-    } else {
-      throw Exception('Error fetching product image');
+    } catch (error) {
+      print('Error fetching product image : $error');
     }
-  } 
-  catch (error){
-    print('Error fetching product image : $error');
   }
-}
-
 }

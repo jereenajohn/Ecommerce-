@@ -14,7 +14,7 @@ class Sign_Up extends StatefulWidget {
 
 class _Sign_UpState extends State<Sign_Up> {
   var url =
-      "https://hot-states-obligation-dvds.trycloudflare.com/register/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/register/";
   bool _obscureText = true;
 
   var userId;

@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/wishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/wishlist-delete/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/cart/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -127,7 +127,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+                "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
             print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
@@ -138,7 +138,8 @@ class _WishlistState extends State<Wishlist> {
               'stock': productData['stock'],
               'image': imageUrl,
               'mainCategory': productData['mainCategory'],
-              'wishlistId': wishlistId
+              'wishlistId': wishlistId,
+              'slug':productData['slug']
             });
           }
         }
@@ -159,7 +160,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/product/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/product/";
  
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -184,15 +185,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image1']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image2']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image3']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image4']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${imageData['image5']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])
@@ -522,6 +523,7 @@ void showBottomSheet(
                   builder: (context) => Product_big_View(
                     product_id: products[index]['id'],
                     Category_id: products[index]['mainCategory'],
+                    slug: products[index]['slug'],
                   ),
                 ),
               );

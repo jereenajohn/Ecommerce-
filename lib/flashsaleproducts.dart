@@ -27,14 +27,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/flash-sale/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/whishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -332,6 +332,8 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                                                             flashsaleproducts[
                                                                     firstItemIndex]
                                                                 ['id'],
+                                                      slug: flashsaleproducts[firstItemIndex]['slug'],
+
                                                         Category_id:
                                                             flashsaleproducts[
                                                                     firstItemIndex]
@@ -460,6 +462,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
                                                             flashsaleproducts[
                                                                     secondItemIndex]
                                                                 ['id'],
+                                                          slug: flashsaleproducts[secondItemIndex]['slug'],
                                                         Category_id:
                                                             flashsaleproducts[
                                                                     secondItemIndex]

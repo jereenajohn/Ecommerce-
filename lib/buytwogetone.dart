@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/buy-2-get-1/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/whishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -144,7 +144,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -235,7 +235,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -243,6 +243,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -322,6 +323,8 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                       product_id:
                                           buytwogetoneproducts[firstItemIndex]
                                               ['id'],
+                                       slug: buytwogetoneproducts[firstItemIndex]['slug'],
+
                                       Category_id:
                                           (buytwogetoneproducts[firstItemIndex]
                                               ['mainCategory']),
@@ -453,6 +456,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                             Category_id: buytwogetoneproducts[
                                                     secondItemIndex]
                                                 ['mainCategory'],
+                                          slug: buytwogetoneproducts[secondItemIndex]['slug']
                                           )));
                             },
                             child: Container(

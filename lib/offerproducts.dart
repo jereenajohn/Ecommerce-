@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//search-products/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//offer-banner/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com//add-wishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://hot-states-obligation-dvds.trycloudflare.com//low-products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://hot-states-obligation-dvds.trycloudflare.com//high-products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}",
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -272,7 +272,6 @@ class _OfferProductsState extends State<OfferProducts> {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-       
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -287,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -540,9 +539,11 @@ class _OfferProductsState extends State<OfferProducts> {
                                         builder: (context) => Product_big_View(
                                           product_id: products[firstItemIndex]
                                               ['id'],
+                                          slug: products[firstItemIndex]['slug'],
                                           Category_id: int.parse(
-                                              products[firstItemIndex]
-                                                  ['mainCategory']),
+                                            products[firstItemIndex]
+                                                ['mainCategory'],
+                                          ),
                                         ),
                                       ),
                                     );
@@ -673,6 +674,7 @@ class _OfferProductsState extends State<OfferProducts> {
                                                 product_id:
                                                     products[secondItemIndex]
                                                         ['id'],
+                                              slug: products[secondItemIndex]['slug'],
                                                 Category_id: int.parse(
                                                     products[secondItemIndex]
                                                         ['mainCategory']),

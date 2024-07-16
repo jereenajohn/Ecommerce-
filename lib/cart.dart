@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/cart-products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/cart/increment/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/cart/decrement/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/cart-delete/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -116,7 +116,7 @@ var total;
 
         for (var item in data) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${item['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -487,6 +487,8 @@ var total;
                       MaterialPageRoute(
                         builder: (context) => Product_big_View(
                           product_id: cartProducts[index]['productId'],
+                        slug: cartProducts[index]['slug'],
+
                           Category_id:
                               int.parse(cartProducts[index]['mainCategory']),
                         ),

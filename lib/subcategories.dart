@@ -14,10 +14,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SubcategoriesPage extends StatefulWidget {
-    final String? user_id; // Receive user_id as a parameter
+  final String? user_id; // Receive user_id as a parameter
 
-    const SubcategoriesPage({Key? key, this.user_id,required this.categoryId}) : super(key: key);
-
+  const SubcategoriesPage({Key? key, this.user_id, required this.categoryId})
+      : super(key: key);
 
   final int categoryId;
 
@@ -28,19 +28,18 @@ class SubcategoriesPage extends StatefulWidget {
 class _SubcategoriesPageState extends State<SubcategoriesPage> {
   List<Map<String, dynamic>> subcategories = [];
   List<Map<String, dynamic>> categoryProducts = [];
-    String? userId; // Declare userId variable to store user ID
-
+  String? userId; // Declare userId variable to store user ID
 
   void aa() {
     print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii${widget.categoryId}");
   }
 
   final String subcategoriesurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/category/";
   final String productsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/category/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/category/";
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/search-products/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -58,7 +57,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     aa();
   }
 
-   Future<void> _initData() async {
+  Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
@@ -66,7 +65,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     // Use userId after getting the value
   }
 
-   Future<String?> gettokenFromPrefs() async {
+  Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
@@ -75,7 +74,6 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('userId');
   }
-
 
   void _showSearchDialog(BuildContext context) {
     setState(() {
@@ -147,7 +145,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -171,13 +169,12 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     }
   }
 
- Future<void> searchproduct() async {
+  Future<void> searchproduct() async {
     print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-      
       );
       print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
@@ -192,15 +189,14 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
-           'category_id': productData['mainCategory'],
-
+            'category_id': productData['mainCategory'],
           });
         }
         setState(() {
@@ -233,19 +229,18 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${subcategoryData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],
             'image': imageUrl,
-            'slug':subcategoryData['slug']
-
-
+            'slug': subcategoryData['slug']
           });
         }
 
         setState(() {
           subcategories = subcategoryList;
+          
         });
       } else {
         throw Exception('Failed to load subcategories');
@@ -266,7 +261,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         actions: [
           IconButton(
             onPressed: () {
-             if (tokenn == null) {
+              if (tokenn == null) {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Login_Page()));
               } else {
@@ -315,9 +310,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                           subcategories[
                                                                   firstItemIndex]
                                                               ['id'],
-                                                              slug: subcategories[
-                                                                  firstItemIndex]
-                                                              ['slug'] ,
+                                                      slug: subcategories[
+                                                              firstItemIndex]
+                                                          ['slug'],
                                                     )));
                                       },
                                       child: Container(
@@ -376,13 +371,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     SubcategoryProductsPage(
-                                                       subcategoryId:
+                                                      subcategoryId:
                                                           subcategories[
                                                                   firstItemIndex]
                                                               ['id'],
-                                                              slug: subcategories[
-                                                                  firstItemIndex]
-                                                              ['slug'] ,
+                                                      slug: subcategories[
+                                                              firstItemIndex]
+                                                          ['slug'],
                                                     )));
                                       },
                                       child: Container(
@@ -440,124 +435,131 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                         );
                       },
                     ),
-!categoryProducts.isEmpty
-    ? Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'All Products',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CategoryProductView(
-                          categoryId: widget.categoryId,
+              !categoryProducts.isEmpty
+                  ? Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'All Products',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CategoryProductView(
+                                        categoryId: widget.categoryId,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: BorderSide(color: Colors.black),
+                                  ),
+                                ),
+                                child: Text(
+                                  'See More',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(color: Colors.black),
-                    ),
-                  ),
-                  child: Text(
-                    'See More',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: categoryProducts.length > 5
-                    ? 5
-                    : categoryProducts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final product = categoryProducts[index];
-                  try {
-                    final imageData = product['image'];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Product_big_View(
-                              product_id: product['id'],
-                              Category_id: product['category_id']
+                        SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: categoryProducts.length > 5
+                                  ? 5
+                                  : categoryProducts.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final product = categoryProducts[index];
+                                try {
+                                  final imageData = product['image'];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Product_big_View(
+                                                  product_id: product['id'],
+                                                  Category_id:
+                                                      product['category_id'],
+                                                  slug: product['slug'],
+                                                ),
+                                            ),
+                                      );
+                                    },
+                                    child: ListTile(
+                                      title: Text(
+                                        product['name'],
+                                        style: TextStyle(
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (product['price'] != null)
+                                            Text(
+                                              '\$${product['price']}',
+                                              style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          Text(
+                                            'Sale Price: \$${product['salePrice']}',
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      leading: Image.network(
+                                        imageData,
+                                        width: 50,
+                                        height: 50,
+                                      ),
+                                    ),
+                                  );
+                                } catch (e) {
+                                  print('Error decoding image: $e');
+                                  return ListTile(
+                                    title: Text(product['name']),
+                                    subtitle: Text('\$${product['price']}'),
+                                  );
+                                }
+                              },
                             ),
                           ),
-                        );
-                      },
-                      child: ListTile(
-                        title: Text(
-                          product['name'],
-                          style: TextStyle(overflow: TextOverflow.ellipsis),
                         ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (product['price'] != null)
-                              Text(
-                                '\$${product['price']}',
-                                style: TextStyle(
-                                  decoration: TextDecoration.lineThrough,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            Text(
-                              'Sale Price: \$${product['salePrice']}',
-                              style: TextStyle(
-                                color: Colors.green,
-                              ),
-                            ),
-                          ],
-                        ),
-                        leading: Image.network(
-                          imageData,
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                    );
-                  } catch (e) {
-                    print('Error decoding image: $e');
-                    return ListTile(
-                      title: Text(product['name']),
-                      subtitle: Text('\$${product['price']}'),
-                    );
-                  }
-                },
-              ),
-            ),
-          ),
-        ],
-      )
-    : Padding(
-      padding: const EdgeInsets.only(top: 120),
-      child: Center(child: Text('No products available',style:TextStyle(color: Colors.grey))),
-    )
-
-             
-          ],
+                      ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 120),
+                      child: Center(
+                          child: Text('No products available',
+                              style: TextStyle(color: Colors.grey))),
+                    )
+            ],
           ),
         ),
       ),
@@ -586,22 +588,20 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                   // Navigate to Home page
                 },
               ),
-            GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+              GButton(
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {

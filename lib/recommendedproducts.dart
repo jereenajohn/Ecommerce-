@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/recommended/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/add-wishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,7 +258,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],
@@ -342,6 +342,8 @@ Future<void> _initData() async {
                                       Category_id: 
                                           recommendedproducts[firstItemIndex]
                                               ['mainCategory'],
+
+                                    slug: recommendedproducts[firstItemIndex]['slug'],
                                     ),
                                   ),
                                 );
@@ -415,7 +417,12 @@ Future<void> _initData() async {
                                                             recommendedproducts[
                                                                     firstItemIndex]
                                                                 [
-                                                                'mainCategory'])));
+                                                                'mainCategory'],
+
+                                                        slug: recommendedproducts[firstItemIndex]['slug'],
+                                                                
+                                                                
+                                                                )));
                                             toggleFavorite(firstItemIndex);
                                           },
                                           child: Padding(
@@ -489,7 +496,12 @@ Future<void> _initData() async {
                                                   ['id'],
                                           Category_id:
                                               recommendedproducts[secondItemIndex]
-                                                  ['mainCategory'])));
+                                                  ['mainCategory'],
+
+                                                  slug: recommendedproducts[secondItemIndex]['slug'],
+                                                  
+                                                  
+                                                  )));
                             },
                             child: Container(
                               height: 250,

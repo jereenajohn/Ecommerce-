@@ -49,6 +49,8 @@ dependencies:
   permission_handler: ^8.3.0
   razorpay_web: ^1.4.2
   flutter_rating_bar:
+  url_launcher: ^6.0.3
+
 
 
 
@@ -120,7 +122,7 @@ flutter:
    - lib/assets/upload.png
    - lib/assets/coin.png
    - lib/assets/telephone.png
-
+   - lib/assets/whatsapp.png
 
 
 

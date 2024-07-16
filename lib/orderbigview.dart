@@ -40,10 +40,10 @@ class _OrderBigViewState extends State<OrderBigView> {
   }
 
   final String orders =
-      "https://hot-states-obligation-dvds.trycloudflare.com/order-items/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/order-items/";
 
   final String productsUrl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -135,7 +135,7 @@ class _OrderBigViewState extends State<OrderBigView> {
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
-                "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+                "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],

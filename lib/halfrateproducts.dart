@@ -27,14 +27,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/offers/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/whishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -147,7 +147,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -238,7 +238,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -325,6 +325,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                       product_id:
                                           halfrateproducts[firstItemIndex]
                                               ['id'],
+                                      slug: halfrateproducts[firstItemIndex]['slug'],
                                       Category_id:
                                           halfrateproducts[firstItemIndex]
                                               ['mainCategory'],
@@ -488,6 +489,7 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
                                             Category_id: halfrateproducts[
                                                     secondItemIndex]
                                                 ['mainCategory'],
+                                          slug: halfrateproducts[secondItemIndex]['slug'],
                                           )));
                             },
                             child: Container(

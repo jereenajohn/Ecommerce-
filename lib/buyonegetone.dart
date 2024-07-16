@@ -28,14 +28,14 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   final String buyonegetoneurl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/buy-1-get-1/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-1-get-1/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/products/search/?q=";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://hot-states-obligation-dvds.trycloudflare.com/add-wishlist/";
+      "https://robert-crops-jews-kilometers.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -150,7 +150,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -242,7 +242,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://hot-states-obligation-dvds.trycloudflare.com/${productData['image']}";
+              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
           productbuyonegetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -250,6 +250,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -331,7 +332,12 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                                   ['id'],
                                           Category_id:
                                               buyonegetoneproducts[firstItemIndex]
-                                                  ['mainCategory'])));
+                                                  ['mainCategory'],
+
+                                          slug: buyonegetoneproducts[firstItemIndex]['slug'],
+
+                                                  
+                                                  )));
                               } catch (e) {
                                 print('Error navigating: $e');
                               }
@@ -454,6 +460,8 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           product_id:
                                               buyonegetoneproducts[secondItemIndex]
                                                   ['id'],
+                                                                                            slug: buyonegetoneproducts[firstItemIndex]['slug'],
+
                                           Category_id:
                                               buyonegetoneproducts[secondItemIndex]
                                                   ['mainCategory'])));
