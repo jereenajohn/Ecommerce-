@@ -29,7 +29,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
   List<Map<String, dynamic>> hightolowresult = [];
    final String searchproducturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/products/search/?q=";
    bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -51,8 +51,8 @@ class _lowtohighpageState extends State<lowtohighpage> {
     // Use userId after getting the value
   }
 
-  final String hightolow = "https://robert-crops-jews-kilometers.trycloudflare.com//high-products/";
-  final String wishlisturl = "https://robert-crops-jews-kilometers.trycloudflare.com//whishlist/";
+  final String hightolow = "https://papua-violation-assistance-hearts.trycloudflare.com//high-products/";
+  final String wishlisturl = "https://papua-violation-assistance-hearts.trycloudflare.com//whishlist/";
 
   Future<void> HightoLow(int subcategoryId) async {
     print(subcategoryId);
@@ -71,7 +71,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+          String imageUrl = "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -173,7 +173,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

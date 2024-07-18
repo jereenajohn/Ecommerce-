@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bepocart/addaddress.dart';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
@@ -30,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/get-address/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/get-address/";
   String orderurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/order/create/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/order/create/";
   String cuponurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/cupons/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -42,6 +43,7 @@ class _orderState extends State<order> {
   int CODAMOUNT = 40;
   late Razorpay razorpay;
   Map<String, dynamic>? selectedAddress;
+  var hasAddresses;
   var tokenn;
   @override
   void initState() {
@@ -107,13 +109,11 @@ class _orderState extends State<order> {
               : double.parse(cartProducts[i]['saleprice'].toString());
           int quantity = cartProducts[i]['quantity'] ?? 1;
           print("priceeeeeeeeeeeeeeeeeeeeeeoption11111111======$price");
-                    print("priceeeeeeeeeeeeeeeeeeeeeeoption11111111======$quantity");
-
+          print("priceeeeeeeeeeeeeeeeeeeeeeoption11111111======$quantity");
 
           totalPrice += price * quantity;
-                    print("Totallllllllllpriceeeeeeeeeeeeeeeeeeeeeeoption11111111======$totalPrice");
-
-
+          print(
+              "Totallllllllllpriceeeeeeeeeeeeeeeeeeeeeeoption11111111======$totalPrice");
         }
       } else {
         for (int i = 0; i < cartProducts.length; i++) {
@@ -259,9 +259,22 @@ class _orderState extends State<order> {
       var responseData = jsonDecode(response.body);
       var data = responseData['address'];
 
+      print("Address: $data");
+
       setState(() {
         addressList = List<Map<String, dynamic>>.from(data);
+        print("Address List: $addressList");
       });
+
+      // Check if addressList is empty to indicate no addresses
+      if (addressList.isEmpty) {
+        hasAddresses = false; // Flag to indicate no addresses
+      } else {
+        hasAddresses = true; // Flag to indicate addresses are available
+        // Set default selected address (if needed)
+        // selectedAddress = addressList.first;
+        // selectedAddressId = addressList.first['id'];
+      }
     } else if (response.statusCode == 401) {
       print("session expireddd");
       Navigator.push(
@@ -272,7 +285,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/cart-products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -286,7 +299,7 @@ class _orderState extends State<order> {
   void openCheckout() {
     var options = {
       "key": "rzp_test_m3k00iFqtte9HH",
-      "amount": sellingprice * 100,
+      "amount": totalPrice * 100,
       "name": "Bepocart",
       "description": " this is the test payment",
       "timeout": "180",
@@ -300,6 +313,7 @@ class _orderState extends State<order> {
   }
 
   void errorHandler(PaymentFailureResponse response) {
+    print("ereeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrooooooooo");
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(response.message!),
       backgroundColor: Colors.red,
@@ -312,28 +326,30 @@ class _orderState extends State<order> {
     id = response.paymentId;
 
     // Show an alert dialog with a "Done" button
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent dismissing by tapping outside
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async => false, // Prevent dismissing by back button
-          child: AlertDialog(
-            title: Text("Payment Successful"),
-            content: Text("Your payment ID is ${response.paymentId!}"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  // orderpayment();
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text("Done"),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false, // Prevent dismissing by tapping outside
+    //   builder: (BuildContext context) {
+    //     return WillPopScope(
+    //       onWillPop: () async => false, // Prevent dismissing by back button
+    //       child: AlertDialog(
+    //         title: Text("Payment Successful"),
+    //         content: Text("Your payment ID is ${response.paymentId!}"),
+    //         actions: [
+    //           TextButton(
+    //             onPressed: () {
+    //               // orderpayment();
+    //               Navigator.of(context).pop(); // Close the dialog
+    //             },
+    //             child: Text("Done"),
+    //           ),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
+
+    orderpayment();
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(response.paymentId!),
@@ -357,40 +373,81 @@ class _orderState extends State<order> {
           builder: (BuildContext context, StateSetter setState) {
             return Container(
               color: Colors.white, // Set the background color to white
-              child: Wrap(
-                children: addressList.map((address) {
-                  return Column(
-                    children: [
-                      RadioListTile<Map<String, dynamic>>(
-                        title: Text(address['address']),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.all(16), // Padding for the content
+              child: hasAddresses ??
+                      false // Default to false if hasAddresses is null
+                  ? Wrap(
+                      children: addressList.map((address) {
+                        return Column(
                           children: [
-                            Text('City: ${address['city']}'),
-                            Text('State: ${address['state']}'),
-                            Text('Pincode: ${address['pincode']}'),
-                            Text('Phone: ${address['phone']}'),
-                            Text('Email: ${address['email']}'),
+                            RadioListTile<Map<String, dynamic>>(
+                              title: Text(address['address']),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('City: ${address['city']}'),
+                                  Text('State: ${address['state']}'),
+                                  Text('Pincode: ${address['pincode']}'),
+                                  Text('Phone: ${address['phone']}'),
+                                  Text('Email: ${address['email']}'),
+                                ],
+                              ),
+                              value: address,
+                              groupValue: selectedAddress,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedAddress = value;
+                                  selectedAddressId = value?['id'];
+                                });
+                                // Optionally, close the bottom sheet immediately after selecting an address
+                                Navigator.pop(context);
+                              },
+                            ),
+                            Divider(), // Add a divider after each address
                           ],
+                        );
+                      }).toList(),
+                    )
+                  : Column(
+                      mainAxisSize: MainAxisSize
+                          .min, // Use minimum height for the content
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width *
+                              0.9, // 90% of screen width
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context); // Close the bottom sheet
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      UserAddress(), // Replace with your add address screen
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.black, // Set button color to black
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    0), // Set button corners to square (0 radius)
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Text(
+                                'Add Address',
+                                style: TextStyle(
+                                  fontSize: 16, // Adjust font size if needed
+                                  color: Colors.white, // Text color
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        value: address,
-                        groupValue: selectedAddress,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedAddress = value;
-                            selectedAddressId =
-                                value?['id']; // Store the address ID
-                            fetchAddress();
-                          });
-                          // Optionally, close the bottom sheet immediately after selecting an address
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Divider(), // Add a divider after each address
-                    ],
-                  );
-                }).toList(),
-              ),
+                      ],
+                    ),
             );
           },
         );
@@ -562,7 +619,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com//${item['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com//${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -578,7 +635,7 @@ class _orderState extends State<order> {
             'image': imageUrl,
             'color': item['color'],
             'size': item['size'],
-            'offer_type':item['offer_type']
+            'offer_type': item['offer_type']
           });
         }
         print(
@@ -593,7 +650,8 @@ class _orderState extends State<order> {
           totalPrice = calculateTotalPrice();
           discount = orginalprice - totalPrice;
           print("Original Price: $orginalprice");
-          print("Selling Priceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: $totalPrice");
+          print(
+              "Selling Priceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: $totalPrice");
           print("Discount: $discount");
           calculateTotalAmount();
         });
@@ -628,18 +686,15 @@ class _orderState extends State<order> {
   }
 
   double calculateTotalAmount() {
-   
     setState(() {
-      
-       
-        print("total::::::::::::::::::::::::::::::::::::::::::::::::::::::::::$totalPrice");
-      
+      print(
+          "total::::::::::::::::::::::::::::::::::::::::::::::::::::::::::$totalPrice");
+
       if (totalPrice < 500) {
         deliverycharge = 60;
         totalPrice = totalPrice + deliverycharge;
-      }
-      else{
-         deliverycharge = 0;
+      } else {
+        deliverycharge = 0;
       }
     });
     return totalPrice;
@@ -1183,7 +1238,7 @@ class _orderState extends State<order> {
                   ordercreate();
                 } else {
                   openCheckout();
-                  orderpayment();
+                
                 }
               },
               child: Container(

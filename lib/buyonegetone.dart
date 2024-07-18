@@ -27,48 +27,54 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<bool> isFavorite = [];
   var tokenn;
 
-  final String buyonegetoneurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-1-get-1/";
-  List<Map<String, dynamic>> buyonegetoneproducts = [];
+  // final String buyonegetoneurl =
+  //     "https://papua-violation-assistance-hearts.trycloudflare.com/buy-1-get-1/";
+  List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/products/search/?q=";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/add-wishlist/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/add-wishlist/";
+
+  final String productsurl =
+      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
+
+  final String offersurl =
+      "https://papua-violation-assistance-hearts.trycloudflare.com/offer/";
 
   List<Map<String, dynamic>> products = [];
 
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> searchResults = [];
+  List<Map<String, dynamic>> offers = [];
+  List<Map<String, dynamic>> productsInOffer = [];
 
   @override
   void initState() {
     super.initState();
     _initData();
-    fetchbuyonegetoneProducts();
+    // fetchbuyonegetoneProducts();
+    fetchofferproducts();
+    fetchbogooffers();
   }
 
-   Future<void> _initData() async {
-        tokenn = await gettokenFromPrefs();
-
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
   }
 
   void toggleFavorite(int index) {
     setState(() {
       isFavorite[index] = !isFavorite[index];
+      print(
+          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd$index");
+      print(
+          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd${productsInOffer[index]['id']}");
     });
 
-    // Check if the product is being added or removed from the wishlist
     if (isFavorite[index]) {
-      // If the product is being added to the wishlist
-      addProductToWishlist(
-        buyonegetoneproducts[index]['id'],
-      );
-    } else {
-      // If the product is being removed from the wishlist
-      // You can implement this logic if needed
+      addProductToWishlist(productsInOffer[index]['id']);
     }
   }
 
@@ -87,7 +93,103 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
     return Icon(Icons.favorite_border, color: Colors.black);
   }
 
+  Future<void> fetchofferproducts() async {
+    try {
+      final response = await http.get(Uri.parse(productsurl));
+      print('Response: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        print(
+            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
+        final List<dynamic> productsData = parsed['products'];
+        List<Map<String, dynamic>> productsList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+          productsList.add({
+            'id': productData['id'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+            'slug': productData['slug'],
+            'mainCategory': productData['mainCategory'],
+          });
+        }
+
+        setState(() {
+          products = productsList;
+          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
+
+          // Filter the products that are present in offerProducts
+          productsInOffer = products.where((product) {
+            return offerProducts.contains(product['id']);
+          }).toList();
+
+          isFavorite = List.generate(productsInOffer.length, (index) => false);
+
+          print('Products in Offer: $productsInOffer');
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
+  List<int> offerProducts = [];
+
+  Future<void> fetchbogooffers() async {
+    try {
+      final response = await http.get(Uri.parse(offersurl));
+      print('Response:::::::::::::::::::::::::: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
+
+        for (var productData in parsed) {
+          productsList.add({
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'buy_value': productData['buy_value'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+          });
+
+          if (productData.containsKey('offer_products') &&
+              productData['offer_products'].isNotEmpty) {
+            offerProducts.addAll(List<int>.from(productData['offer_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories
+                .addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+
+        setState(() {
+          offers = productsList;
+          // Store offerProducts and offerCategories in state variables if needed
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
+          print('Offer Products: $offerProducts');
+          print('Offer Categories: $offerCategories');
+          fetchofferproducts();
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
   Future<void> addProductToWishlist(int productId) async {
+    print("tyyyttttttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffffff");
     try {
       final token = await gettokenFromPrefs();
 
@@ -131,26 +233,26 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   }
 
   Future<void> searchproduct() async {
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-      
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
+      print("=========SSSSSSSSSSSSSEEEEEEEEEEEEEEEEEEAAAAAAAARRRRRRCCCCCHHHHHHHHHH${response.body}");
       print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+          "==============SSSSSSEEEEEEEEEEEAAAAAAAAAAAAAARRRRRRRRCCCCCHHHHHHHSSSSSSSTTTTTTAATTTUUS${response.statusCode}");
 
       if (response.statusCode == 200) {
         print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
+        print("=========SSSSSSSSSSSEEEEEEEEEEEEEEEAAARRRRRRRCCCCCHHHHDDDDDAAAAAAAAATTTTTTTAAAA${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -200,6 +302,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                           borderRadius: BorderRadius.circular(20)),
                       suffixIcon: IconButton(
                         onPressed: () async {
+                          print("gggggggggggggggggggggggggggggggggggggggggg");
                           await searchproduct();
 
                           setState(() {
@@ -231,42 +334,42 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
     return prefs.getString('userId');
   }
 
-  void fetchbuyonegetoneProducts() async {
-    try {
-      final response = await http.get(Uri.parse(buyonegetoneurl));
+  // void fetchbuyonegetoneProducts() async {
+  //   try {
+  //     final response = await http.get(Uri.parse(buyonegetoneurl));
 
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['data'];
-        List<Map<String, dynamic>> productbuyonegetoneList = [];
+  //     if (response.statusCode == 200) {
+  //       final parsed = jsonDecode(response.body);
+  //       final List<dynamic> productsData = parsed['data'];
+  //       List<Map<String, dynamic>> productbuyonegetoneList = [];
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
-          productbuyonegetoneList.add({
-            'id': productData['id'],
-            'mainCategory': productData['mainCategory'],
-            'name': productData['name'],
-            'price': productData['price'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-            'slug':productData['slug']
-          });
-        }
+  //       for (var productData in productsData) {
+  //         String imageUrl =
+  //             "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+  //         productbuyonegetoneList.add({
+  //           'id': productData['id'],
+  //           'mainCategory': productData['mainCategory'],
+  //           'name': productData['name'],
+  //           'price': productData['price'],
+  //           'salePrice': productData['salePrice'],
+  //           'image': imageUrl,
+  //           'slug': productData['slug']
+  //         });
+  //       }
 
-        setState(() {
-          buyonegetoneproducts = productbuyonegetoneList;
-          // Initialize isFavorite list with the same length as products list
-          isFavorite =
-              List.generate(buyonegetoneproducts.length, (index) => false);
-        });
-      } else {
-        throw Exception('Failed to load Buy One Get One products');
-      }
-    } catch (error) {
-      print('Error fetching Buy One Get One products: $error');
-    }
-  }
+  //       setState(() {
+  //         productsinoffer = productbuyonegetoneList;
+  //         // Initialize isFavorite list with the same length as products list
+  //         isFavorite =
+  //             List.generate(productsinoffer.length, (index) => false);
+  //       });
+  //     } else {
+  //       throw Exception('Failed to load Buy One Get One products');
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching Buy One Get One products: $error');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -279,17 +382,13 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         actions: [
           IconButton(
             onPressed: () {
-               if (tokenn == null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login_Page()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wishlist()));
-                        }
+              if (tokenn == null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_Page()));
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Wishlist()));
+              }
             },
             icon: Image.asset(
               "lib/assets/heart.png",
@@ -305,39 +404,35 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: (buyonegetoneproducts.length / 2).ceil(),
+            itemCount: (productsInOffer.length / 2).ceil(),
             itemBuilder: (BuildContext context, int index) {
               int firstItemIndex = index * 2;
               int secondItemIndex = firstItemIndex + 1;
 
               // Check if this is the last row
-              bool isLastRow =
-                  index == (buyonegetoneproducts.length / 2).ceil() - 1;
+              bool isLastRow = index == (productsInOffer.length / 2).ceil() - 1;
 
               return Column(
                 children: [
                   Row(
                     children: [
-                      if (firstItemIndex < buyonegetoneproducts.length) ...[
+                      if (firstItemIndex < productsInOffer.length) ...[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
                               try {
-                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Product_big_View(
-                                          product_id:
-                                              buyonegetoneproducts[firstItemIndex]
-                                                  ['id'],
-                                          Category_id:
-                                              buyonegetoneproducts[firstItemIndex]
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Product_big_View(
+                                              product_id: productsInOffer[
+                                                  firstItemIndex]['id'],
+                                              Category_id: productsInOffer[
+                                                      firstItemIndex]
                                                   ['mainCategory'],
-
-                                          slug: buyonegetoneproducts[firstItemIndex]['slug'],
-
-                                                  
-                                                  )));
+                                              slug: productsInOffer[
+                                                  firstItemIndex]['slug'],
+                                            )));
                               } catch (e) {
                                 print('Error navigating: $e');
                               }
@@ -345,11 +440,11 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                             child: Container(
                               height: 250,
                               margin: EdgeInsets.only(
-                                right: (secondItemIndex <
-                                            buyonegetoneproducts.length ||
-                                        isLastRow)
-                                    ? 5
-                                    : 0,
+                                right:
+                                    (secondItemIndex < productsInOffer.length ||
+                                            isLastRow)
+                                        ? 5
+                                        : 0,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -380,7 +475,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: NetworkImage(
-                                                  buyonegetoneproducts[
+                                                  productsInOffer[
                                                       firstItemIndex]['image'],
                                                 ),
                                               ),
@@ -389,6 +484,9 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
+                                            print(
+                                                "firstttttttttttttttttttttttindexxxxxxxxxxxxx$firstItemIndex");
+
                                             toggleFavorite(firstItemIndex);
                                           },
                                           child: Padding(
@@ -408,7 +506,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            buyonegetoneproducts[firstItemIndex]
+                                            productsInOffer[firstItemIndex]
                                                 ['name'],
                                             style: TextStyle(
                                                 fontSize: 16,
@@ -421,7 +519,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            '\$${buyonegetoneproducts[firstItemIndex]['price']}',
+                                            '\$${productsInOffer[firstItemIndex]['price']}',
                                             style: TextStyle(
                                               decoration: TextDecoration
                                                   .lineThrough, // Add strikethrough decoration
@@ -434,7 +532,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            'Sale Price: \$${buyonegetoneproducts[firstItemIndex]['salePrice']}',
+                                            'Sale Price: \$${productsInOffer[firstItemIndex]['salePrice']}',
                                             style: TextStyle(
                                               color: Colors.green,
                                             ),
@@ -449,7 +547,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                           ),
                         ),
                       ],
-                      if (secondItemIndex < buyonegetoneproducts.length) ...[
+                      if (secondItemIndex < productsInOffer.length) ...[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -458,22 +556,22 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                   MaterialPageRoute(
                                       builder: (context) => Product_big_View(
                                           product_id:
-                                              buyonegetoneproducts[secondItemIndex]
+                                              productsInOffer[secondItemIndex]
                                                   ['id'],
-                                                                                            slug: buyonegetoneproducts[firstItemIndex]['slug'],
-
+                                          slug: productsInOffer[secondItemIndex]
+                                              ['slug'],
                                           Category_id:
-                                              buyonegetoneproducts[secondItemIndex]
+                                              productsInOffer[secondItemIndex]
                                                   ['mainCategory'])));
                             },
                             child: Container(
                               height: 250,
                               margin: EdgeInsets.only(
-                                left: (firstItemIndex <
-                                            buyonegetoneproducts.length ||
-                                        isLastRow)
-                                    ? 5
-                                    : 0,
+                                left:
+                                    (firstItemIndex < productsInOffer.length ||
+                                            isLastRow)
+                                        ? 5
+                                        : 0,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -499,8 +597,8 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           child: Image.network(
-                                            buyonegetoneproducts[
-                                                secondItemIndex]['image'],
+                                            productsInOffer[secondItemIndex]
+                                                ['image'],
                                             width: 150,
                                             height: 150,
                                           ),
@@ -526,8 +624,8 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            buyonegetoneproducts[
-                                                secondItemIndex]['name'],
+                                            productsInOffer[secondItemIndex]
+                                                ['name'],
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -539,7 +637,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            '\$${buyonegetoneproducts[secondItemIndex]['price']}',
+                                            '\$${productsInOffer[secondItemIndex]['price']}',
                                             style: TextStyle(
                                               decoration: TextDecoration
                                                   .lineThrough, // Add strikethrough decoration
@@ -552,7 +650,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            'Sale Price: \$${buyonegetoneproducts[secondItemIndex]['salePrice']}',
+                                            'Sale Price: \$${productsInOffer[secondItemIndex]['salePrice']}',
                                             style: TextStyle(
                                               color: Colors.green,
                                             ),
@@ -602,21 +700,19 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                 },
               ),
               GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {
@@ -640,5 +736,11 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         ),
       ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com//search-products/?q=";
+      "https://papua-violation-assistance-hearts.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com//offer-banner/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com//add-wishlist/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://robert-crops-jews-kilometers.trycloudflare.com//low-products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://robert-crops-jews-kilometers.trycloudflare.com//high-products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}",
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -286,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

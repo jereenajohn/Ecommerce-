@@ -64,42 +64,48 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> offers = [];
 
+  List<Map<String, dynamic>> offerss = [];
+  List<Map<String, dynamic>> productsInOffer = [];
+
   final String bannerurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/banners/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/";
   final String categoryUrl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/category/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/category/";
   final String productsurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
   final String offersurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/offer-banner/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/discount-sale/";
-  final String buyonegetoneurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-1-get-1/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/discount-sale/";
+  // final String buyonegetoneurl =
+  //     "https://papua-violation-assistance-hearts.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/best-sale-products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/flash-sale/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/buy-2-get-1/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/offers/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/search-products/?q=";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/recommended/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/recently-viewed/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/recently-viewed/";
+
+  final String bogooffersurl =
+      "https://papua-violation-assistance-hearts.trycloudflare.com/offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -116,13 +122,15 @@ class _HomePageState extends State<HomePage> {
     _startTimer();
     fetchOffers();
     fetchDiscountProducts();
-    fetchbuyonegetoneProducts();
+    // fetchbuyonegetoneProducts();
     fetchBestSaleProducts();
     fetchFlashSaleProducts();
     fetchbuytwogetoneProducts();
     halfratedProducts();
     fetchRecommendedProducts();
     recentlyviewed();
+    fetchofferproducts();
+    fetchbogooffers();
 
     // Call getUserIdFromPrefs when the widget initializes
     getUserIdFromPrefs().then((value) {
@@ -248,6 +256,96 @@ class _HomePageState extends State<HomePage> {
     print('Could not launch WhatsApp. Make sure WhatsApp is installed.');
   }
 
+  Future<void> fetchofferproducts() async {
+    try {
+      final response = await http.get(Uri.parse(productsurl));
+      print('Response: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['products'];
+        List<Map<String, dynamic>> productsList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+          productsList.add({
+            'id': productData['id'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+            'slug':productData['slug'],
+            'mainCategory': productData['mainCategory'],
+          });
+        }
+
+        setState(() {
+          products = productsList;
+          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
+
+          // Filter the products that are present in offerProducts
+          productsInOffer = products.where((product) {
+            return offerProducts.contains(product['id']);
+          }).toList();
+
+          print('Products in Offer: $productsInOffer');
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
+  List<int> offerProducts = [];
+
+  Future<void> fetchbogooffers() async {
+    try {
+      final response = await http.get(Uri.parse(bogooffersurl));
+      print('Response:::::::::::::::::::::::::: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
+
+        for (var productData in parsed) {
+          productsList.add({
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'buy_value': productData['buy_value'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+          });
+
+          if (productData.containsKey('offer_products') &&
+              productData['offer_products'].isNotEmpty) {
+            offerProducts.addAll(List<int>.from(productData['offer_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories
+                .addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+
+        setState(() {
+          offerss = productsList;
+          // Store offerProducts and offerCategories in state variables if needed
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offerss');
+          print('Offer Products: $offerProducts');
+          print('Offer Categories: $offerCategories');
+          fetchofferproducts();
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
   Future<void> recentlyviewed() async {
     try {
       final token = await gettokenFromPrefs();
@@ -274,7 +372,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${recentproductsData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -320,7 +418,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -355,7 +453,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${offerData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -386,7 +484,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -419,7 +517,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -457,7 +555,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -496,7 +594,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -520,42 +618,42 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> fetchbuyonegetoneProducts() async {
-    try {
-      final response = await http.get(Uri.parse(buyonegetoneurl));
+  // Future<void> fetchbuyonegetoneProducts() async {
+  //   try {
+  //     final response = await http.get(Uri.parse(buyonegetoneurl));
 
-      print(
-          "ressssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss${response.body}");
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['data'];
-        List<Map<String, dynamic>> productbuyonegetoneList = [];
+  //     print(
+  //         "ressssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss${response.body}");
+  //     if (response.statusCode == 200) {
+  //       final parsed = jsonDecode(response.body);
+  //       final List<dynamic> productsData = parsed['data'];
+  //       List<Map<String, dynamic>> productbuyonegetoneList = [];
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
-          productbuyonegetoneList.add({
-            'id': productData['id'],
-            'mainCategory': productData['mainCategory'],
-            'name': productData['name'],
-            'price': productData['price'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-          });
-        }
+  //       for (var productData in productsData) {
+  //         String imageUrl =
+  //             "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+  //         productbuyonegetoneList.add({
+  //           'id': productData['id'],
+  //           'mainCategory': productData['mainCategory'],
+  //           'name': productData['name'],
+  //           'price': productData['price'],
+  //           'salePrice': productData['salePrice'],
+  //           'image': imageUrl,
+  //         });
+  //       }
 
-        setState(() {
-          buyonegetoneproducts = productbuyonegetoneList;
-          print(
-              "HELLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOO$buyonegetoneproducts");
-        });
-      } else {
-        throw Exception('Failed to load Buy One Get One products');
-      }
-    } catch (error) {
-      print('Error fetching Buy One Get One products: $error');
-    }
-  }
+  //       setState(() {
+  //         buyonegetoneproducts = productbuyonegetoneList;
+  //         print(
+  //             "HELLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOO$buyonegetoneproducts");
+  //       });
+  //     } else {
+  //       throw Exception('Failed to load Buy One Get One products');
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching Buy One Get One products: $error');
+  //   }
+  // }
 
   void fetchbuytwogetoneProducts() async {
     try {
@@ -570,7 +668,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -627,7 +725,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -679,7 +777,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+  //             "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -712,7 +810,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -748,7 +846,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com${bannerData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -777,7 +875,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${categoryData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -861,13 +959,15 @@ class _HomePageState extends State<HomePage> {
         _startTimer();
         fetchOffers();
         fetchDiscountProducts();
-        fetchbuyonegetoneProducts();
+        // fetchbuyonegetoneProducts();
         fetchBestSaleProducts();
         fetchFlashSaleProducts();
         fetchbuytwogetoneProducts();
         halfratedProducts();
         fetchRecommendedProducts();
         recentlyviewed();
+        fetchofferproducts();
+        fetchbogooffers();
       },
       child: Scaffold(
         body: Column(
@@ -893,8 +993,10 @@ class _HomePageState extends State<HomePage> {
                   Spacer(),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => coin()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => coin()));
 
                       // Add your logout functionality here
                     },
@@ -1413,7 +1515,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     Column(
                       children: [
-                        if (buyonegetoneproducts.isNotEmpty)
+                        if (productsInOffer.isNotEmpty)
                           GestureDetector(
                             onTap: () {},
                             child: Container(
@@ -1468,12 +1570,14 @@ class _HomePageState extends State<HomePage> {
                                     physics: NeverScrollableScrollPhysics(),
                                     crossAxisCount: 2,
                                     children: List.generate(
-                                      (buyonegetoneproducts.length > 4)
+                                      (productsInOffer.length > 4)
                                           ? 4
-                                          : buyonegetoneproducts.length,
+                                          : productsInOffer.length,
                                       (index) {
-                                        final product =
-                                            buyonegetoneproducts[index];
+                                        final product = productsInOffer[index];
+
+                                        print(
+                                            "BBBBBBBBB1111111GGGGGGGGGGGGGGGGG1111111111111PPPPPRRRRRROOOOOOOO$product");
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: GestureDetector(
@@ -1522,6 +1626,7 @@ class _HomePageState extends State<HomePage> {
                                                               .ellipsis),
                                                     ),
                                                   ),
+                                                  if(product['price']!=null)
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(

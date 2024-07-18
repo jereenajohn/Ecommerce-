@@ -34,7 +34,7 @@ class _MyOrderState extends State<MyOrder> {
     tokenn = await gettokenFromPrefs();
 
     print("--------------------------------------------R$tokenn");
-    // Use userId after getting the value
+    // Use userId after getting the value
   }
 
   Future<String?> gettokenFromPrefs() async {
@@ -43,15 +43,15 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/order-items/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/order-items/";
       final String orderstatus =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/orders/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/orders/";
 
   final String productsUrl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
 
   final String ratingurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/product-review/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/product-review/";
 
   List<dynamic> productIds = [];
   List<dynamic> orderIds = [];
@@ -91,13 +91,14 @@ class _MyOrderState extends State<MyOrder> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
           orderProducts.add({
             'id': productData['order'].toString(), // Ensure ID is a string
             'productid': productData['product'].toString(), // Ensure product ID is a string
             'name': productData['name'],
             'salePrice': productData['sale_price'].toString(), // Ensure sale price is a string
             'image': imageUrl,
+            'status':productData['status'],
           });
         }
 
@@ -105,6 +106,7 @@ class _MyOrderState extends State<MyOrder> {
         setState(() {
           products = orderProducts;
           isLoading = false; // Set loading state to false
+
 
           print(
               "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$products");
@@ -280,47 +282,75 @@ class _MyOrderState extends State<MyOrder> {
       body: isLoading
           ? Center(child: CircularProgressIndicator()) // Display loader
           : ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        _showRatingDialog(context, product['productid']);
-                      },
-                      child: Container(
-                        height: 90,
-                        margin: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          leading: Image.network(product['image']),
-                          title: Text(
-                            product['name'],
-                            style: TextStyle(
-                                fontSize: 13, overflow: TextOverflow.ellipsis),
-                          ),
-                          subtitle: Text(
-                            '\$${product['salePrice']}',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          ),
-                          trailing: Icon(Icons.arrow_forward_ios,
-                              size: 16, color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      color: Colors.grey[
-                          200], // You can adjust the color and thickness here
-                      height: 1,
-                      thickness: 1,
-                    ),
-                  ],
-                );
-              },
+  itemCount: products.length,
+  itemBuilder: (context, index) {
+    final product = products[index];
+    Color statusColor = (product['status'] == 'pending')
+        ? Colors.red
+        : Color.fromARGB(255, 6, 157, 3); // Green color
+
+    return Column(
+      children: [
+
+        GestureDetector(
+          onTap: () {
+           if(product['status']=='Completed')
+
+            _showRatingDialog(context, product['productid']);
+          },
+          child: Container(
+            height: 110,  // Adjusted height to accommodate additional text
+            margin: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
             ),
+            child: ListTile(
+              leading: Image.network(product['image']),
+              title: Text(
+                product['name'],
+                style: TextStyle(
+                  fontSize: 13, 
+                  overflow: TextOverflow.ellipsis
+                ),
+              ),
+              subtitle: Row(
+                children: [
+                  Text(
+                    '\$${product['salePrice']}',
+                    style: TextStyle(
+                      color: Colors.grey, 
+                      fontSize: 12
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    '${product['status']}',
+                    style: TextStyle(
+                      color: statusColor, 
+                      fontSize: 14
+                    ),
+                  ),
+                ],
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                size: 16, 
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+        Divider(
+          color: Colors.grey[200], // You can adjust the color and thickness here
+          height: 1,
+          thickness: 1,
+        ),
+      ],
+    );
+  },
+),
+
+
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(

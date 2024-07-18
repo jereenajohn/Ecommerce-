@@ -1,9 +1,9 @@
 import 'dart:convert';
+
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/productbigview.dart';
-import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/wishlist/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/products/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/wishlist-delete/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/cart/";
+      "https://papua-violation-assistance-hearts.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -70,8 +70,6 @@ class _WishlistState extends State<Wishlist> {
     );
 
     print("FetchWishlistData status code: ${response.body}");
-        print("FetchWishlistData status code: ${response.statusCode}");
-
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -100,14 +98,12 @@ class _WishlistState extends State<Wishlist> {
         print("Wishlist IDs: $wishlistIds");
         print("Product-Wishlist Map: $productWishlistMap");
       });
-    }
-    else if(response.statusCode== 401){
+    } else if (response.statusCode == 401) {
       print("session expired");
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
 
-
-    }
-     else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Login_Page()));
+    } else {
       print("Failed to fetch wishlist data");
     }
   }
@@ -127,7 +123,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://robert-crops-jews-kilometers.trycloudflare.com/${productData['image']}";
+                "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
             print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
@@ -139,7 +135,7 @@ class _WishlistState extends State<Wishlist> {
               'image': imageUrl,
               'mainCategory': productData['mainCategory'],
               'wishlistId': wishlistId,
-              'slug':productData['slug']
+              'slug': productData['slug']
             });
           }
         }
@@ -160,8 +156,8 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://robert-crops-jews-kilometers.trycloudflare.com/product/";
- 
+      "https://papua-violation-assistance-hearts.trycloudflare.com/product/";
+
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -169,11 +165,11 @@ class _WishlistState extends State<Wishlist> {
   String? selectedSize;
   var sizes;
   int? selectedstock;
-  Future<void> sizecolor(int id) async {
-    print('======================$imageurl${id}/r');
+  Future<void> sizecolor(var slug) async {
+    print('======================$imageurl${slug}/r');
     Set<String> colorsSet = {};
     try {
-      final response = await http.get(Uri.parse('$imageurl${id}/'));
+      final response = await http.get(Uri.parse('$imageurl${slug}/'));
       print("statussssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
@@ -185,15 +181,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image1']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image2']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image3']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image4']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://robert-crops-jews-kilometers.trycloudflare.com/${imageData['image5']}";
+              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])
@@ -234,171 +230,194 @@ class _WishlistState extends State<Wishlist> {
       print('Error fetching product image : $error');
     }
   }
-void showBottomSheet(
-  int id,
-  var name,
-  var price,
-  BuildContext context,
-  List<String> colors,
-  List<Map<String, dynamic>> images,
-  String? selectedColor,
-  List<Map<String, dynamic>> sizes,
-  String? selectedSize,
-  int? selectedStock,
-  Function(String color, List<Map<String, dynamic>> sizeList, String? size, int? stock) onColorSizeChanged,
-) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true, // Allow the bottom sheet to be scrollable
-    builder: (BuildContext context) {
-      return Container(
-        color: Colors.white,
-        padding: const EdgeInsets.all(8.0),
-        child: StatefulBuilder(
-          builder: (BuildContext context, StateSetter setModalState) {
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (colors.isNotEmpty)
-                    Container(
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Wrap(
-                              spacing: 8.0,
-                              children: colors.map<Widget>((color) {
-                                return OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: selectedColor == color
-                                        ? Color.fromARGB(255, 1, 80, 12)
-                                        : Colors.black,
-                                    side: BorderSide(
-                                      color: selectedColor == color
-                                          ? Color.fromARGB(255, 28, 146, 1)
+
+  void showBottomSheet(
+    int id,
+    var slug,
+    var name,
+    var price,
+    BuildContext context,
+    List<String> colors,
+    List<Map<String, dynamic>> images,
+    String? selectedColor,
+    List<Map<String, dynamic>> sizes,
+    String? selectedSize,
+    int? selectedStock,
+    Function(String color, List<Map<String, dynamic>> sizeList, String? size,
+            int? stock)
+        onColorSizeChanged,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allow the bottom sheet to be scrollable
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(8.0),
+          child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setModalState) {
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (colors.isNotEmpty)
+                      Container(
+                        color: Colors.white,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Wrap(
+                                spacing: 8.0,
+                                children: colors.map<Widget>((color) {
+                                  return OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: selectedColor == color
+                                          ? Color.fromARGB(255, 1, 80, 12)
                                           : Colors.black,
+                                      side: BorderSide(
+                                        color: selectedColor == color
+                                            ? Color.fromARGB(255, 28, 146, 1)
+                                            : Colors.black,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                      ),
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
+                                    onPressed: () {
+                                      setModalState(() {
+                                        selectedColor = color;
+                                        print("selectedcolorrrr$selectedColor");
+                                        sizes = images.firstWhere((image) =>
+                                                image['color'] ==
+                                                selectedColor)['sizes'] ??
+                                            [];
+                                        selectedSize = sizes.isNotEmpty
+                                            ? sizes[0]['size']
+                                            : null;
+                                        selectedStock = sizes.isNotEmpty
+                                            ? sizes[0]['stock']
+                                            : null;
+                                        onColorSizeChanged(selectedColor!,
+                                            sizes, selectedSize, selectedStock);
+                                      });
+                                    },
+                                    child: Text(color.toUpperCase()),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (selectedColor != null && sizes.isNotEmpty)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            color: Colors.white,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Wrap(
+                                spacing: 8.0,
+                                children: sizes.map<Widget>((sizeData) {
+                                  return Container(
+                                    width: 40.0,
+                                    height: 40.0,
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        padding: EdgeInsets.zero,
+                                        foregroundColor:
+                                            selectedSize == sizeData['size']
+                                                ? Color.fromARGB(255, 1, 80, 12)
+                                                : Colors.black,
+                                        side: BorderSide(
+                                          color: selectedSize ==
+                                                  sizeData['size']
+                                              ? Color.fromARGB(255, 28, 146, 1)
+                                              : Colors.black,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                        ),
+                                      ),
+                                      onPressed: sizeData['stock'] > 0
+                                          ? () {
+                                              setModalState(() {
+                                                selectedSize = sizeData['size'];
+                                                selectedStock =
+                                                    sizeData['stock'];
+                                                print(
+                                                    "selectedcolorrrr$selectedSize");
+                                                print(
+                                                    "selectedcolorrrr$selectedStock");
+                                                onColorSizeChanged(
+                                                    selectedColor!,
+                                                    sizes,
+                                                    selectedSize,
+                                                    selectedStock);
+                                              });
+                                            }
+                                          : null,
+                                      child: Center(
+                                        child: Text(
+                                          sizeData['size'].toUpperCase(),
+                                          style: TextStyle(
+                                            decoration: sizeData['stock'] == 0
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  onPressed: () {
-                                    setModalState(() {
-                                      selectedColor = color;
-                                      print("selectedcolorrrr$selectedColor");
-                                      sizes = images.firstWhere(
-                                          (image) => image['color'] == selectedColor)['sizes'] ?? [];
-                                      selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
-                                      selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
-                                      onColorSizeChanged(selectedColor!, sizes, selectedSize, selectedStock);
-                                    });
-                                  },
-                                  child: Text(color.toUpperCase()),
-                                );
-                              }).toList(),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: (selectedStock ?? 0) > 0
+                                  ? () {
+                                      addProductToCart(id, name, price);
+                                      Navigator.pop(context);
+                                    }
+                                  : null,
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: (selectedStock ?? 0) > 0
+                                    ? Colors.black
+                                    : Colors.grey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text("ADD TO CART"),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  if (selectedColor != null && sizes.isNotEmpty)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Wrap(
-                              spacing: 8.0,
-                              children: sizes.map<Widget>((sizeData) {
-                                return Container(
-                                  width: 40.0,
-                                  height: 40.0,
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      foregroundColor: selectedSize == sizeData['size']
-                                          ? Color.fromARGB(255, 1, 80, 12)
-                                          : Colors.black,
-                                      side: BorderSide(
-                                        color: selectedSize == sizeData['size']
-                                            ? Color.fromARGB(255, 28, 146, 1)
-                                            : Colors.black,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30.0),
-                                      ),
-                                    ),
-                                    onPressed: sizeData['stock'] > 0
-                                        ? () {
-                                            setModalState(() {
-                                              selectedSize = sizeData['size'];
-                                              selectedStock = sizeData['stock'];
-                                              print("selectedcolorrrr$selectedSize");
-                                              print("selectedcolorrrr$selectedStock");
-                                              onColorSizeChanged(selectedColor!, sizes, selectedSize, selectedStock);
-                                            });
-                                          }
-                                        : null,
-                                    child: Center(
-                                      child: Text(
-                                        sizeData['size'].toUpperCase(),
-                                        style: TextStyle(
-                                          decoration: sizeData['stock'] == 0
-                                              ? TextDecoration.lineThrough
-                                              : TextDecoration.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: (selectedStock ?? 0) > 0
-                                ? () {
-                                    addProductToCart(id, name, price);
-                                    Navigator.pop(context);
-                                  }
-                                : null,
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: (selectedStock ?? 0) > 0
-                                  ? Colors.black
-                                  : Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: Text("ADD TO CART"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      );
-    },
-  );
-}
-
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -453,13 +472,13 @@ void showBottomSheet(
       print("Response status code: ${response.statusCode}");
 
       if (response.statusCode == 201) {
-         ScaffoldMessenger.of(context).showSnackBar(
+        print('Product added to cart: $productId');
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              backgroundColor: Colors.green,
+            backgroundColor: Colors.green,
             content: Text('Product added to Cart'),
           ),
         );
-        print('Product added to cart: $productId');
       } else if (response.statusCode == 400) {
         // Product already in cart, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -611,32 +630,32 @@ void showBottomSheet(
 
                           ElevatedButton(
                             onPressed: () async {
-                              await sizecolor(products[index]['id']);
+                              await sizecolor(products[index]['slug']);
                               if (colors.isNotEmpty) {
-                               showBottomSheet(
-                                products[index]['id'],
-                                products[index]['name'],
-                                products[index]['SalePrice'],
-
-              context,
-              colors,
-              images,
-              selectedColor,
-              sizes,
-              selectedSize,
-              selectedstock,
-              (color, sizeList, size, stock) {
-                setState(() {
-                  selectedColor = color;
-                  sizes = sizeList;
-                  selectedSize = size;
-                  selectedstock = stock;
-                });
-              },
-            );
+                                showBottomSheet(
+                                  products[index]['id'],
+                                  products[index]['slug'],
+                                  products[index]['name'],
+                                  products[index]['SalePrice'],
+                                  context,
+                                  colors,
+                                  images,
+                                  selectedColor,
+                                  sizes,
+                                  selectedSize,
+                                  selectedstock,
+                                  (color, sizeList, size, stock) {
+                                    setState(() {
+                                      selectedColor = color;
+                                      sizes = sizeList;
+                                      selectedSize = size;
+                                      selectedstock = stock;
+                                    });
+                                  },
+                                );
                               } else {
                                 await sizecolor(products[index][
-                                    'id']); // Add await here to ensure the async call is completed
+                                    'slug']); // Add await here to ensure the async call is completed
                                 addProductToCart(
                                   products[index]['id'],
                                   products[index]['name'],
@@ -646,7 +665,7 @@ void showBottomSheet(
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
-                             
+
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -655,7 +674,8 @@ void showBottomSheet(
                             ),
                             child: Text(
                               "ADD TO CART",
-                              style: TextStyle(fontSize: 7,color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 7, color: Colors.white),
                             ),
                           ),
                         ],
