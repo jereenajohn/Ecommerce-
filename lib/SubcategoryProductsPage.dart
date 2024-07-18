@@ -41,6 +41,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   void aa() {
     print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF${widget.slug}");
+        print("SUBBBBBBBBBBBBBIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDDDDDDDDDDD${widget.subcategoryId}");
+
   }
 
   TextEditingController searchitem = TextEditingController();
@@ -83,6 +85,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
     // Use userId after getting the value
     subcategoryproducts();
     searchproduct();
+    aa();
   }
 
   Future<void> pricefilterr() async {

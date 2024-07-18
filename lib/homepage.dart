@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:bepocart/aaa.dart';
 import 'package:bepocart/bestsaleproducts.dart';
+import 'package:bepocart/bogoeligibleproducts.dart';
 import 'package:bepocart/buyonegetone.dart';
 import 'package:bepocart/buytwogetone.dart';
 import 'package:bepocart/cart.dart';
@@ -66,6 +67,10 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> offerss = [];
   List<Map<String, dynamic>> productsInOffer = [];
+  List<Map<String, dynamic>> bogodisoffers = [];
+  List<Map<String, dynamic>> productsIndiscountOffer = [];
+    List<Map<String, dynamic>> bogoproducts = [];
+
 
   final String bannerurl =
       "https://papua-violation-assistance-hearts.trycloudflare.com/banners/";
@@ -131,6 +136,8 @@ class _HomePageState extends State<HomePage> {
     recentlyviewed();
     fetchofferproducts();
     fetchbogooffers();
+    fetchbogodiscountoffers();
+    fetchbogodiscountproducts();
 
     // Call getUserIdFromPrefs when the widget initializes
     getUserIdFromPrefs().then((value) {
@@ -256,6 +263,8 @@ class _HomePageState extends State<HomePage> {
     print('Could not launch WhatsApp. Make sure WhatsApp is installed.');
   }
 
+  // ##Buyonegetone##
+
   Future<void> fetchofferproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
@@ -274,7 +283,7 @@ class _HomePageState extends State<HomePage> {
             'name': productData['name'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
-            'slug':productData['slug'],
+            'slug': productData['slug'],
             'mainCategory': productData['mainCategory'],
           });
         }
@@ -346,6 +355,106 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // ##Buyonegetone ends##
+
+  // ##Buyonegetone eligible discountproducts##
+  Future<void> fetchbogodiscountproducts() async {
+    try {
+      final response = await http.get(Uri.parse(productsurl));
+      print('Response: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        print(
+            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
+        final List<dynamic> productsData = parsed['products'];
+        List<Map<String, dynamic>> productsList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+          productsList.add({
+            'id': productData['id'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+            'slug': productData['slug'],
+            'mainCategory': productData['mainCategory'],
+          });
+        }
+
+        setState(() {
+          bogoproducts = productsList;
+          print('productssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $bogoproducts');
+
+          // Filter the products that are present in offerProducts
+          productsIndiscountOffer = bogoproducts.where((product) {
+            return offerProductss.contains(product['id']);
+          }).toList();
+
+          print('Products in Offer: $productsIndiscountOffer');
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
+  List<int> offerProductss = [];
+
+  Future<void> fetchbogodiscountoffers() async {
+    try {
+      final response = await http.get(Uri.parse(offersurl));
+      print('Response:::::::::::::::::::::::::: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
+
+        for (var productData in parsed) {
+          productsList.add({
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'buy_value': productData['buy_value'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+          });
+          print(
+              "dissssssssscccccccccccccccccaaaaaaaaaaaaaaaappppppppppppppppppppp${productData['discount_approved_products']}");
+
+          if (productData.containsKey('discount_approved_products') &&
+              productData['discount_approved_products'].isNotEmpty) {
+            offerProductss.addAll(
+                List<int>.from(productData['discount_approved_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories
+                .addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+
+        setState(() {
+          bogodisoffers = productsList;
+          // Store offerProducts and offerCategories in state variables if needed
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrbbbbbbbbbboooooooggggggggg: $bogodisoffers');
+          print('Offer Products: $offerProductss');
+          print('Offer Categories: $offerCategories');
+          fetchbogodiscountproducts();
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+  // ##Buyonegetone eligible discountproducts ends##
+
   Future<void> recentlyviewed() async {
     try {
       final token = await gettokenFromPrefs();
@@ -379,6 +488,7 @@ class _HomePageState extends State<HomePage> {
             'name': recentproductsData['name'],
             'salePrice': recentproductsData['salePrice'],
             'image': imageUrl,
+            'slug': recentproductsData['slug']
           });
         }
 
@@ -386,7 +496,7 @@ class _HomePageState extends State<HomePage> {
           recenlyviewd = Recentlylist;
 
           print(
-              "RRRRRRRRRRRRRRRRRRTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT$recenlyviewd");
+              "RRRRRRRRRRRRRRRRRRvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv$recenlyviewd");
         });
 
         print('Profile data fetched successfully');
@@ -996,7 +1106,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => coin()));
+                              builder: (context) => Bogo_Eligible_Products()));
 
                       // Add your logout functionality here
                     },
@@ -1626,20 +1736,20 @@ class _HomePageState extends State<HomePage> {
                                                               .ellipsis),
                                                     ),
                                                   ),
-                                                  if(product['price']!=null)
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10,
-                                                            right: 10),
-                                                    child: Text(
-                                                      '\₹${product['price']}',
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough),
+                                                  if (product['price'] != null)
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Text(
+                                                        '\₹${product['price']}',
+                                                        style: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough),
+                                                      ),
                                                     ),
-                                                  ),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -2459,6 +2569,170 @@ class _HomePageState extends State<HomePage> {
                                                         null)
                                                       Text(
                                                           'Discount: ${recommendedproducts[index]['discount']}'),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      children: [
+                        if (productsIndiscountOffer.isNotEmpty)
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                                color: Color.fromARGB(255, 217, 219, 221),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text("BOGO Discount Products",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10, top: 10),
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Bogo_Eligible_Products(),
+                                                ),
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors
+                                                  .white, // Set white background color
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                side: BorderSide(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              'See More',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    GridView.count(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      crossAxisCount: 2,
+                                      children: List.generate(
+                                        (productsIndiscountOffer.length > 4)
+                                            ? 4
+                                            : productsIndiscountOffer.length,
+                                        (index) {
+                                          final product =
+                                              productsIndiscountOffer[index];
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Product_big_View(
+                                                      product_id: product['id'],
+                                                      slug: product['slug'],
+                                                      Category_id: product[
+                                                          'mainCategory'],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                height: 200,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Color.fromARGB(
+                                                        255, 211, 211, 211),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  color: Colors.white,
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Image.network(
+                                                      productsIndiscountOffer[
+                                                          index]['image'],
+                                                      width: 100,
+                                                      height: 100,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Text(
+                                                        productsIndiscountOffer[
+                                                            index]['name'],
+                                                        style: TextStyle(
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
+                                                      ),
+                                                    ),
+                                                    if (productsIndiscountOffer[
+                                                            index]['price'] !=
+                                                        null)
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Text(
+                                                          '\₹${productsIndiscountOffer[index]['price']}',
+                                                          style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough),
+                                                        ),
+                                                      ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: Text(
+                                                        ' \₹${productsIndiscountOffer[index]['salePrice']}',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                      ),
+                                                    ),
+                                                    if (product['discount'] !=
+                                                        null)
+                                                      Text(
+                                                          'Discount: ${productsIndiscountOffer[index]['discount']}'),
                                                   ],
                                                 ),
                                               ),

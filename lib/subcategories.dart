@@ -240,6 +240,8 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         setState(() {
           subcategories = subcategoryList;
+
+          print("SSSSSSSSSSSSSSSSSSSSUUUUUUUUUUUUBBBBBBBBBBBBBBBBBBBBBB$subcategories");
           
         });
       } else {
@@ -314,6 +316,8 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                               firstItemIndex]
                                                           ['slug'],
                                                     )));
+
+                                                    print("SUUUUUUUUUBBBBBIIIIIIIIIIDDDDDDDDDDDD${subcategories[firstItemIndex]['id']}");
                                       },
                                       child: Container(
                                         height: 100,
@@ -373,10 +377,10 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                     SubcategoryProductsPage(
                                                       subcategoryId:
                                                           subcategories[
-                                                                  firstItemIndex]
+                                                                  secondItemIndex]
                                                               ['id'],
                                                       slug: subcategories[
-                                                              firstItemIndex]
+                                                              secondItemIndex]
                                                           ['slug'],
                                                     )));
                                       },
