@@ -105,6 +105,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
     // Use userId after getting the value
   }
 
+  double totalRating = 0.0;
+  String averageRating = "0.0"; // Changed to String to hold the formatted value
+
   Future<void> fetchRatingData() async {
     try {
       final token = await gettokenFromPrefs();
@@ -143,11 +146,21 @@ class _Product_big_ViewState extends State<Product_big_View> {
             'first_name': productData['first_name'] ?? 'No first name',
             'image': imageUrl
           });
+
+          // Calculate total rating
+          totalRating += productData['rating'];
         }
 
+        // Compute average rating and format to one decimal place
+
         setState(() {
+          if (productsData.isNotEmpty) {
+            averageRating =
+                (totalRating / productsData.length).toStringAsFixed(1);
+          }
           productsrating = productratingList;
           print("Products: $productsrating");
+          print("Average Rating: $averageRating");
         });
       } else {
         throw Exception('Failed to load rating data');
@@ -708,6 +721,27 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   fontSize: 15,
                                   color: Color.fromARGB(255, 155, 153, 153),
                                   decoration: TextDecoration.lineThrough),
+                            ),
+                            SizedBox(width: 4,),
+                          if (averageRating != 0)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Color.fromARGB(255, 255, 197, 5),
+                                  size: 20,
+                                ),
+
+                                SizedBox(width: 4,),
+                                Text(
+                                  "$averageRating",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 255, 197, 5),
+                                  ),
+                                ),
+                              ],
                             ),
                         ],
                       ),
