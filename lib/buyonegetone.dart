@@ -28,20 +28,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   // final String buyonegetoneurl =
-  //     "https://papua-violation-assistance-hearts.trycloudflare.com/buy-1-get-1/";
+  //     "https://denmark-eagle-house-wedding.trycloudflare.com/buy-1-get-1/";
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/search/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/add-wishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/add-wishlist/";
 
   final String productsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
 
   final String offersurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/offer/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -108,7 +108,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -252,7 +252,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -345,7 +345,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+  //             "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

@@ -18,7 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Product_big_View extends StatefulWidget {
   Product_big_View(
-      {required this.product_id, required this.Category_id, required this.slug});
+      {required this.product_id,
+      required this.Category_id,
+      required this.slug});
 
   final product_id;
   final Category_id;
@@ -30,26 +32,29 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/category/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/product-images/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/cart/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/cart/";
   final String wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/add-wishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/discount-sale/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/recently-viewed/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/recommended/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/recommended/";
   final imageurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/product/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/product/";
+
+  final String ratingurl =
+      "https://denmark-eagle-house-wedding.trycloudflare.com/review/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -57,6 +62,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
   List<Map<String, dynamic>> discountproducts = [];
   List<Map<String, dynamic>> recenlyviewd = [];
   List<Map<String, dynamic>> recommendedproducts = [];
+  List<Map<String, dynamic>> productsrating = [];
 
   List<bool> isFavorite = [];
   int _selectedIndex = 0;
@@ -84,12 +90,11 @@ class _Product_big_ViewState extends State<Product_big_View> {
     print("category_idddddddddddddd${widget.Category_id}");
     _initData();
     fetchproductdata();
-    ;
-
     fetchDiscountProducts();
     recentlyviewed();
     fetchRecommendedProducts();
     sizecolor();
+    fetchRatingData();
     super.initState();
   }
 
@@ -98,6 +103,58 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
     print("--------------------------------------------R$tokenn");
     // Use userId after getting the value
+  }
+
+  Future<void> fetchRatingData() async {
+    try {
+      final token = await gettokenFromPrefs();
+
+      if (token == null) {
+        throw Exception('Token is null');
+      }
+
+      print("Tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnn: $token");
+
+      final response = await http.get(
+        Uri.parse('$ratingurl${widget.product_id}/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
+
+      print('URL: $ratingurl${widget.product_id}/');
+      print("Response Body: ${response.body}");
+      print("Response Status Code: ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        final productsData = jsonDecode(response.body) as List;
+
+        print("Products Data: $productsData");
+
+        List<Map<String, dynamic>> productratingList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+          productratingList.add({
+            'rating': productData['rating'],
+            'review_text': productData['review_text'] ?? 'No review',
+            'first_name': productData['first_name'] ?? 'No first name',
+            'image': imageUrl
+          });
+        }
+
+        setState(() {
+          productsrating = productratingList;
+          print("Products: $productsrating");
+        });
+      } else {
+        throw Exception('Failed to load rating data');
+      }
+    } catch (error) {
+      print('Error fetching rating data: $error');
+    }
   }
 
   Future<void> fetchRecommendedProducts() async {
@@ -128,7 +185,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -176,13 +233,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${recentproductsData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
             'name': recentproductsData['name'],
             'salePrice': recentproductsData['salePrice'],
             'image': imageUrl,
+            'slug': recentproductsData['slug']
           });
         }
 
@@ -215,7 +273,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -865,6 +923,142 @@ class _Product_big_ViewState extends State<Product_big_View> {
               ),
               SizedBox(height: 5),
 
+              if (productsrating.isNotEmpty)
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Reviews",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0),
+                        child: Container(
+                          height: 150,
+                          child: ListView.builder(
+                            scrollDirection: Axis
+                                .horizontal, // Set the scroll direction to horizontal
+                            itemCount: productsrating.length,
+                            itemBuilder: (context, index) {
+                              final rating = productsrating[index]['rating'];
+                              var img = productsrating[index]['image'];
+                              print(
+                                  "RRRRRRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAA$rating");
+                              final reviewText =
+                                  productsrating[index]['review_text'];
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Container(
+                                  width:
+                                      300, // Set a fixed width for each review container
+
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.white,
+                                        Color.fromARGB(255, 255, 252, 252)!
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 2,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child:
+                                                  img != null && img.isNotEmpty
+                                                      ? ClipOval(
+                                                          child: Image.network(
+                                                            img,
+                                                            width: 25,
+                                                            height: 25,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        )
+                                                      : Image.asset(
+                                                          'lib/assets/user.png',
+                                                          width: 25,
+                                                          height: 25,
+                                                        ),
+                                            ),
+                                            Text(productsrating[index]
+                                                ['first_name']),
+                                          ],
+                                        ),
+                                        Text(
+                                          "$reviewText",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        SizedBox(height: 8),
+                                        Row(
+                                          children: List.generate(5, (i) {
+                                            return Icon(
+                                              i < rating
+                                                  ? Icons.star
+                                                  : Icons.star_border,
+                                              color: Colors.amber,
+                                              size: 15,
+                                            );
+                                          }),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  ),
+                ),
+
+              SizedBox(
+                height: 5,
+              ),
+
               // Add spacing between product view and horizontal list
               if (isDataLoaded)
                 Container(
@@ -1166,7 +1360,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                             product_id: product['id'],
                                             Category_id:
                                                 product['mainCategory'],
-                                            slug: product[index]['slug'],
+                                            slug: product['slug'],
                                           ),
                                         ),
                                       );
@@ -1323,8 +1517,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                                 product_id: product['id'],
                                                 Category_id:
                                                     product['mainCategory'],
-                                                slug: product[index]
-                                                    ['slug'],
+                                                slug: product[index]['slug'],
                                               ),
                                             ),
                                           );
@@ -1486,7 +1679,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1498,6 +1691,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
             'mainCategory': productData['mainCategory'],
             'offer_type': productData['offer_type'],
             'image': imageUrl,
+            'slug': productData['slug']
           });
         }
 
@@ -1539,8 +1733,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
     print('======================$imageurl${widget.slug}/');
     Set<String> colorsSet = {};
     try {
-      final response =
-          await http.get(Uri.parse('$imageurl${widget.slug}/'));
+      final response = await http.get(Uri.parse('$imageurl${widget.slug}/'));
       print("statussssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
@@ -1552,15 +1745,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image1']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image2']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image3']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image4']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image5']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

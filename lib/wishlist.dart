@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/wishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/wishlist-delete/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/cart/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -123,7 +123,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+                "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
             print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
@@ -156,7 +156,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/product/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/product/";
 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -181,15 +181,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image1']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image1']}";
           String imageUrl2 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image2']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image2']}";
           String imageUrl3 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image3']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image3']}";
           String imageUrl4 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image4']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image4']}";
           String imageUrl5 =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${imageData['image5']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

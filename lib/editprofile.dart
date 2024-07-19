@@ -29,9 +29,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   var url =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/profile/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/profile/";
   var url2 =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/profile-image/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -43,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/profile-view/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

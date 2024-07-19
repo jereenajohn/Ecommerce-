@@ -3,15 +3,13 @@ import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
-import 'package:bepocart/orderbigview.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class MyOrder extends StatefulWidget {
   const MyOrder({super.key});
@@ -21,20 +19,33 @@ class MyOrder extends StatefulWidget {
 }
 
 class _MyOrderState extends State<MyOrder> {
+  List<String> ratedProducts = []; // List to store rated product IDs
+
   @override
   void initState() {
     super.initState();
     _initData();
+    loadRatedProducts(); // Load rated products from shared preferences
     myOrderDetails();
+  }
+
+  Future<void> saveRatedProducts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('ratedProducts', ratedProducts);
+  }
+
+  Future<void> loadRatedProducts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      ratedProducts = prefs.getStringList('ratedProducts') ?? [];
+    });
   }
 
   var tokenn;
 
   Future<void> _initData() async {
     tokenn = await gettokenFromPrefs();
-
     print("--------------------------------------------R$tokenn");
-    // Use userId after getting the value
   }
 
   Future<String?> gettokenFromPrefs() async {
@@ -43,20 +54,12 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/order-items/";
-      final String orderstatus =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/orders/";
-
-  final String productsUrl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
-
+      "https://denmark-eagle-house-wedding.trycloudflare.com/order-items/";
   final String ratingurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/product-review/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/product-review/";
 
-  List<dynamic> productIds = [];
-  List<dynamic> orderIds = [];
   List<Map<String, dynamic>> products = [];
-  bool isLoading = true; // Add loading state
+  bool isLoading = true;
 
   Future<String?> getTokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -91,25 +94,20 @@ class _MyOrderState extends State<MyOrder> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           orderProducts.add({
-            'id': productData['order'].toString(), // Ensure ID is a string
-            'productid': productData['product'].toString(), // Ensure product ID is a string
+            'id': productData['order'].toString(),
+            'productid': productData['product'].toString(),
             'name': productData['name'],
-            'salePrice': productData['sale_price'].toString(), // Ensure sale price is a string
+            'salePrice': productData['sale_price'].toString(),
             'image': imageUrl,
-            'status':productData['status'],
+            'status': productData['status'],
           });
         }
 
-        // Fetch product details after getting order details
         setState(() {
           products = orderProducts;
-          isLoading = false; // Set loading state to false
-
-
-          print(
-              "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$products");
+          isLoading = false;
         });
       } else {
         throw Exception('Failed to load recommended products');
@@ -119,59 +117,71 @@ class _MyOrderState extends State<MyOrder> {
     }
   }
 
-  Future<void> postrating(String productid, double rating, String feedback) async
-   {
-  try {
-    final token = await gettokenFromPrefs();
+  Future<void> postrating(
+      String productid, double rating, String feedback) async {
+    try {
+      final token = await gettokenFromPrefs();
 
-    var response = await http.post(
-      Uri.parse('$ratingurl$productid/'),
-      headers: {
-        'Authorization': '$token',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(
-        {
-          'rating': rating.toInt(),
-          'review_text': feedback,
+      var response = await http.post(
+        Uri.parse('$ratingurl$productid/'),
+        headers: {
+          'Authorization': '$token',
+          'Content-Type': 'application/json',
         },
-      ),
-    );
-
-    print('$ratingurl$productid/');
-    print("Response status: ${response.statusCode}");
-    print("Response body: ${response.body}");
-
-    if (response.statusCode == 201) {
-      print('Rating submitted successfully');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Rating submitted successfully'),
-          duration: Duration(seconds: 2),
+        body: jsonEncode(
+          {
+            'rating': rating.toInt(),
+            'review_text': feedback,
+          },
         ),
       );
-    } else {
-      print('Failed to submit rating: ${response.statusCode}');
-      print('Error: ${response.body}'); // Print the error message from the server
+
+      print('$ratingurl$productid/');
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      if (response.statusCode == 201) {
+        print('Rating submitted successfully');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Rating submitted successfully'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        ratedProducts.add(productid);
+        saveRatedProducts(); // Save the updated list
+      } else {
+        print('Failed to submit rating: ${response.statusCode}');
+        print('Error: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to submit rating: ${response.body}'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (error) {
+      print('Error submitting rating: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to submit rating: ${response.body}'),
+          content: Text('Error submitting rating'),
           duration: Duration(seconds: 2),
         ),
       );
     }
-  } catch (error) {
-    print('Error submitting rating: $error');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Error submitting rating'),
-        duration: Duration(seconds: 2),
-      ),
-    );
   }
-}
 
   void _showRatingDialog(BuildContext context, String productid) {
+    if (ratedProducts.contains(productid)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You have already rated this product.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -214,7 +224,7 @@ class _MyOrderState extends State<MyOrder> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  hintText: 'Feeedback.',
+                  hintText: 'Feedback.',
                 ),
               ),
             ],
@@ -241,7 +251,6 @@ class _MyOrderState extends State<MyOrder> {
                 ),
               ),
               onPressed: () {
-                // Handle rating and feedback submission here
                 postrating(productid, _rating, _feedbackController.text);
                 Navigator.of(context).pop();
               },
@@ -280,77 +289,69 @@ class _MyOrderState extends State<MyOrder> {
         ],
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator()) // Display loader
+          ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-  itemCount: products.length,
-  itemBuilder: (context, index) {
-    final product = products[index];
-    Color statusColor = (product['status'] == 'pending')
-        ? Colors.red
-        : Color.fromARGB(255, 6, 157, 3); // Green color
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                Color statusColor = (product['status'] == 'pending')
+                    ? Colors.red
+                    : Color.fromARGB(255, 6, 157, 3);
 
-    return Column(
-      children: [
-
-        GestureDetector(
-          onTap: () {
-           if(product['status']=='Completed')
-
-            _showRatingDialog(context, product['productid']);
-          },
-          child: Container(
-            height: 110,  // Adjusted height to accommodate additional text
-            margin: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              leading: Image.network(product['image']),
-              title: Text(
-                product['name'],
-                style: TextStyle(
-                  fontSize: 13, 
-                  overflow: TextOverflow.ellipsis
-                ),
-              ),
-              subtitle: Row(
-                children: [
-                  Text(
-                    '\$${product['salePrice']}',
-                    style: TextStyle(
-                      color: Colors.grey, 
-                      fontSize: 12
+                return Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (product['status'] == 'Completed')
+                          _showRatingDialog(context, product['productid']);
+                      },
+                      child: Container(
+                        height: 110,
+                        margin: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ListTile(
+                          leading: Image.network(product['image']),
+                          title: Text(
+                            product['name'],
+                            style: TextStyle(
+                              fontSize: 13,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          subtitle: Row(
+                            children: [
+                              Text(
+                                '\$${product['salePrice']}',
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 12),
+                              ),
+                              Spacer(),
+                              Text(
+                                '${product['status']}',
+                                style:
+                                    TextStyle(color: statusColor, fontSize: 14),
+                              ),
+                            ],
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  Text(
-                    '${product['status']}',
-                    style: TextStyle(
-                      color: statusColor, 
-                      fontSize: 14
+                    Divider(
+                      color: Colors.grey[200],
+                      height: 1,
+                      thickness: 1,
                     ),
-                  ),
-                ],
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                size: 16, 
-                color: Colors.grey,
-              ),
+                  ],
+                );
+              },
             ),
-          ),
-        ),
-        Divider(
-          color: Colors.grey[200], // You can adjust the color and thickness here
-          height: 1,
-          thickness: 1,
-        ),
-      ],
-    );
-  },
-),
-
-
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 244, 244, 244),
         child: Padding(
@@ -358,22 +359,15 @@ class _MyOrderState extends State<MyOrder> {
           child: GNav(
             gap: 20,
             onTabChange: (index) {
-              setState(() {
-                // _index = index;
-                // if (index == 2) {
-                //   _showSearchDialog(context);
-                // }
-              });
+              setState(() {});
             },
             padding: EdgeInsets.all(16),
-            // selectedIndex: _index,
             tabs: [
               GButton(
                 icon: Icons.home,
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomePage()));
-                  // Navigate to Home page
                 },
               ),
               GButton(
@@ -386,8 +380,6 @@ class _MyOrderState extends State<MyOrder> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Cart()));
                   }
-
-                  // Navigate to Cart page
                 },
               ),
               GButton(
@@ -404,7 +396,6 @@ class _MyOrderState extends State<MyOrder> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => UserProfilePage()));
-                  // Navigate to Profile page
                 },
               ),
             ],

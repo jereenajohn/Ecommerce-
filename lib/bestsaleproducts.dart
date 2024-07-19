@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//best-sale-products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//products/search/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//whishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -143,7 +143,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -239,7 +239,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

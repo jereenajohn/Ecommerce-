@@ -23,9 +23,9 @@ class _OfferState extends State<Offer> {
   List<Map<String, dynamic>> offers = [];
   List<Map<String, dynamic>> productsInOffer = [];
   final String productsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
   final String offersurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/offer/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/offer/";
 
   Future<void> fetchProducts() async {
     try {
@@ -39,7 +39,7 @@ class _OfferState extends State<Offer> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],

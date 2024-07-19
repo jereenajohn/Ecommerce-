@@ -26,7 +26,7 @@ class CategoryProductView extends StatefulWidget {
 
 class _CategoryProductViewState extends State<CategoryProductView> {
   final String productsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/category/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -35,11 +35,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/search-products/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/filter/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/filter/";
   final String hightolow =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/filtering/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -87,7 +87,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -126,7 +126,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -235,7 +235,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://papua-violation-assistance-hearts.trycloudflare.com//${productData['image']}";
+  //             "https://denmark-eagle-house-wedding.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],
@@ -281,7 +281,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
 
   //       for (var productData in searchData) {
   //         String imageUrl =
-  //             "https://papua-violation-assistance-hearts.trycloudflare.com//${productData['image']}";
+  //             "https://denmark-eagle-house-wedding.trycloudflare.com//${productData['image']}";
   //         searchList.add({
   //           'id': productData['id'],
   //           'name': productData['name'],

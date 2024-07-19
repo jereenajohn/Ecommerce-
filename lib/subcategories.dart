@@ -35,11 +35,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   }
 
   final String subcategoriesurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/category/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/category/";
   final String productsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/category/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/category/";
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/search-products/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -145,7 +145,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -153,6 +153,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -189,7 +190,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -229,7 +230,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${subcategoryData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

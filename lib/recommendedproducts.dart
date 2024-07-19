@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/recommended/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/search/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/add-wishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -151,7 +151,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -258,7 +258,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+        String imageUrl = "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],

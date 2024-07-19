@@ -30,16 +30,16 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/search/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/add-wishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/add-wishlist/";
 
   final String productsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
 
   final String offersurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com/offer/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -106,7 +106,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -256,7 +256,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -349,7 +349,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+  //             "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -522,29 +522,35 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${productsIndiscountOffer[firstItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if (productsIndiscountOffer[
+                                                firstItemIndex]['price'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsIndiscountOffer[firstItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            'Sale Price: \$${productsIndiscountOffer[firstItemIndex]['salePrice']}',
-                                            style: TextStyle(
-                                              color: Colors.green,
+                                        if (productsIndiscountOffer[
+                                                firstItemIndex]['salePrice'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              'Sale Price: \$${productsIndiscountOffer[firstItemIndex]['salePrice']}',
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                              ),
                                             ),
                                           ),
-                                        ),
                                       ],
                                     )
                                   ],
@@ -639,29 +645,35 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${productsIndiscountOffer[secondItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if (productsIndiscountOffer[
+                                                secondItemIndex]['price'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsIndiscountOffer[secondItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            'Sale Price: \$${productsIndiscountOffer[secondItemIndex]['salePrice']}',
-                                            style: TextStyle(
-                                              color: Colors.green,
+                                        if (productsIndiscountOffer[
+                                                secondItemIndex]['salePrice'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              'Sale Price: \$${productsIndiscountOffer[secondItemIndex]['salePrice']}',
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                              ),
                                             ),
                                           ),
-                                        ),
                                       ],
                                     )
                                   ],

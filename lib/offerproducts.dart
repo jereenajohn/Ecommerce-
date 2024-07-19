@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//search-products/?q=";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//offer-banner/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//offer-banner/";
 
   final String wishlisturl =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//add-wishlist/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//add-wishlist/";
 
   final String lowtohigh =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//low-products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//low-products/";
   final String hightolow =
-      "https://papua-violation-assistance-hearts.trycloudflare.com//high-products/";
+      "https://denmark-eagle-house-wedding.trycloudflare.com//high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}",
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -286,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://papua-violation-assistance-hearts.trycloudflare.com/${productData['image']}";
+              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
