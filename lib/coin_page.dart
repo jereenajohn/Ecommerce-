@@ -22,7 +22,7 @@ class _coinState extends State<coin> {
 
 
   final String orders =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/coin/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//coin/";
 
         Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

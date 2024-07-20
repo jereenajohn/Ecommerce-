@@ -73,44 +73,44 @@ class _HomePageState extends State<HomePage> {
 
 
   final String bannerurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/banners/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//banners/";
   final String baseUrl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//";
   final String categoryUrl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/category/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//category/";
   final String productsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
   final String offersurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/offer-banner/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offer-banner/";
 
   final String discountsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/discount-sale/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//discount-sale/";
   // final String buyonegetoneurl =
-  //     "https://denmark-eagle-house-wedding.trycloudflare.com/buy-1-get-1/";
+  //     "https://article-looksmart-unsigned-adopt.trycloudflare.com//buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/best-sale-products/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//best-sale-products/";
 
   final String flashsaleurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/flash-sale/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//flash-sale/";
 
   final String buytwogetoneurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/buy-2-get-1/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/offers/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offers/";
 
   final String searchproducturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/search-products/?q=";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/recommended/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//recommended/";
 
   var recentlyviewedurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/recently-viewed/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//recently-viewed/";
 
   final String bogooffersurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/offer/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -373,7 +373,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -484,7 +484,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${recentproductsData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -531,7 +531,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -566,7 +566,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${offerData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -597,7 +597,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -630,7 +630,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -668,7 +668,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -707,7 +707,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -744,7 +744,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+  //             "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -781,7 +781,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -838,7 +838,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -890,7 +890,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+  //             "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -923,7 +923,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -959,7 +959,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${bannerData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -988,7 +988,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${categoryData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],

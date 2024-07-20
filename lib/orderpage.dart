@@ -31,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/get-address/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//get-address/";
   String orderurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/order/create/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//order/create/";
   String cuponurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cupons/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -285,7 +285,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cart-products/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -619,7 +619,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com//${item['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com///${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;

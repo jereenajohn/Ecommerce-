@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cart-products/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart-products/";
   final String productsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
 
   final quantityincrementurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cart/increment/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart/increment/";
 
   final quantitydecrementurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cart/decrement/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart/decrement/";
 
   final deletecarturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cart-delete/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart-delete/";
 
   @override
   void initState() {
@@ -116,7 +116,7 @@ var total;
 
         for (var item in data) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${item['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],

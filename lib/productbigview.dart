@@ -32,29 +32,29 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/category/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//category/";
 
   final multipleimageurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/product-images/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//product-images/";
 
   final String addtocarturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/cart/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart/";
   final String wishlisturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/add-wishlist/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//add-wishlist/";
 
   final String discountsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/discount-sale/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//discount-sale/";
 
   var recentlyviewedurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/recently-viewed/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/recommended/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//recommended/";
   final imageurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/product/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//product/";
 
   final String ratingurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/review/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//review/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -139,7 +139,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
           productratingList.add({
             'rating': productData['rating'],
             'review_text': productData['review_text'] ?? 'No review',
@@ -198,7 +198,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -246,7 +246,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${recentproductsData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -286,7 +286,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -722,7 +722,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   color: Color.fromARGB(255, 155, 153, 153),
                                   decoration: TextDecoration.lineThrough),
                             ),
-                            SizedBox(width: 4,),
+                          SizedBox(
+                            width: 4,
+                          ),
                           if (averageRating != 0)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -732,8 +734,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   color: Color.fromARGB(255, 255, 197, 5),
                                   size: 20,
                                 ),
-
-                                SizedBox(width: 4,),
+                                SizedBox(
+                                  width: 4,
+                                ),
                                 Text(
                                   "$averageRating",
                                   style: TextStyle(
@@ -1713,7 +1716,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1779,15 +1782,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image1']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image1']}";
           String imageUrl2 =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image2']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image2']}";
           String imageUrl3 =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image3']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image3']}";
           String imageUrl4 =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image4']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image4']}";
           String imageUrl5 =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${imageData['image5']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

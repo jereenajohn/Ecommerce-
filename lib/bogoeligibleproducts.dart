@@ -30,16 +30,16 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/products/search/?q=";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/add-wishlist/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//add-wishlist/";
 
   final String productsurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/products/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
 
   final String offersurl =
-      "https://denmark-eagle-house-wedding.trycloudflare.com/offer/";
+      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -106,7 +106,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -256,7 +256,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -349,7 +349,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://denmark-eagle-house-wedding.trycloudflare.com/${productData['image']}";
+  //             "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
