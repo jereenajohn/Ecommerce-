@@ -74,7 +74,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${userimage['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -105,9 +105,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///profile-view/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///profile-view/";
       var viewimage =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///profile-image/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -151,7 +151,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://article-looksmart-unsigned-adopt.trycloudflare.com//${userimage['image']}"
+            ? "http://sort-matters-zealand-affiliated.trycloudflare.com//${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(

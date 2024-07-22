@@ -54,9 +54,9 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//order-items/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//order-items/";
   final String ratingurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//product-review/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//product-review/";
 
   List<Map<String, dynamic>> products = [];
   bool isLoading = true;
@@ -94,7 +94,7 @@ class _MyOrderState extends State<MyOrder> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           orderProducts.add({
             'id': productData['order'].toString(),
             'productid': productData['product'].toString(),
@@ -145,6 +145,7 @@ class _MyOrderState extends State<MyOrder> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Rating submitted successfully'),
+            backgroundColor: Colors.red,
             duration: Duration(seconds: 2),
           ),
         );
@@ -176,6 +177,7 @@ class _MyOrderState extends State<MyOrder> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('You have already rated this product.'),
+          backgroundColor: Colors.red,
           duration: Duration(seconds: 2),
         ),
       );

@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///search-products/?q=";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///offer-banner/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///offer-banner/";
 
   final String wishlisturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///add-wishlist/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///add-wishlist/";
 
   final String lowtohigh =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///low-products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///low-products/";
   final String hightolow =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com///high-products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com///high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
@@ -103,7 +103,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -145,7 +145,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -251,7 +251,7 @@ class _OfferProductsState extends State<OfferProducts> {
           'mainCategory': productData['mainCategory'],
           'name': productData['name'],
           'image':
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}",
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}",
           'price': productData['price'],
           'salePrice': productData['salePrice'],
         });
@@ -286,7 +286,7 @@ class _OfferProductsState extends State<OfferProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//wishlist/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//wishlist/";
   final String productsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/";
 
   final String deletewishlisturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//wishlist-delete/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//wishlist-delete/";
 
   final String addtocarturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -123,7 +123,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+                "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
             print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
@@ -156,7 +156,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//product/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//product/";
 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -181,15 +181,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image1']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image1']}";
           String imageUrl2 =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image2']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image2']}";
           String imageUrl3 =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image3']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image3']}";
           String imageUrl4 =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image4']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image4']}";
           String imageUrl5 =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${imageData['image5']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

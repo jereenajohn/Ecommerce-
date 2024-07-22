@@ -30,16 +30,16 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/search/?q=";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//add-wishlist/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//add-wishlist/";
 
   final String productsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/products/";
 
   final String offersurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offer/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -106,7 +106,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -126,6 +126,11 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
             return offerProductss.contains(product['id']);
           }).toList();
 
+           productsIndiscountOffer = products.where((product) {
+            return offerCategories.contains(product['category']);
+          }).toList();
+
+
           isFavorite =
               List.generate(productsIndiscountOffer.length, (index) => false);
 
@@ -140,6 +145,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   }
 
   List<int> offerProductss = [];
+        List<int> offerCategories = [];
 
   Future<void> fetchbogodiscountoffers() async {
     try {
@@ -150,7 +156,6 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
-        List<int> offerCategories = [];
 
         for (var productData in parsed) {
           productsList.add({
@@ -168,9 +173,9 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
               productData['discount_approved_products'].isNotEmpty) {
             offerProductss.addAll(
                 List<int>.from(productData['discount_approved_products']));
-          } else if (productData.containsKey('offer_category')) {
+          } else if (productData.containsKey('discount_approved_category')) {
             offerCategories
-                .addAll(List<int>.from(productData['offer_category']));
+                .addAll(List<int>.from(productData['discount_approved_category']));
           }
         }
 
@@ -189,6 +194,9 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
       print('Error fetching wishlist products: $error');
     }
   }
+
+
+  
 
   Future<void> addProductToWishlist(int productId) async {
     print("tyyyttttttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffffff");
@@ -256,7 +264,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -349,7 +357,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+  //             "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

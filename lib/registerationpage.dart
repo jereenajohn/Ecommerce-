@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 
 class _Sign_UpState extends State<Sign_Up> {
   var url =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//register/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//register/";
   bool _obscureText = true;
 
   var userId;

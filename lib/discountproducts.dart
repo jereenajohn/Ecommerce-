@@ -27,14 +27,14 @@ class _Discount_ProductsState extends State<Discount_Products> {
   List<bool> isFavorite = [];
 
   final String discountsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//discount-sale/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//discount-sale/";
   List<Map<String, dynamic>> discountproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/search/?q=";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//add-wishlist/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -152,7 +152,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -248,7 +248,7 @@ class _Discount_ProductsState extends State<Discount_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
           productDiscountList.add({
             'id': productData['id'], // Changed to int
             'mainCategory': productData['mainCategory'], // Changed to int

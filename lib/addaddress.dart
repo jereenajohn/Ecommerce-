@@ -31,7 +31,7 @@ class _UserAddressState extends State<UserAddress> {
   TextEditingController note = TextEditingController();
 
   String url =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//add-address/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/add-address/";
   var tokenn;
 
   @override

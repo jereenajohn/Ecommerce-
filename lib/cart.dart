@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
@@ -37,18 +38,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart-products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart/increment/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart/decrement/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart-delete/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -63,6 +64,7 @@ class _CartState extends State<Cart> {
     print("--------------------------------------------R$userId");
 
     fetchCartData();
+    fetchoffers();
 
   
     
@@ -77,24 +79,24 @@ class _CartState extends State<Cart> {
 
   var option = false;
 var total;
-  void optionselect() {
+  // void optionselect() {
    
-    print("OOOOOOOOooooooooooooooooooooooooooooo$total");
-    for (int i = 0; i < cartProducts.length; i++) {
-      if (cartProducts[i]['offer_type'] == "BUY 1 GET 1" ||
-          cartProducts[i]['offer_type'] == "BUY 2 GET 1") {
-        option = true;
-      } else {
-        option = false;
-      }
-    }
-  }
+  //   print("OOOOOOOOooooooooooooooooooooooooooooo$total");
+  //   for (int i = 0; i < cartProducts.length; i++) {
+  //     if (cartProducts[i]['offer_type'] == "BUY 1 GET 1" ||
+  //         cartProducts[i]['offer_type'] == "BUY 2 GET 1") {
+  //       option = true;
+  //     } else {
+  //       option = false;
+  //     }
+  //   }
+  // }
 
   Future<void> fetchCartData() async {
     print("Fetching cart data...");
     try {
       final token = await gettokenFromPrefs();
-      print("Token: $token");
+      // print("Token: $token");
 
       final response = await http.get(
         Uri.parse(CartUrl),
@@ -104,19 +106,19 @@ var total;
       );
 
       print("ResponseEWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW: ${response.body}");
-      print(response.statusCode);
+      // print(response.statusCode);
     
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final data = responseData['data'];
-        print("AAAAAAAAAAAA AAAAAAAAAAHHHHHHHHHHHDEEEEEEEEEEEEEEEEEEEEE$data");
+        // print("AAAAAAAAAAAA AAAAAAAAAAHHHHHHHHHHHDEEEEEEEEEEEEEEEEEEEEE$data");
 
         List<Map<String, dynamic>> cartItems = [];
 
         for (var item in data) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${item['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -131,6 +133,9 @@ var total;
             'size': item['size'],
             'offer_type': item['offer_type'],
             'stock': item['stock'],
+            'has_offer':item['has_offer'],
+            'discount_product':item['discount_product']
+
 
             // Update with correct price value
           });
@@ -152,8 +157,8 @@ var total;
             }
           }
         });
-        print(cartProducts.length);
-        print("cccccccccccccccccccccccCart Products: $cartProducts");
+        // print(cartProducts.length);
+        // print("cccccccccccccccccccccccCart Products: $cartProducts");
       }
       else if(response.statusCode==401){
 
@@ -229,13 +234,13 @@ var total;
       final response = await http.delete(
         Uri.parse('$deletecarturl$cartProductId/'),
       );
-      print("Response status code: ${response.statusCode}");
+      print("Response status codeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.statusCode}");
       print("Response body: ${response.body}");
 
       if (response.statusCode == 204) {
-        print('Wishlist ID deleted successfully: $cartProductId');
+        print('cart ID deleted successfully: $cartProductId');
       } else {
-        throw Exception('Failed to delete wishlist ID: $cartProductId');
+        throw Exception('Failed to delete cart ID: $cartProductId');
       }
     } catch (error) {
       print('Error: $error');
@@ -259,21 +264,113 @@ var total;
   // }
   var Dquantity;
 
+   List<int> offerProducts = [];
+     List<Map<String, dynamic>> offers = [];
+ final String offersurl =
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/offer/";
+
+var bogo;
+bool is_active=false;
+  Future<void> fetchoffers() async {
+    try {
+      final response = await http.get(Uri.parse(offersurl));
+      // print('Response:::::::::::::::::::::::::: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
+
+        for (var productData in parsed) {
+          productsList.add({
+            'id':productData['id'],
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'offer_type':productData['offer_type'],
+            'get_option': productData['get_option'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+            'is_active':productData['is_active'],
+            
+          });
+
+          if (productData.containsKey('offer_products') &&
+              productData['offer_products'].isNotEmpty) {
+            offerProducts.addAll(List<int>.from(productData['offer_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories
+                .addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+
+        setState(() {
+          offers = productsList;
+          // Store offerProducts and offerCategories in state variables if needed
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
+          // print('Offer Products: $offerProducts');
+          // print('Offer Categories: $offerCategories');
+        // for(int i=0;i<offers.length;i++){
+          if(offers[0]['offer_type']=="BUY"){
+            print("***********************************************************************************${offers[0]['get_option']}");
+            if(offers[0]['get_option']== 1){
+              bogo="BUY 1 GET 1";
+                            print("bogooooooooooooooooooooooooooo:::$bogo");
+
+              }else if(offers[0]['get_option']==2){
+                bogo="BUY 2 GET 1";
+            }
+            if(offers[0]['is_active']=="true"){
+              is_active=true;
+              print("is_activeeeeeeeeeeeeeeeeeeeee:::$is_active");
+            }
+            else{
+              is_active=false;
+                            // print("is_activeeeeeeeeeeeeeeeeeeeee:::$is_active");
+
+            }
+
+          // }
+
+
+        }
+         
+        });
+      } else {
+        throw Exception('Failed to load offer products');
+      }
+    } catch (error) {
+      print('Error fetching offer products: $error');
+    }
+  }
+
+
+bool hasOfferAppliedNormalProduct = false;
+bool hasBothOfferAndDiscount = false;
+bool onlyDiscountAllowedAndNormal = true;
+bool offernotdiscount=false;
+bool notofferdiscount1=false;
+
+ int discount_product_quantity=0;
+ bool offeronly=true;
+
   double calculateTotalPrice() {
     double totalPrice = 0.0;
     double? leastPrice;
     int offerProductCount = 0;
-
+    
+int quat=0;
     setState(() {
-      if (selectedOption == 'Option 1') {
+      if (is_active == 'true') {
         for (int i = 0; i < cartProducts.length; i++) {
           double price = double.parse(cartProducts[i]['price']);
           int quantity = cartProducts[i]['quantity'] ?? 1;
 
           totalPrice += price * quantity;
         }
-        print("option111111111111111111111111111111$totalPrice");
       } else {
+        // print(is_active);
         for (int i = 0; i < cartProducts.length; i++) {
           double price = double.parse(cartProducts[i]['price']);
           int quantity = cartProducts[i]['quantity'] ?? 1;
@@ -282,30 +379,139 @@ var total;
           totalPrice += price * quantity;
 
           // Check if this product has an offer
-          String? offerType = cartProducts[i]['offer_type'];
-          if (offerType == "BUY 1 GET 1" || offerType == "BUY 2 GET 1") {
+          String? discountapplicable = cartProducts[i]['discount_product'];
+          String? has_offer = cartProducts[i]['has_offer'];
+  if (has_offer == "Offer Applied") {
             // Count the offer products
-            offerProductCount += quantity;
+            offerProductCount += quantity; 
+            print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offerProductCount");
+            offeronly=true;
+                        print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offeronly");
 
-            // Determine the least priced offer product
+
+          }
+          else{
+  offeronly=false;
+}
+
+          if (discountapplicable == "Discount Allowd") {
+    // Determine the least priced offer product
             if (leastPrice == null || price < leastPrice!) {
+
               leastPrice = price;
+              print("leastttttttttttttttttttttttttttttttttttttttttttttttttt$leastPrice");
+
               Dquantity = quantity;
               print("Quantity of least price product: $Dquantity");
             }
+            
           }
         }
 
 // Adjust the total price based on the offer type
         if (leastPrice != null) {
           for (int i = 0; i < cartProducts.length; i++) {
-            String? offerType = cartProducts[i]['offer_type'];
-            if (offerType == "BUY 1 GET 1") {
-              // For "BUY 1 GET 1", each pair gets one free
-              int freeItems = offerProductCount ~/ 2;
-              print("Free items: $freeItems");
+             String? offerType = cartProducts[i]['offer_type'];
 
-              while (freeItems > 0) {
+            
+            if (bogo == "BUY 1 GET 1") {
+              print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+             int freeItems =  0; // Default calculation
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+    hasOfferAppliedNormalProduct = true;
+  
+  }
+  else{
+    hasOfferAppliedNormalProduct = false;
+    break;
+  }
+}
+print("hasBothOfferAndDiscounttttttttttttttttttttttttttttttttttttttttttt$hasBothOfferAndDiscount");
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+
+
+  if(discountapplicable == "Discount Allowd"){
+
+     
+     discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+     quat+=discount_product_quantity;
+    
+
+  }
+}
+   print("discount_product_quantity==================$quat");
+
+
+
+for (int i = 0; i < cartProducts.length; i++)
+ {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+
+
+  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowd") {
+    onlyDiscountAllowedAndNormal = true;
+  }
+  else{
+    onlyDiscountAllowedAndNormal = false;
+    break;
+  }
+}
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    offernotdiscount = true; 
+  }
+  else{
+    notofferdiscount1 = true;
+    
+  }
+}
+// Determine free items based on the conditions
+if (hasOfferAppliedNormalProduct) {
+  print("offeerrrrrrrrrrrrronnlyyyyyyy");
+  freeItems = 0;
+} else if (onlyDiscountAllowedAndNormal) {
+  print("discountnlyyyyyyyyyyyyyyyyyyyyy");
+  freeItems = 0;
+}
+else if(offernotdiscount==true && notofferdiscount1==true){
+  print("offernotdiscount$quat");
+   if(quat<offerProductCount){
+    freeItems=quat;
+        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+   else if(offerProductCount<=quat){
+    
+freeItems=offerProductCount;
+    print("22222222==============freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+   
+   else{
+   
+    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+   
+   }
+}
+else{
+  freeItems = offerProductCount ~/ 2; 
+}
+
+print("Total free items: $freeItems");
+              // For "BUY 1 GET 1", each pair gets one free
+ while (freeItems > 0) {
+
+                print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
                 int dQuantity = Dquantity ?? 0;
 
                 if (freeItems >= dQuantity) {
@@ -319,10 +525,10 @@ var total;
                   int nextDquantity = 0;
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['price']);
-                    String? nextOfferType = cartProducts[j]['offer_type'];
+                    // String? nextOfferType = cartProducts[j]['offer_type'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (nextOfferType == "BUY 1 GET 1" ||
-                            nextOfferType == "BUY 2 GET 1") &&
+                        (bogo == "BUY 1 GET 1" ||
+                            bogo == "BUY 2 GET 1") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
@@ -341,12 +547,139 @@ var total;
                 }
               }
               break; // Exit the loop after processing the first offer type "BUY 1 GET 1"
-            } else if (offerType == "BUY 2 GET 1") {
+            } 
+            else if (bogo == "BUY 2 GET 1") {
               // For "BUY 2 GET 1", every three items, one is free
-              int freeItems = offerProductCount ~/ 3;
-              print("Free items: $freeItems");
+            var freeItems;
+
+            print("2222222222222222222======================1111111111111111111111111111111");
+
+
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+    hasOfferAppliedNormalProduct = true;
+  
+  }
+  else{
+    hasOfferAppliedNormalProduct = false;
+    break;
+  }
+}
+
+
+print("hasBothOfferAndDiscounttttttttttttttttttttttttttttttttttttttttttt$hasBothOfferAndDiscount");
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+
+
+  if(discountapplicable == "Discount Allowd"){
+
+     
+     discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+     quat+=discount_product_quantity;
+    
+
+  }
+}
+   print("discount_product_quantity==================$quat");
+
+
+
+
+for (int i = 0; i < cartProducts.length; i++)
+ {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+
+
+  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowd") {
+    onlyDiscountAllowedAndNormal = true;
+    print("discountonlyyyyyyyyyyyyyyyyyyyyyyiffffffffffffffffffffffffffffffff");
+  }
+  else{
+    onlyDiscountAllowedAndNormal = false;   
+     print("discountonlyyyyyyyyyyyyyyyyyyyyyyiffffffffffffffffffffffffffffffff$onlyDiscountAllowedAndNormal");
+
+    break;
+  }
+}
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    offernotdiscount = true; 
+  }
+  else{
+    notofferdiscount1 = true;
+    
+  }
+}
+
+
+
+           for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+
+  
+ 
+}
+
+
+if (hasOfferAppliedNormalProduct) {
+  print("offeerrrrrrrrrrrrronnlyyyyyyy");
+  freeItems = 0;
+} else if (onlyDiscountAllowedAndNormal) {
+  print("discountnlyyyyyyyyyyyyyyyyyyyyy");
+  freeItems = 0;
+}
+else if(offernotdiscount==true && notofferdiscount1==true){
+  print("offernotdiscount$quat");
+   if(offerProductCount>=quat){
+print("offerProductCounttttttttttttttttttttttt$offerProductCount");
+    int f=offerProductCount~/2 ;
+   
+    print("fffffffffffffffffffffffffff$f");
+    if(quat<f){
+      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+      freeItems=quat;
+
+
+    }
+
+    else{
+      freeItems=f;
+    }
+
+        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+  
+   else if(quat>offerProductCount){
+     int f=offerProductCount~/2 ;
+     freeItems=f;
+     print("fffffffffffffffffffffffffff$f");
+   }
+
+   
+   
+   else{
+   
+    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+   
+   }
+}
+
+
+print("Total free items: $freeItems");
+           
 
               while (freeItems > 0) {
+                // print("gggggggggggggggggggggggggggggggggg");
                 int dQuantity = Dquantity ?? 0;
 
                 if (freeItems >= dQuantity) {
@@ -360,10 +693,10 @@ var total;
                   int nextDquantity = 0;
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['price']);
-                    String? nextOfferType = cartProducts[j]['offer_type'];
+                    // String? nextOfferType = cartProducts[j]['offer_type'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (nextOfferType == "BUY 1 GET 1" ||
-                            nextOfferType == "BUY 2 GET 1") &&
+                        (bogo == "BUY 1 GET 1" ||
+                            bogo == "BUY 2 GET 1") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
@@ -399,10 +732,10 @@ var total;
 
   int offerProductCount = 0;
 
-  int calculateOfferQuantity(String offerType, int quantity) {
-    if (offerType == 'BUY 1 GET 1') {
+  int calculateOfferQuantity(String offerRType, int quantity) {
+    if (bogo == 'BUY 1 GET 1') {
       return quantity * 2;
-    } else if (offerType == 'BUY 2 GET 1') {
+    } else if (bogo == 'BUY 2 GET 1') {
       return quantity + (quantity ~/ 2);
     }
     return quantity;
@@ -437,42 +770,18 @@ var total;
       ),
       body: Column(
         children: [
-          if (option == true)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      Radio<String>(
-                        value: 'Option 1',
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedOption = value;
-                          });
-                        },
-                      ),
-                      Text('Option 1'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Radio<String>(
-                        value: 'Option 2',
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedOption = value;
-                          });
-                        },
-                      ),
-                      Text('Option 2'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+         
+          // if(bogo=="BUY 1 GET 1" || bogo=="BUY 2 GET 1" && is_active==false)
+           
+          //  Container(
+          //   child: Row(
+          //     children: [
+          //       Text("add discount products to cart... get B1 G1 offer")
+          //     ],
+          //   ),
+          // ),
+          
+            
           Expanded(
             child: ListView.builder(
               itemCount: cartProducts.length,
@@ -542,6 +851,9 @@ var total;
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+
+                                
+                                
                                 SizedBox(height: 5),
                                 if (cartProducts[index]['actualprice'] != null)
                                   Text(
@@ -583,6 +895,15 @@ var total;
                                       ),
                                     ],
                                   ),
+                                  if(cartProducts[index]['has_offer']=="Offer Applied" || cartProducts[index]['category_discount']=="Category Offer Applied")
+
+                                    Text(
+                                    '${bogo}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.green,
+                                    ),
+                                  ),
                                 // Inside the ListView.builder itemBuilder method
                                 Container(
                                   child: Row(
@@ -619,8 +940,10 @@ var total;
                                                     1);
 
                                             setState(() {
-                                              calculateTotalPrice();
                                               fetchCartData();
+                                              calculateTotalPrice();
+                                              _initData();
+                                              
                                             });
                                           } else {
                                             print("out of stockkk");
@@ -661,6 +984,8 @@ var total;
                             children: [
                               GestureDetector(
                                 onTap: () {
+
+                                  print("iddddddddddddddddddddddddddddddddd${cartProducts[index]['id']}");
                                   deleteCartProduct(cartProducts[index]['id']);
                                   removeProduct(index);
 

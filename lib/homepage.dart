@@ -73,44 +73,44 @@ class _HomePageState extends State<HomePage> {
 
 
   final String bannerurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//banners/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//banners/";
   final String baseUrl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//";
   final String categoryUrl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//category/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//category/";
   final String productsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/";
   final String offersurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offer-banner/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//discount-sale/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//discount-sale/";
   // final String buyonegetoneurl =
-  //     "https://article-looksmart-unsigned-adopt.trycloudflare.com//buy-1-get-1/";
+  //     "http://sort-matters-zealand-affiliated.trycloudflare.com//buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//best-sale-products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//best-sale-products/";
 
   final String flashsaleurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//flash-sale/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//flash-sale/";
 
   final String buytwogetoneurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//buy-2-get-1/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offers/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//offers/";
 
   final String searchproducturl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//search-products/?q=";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//recommended/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//recommended/";
 
   var recentlyviewedurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//recently-viewed/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//recently-viewed/";
 
   final String bogooffersurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//offer/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
     fetchCategories();
     fetchProducts();
     _startTimer();
-    fetchOffers();
+    // fetchOffers();
     fetchDiscountProducts();
     // fetchbuyonegetoneProducts();
     fetchBestSaleProducts();
@@ -265,6 +265,7 @@ class _HomePageState extends State<HomePage> {
 
   // ##Buyonegetone##
 
+ 
   Future<void> fetchofferproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
@@ -272,12 +273,15 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
+
+        print(
+            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> productsList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -285,19 +289,27 @@ class _HomePageState extends State<HomePage> {
             'image': imageUrl,
             'slug': productData['slug'],
             'mainCategory': productData['mainCategory'],
+            'category':productData['category']
           });
         }
 
         setState(() {
           products = productsList;
-          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
+          print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++: $products');
 
-          // Filter the products that are present in offerProducts
+      
+
           productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
+          productsInOffer = products.where((product) {
+            return offerCategories.contains(product['category']);
+          }).toList();
 
-          print('Products in Offer: $productsInOffer');
+
+        
+
+          print('Products in Offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $productsInOffer');
         });
       } else {
         throw Exception('Failed to load wishlist products');
@@ -308,6 +320,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<int> offerProducts = [];
+       
 
   Future<void> fetchbogooffers() async {
     try {
@@ -318,7 +331,6 @@ class _HomePageState extends State<HomePage> {
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
-        List<int> offerCategories = [];
 
         for (var productData in parsed) {
           productsList.add({
@@ -336,15 +348,16 @@ class _HomePageState extends State<HomePage> {
           } else if (productData.containsKey('offer_category')) {
             offerCategories
                 .addAll(List<int>.from(productData['offer_category']));
+                
           }
         }
 
         setState(() {
-          offerss = productsList;
+          offers = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offerss');
-          print('Offer Products: $offerProducts');
-          print('Offer Categories: $offerCategories');
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
+          print('Offer Products======================================================================: $offerProducts');
+          print('Offer Categorie////////////////////////////////////////////////////////////////////////////s: $offerCategories');
           fetchofferproducts();
         });
       } else {
@@ -354,11 +367,10 @@ class _HomePageState extends State<HomePage> {
       print('Error fetching wishlist products: $error');
     }
   }
-
   // ##Buyonegetone ends##
 
   // ##Buyonegetone eligible discountproducts##
-  Future<void> fetchbogodiscountproducts() async {
+ Future<void> fetchbogodiscountproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
       print('Response: ${response.statusCode}');
@@ -373,7 +385,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -385,13 +397,20 @@ class _HomePageState extends State<HomePage> {
         }
 
         setState(() {
-          bogoproducts = productsList;
-          print('productssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $bogoproducts');
+          products = productsList;
+          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
           // Filter the products that are present in offerProducts
-          productsIndiscountOffer = bogoproducts.where((product) {
+          productsIndiscountOffer = products.where((product) {
             return offerProductss.contains(product['id']);
           }).toList();
+
+           productsIndiscountOffer = products.where((product) {
+            return offerCategories.contains(product['category']);
+          }).toList();
+
+
+         
 
           print('Products in Offer: $productsIndiscountOffer');
         });
@@ -404,10 +423,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<int> offerProductss = [];
+  List<int> offerCategories = [];
 
   Future<void> fetchbogodiscountoffers() async {
     try {
-      print("hhhhhhhhhhheeeeeeeeeeeeeeeeeeellllllllllllllllllllllllloooooo");
       final response = await http.get(Uri.parse(bogooffersurl));
       print('Response:::::::::::::::::::::::::: ${response.body}');
 
@@ -415,7 +434,6 @@ class _HomePageState extends State<HomePage> {
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
-        List<int> offerCategories = [];
 
         for (var productData in parsed) {
           productsList.add({
@@ -425,26 +443,24 @@ class _HomePageState extends State<HomePage> {
             'get_value': productData['get_value'],
             'method': productData['method'],
             'amount': productData['amount'],
-            'slug':productData['slug']
           });
           print(
-              "dissssssssscccccccccccccccccaaaaaaaaaaaaaaaappppppppppppppppppppp${productData['discount_approved_products']}");
+              "dissssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccc${productData['discount_approved_products']}");
 
           if (productData.containsKey('discount_approved_products') &&
               productData['discount_approved_products'].isNotEmpty) {
             offerProductss.addAll(
                 List<int>.from(productData['discount_approved_products']));
-            
-          } else if (productData.containsKey('offer_category')) {
+          } else if (productData.containsKey('discount_approved_category')) {
             offerCategories
-                .addAll(List<int>.from(productData['offer_category']));
+                .addAll(List<int>.from(productData['discount_approved_category']));
           }
         }
 
         setState(() {
           bogodisoffers = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrbbbbbbbbbboooooooggggggggg: $bogodisoffers');
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $bogodisoffers');
           print('Offer Products: $offerProductss');
           print('Offer Categories: $offerCategories');
           fetchbogodiscountproducts();
@@ -456,6 +472,7 @@ class _HomePageState extends State<HomePage> {
       print('Error fetching wishlist products: $error');
     }
   }
+
   // ##Buyonegetone eligible discountproducts ends##
 
   Future<void> recentlyviewed() async {
@@ -484,7 +501,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${recentproductsData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -531,7 +548,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -566,7 +583,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${offerData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -597,12 +614,13 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -630,7 +648,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -668,7 +686,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -707,7 +725,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -744,7 +762,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+  //             "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -781,7 +799,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -838,7 +856,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -890,7 +908,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://article-looksmart-unsigned-adopt.trycloudflare.com//${productData['image']}";
+  //             "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -923,7 +941,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${productData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -959,7 +977,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com/${bannerData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -988,7 +1006,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com//${categoryData['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -1545,7 +1563,7 @@ class _HomePageState extends State<HomePage> {
                                             builder: (context) =>
                                                 Product_big_View(
                                               product_id: products[index]['id'],
-                                              slug: products[index]['id'],
+                                              slug: products[index]['slug'],
                                               Category_id: products[index]
                                                   ['mainCategory'],
                                             ),
@@ -1785,128 +1803,128 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    if (offers.isNotEmpty)
-                      Container(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, bottom: 10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "All Offers",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, bottom: 10),
-                              child: SizedBox(
-                                height: 240,
-                                child: Container(
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: offers.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        width: 220,
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 219, 217, 217)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.white,
-                                              blurRadius: 3,
-                                              spreadRadius: 2,
-                                              offset: Offset(0, 2),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, left: 10, right: 10),
-                                              child: Container(
-                                                height:
-                                                    140, // Adjusted height to accommodate the images
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(offers[
-                                                            index][
-                                                        'image']), // Using NetworkImage directly
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 4),
-                                            Center(
-                                              child: Text(
-                                                offers[index]['name'],
-                                                style: TextStyle(fontSize: 12),
-                                                // maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Center(
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              OfferProducts(
-                                                                  offerId: offers[
-                                                                          index]
-                                                                      ['id'])));
-                                                  // Add your onPressed function here
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.black,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "Collect Now",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    // if (offers.isNotEmpty)
+                    //   Container(
+                    //     child: Column(
+                    //       children: [
+                    //         Padding(
+                    //           padding:
+                    //               const EdgeInsets.only(left: 10, bottom: 10),
+                    //           child: Row(
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             children: [
+                    //               Text(
+                    //                 "All Offers",
+                    //                 style:
+                    //                     TextStyle(fontWeight: FontWeight.bold),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.only(
+                      //             left: 10, right: 10, bottom: 10),
+                      //         child: SizedBox(
+                      //           height: 240,
+                      //           child: Container(
+                      //             child: ListView.builder(
+                      //               scrollDirection: Axis.horizontal,
+                      //               itemCount: offers.length,
+                      //               itemBuilder:
+                      //                   (BuildContext context, int index) {
+                      //                 return Container(
+                      //                   width: 220,
+                      //                   margin: EdgeInsets.symmetric(
+                      //                       horizontal: 5.0),
+                      //                   decoration: BoxDecoration(
+                      //                     borderRadius:
+                      //                         BorderRadius.circular(10),
+                      //                     border: Border.all(
+                      //                         color: Color.fromARGB(
+                      //                             255, 219, 217, 217)),
+                      //                     boxShadow: [
+                      //                       BoxShadow(
+                      //                         color: Colors.white,
+                      //                         blurRadius: 3,
+                      //                         spreadRadius: 2,
+                      //                         offset: Offset(0, 2),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                   child: Column(
+                      //                     crossAxisAlignment:
+                      //                         CrossAxisAlignment.start,
+                      //                     children: [
+                      //                       Padding(
+                      //                         padding: const EdgeInsets.only(
+                      //                             top: 10, left: 10, right: 10),
+                      //                         child: Container(
+                      //                           height:
+                      //                               140, // Adjusted height to accommodate the images
+                      //                           decoration: BoxDecoration(
+                      //                             image: DecorationImage(
+                      //                               image: NetworkImage(offers[
+                      //                                       index][
+                      //                                   'image']), // Using NetworkImage directly
+                      //                               fit: BoxFit.cover,
+                      //                             ),
+                      //                             borderRadius:
+                      //                                 BorderRadius.circular(10),
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                       SizedBox(height: 4),
+                      //                       Center(
+                      //                         child: Text(
+                      //                           offers[index]['name'],
+                      //                           style: TextStyle(fontSize: 12),
+                      //                           // maxLines: 2,
+                      //                           overflow: TextOverflow.ellipsis,
+                      //                         ),
+                      //                       ),
+                      //                       SizedBox(
+                      //                         height: 10,
+                      //                       ),
+                      //                       Center(
+                      //                         child: ElevatedButton(
+                      //                           onPressed: () {
+                      //                             Navigator.push(
+                      //                                 context,
+                      //                                 MaterialPageRoute(
+                      //                                     builder: (context) =>
+                      //                                         OfferProducts(
+                      //                                             offerId: offers[
+                      //                                                     index]
+                      //                                                 ['id'])));
+                      //                             // Add your onPressed function here
+                      //                           },
+                      //                           style: ElevatedButton.styleFrom(
+                      //                             backgroundColor: Colors.black,
+                      //                             shape: RoundedRectangleBorder(
+                      //                               borderRadius:
+                      //                                   BorderRadius.circular(
+                      //                                       20),
+                      //                             ),
+                      //                           ),
+                      //                           child: Text(
+                      //                             "Collect Now",
+                      //                             style: TextStyle(
+                      //                               color: Colors.white,
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                       )
+                      //                     ],
+                      //                   ),
+                      //                 );
+                      //               },
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     Column(
                       children: [
                         if (bestsaleproducts.isNotEmpty)
@@ -2594,7 +2612,7 @@ class _HomePageState extends State<HomePage> {
                           GestureDetector(
                             onTap: () {},
                             child: Container(
-                                color: Color.fromARGB(255, 217, 219, 221),
+                                // color: Color.fromARGB(255, 172, 217, 236),
                                 child: Column(
                                   children: [
                                     Row(

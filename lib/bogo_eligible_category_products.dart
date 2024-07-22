@@ -12,24 +12,22 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class Recommended_products extends StatefulWidget {
+class Bogo_Eligible_Category_Products extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
 
-  const Recommended_products({Key? key, this.user_id}) : super(key: key);
+  const Bogo_Eligible_Category_Products({Key? key, this.user_id}) : super(key: key);
 
   @override
-  State<Recommended_products> createState() => _Recommended_productsState();
+  State<Bogo_Eligible_Category_Products> createState() => _Bogo_Eligible_Category_ProductsState();
 }
 
-class _Recommended_productsState extends State<Recommended_products> {
+class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category_Products> {
   String? userId; // Declare userId variable to store user ID
   int _selectedIndex = 0; // Index of the selected tab
   List<bool> isFavorite = [];
-    List<Map<String, dynamic>> recommendedproducts = [];
+  var tokenn;
 
-
-  final String recommendedproductsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//recommended/";
+  List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
       "http://sort-matters-zealand-affiliated.trycloudflare.com//products/search/?q=";
@@ -37,39 +35,44 @@ class _Recommended_productsState extends State<Recommended_products> {
   final String wishlisturl =
       "http://sort-matters-zealand-affiliated.trycloudflare.com//add-wishlist/";
 
+  final String productsurl =
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/";
+
+  final String offersurl =
+      "http://sort-matters-zealand-affiliated.trycloudflare.com//offer/";
+
   List<Map<String, dynamic>> products = [];
 
   bool _isSearching = false;
   int _index = 0;
-  List<Map<String, dynamic>> searchResults = [];  
-  var tokenn;
+  List<Map<String, dynamic>> searchResults = [];
+  List<Map<String, dynamic>> bogodisoffers = [];
+  List<Map<String, dynamic>> productsIndiscountOffer = [];
 
   @override
   void initState() {
     super.initState();
-     _initData();
-    fetchRecommendedProducts();
+    _initData();
+    // fetchbuyonegetoneProducts();
+    fetchbogodiscountoffers();
+    fetchbogodiscountproducts();
   }
 
-Future<void> _initData() async {
-        tokenn = await gettokenFromPrefs();
-
+  Future<void> _initData() async {
+    tokenn = await gettokenFromPrefs();
   }
 
   void toggleFavorite(int index) {
     setState(() {
       isFavorite[index] = !isFavorite[index];
+      print(
+          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd$index");
+      print(
+          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd${productsIndiscountOffer[index]['id']}");
     });
 
-    // Check if the product is being added or removed from the wishlist
     if (isFavorite[index]) {
-      // If the product is being added to the wishlist
-      addProductToWishlist(
-        recommendedproducts[index]['id'],
-      );
-    } else {
-      // If the product is being removed from the wishlist
-      // You can implement this logic if needed
+      addProductToWishlist(productsIndiscountOffer[index]['id']);
     }
   }
 
@@ -88,7 +91,107 @@ Future<void> _initData() async {
     return Icon(Icons.favorite_border, color: Colors.black);
   }
 
+  Future<void> fetchbogodiscountproducts() async {
+    try {
+      final response = await http.get(Uri.parse(productsurl));
+      print('Response: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        print(
+            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
+        final List<dynamic> productsData = parsed['products'];
+        List<Map<String, dynamic>> productsList = [];
+
+        for (var productData in productsData) {
+          String imageUrl =
+              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+          productsList.add({
+            'id': productData['id'],
+            'name': productData['name'],
+            'salePrice': productData['salePrice'],
+            'image': imageUrl,
+            'slug': productData['slug'],
+            'mainCategory': productData['mainCategory'],
+          });
+        }
+
+        setState(() {
+          products = productsList;
+          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
+
+          // Filter the products that are present in offerProducts
+          productsIndiscountOffer = products.where((product) {
+            return offerProductss.contains(product['id']);
+          }).toList();
+
+          isFavorite =
+              List.generate(productsIndiscountOffer.length, (index) => false);
+
+          print('Products in Offer: $productsIndiscountOffer');
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
+  List<int> offerProductss = [];
+
+  Future<void> fetchbogodiscountoffers() async {
+    try {
+      final response = await http.get(Uri.parse(offersurl));
+      print('Response:::::::::::::::::::::::::: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
+
+        for (var productData in parsed) {
+          productsList.add({
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'buy_value': productData['buy_value'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+          });
+          print(
+              "dissssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccc${productData['discount_approved_products']}");
+
+          if (productData.containsKey('discount_approved_products') &&
+              productData['discount_approved_products'].isNotEmpty) {
+            offerProductss.addAll(
+                List<int>.from(productData['discount_approved_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories
+                .addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+
+        setState(() {
+          bogodisoffers = productsList;
+          // Store offerProducts and offerCategories in state variables if needed
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $bogodisoffers');
+          print('Offer Products: $offerProductss');
+          print('Offer Categories: $offerCategories');
+          fetchbogodiscountproducts();
+        });
+      } else {
+        throw Exception('Failed to load wishlist products');
+      }
+    } catch (error) {
+      print('Error fetching wishlist products: $error');
+    }
+  }
+
   Future<void> addProductToWishlist(int productId) async {
+    print("tyyyttttttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffffff");
     try {
       final token = await gettokenFromPrefs();
 
@@ -105,11 +208,11 @@ Future<void> _initData() async {
         }),
       );
 
-      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.body}");
+      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
       if (response.statusCode == 201) {
         print('Product added to wishlist: $productId');
-         ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
             backgroundColor: Colors.green,
@@ -132,22 +235,24 @@ Future<void> _initData() async {
   }
 
   Future<void> searchproduct() async {
+    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
       print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
-       
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
       print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+          "=========SSSSSSSSSSSSSEEEEEEEEEEEEEEEEEEAAAAAAAARRRRRRCCCCCHHHHHHHHHH${response.body}");
+      print(
+          "==============SSSSSSEEEEEEEEEEEAAAAAAAAAAAAAARRRRRRRRCCCCCHHHHHHHSSSSSSSTTTTTTAATTTUUS${response.statusCode}");
 
       if (response.statusCode == 200) {
         print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
+        print(
+            "=========SSSSSSSSSSSEEEEEEEEEEEEEEEAAARRRRRRRCCCCCHHHHDDDDDAAAAAAAAATTTTTTTAAAA${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -201,6 +306,7 @@ Future<void> _initData() async {
                           borderRadius: BorderRadius.circular(20)),
                       suffixIcon: IconButton(
                         onPressed: () async {
+                          print("gggggggggggggggggggggggggggggggggggggggggg");
                           await searchproduct();
 
                           setState(() {
@@ -232,61 +338,49 @@ Future<void> _initData() async {
     return prefs.getString('userId');
   }
 
-  Future<void> fetchRecommendedProducts() async {
-  try {
-    final token = await gettokenFromPrefs(); // Make sure this method returns your token correctly
+  // void fetchbuyonegetoneProducts() async {
+  //   try {
+  //     final response = await http.get(Uri.parse(buyonegetoneurl));
 
-    print("Token: $token");
+  //     if (response.statusCode == 200) {
+  //       final parsed = jsonDecode(response.body);
+  //       final List<dynamic> productsData = parsed['data'];
+  //       List<Map<String, dynamic>> productbuyonegetoneList = [];
 
-    final response = await http.get(
-      Uri.parse(recommendedproductsurl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': '$token',
-      },
-    );
+  //       for (var productData in productsData) {
+  //         String imageUrl =
+  //             "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+  //         productbuyonegetoneList.add({
+  //           'id': productData['id'],
+  //           'mainCategory': productData['mainCategory'],
+  //           'name': productData['name'],
+  //           'price': productData['price'],
+  //           'salePrice': productData['salePrice'],
+  //           'image': imageUrl,
+  //           'slug': productData['slug']
+  //         });
+  //       }
 
-    print("Response Body: ${response.body}");
-    print("Response Status Code: ${response.statusCode}");
-
-    if (response.statusCode == 200) {
-      final parsed = jsonDecode(response.body);
-      final List<dynamic> productsData = parsed['data'];
-
-      print("Products Data: $productsData");
-
-      List<Map<String, dynamic>> productRecommendedList = [];
-
-      for (var productData in productsData) {
-        String imageUrl = "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
-        productRecommendedList.add({
-          'id': productData['id'],
-          'mainCategory': productData['mainCategory'],
-          'name': productData['name'],
-          'salePrice': productData['salePrice'],
-          'image': imageUrl,
-        });
-      }
-
-      setState(() {
-        recommendedproducts = productRecommendedList;
-        print("Recommended Products: $recommendedproducts");
-      });
-    } else {
-      throw Exception('Failed to load recommended products');
-    }
-  } catch (error) {
-    print('Error fetching recommended products: $error');
-  }
-}
-
+  //       setState(() {
+  //         productsinoffer = productbuyonegetoneList;
+  //         // Initialize isFavorite list with the same length as products list
+  //         isFavorite =
+  //             List.generate(productsinoffer.length, (index) => false);
+  //       });
+  //     } else {
+  //       throw Exception('Failed to load Buy One Get One products');
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching Buy One Get One products: $error');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Recommended for you',
+          'Discount Products',
           style: TextStyle(fontSize: 15, color: Colors.grey),
         ),
         actions: [
@@ -314,39 +408,38 @@ Future<void> _initData() async {
           child: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: (recommendedproducts.length / 2).ceil(),
+            itemCount: (productsIndiscountOffer.length / 2).ceil(),
             itemBuilder: (BuildContext context, int index) {
               int firstItemIndex = index * 2;
               int secondItemIndex = firstItemIndex + 1;
 
               // Check if this is the last row
               bool isLastRow =
-                  index == (recommendedproducts.length / 2).ceil() - 1;
+                  index == (productsIndiscountOffer.length / 2).ceil() - 1;
 
               return Column(
                 children: [
                   Row(
                     children: [
-                      if (firstItemIndex < recommendedproducts.length) ...[
+                      if (firstItemIndex < productsIndiscountOffer.length) ...[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
                               try {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Product_big_View(
-                                      product_id:
-                                          recommendedproducts[firstItemIndex]
-                                              ['id'],
-                                      Category_id: 
-                                          recommendedproducts[firstItemIndex]
-                                              ['mainCategory'],
-
-                                    slug: recommendedproducts[firstItemIndex]['slug'],
-                                    ),
-                                  ),
-                                );
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Product_big_View(
+                                              product_id:
+                                                  productsIndiscountOffer[
+                                                      firstItemIndex]['id'],
+                                              Category_id:
+                                                  productsIndiscountOffer[
+                                                          firstItemIndex]
+                                                      ['mainCategory'],
+                                              slug: productsIndiscountOffer[
+                                                  firstItemIndex]['slug'],
+                                            )));
                               } catch (e) {
                                 print('Error navigating: $e');
                               }
@@ -355,7 +448,7 @@ Future<void> _initData() async {
                               height: 250,
                               margin: EdgeInsets.only(
                                 right: (secondItemIndex <
-                                            recommendedproducts.length ||
+                                            productsIndiscountOffer.length ||
                                         isLastRow)
                                     ? 5
                                     : 0,
@@ -389,7 +482,7 @@ Future<void> _initData() async {
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: NetworkImage(
-                                                  recommendedproducts[
+                                                  productsIndiscountOffer[
                                                       firstItemIndex]['image'],
                                                 ),
                                               ),
@@ -399,30 +492,8 @@ Future<void> _initData() async {
                                         GestureDetector(
                                           onTap: () {
                                             print(
-                                                recommendedproducts[firstItemIndex]
-                                                    ['id']);
-                                            print(
-                                                recommendedproducts[firstItemIndex]
-                                                    ['mainCategory']);
+                                                "firstttttttttttttttttttttttindexxxxxxxxxxxxx$firstItemIndex");
 
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => Product_big_View(
-                                                        product_id:
-                                                            recommendedproducts[
-                                                                    firstItemIndex]
-                                                                ['id'],
-                                                        Category_id:
-                                                            recommendedproducts[
-                                                                    firstItemIndex]
-                                                                [
-                                                                'mainCategory'],
-
-                                                        slug: recommendedproducts[firstItemIndex]['slug'],
-                                                                
-                                                                
-                                                                )));
                                             toggleFavorite(firstItemIndex);
                                           },
                                           child: Padding(
@@ -442,38 +513,44 @@ Future<void> _initData() async {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            recommendedproducts[firstItemIndex]
-                                                ['name'],
+                                            productsIndiscountOffer[
+                                                firstItemIndex]['name'],
                                             style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${recommendedproducts[firstItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if (productsIndiscountOffer[
+                                                firstItemIndex]['price'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsIndiscountOffer[firstItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            'Sale Price: \$${recommendedproducts[firstItemIndex]['salePrice']}',
-                                            style: TextStyle(
-                                              color: Colors.green,
+                                        if (productsIndiscountOffer[
+                                                firstItemIndex]['salePrice'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              'Sale Price: \$${productsIndiscountOffer[firstItemIndex]['salePrice']}',
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                              ),
                                             ),
                                           ),
-                                        ),
                                       ],
                                     )
                                   ],
@@ -483,7 +560,7 @@ Future<void> _initData() async {
                           ),
                         ),
                       ],
-                      if (secondItemIndex < recommendedproducts.length) ...[
+                      if (secondItemIndex < productsIndiscountOffer.length) ...[
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -491,26 +568,22 @@ Future<void> _initData() async {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Product_big_View(
-                                          product_id:
-                                              recommendedproducts[secondItemIndex]
-                                                  ['id'],
-                                          Category_id:
-                                              recommendedproducts[secondItemIndex]
-                                                  ['mainCategory'],
-
-                                                  slug: recommendedproducts[secondItemIndex]['slug'],
-                                                  
-                                                  
-                                                  )));
+                                          product_id: productsIndiscountOffer[
+                                              secondItemIndex]['id'],
+                                          slug: productsIndiscountOffer[
+                                              secondItemIndex]['slug'],
+                                          Category_id: productsIndiscountOffer[
+                                                  secondItemIndex]
+                                              ['mainCategory'])));
                             },
                             child: Container(
                               height: 250,
                               margin: EdgeInsets.only(
-                                left:
-                                    (firstItemIndex < recommendedproducts.length ||
-                                            isLastRow)
-                                        ? 5
-                                        : 0,
+                                left: (firstItemIndex <
+                                            productsIndiscountOffer.length ||
+                                        isLastRow)
+                                    ? 5
+                                    : 0,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -536,8 +609,8 @@ Future<void> _initData() async {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           child: Image.network(
-                                            recommendedproducts[secondItemIndex]
-                                                ['image'],
+                                            productsIndiscountOffer[
+                                                secondItemIndex]['image'],
                                             width: 150,
                                             height: 150,
                                           ),
@@ -563,38 +636,44 @@ Future<void> _initData() async {
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Text(
-                                            recommendedproducts[secondItemIndex]
-                                                ['name'],
+                                            productsIndiscountOffer[
+                                                secondItemIndex]['name'],
                                             style: TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 overflow:
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${recommendedproducts[secondItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if (productsIndiscountOffer[
+                                                secondItemIndex]['price'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsIndiscountOffer[secondItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            'Sale Price: \$${recommendedproducts[secondItemIndex]['salePrice']}',
-                                            style: TextStyle(
-                                              color: Colors.green,
+                                        if (productsIndiscountOffer[
+                                                secondItemIndex]['salePrice'] !=
+                                            null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              'Sale Price: \$${productsIndiscountOffer[secondItemIndex]['salePrice']}',
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                              ),
                                             ),
                                           ),
-                                        ),
                                       ],
                                     )
                                   ],
@@ -638,22 +717,20 @@ Future<void> _initData() async {
                   // Navigate to Home page
                 },
               ),
-               GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+              GButton(
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
+                  // Navigate to Cart page
+                },
+              ),
               GButton(
                 icon: Icons.search,
                 onPressed: () {
@@ -677,5 +754,11 @@ Future<void> _initData() async {
         ),
       ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

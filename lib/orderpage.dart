@@ -31,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//get-address/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/get-address/";
   String orderurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//order/create/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/order/create/";
   String cuponurl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cupons/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -63,10 +63,11 @@ class _orderState extends State<order> {
 
     userId = await getUserIdFromPrefs();
     fetchcupons();
+    fetchoffers();
 
     fetchCartData();
     fetchAddress();
-    calculateTotalAmount();
+    // calculateTotalAmount();
 
     // calculateTotalPrice();
   }
@@ -95,14 +96,110 @@ class _orderState extends State<order> {
     }
   }
 
+  List<int> offerProducts = [];
+     List<Map<String, dynamic>> offers = [];
+ final String offersurl =
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/offer/";
+
+var bogo;
+bool is_active=false;
+  Future<void> fetchoffers() async {
+    try {
+      final response = await http.get(Uri.parse(offersurl));
+      print('Response:::::::::::::::::::::::::: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+
+        List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
+
+        for (var productData in parsed) {
+          productsList.add({
+            'id':productData['id'],
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'offer_type':productData['offer_type'],
+            'get_option': productData['get_option'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+            'is_active':productData['is_active'],
+            
+          });
+
+          if (productData.containsKey('offer_products') &&
+              productData['offer_products'].isNotEmpty) {
+            offerProducts.addAll(List<int>.from(productData['offer_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories
+                .addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+
+        setState(() {
+          offers = productsList;
+          // Store offerProducts and offerCategories in state variables if needed
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
+          print('Offer Products: $offerProducts');
+          print('Offer Categories: $offerCategories');
+        // for(int i=0;i<offers.length;i++){
+          if(offers[0]['offer_type']=="BUY"){
+            print("***********************************************************************************${offers[0]['get_option']}");
+            if(offers[0]['get_option']==1){
+              bogo="BUY 1 GET 1";
+                            print("bogooooooooooooooooooooooooooo:::$bogo");
+
+              }else if(offers[0]['get_option']==2){
+                bogo="BUY 2 GET 1";
+                 print("bogooooooooooooooooooooooooooo:::$bogo");
+            }
+            if(offers[0]['is_active']=="Allowed"){
+              is_active=true;
+              print("is_activeeeeeeeeeeeeeeeeeeeee:::$is_active");
+            }
+            else{
+              is_active=false;
+            }
+
+          // }
+
+
+        }
+         
+        });
+        calculateTotalPrice();
+      } else {
+        throw Exception('Failed to load offer products');
+      }
+    } catch (error) {
+      print('Error fetching offer products: $error');
+    }
+  }
+
+
+
+bool hasOfferAppliedNormalProduct = false;
+bool hasBothOfferAndDiscount = false;
+bool onlyDiscountAllowedAndNormal = true;
+
+
+bool offernotdiscount=false;
+bool notofferdiscount1=false;
+
+ int discount_product_quantity=0;
+ bool offeronly=false;
+
   double calculateTotalPrice() {
+    double totalPrice = 0.0;
     double? leastPrice;
     int offerProductCount = 0;
-
+int quat=0;
     setState(() {
-      totalPrice = 0.0;
+      
 
-      if (widget.total == 'Option 1') {
+
+      if (is_active == 'true') {
         for (int i = 0; i < cartProducts.length; i++) {
           double price = (cartProducts[i]['saleprice'] is int)
               ? (cartProducts[i]['saleprice'] as int).toDouble()
@@ -124,17 +221,28 @@ class _orderState extends State<order> {
           totalPrice += price * quantity;
 
           print("totallllllllllllelseeeeeeeeeeeeeeeee$totalPrice");
+  String? discountapplicable = cartProducts[i]['discount_product'];
+          String? has_offer = cartProducts[i]['has_offer'];
+                  
 
-          // Check if this product has an offer
-          String? offerType = cartProducts[i]['offer_type'];
-          if (offerType == "BUY 1 GET 1" || offerType == "BUY 2 GET 1") {
-            print("ssssssssssssssssssssssssss");
+if (has_offer == "Offer Applied") {
             // Count the offer products
             offerProductCount += quantity;
+             offeronly=true;
+
+          print("ofeerrrrrrcountttttttttttttttttttttttt$offerProductCount");
+          }
+
+          // Check if this product has an offer
+          // String? offerType = cartProducts[i]['offer_type'];
+          if (discountapplicable == "Discount Allowd") {
+            print("ssssssssssssssssssssssssss");
+           
 
             // Determine the least priced offer product
             if (leastPrice == null || price < leastPrice!) {
               leastPrice = price;
+              print("leasttttttttttttttttttttttttt$leastPrice");
               Dquantity = quantity;
               print("Quantity of least price product: $Dquantity");
             }
@@ -145,10 +253,103 @@ class _orderState extends State<order> {
         if (leastPrice != null) {
           for (int i = 0; i < cartProducts.length; i++) {
             String? offerType = cartProducts[i]['offer_type'];
-            if (offerType == "BUY 1 GET 1") {
+            print("bogooooooooooooooooooooooooooooo$bogo");
+            if (bogo == "BUY 1 GET 1") {
+              
               // For "BUY 1 GET 1", each pair gets one free
-              int freeItems = offerProductCount ~/ 2;
-              print("Free items: $freeItems");
+               int freeItems =  0;
+              print("Free itemsssssssssssssssssssssssssss: $freeItems");
+
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+    hasOfferAppliedNormalProduct = true;
+  
+  }
+  else{
+    hasOfferAppliedNormalProduct = false;
+    break;
+  }
+}
+
+print("hasBothOfferAndDiscounttttttttttttttttttttttttttttttttttttttttttt$hasBothOfferAndDiscount");
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+
+
+  if(discountapplicable == "Discount Allowd"){
+
+     
+     discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+     quat+=discount_product_quantity;
+    
+
+  }
+}
+   print("discount_product_quantity==================$quat");
+for (int i = 0; i < cartProducts.length; i++)
+ {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+
+
+  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowd") {
+    onlyDiscountAllowedAndNormal = true;
+  }
+  else{
+    onlyDiscountAllowedAndNormal = false;
+    break;
+  }
+}
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    offernotdiscount = true; 
+  }
+  else{
+    notofferdiscount1 = true;
+    
+  }
+}
+
+// Determine free items based on the conditions
+if (hasOfferAppliedNormalProduct) {
+  print("offeerrrrrrrrrrrrronnlyyyyyyy");
+  freeItems = 0;
+} else if (onlyDiscountAllowedAndNormal) {
+  print("discountnlyyyyyyyyyyyyyyyyyyyyy");
+  freeItems = 0;
+}
+else if(offernotdiscount==true && notofferdiscount1==true){
+  print("offernotdiscount$quat");
+   if(quat<offerProductCount){
+    freeItems=quat;
+        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+   else if(offerProductCount<=quat){
+    
+freeItems=offerProductCount;
+    print("22222222==============freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+   
+   else{
+   
+    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+   
+   }
+}
+else{
+  freeItems = offerProductCount ~/ 2; 
+}
+
+print("Total free items: $freeItems");
 
               while (freeItems > 0) {
                 int dQuantity = Dquantity ?? 0;
@@ -164,10 +365,10 @@ class _orderState extends State<order> {
                   int nextDquantity = 0;
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['saleprice']);
-                    String? nextOfferType = cartProducts[j]['offer_type'];
+                    // String? nextOfferType = cartProducts[j]['offer_type'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (nextOfferType == "BUY 1 GET 1" ||
-                            nextOfferType == "BUY 2 GET 1") &&
+                        (bogo == "BUY 1 GET 1" ||
+                            bogo == "BUY 2 GET 1") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
@@ -186,10 +387,136 @@ class _orderState extends State<order> {
                 }
               }
               break; // Exit the loop after processing the first offer type "BUY 1 GET 1"
-            } else if (offerType == "BUY 2 GET 1") {
-              // For "BUY 2 GET 1", every three items, one is free
-              int freeItems = offerProductCount ~/ 3;
-              print("Free items: $freeItems");
+            } 
+            else if (bogo == "BUY 2 GET 1") {
+                    var freeItems;
+
+            print("2222222222222222222======================1111111111111111111111111111111");
+
+
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+    hasOfferAppliedNormalProduct = true;
+  
+  }
+  else{
+    hasOfferAppliedNormalProduct = false;
+    break;
+  }
+}
+
+
+print("hasBothOfferAndDiscounttttttttttttttttttttttttttttttttttttttttttt$hasBothOfferAndDiscount");
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+
+
+  if(discountapplicable == "Discount Allowd"){
+
+     
+     discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+     quat+=discount_product_quantity;
+    
+
+  }
+}
+   print("discount_product_quantity==================$quat");
+
+
+
+
+for (int i = 0; i < cartProducts.length; i++)
+ {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+
+
+  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowd") {
+    onlyDiscountAllowedAndNormal = true;
+    print("discountonlyyyyyyyyyyyyyyyyyyyyyyiffffffffffffffffffffffffffffffff");
+  }
+  else{
+    onlyDiscountAllowedAndNormal = false;   
+     print("discountonlyyyyyyyyyyyyyyyyyyyyyyiffffffffffffffffffffffffffffffff$onlyDiscountAllowedAndNormal");
+
+    break;
+  }
+}
+for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+  String? has_offer = cartProducts[i]['has_offer'];
+  int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+    offernotdiscount = true; 
+  }
+  else{
+    notofferdiscount1 = true;
+    
+  }
+}
+
+
+
+           for (int i = 0; i < cartProducts.length; i++) {
+  String? discountapplicable = cartProducts[i]['discount_product'];
+
+  
+ 
+}
+
+if (hasOfferAppliedNormalProduct) {
+  print("offeerrrrrrrrrrrrronnlyyyyyyy");
+  freeItems = 0;
+} else if (onlyDiscountAllowedAndNormal) {
+  print("discountnlyyyyyyyyyyyyyyyyyyyyy");
+  freeItems = 0;
+}
+else if(offernotdiscount==true && notofferdiscount1==true){
+  print("offernotdiscount$quat");
+   if(offerProductCount>=quat){
+print("offerProductCounttttttttttttttttttttttt$offerProductCount");
+    int f=offerProductCount~/2 ;
+   
+    print("fffffffffffffffffffffffffff$f");
+    if(quat<f){
+      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+      freeItems=quat;
+
+
+    }
+
+    else{
+      freeItems=f;
+    }
+
+        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+  
+   else if(quat>offerProductCount){
+     int f=offerProductCount~/2 ;
+     freeItems=f;
+     print("fffffffffffffffffffffffffff$f");
+   }
+
+   
+   
+   else{
+   
+    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+   
+   }
+}
+
+
+print("Total free items: $freeItems");
+           
+           
+        
 
               while (freeItems > 0) {
                 int dQuantity = Dquantity ?? 0;
@@ -205,10 +532,10 @@ class _orderState extends State<order> {
                   int nextDquantity = 0;
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['saleprice']);
-                    String? nextOfferType = cartProducts[j]['offer_type'];
+                    // String? nextOfferType = cartProducts[j]['offer_type'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (nextOfferType == "BUY 1 GET 1" ||
-                            nextOfferType == "BUY 2 GET 1") &&
+                        (bogo == "BUY 1 GET 1" ||
+                            bogo == "BUY 2 GET 1") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
@@ -242,50 +569,50 @@ class _orderState extends State<order> {
 
   int offerProductCount = 0;
 
-  Future<void> fetchAddress() async {
-    final token = await gettokenFromPrefs();
-    print("--------------------------------------------R$token");
+ Future<void> fetchAddress() async {
+  final token = await gettokenFromPrefs();
+  print("--------------------------------------------R$token");
 
-    var response = await http.get(
-      Uri.parse(fetchaddressurl),
-      headers: {
-        'Authorization': '$token',
-      },
-    );
+  var response = await http.get(
+    Uri.parse(fetchaddressurl),
+    headers: {
+      'Authorization': '$token',
+    },
+  );
 
-    print("Fetch address: ${response.body}");
+  print("Fetch address: ${response.body}");
 
-    if (response.statusCode == 200) {
-      var responseData = jsonDecode(response.body);
-      var data = responseData['address'];
+  if (response.statusCode == 200) {
+    var responseData = jsonDecode(response.body);
+    var data = responseData['address'];
 
-      print("Address: $data");
+    print("Address: $data");
 
-      setState(() {
-        addressList = List<Map<String, dynamic>>.from(data);
-        print("Address List: $addressList");
-      });
+    setState(() {
+      addressList = List<Map<String, dynamic>>.from(data);
+      print("Address List: $addressList");
+    });
 
-      // Check if addressList is empty to indicate no addresses
-      if (addressList.isEmpty) {
-        hasAddresses = false; // Flag to indicate no addresses
-      } else {
-        hasAddresses = true; // Flag to indicate addresses are available
-        // Set default selected address (if needed)
-        // selectedAddress = addressList.first;
-        // selectedAddressId = addressList.first['id'];
-      }
-    } else if (response.statusCode == 401) {
-      print("session expireddd");
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Login_Page()));
+    // Check if addressList is empty to indicate no addresses
+    if (addressList.isEmpty) {
+      hasAddresses = false; // Flag to indicate no addresses
     } else {
-      print("Failed to fetch address data");
+      hasAddresses = true; // Flag to indicate addresses are available
+      // Set default selected address (if needed)
+      // selectedAddress = addressList.first;
+      // selectedAddressId = addressList.first['id'];
     }
+  } else if (response.statusCode == 401) {
+    print("session expireddd");
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Login_Page()));
+  } else {
+    print("Failed to fetch address data");
   }
+}
 
   var CartUrl =
-      "https://article-looksmart-unsigned-adopt.trycloudflare.com//cart-products/";
+      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -313,7 +640,6 @@ class _orderState extends State<order> {
   }
 
   void errorHandler(PaymentFailureResponse response) {
-    print("ereeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrooooooooo");
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(response.message!),
       backgroundColor: Colors.red,
@@ -348,7 +674,6 @@ class _orderState extends State<order> {
     //     );
     //   },
     // );
-
     orderpayment();
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -364,96 +689,91 @@ class _orderState extends State<order> {
     ));
   }
 
-  void showAddressBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // Adjust bottom sheet height based on content
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              color: Colors.white, // Set the background color to white
-              padding: EdgeInsets.all(16), // Padding for the content
-              child: hasAddresses ??
-                      false // Default to false if hasAddresses is null
-                  ? Wrap(
-                      children: addressList.map((address) {
-                        return Column(
-                          children: [
-                            RadioListTile<Map<String, dynamic>>(
-                              title: Text(address['address']),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('City: ${address['city']}'),
-                                  Text('State: ${address['state']}'),
-                                  Text('Pincode: ${address['pincode']}'),
-                                  Text('Phone: ${address['phone']}'),
-                                  Text('Email: ${address['email']}'),
-                                ],
-                              ),
-                              value: address,
-                              groupValue: selectedAddress,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedAddress = value;
-                                  selectedAddressId = value?['id'];
-                                });
-                                // Optionally, close the bottom sheet immediately after selecting an address
-                                Navigator.pop(context);
-                              },
+ void showAddressBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Adjust bottom sheet height based on content
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            color: Colors.white, // Set the background color to white
+            padding: EdgeInsets.all(16), // Padding for the content
+            child: hasAddresses
+                ? Wrap(
+                    children: addressList.map((address) {
+                      return Column(
+                        children: [
+                          RadioListTile<Map<String, dynamic>>(
+                            title: Text(address['address']),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('City: ${address['city']}'),
+                                Text('State: ${address['state']}'),
+                                Text('Pincode: ${address['pincode']}'),
+                                Text('Phone: ${address['phone']}'),
+                                Text('Email: ${address['email']}'),
+                              ],
                             ),
-                            Divider(), // Add a divider after each address
-                          ],
-                        );
-                      }).toList(),
-                    )
-                  : Column(
-                      mainAxisSize: MainAxisSize
-                          .min, // Use minimum height for the content
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width *
-                              0.9, // 90% of screen width
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context); // Close the bottom sheet
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      UserAddress(), // Replace with your add address screen
-                                ),
-                              );
+                            value: address,
+                            groupValue: selectedAddress,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedAddress = value;
+                                selectedAddressId = value?['id'];
+                              });
+                              // Optionally, close the bottom sheet immediately after selecting an address
+                              Navigator.pop(context);
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.black, // Set button color to black
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    0), // Set button corners to square (0 radius)
+                          ),
+                          Divider(), // Add a divider after each address
+                        ],
+                      );
+                    }).toList(),
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.min, // Use minimum height for the content
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9, // 90% of screen width
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context); // Close the bottom sheet
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserAddress(), // Replace with your add address screen
                               ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black, // Set button color to black
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0), // Set button corners to square (0 radius)
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Text(
-                                'Add Address',
-                                style: TextStyle(
-                                  fontSize: 16, // Adjust font size if needed
-                                  color: Colors.white, // Text color
-                                ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Text(
+                              'Add Address',
+                              style: TextStyle(
+                                fontSize: 16, // Adjust font size if needed
+                                color: Colors.white, // Text color
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-            );
-          },
-        );
-      },
-    );
-  }
+                      ),
+                    ],
+                  ),
+          );
+        },
+      );
+    },
+  );
+}
+
 
 //coupons
   List<Map<String, dynamic>> cupondata = [];
@@ -619,7 +939,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://article-looksmart-unsigned-adopt.trycloudflare.com///${item['image']}";
+              "http://sort-matters-zealand-affiliated.trycloudflare.com//${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -635,11 +955,13 @@ class _orderState extends State<order> {
             'image': imageUrl,
             'color': item['color'],
             'size': item['size'],
-            'offer_type': item['offer_type']
+            'offer_type': item['offer_type'],
+            'has_offer':item['has_offer'],
+            'discount_product':item['discount_product'],
+
           });
         }
-        print(
-            "Cart Productssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss: $cartItems");
+
 
         setState(() {
           cartProducts = cartItems;
@@ -653,7 +975,8 @@ class _orderState extends State<order> {
           print(
               "Selling Priceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: $totalPrice");
           print("Discount: $discount");
-          calculateTotalAmount();
+          fetchoffers();
+          
         });
 
         print(cartProducts.length);
@@ -1238,7 +1561,7 @@ class _orderState extends State<order> {
                   ordercreate();
                 } else {
                   openCheckout();
-                
+                  orderpayment();
                 }
               },
               child: Container(
