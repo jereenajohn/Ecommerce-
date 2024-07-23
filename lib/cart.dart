@@ -38,18 +38,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart-products/";
+      "https://emails-permanent-available-risk.trycloudflare.com/cart-products/";
   final String productsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/products/";
+      "https://emails-permanent-available-risk.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart/increment/";
+      "https://emails-permanent-available-risk.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart/decrement/";
+      "https://emails-permanent-available-risk.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart-delete/";
+      "https://emails-permanent-available-risk.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -118,7 +118,7 @@ var total;
 
         for (var item in data) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com${item['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -158,7 +158,7 @@ var total;
           }
         });
         // print(cartProducts.length);
-        // print("cccccccccccccccccccccccCart Products: $cartProducts");
+        print("cccccccccccccccccccccccCart Products: $cartProducts");
       }
       else if(response.statusCode==401){
 
@@ -177,7 +177,6 @@ var total;
       print('Error fetching cart data: $error');
     }
   }
-
   Future<void> incrementquantity(int cartProductId, int newQuantity) async {
     try {
       final token = await gettokenFromPrefs();
@@ -267,11 +266,11 @@ var total;
    List<int> offerProducts = [];
      List<Map<String, dynamic>> offers = [];
  final String offersurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/offer/";
+      "https://emails-permanent-available-risk.trycloudflare.com/offer/";
 
 var bogo;
 bool is_active=false;
-  Future<void> fetchoffers() async {
+ Future<void> fetchoffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
       // print('Response:::::::::::::::::::::::::: ${response.body}');
@@ -283,7 +282,8 @@ bool is_active=false;
         List<int> offerCategories = [];
 
         for (var productData in parsed) {
-          productsList.add({
+          if(productData['offer_active']==true){
+            productsList.add({
             'id':productData['id'],
             'title': productData['name'],
             'buy': productData['buy'],
@@ -303,6 +303,9 @@ bool is_active=false;
             offerCategories
                 .addAll(List<int>.from(productData['offer_category']));
           }
+
+          }
+          
         }
 
         setState(() {
@@ -312,18 +315,19 @@ bool is_active=false;
           // print('Offer Products: $offerProducts');
           // print('Offer Categories: $offerCategories');
         // for(int i=0;i<offers.length;i++){
+
           if(offers[0]['offer_type']=="BUY"){
-            print("***********************************************************************************${offers[0]['get_option']}");
+            print("*${offers[0]['get_option']}");
             if(offers[0]['get_option']== 1){
               bogo="BUY 1 GET 1";
-                            print("bogooooooooooooooooooooooooooo:::$bogo");
+                            // print("bogooooooooooooooooooooooooooo:::$bogo");
 
               }else if(offers[0]['get_option']==2){
                 bogo="BUY 2 GET 1";
             }
             if(offers[0]['is_active']=="true"){
               is_active=true;
-              print("is_activeeeeeeeeeeeeeeeeeeeee:::$is_active");
+              // print("is_activeeeeeeeeeeeeeeeeeeeee:::$is_active");
             }
             else{
               is_active=false;
@@ -344,13 +348,12 @@ bool is_active=false;
       print('Error fetching offer products: $error');
     }
   }
-
-
 bool hasOfferAppliedNormalProduct = false;
 bool hasBothOfferAndDiscount = false;
 bool onlyDiscountAllowedAndNormal = true;
 bool offernotdiscount=false;
 bool notofferdiscount1=false;
+bool notofferdiscount2=false;
 
  int discount_product_quantity=0;
  bool offeronly=true;
@@ -359,6 +362,7 @@ bool notofferdiscount1=false;
     double totalPrice = 0.0;
     double? leastPrice;
     int offerProductCount = 0;
+   int  offeronlycount=0;
     
 int quat=0;
     setState(() {
@@ -382,19 +386,21 @@ int quat=0;
           String? discountapplicable = cartProducts[i]['discount_product'];
           String? has_offer = cartProducts[i]['has_offer'];
   if (has_offer == "Offer Applied") {
+
             // Count the offer products
             offerProductCount += quantity; 
-            print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offerProductCount");
+            print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrproductttttttttttttCCCCCountTTTTTTTTTTT:$offerProductCount");
             offeronly=true;
                         print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offeronly");
 
 
           }
+          
           else{
   offeronly=false;
 }
 
-          if (discountapplicable == "Discount Allowd") {
+          if (discountapplicable == "Discount Allowed") {
     // Determine the least priced offer product
             if (leastPrice == null || price < leastPrice!) {
 
@@ -407,7 +413,32 @@ int quat=0;
             
           }
         }
+/////////////////////////////////////////////////
 
+
+
+        // print(is_active);
+        for (int i = 0; i < cartProducts.length; i++) {
+        
+          int quantity = cartProducts[i]['quantity'] ?? 1;
+
+      
+
+          // Check if this product has an offer
+          String? discountapplicable = cartProducts[i]['discount_product'];
+          String? has_offer = cartProducts[i]['has_offer'];
+  if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+
+            // Count the offer products
+            offeronlycount += quantity; 
+            print("OOOOOOOONNNNNNNNNNNNLLLYYYYYYYYYYYrproductttttttttttttCCCCCountTTTTTTTTTTT:$offeronlycount");
+            offeronly=true;
+                        print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offeronly");
+
+
+          }
+  
+        }
 // Adjust the total price based on the offer type
         if (leastPrice != null) {
           for (int i = 0; i < cartProducts.length; i++) {
@@ -435,7 +466,7 @@ for (int i = 0; i < cartProducts.length; i++) {
   String? discountapplicable = cartProducts[i]['discount_product'];
 
 
-  if(discountapplicable == "Discount Allowd"){
+  if(discountapplicable == "Discount Allowed"){
 
      
      discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
@@ -455,7 +486,7 @@ for (int i = 0; i < cartProducts.length; i++)
   int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
 
 
-  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowd") {
+  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowed") {
     onlyDiscountAllowedAndNormal = true;
   }
   else{
@@ -548,6 +579,10 @@ print("Total free items: $freeItems");
               }
               break; // Exit the loop after processing the first offer type "BUY 1 GET 1"
             } 
+
+
+
+
             else if (bogo == "BUY 2 GET 1") {
               // For "BUY 2 GET 1", every three items, one is free
             var freeItems;
@@ -570,12 +605,12 @@ for (int i = 0; i < cartProducts.length; i++) {
 }
 
 
-print("hasBothOfferAndDiscounttttttttttttttttttttttttttttttttttttttttttt$hasBothOfferAndDiscount");
+print("hasBothOfferAndDiscounttttttttttttttttttttttttttttttttttttttttttt$hasOfferAppliedNormalProduct");
 for (int i = 0; i < cartProducts.length; i++) {
   String? discountapplicable = cartProducts[i]['discount_product'];
 
 
-  if(discountapplicable == "Discount Allowd"){
+  if(discountapplicable == "Discount Allowed"){
 
      
      discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
@@ -596,7 +631,7 @@ for (int i = 0; i < cartProducts.length; i++)
   int discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
 
 
-  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowd") {
+  if (has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowed") {
     onlyDiscountAllowedAndNormal = true;
     print("discountonlyyyyyyyyyyyyyyyyyyyyyyiffffffffffffffffffffffffffffffff");
   }
@@ -614,20 +649,22 @@ for (int i = 0; i < cartProducts.length; i++) {
   if (has_offer == "Offer Applied" && discountapplicable == "normal") {
     offernotdiscount = true; 
   }
-  else{
-    notofferdiscount1 = true;
+  else if(has_offer == "Offer Not Applicable" && discountapplicable == "Discount Allowed"){
+notofferdiscount1 = true;
+  }
+
+  else if(has_offer == "Offer Applied" && discountapplicable == "Discount Allowed"){
+
+    notofferdiscount2=true;
     
   }
 }
 
 
 
-           for (int i = 0; i < cartProducts.length; i++) {
-  String? discountapplicable = cartProducts[i]['discount_product'];
 
-  
- 
-}
+
+
 
 
 if (hasOfferAppliedNormalProduct) {
@@ -637,7 +674,8 @@ if (hasOfferAppliedNormalProduct) {
   print("discountnlyyyyyyyyyyyyyyyyyyyyy");
   freeItems = 0;
 }
-else if(offernotdiscount==true && notofferdiscount1==true){
+else if(offernotdiscount==true && notofferdiscount1==true && notofferdiscount2==false){
+  print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
   print("offernotdiscount$quat");
    if(offerProductCount>=quat){
 print("offerProductCounttttttttttttttttttttttt$offerProductCount");
@@ -673,6 +711,110 @@ print("offerProductCounttttttttttttttttttttttt$offerProductCount");
    
    }
 }
+
+
+else if(offernotdiscount==true && notofferdiscount1==false && notofferdiscount2==true){
+  print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH$offerProductCount");
+  print("offernotdiscount$quat");
+
+  if(offerProductCount==1 || offerProductCount==2){
+    freeItems=0;
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    break;
+  }
+
+ else if(offerProductCount%2==0){
+    print("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNnn$offeronlycount");
+ int f=offeronlycount~/2 ;
+ int f2=offerProductCount~/3 ;
+
+ if(offeronlycount==quat){
+      freeItems=f2;
+      
+
+    }
+
+  else if(offeronlycount>quat){
+print("offerProductCounttttttttttttttttttttttt$offerProductCount");
+   
+   
+    print("fffffffffffffffffffffffffff$f");
+    if(quat<f){
+      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+      freeItems=quat;
+
+
+    }
+    
+
+    else{
+      freeItems=f;
+    }
+
+        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+  
+   else if(quat>offeronlycount){
+    
+     freeItems=f2;
+     print("fffffffffffffffffffffffffff$f");
+   }
+
+   
+   
+   else{
+   
+    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+   
+   }
+
+  }
+//elseeeeeeeeeeeeeeeeeeeeeeeeeee
+  else if(offerProductCount%2==1){
+    print("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+
+    
+     if(offerProductCount>=quat){
+print("offerProductCounttttttttttttttttttttttt$offerProductCount");
+    int f=offerProductCount~/3 ;
+   
+    print("fffffffffffffffffffffffffff$f");
+    if(quat<f){
+      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+      freeItems=quat;
+
+
+    }
+
+    else{
+      freeItems=f;
+    }
+
+        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+
+   }
+  
+   else if(quat>offerProductCount){
+     int f=offerProductCount~/3 ;
+     freeItems=f;
+     print("fffffffffffffffffffffffffff$f");
+   }
+
+   
+   
+   else{
+   
+    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+   
+   }
+    
+  }
+ 
+  
+}
+
 
 
 print("Total free items: $freeItems");
@@ -895,15 +1037,15 @@ print("Total free items: $freeItems");
                                       ),
                                     ],
                                   ),
-                                  if(cartProducts[index]['has_offer']=="Offer Applied" || cartProducts[index]['category_discount']=="Category Offer Applied")
+                                  if ((cartProducts[index]['has_offer'] == "Offer Applied" || cartProducts[index]['category_discount'] == "Category Offer Applied") && bogo != null) 
+                                        Text(
+                                            '$bogo',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.green,
+                                            ),
+                                          ),
 
-                                    Text(
-                                    '${bogo}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.green,
-                                    ),
-                                  ),
                                 // Inside the ListView.builder itemBuilder method
                                 Container(
                                   child: Row(

@@ -30,16 +30,16 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/search/?q=";
+      "https://emails-permanent-available-risk.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//add-wishlist/";
+      "https://emails-permanent-available-risk.trycloudflare.com//add-wishlist/";
 
   final String productsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/";
+      "https://emails-permanent-available-risk.trycloudflare.com//products/";
 
   final String offersurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//offer/";
+      "https://emails-permanent-available-risk.trycloudflare.com//offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -106,7 +106,7 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -256,7 +256,7 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
 
         for (var productData in searchData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -349,7 +349,7 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+  //             "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

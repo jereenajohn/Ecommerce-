@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//buy-2-get-1/";
+      "https://emails-permanent-available-risk.trycloudflare.com//buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/search/?q=";
+      "https://emails-permanent-available-risk.trycloudflare.com//products/search/?q=";
 
   final String wishlisturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//whishlist/";
+      "https://emails-permanent-available-risk.trycloudflare.com//whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -144,7 +144,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -235,7 +235,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

@@ -54,9 +54,9 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//order-items/";
+      "https://emails-permanent-available-risk.trycloudflare.com//order-items/";
   final String ratingurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//product-review/";
+      "https://emails-permanent-available-risk.trycloudflare.com//product-review/";
 
   List<Map<String, dynamic>> products = [];
   bool isLoading = true;
@@ -94,7 +94,7 @@ class _MyOrderState extends State<MyOrder> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           orderProducts.add({
             'id': productData['order'].toString(),
             'productid': productData['product'].toString(),

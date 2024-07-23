@@ -31,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/get-address/";
+      "https://emails-permanent-available-risk.trycloudflare.com/get-address/";
   String orderurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/order/create/";
+      "https://emails-permanent-available-risk.trycloudflare.com/order/create/";
   String cuponurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/cupons/";
+      "https://emails-permanent-available-risk.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -99,7 +99,7 @@ class _orderState extends State<order> {
   List<int> offerProducts = [];
      List<Map<String, dynamic>> offers = [];
  final String offersurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/offer/";
+      "https://emails-permanent-available-risk.trycloudflare.com/offer/";
 
 var bogo;
 bool is_active=false;
@@ -612,7 +612,7 @@ print("Total free items: $freeItems");
 }
 
   var CartUrl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/cart-products/";
+      "https://emails-permanent-available-risk.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -939,7 +939,7 @@ print("Total free items: $freeItems");
 
         for (var item in data) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${item['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;

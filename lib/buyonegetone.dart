@@ -28,20 +28,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   // final String buyonegetoneurl =
-  //     "http://sort-matters-zealand-affiliated.trycloudflare.com//buy-1-get-1/";
+  //     "https://emails-permanent-available-risk.trycloudflare.com//buy-1-get-1/";
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/search/?q=";
+      "https://emails-permanent-available-risk.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//add-wishlist/";
+      "https://emails-permanent-available-risk.trycloudflare.com//add-wishlist/";
 
   final String productsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/products/";
+      "https://emails-permanent-available-risk.trycloudflare.com/products/";
 
   final String offersurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//offer/";
+      "https://emails-permanent-available-risk.trycloudflare.com//offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -101,15 +101,12 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-
-        print(
-            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> productsList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -117,7 +114,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
             'image': imageUrl,
             'slug': productData['slug'],
             'mainCategory': productData['mainCategory'],
-            'category':productData['category']
           });
         }
 
@@ -125,17 +121,10 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
           products = productsList;
           print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
-      
-
+          // Filter the products that are present in offerProducts
           productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
-          productsInOffer = products.where((product) {
-            return offerCategories.contains(product['category']);
-          }).toList();
-
-
-          isFavorite = List.generate(productsInOffer.length, (index) => false);
 
           print('Products in Offer: $productsInOffer');
         });
@@ -150,8 +139,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<int> offerProducts = [];
           List<int> offerCategories = [];
 
-
-  Future<void> fetchbogooffers() async {
+ Future<void> fetchbogooffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
       print('Response:::::::::::::::::::::::::: ${response.body}');
@@ -160,6 +148,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
 
         for (var productData in parsed) {
           productsList.add({
@@ -177,7 +166,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
           } else if (productData.containsKey('offer_category')) {
             offerCategories
                 .addAll(List<int>.from(productData['offer_category']));
-                
           }
         }
 
@@ -196,6 +184,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
       print('Error fetching wishlist products: $error');
     }
   }
+
 
   Future<void> addProductToWishlist(int productId) async {
     print("tyyyttttttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffffff");
@@ -261,7 +250,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -354,7 +343,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+  //             "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

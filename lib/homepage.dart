@@ -69,48 +69,47 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> productsInOffer = [];
   List<Map<String, dynamic>> bogodisoffers = [];
   List<Map<String, dynamic>> productsIndiscountOffer = [];
-    List<Map<String, dynamic>> bogoproducts = [];
-
+  List<Map<String, dynamic>> bogoproducts = [];
 
   final String bannerurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//banners/";
+      "https://emails-permanent-available-risk.trycloudflare.com//banners/";
   final String baseUrl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//";
+      "https://emails-permanent-available-risk.trycloudflare.com//";
   final String categoryUrl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//category/";
+      "https://emails-permanent-available-risk.trycloudflare.com//category/";
   final String productsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//products/";
+      "https://emails-permanent-available-risk.trycloudflare.com/products/";
   final String offersurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com/offer-banner/";
+      "https://emails-permanent-available-risk.trycloudflare.com//offer-banner/";
 
   final String discountsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//discount-sale/";
+      "https://emails-permanent-available-risk.trycloudflare.com//discount-sale/";
   // final String buyonegetoneurl =
-  //     "http://sort-matters-zealand-affiliated.trycloudflare.com//buy-1-get-1/";
+  //     "https://emails-permanent-available-risk.trycloudflare.com//buy-1-get-1/";
 
   final String bestsaleurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//best-sale-products/";
+      "https://emails-permanent-available-risk.trycloudflare.com//best-sale-products/";
 
   final String flashsaleurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//flash-sale/";
+      "https://emails-permanent-available-risk.trycloudflare.com//flash-sale/";
 
   final String buytwogetoneurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//buy-2-get-1/";
+      "https://emails-permanent-available-risk.trycloudflare.com//buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//offers/";
+      "https://emails-permanent-available-risk.trycloudflare.com//offers/";
 
   final String searchproducturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//search-products/?q=";
+      "https://emails-permanent-available-risk.trycloudflare.com//search-products/?q=";
 
   final String recommendedproductsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//recommended/";
+      "https://emails-permanent-available-risk.trycloudflare.com//recommended/";
 
   var recentlyviewedurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//recently-viewed/";
+      "https://emails-permanent-available-risk.trycloudflare.com//recently-viewed/";
 
   final String bogooffersurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//offer/";
+      "https://emails-permanent-available-risk.trycloudflare.com//offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -125,7 +124,7 @@ class _HomePageState extends State<HomePage> {
     fetchCategories();
     fetchProducts();
     _startTimer();
-    // fetchOffers();
+    fetchOffers();
     fetchDiscountProducts();
     // fetchbuyonegetoneProducts();
     fetchBestSaleProducts();
@@ -265,7 +264,6 @@ class _HomePageState extends State<HomePage> {
 
   // ##Buyonegetone##
 
- 
   Future<void> fetchofferproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
@@ -273,119 +271,12 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-
-        print(
-            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> productsList = [];
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
-          productsList.add({
-            'id': productData['id'],
-            'name': productData['name'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-            'slug': productData['slug'],
-            'mainCategory': productData['mainCategory'],
-            'category':productData['category']
-          });
-        }
-
-        setState(() {
-          products = productsList;
-          print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++: $products');
-
-      
-
-          productsInOffer = products.where((product) {
-            return offerProducts.contains(product['id']);
-          }).toList();
-          productsInOffer = products.where((product) {
-            return offerCategories.contains(product['category']);
-          }).toList();
-
-
-        
-
-          print('Products in Offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $productsInOffer');
-        });
-      } else {
-        throw Exception('Failed to load wishlist products');
-      }
-    } catch (error) {
-      print('Error fetching wishlist products: $error');
-    }
-  }
-
-  List<int> offerProducts = [];
-       
-
-  Future<void> fetchbogooffers() async {
-    try {
-      final response = await http.get(Uri.parse(bogooffersurl));
-      print('Response:::::::::::::::::::::::::: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-
-        List<Map<String, dynamic>> productsList = [];
-
-        for (var productData in parsed) {
-          productsList.add({
-            'title': productData['name'],
-            'buy': productData['buy'],
-            'buy_value': productData['buy_value'],
-            'get_value': productData['get_value'],
-            'method': productData['method'],
-            'amount': productData['amount'],
-          });
-
-          if (productData.containsKey('offer_products') &&
-              productData['offer_products'].isNotEmpty) {
-            offerProducts.addAll(List<int>.from(productData['offer_products']));
-          } else if (productData.containsKey('offer_category')) {
-            offerCategories
-                .addAll(List<int>.from(productData['offer_category']));
-                
-          }
-        }
-
-        setState(() {
-          offers = productsList;
-          // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
-          print('Offer Products======================================================================: $offerProducts');
-          print('Offer Categorie////////////////////////////////////////////////////////////////////////////s: $offerCategories');
-          fetchofferproducts();
-        });
-      } else {
-        throw Exception('Failed to load wishlist products');
-      }
-    } catch (error) {
-      print('Error fetching wishlist products: $error');
-    }
-  }
-  // ##Buyonegetone ends##
-
-  // ##Buyonegetone eligible discountproducts##
- Future<void> fetchbogodiscountproducts() async {
-    try {
-      final response = await http.get(Uri.parse(productsurl));
-      print('Response: ${response.statusCode}');
-
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-
-        print(
-            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
-        final List<dynamic> productsData = parsed['products'];
-        List<Map<String, dynamic>> productsList = [];
-
-        for (var productData in productsData) {
-          String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -401,18 +292,11 @@ class _HomePageState extends State<HomePage> {
           print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
           // Filter the products that are present in offerProducts
-          productsIndiscountOffer = products.where((product) {
-            return offerProductss.contains(product['id']);
+          productsInOffer = products.where((product) {
+            return offerProducts.contains(product['id']);
           }).toList();
 
-           productsIndiscountOffer = products.where((product) {
-            return offerCategories.contains(product['category']);
-          }).toList();
-
-
-         
-
-          print('Products in Offer: $productsIndiscountOffer');
+          print('Products in Offer: $productsInOffer');
         });
       } else {
         throw Exception('Failed to load wishlist products');
@@ -422,10 +306,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  List<int> offerProductss = [];
-  List<int> offerCategories = [];
+  List<int> offerProducts = [];
 
-  Future<void> fetchbogodiscountoffers() async {
+  Future<void> fetchbogooffers() async {
     try {
       final response = await http.get(Uri.parse(bogooffersurl));
       print('Response:::::::::::::::::::::::::: ${response.body}');
@@ -434,36 +317,37 @@ class _HomePageState extends State<HomePage> {
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
+        List<int> offerCategories = [];
 
         for (var productData in parsed) {
-          productsList.add({
-            'title': productData['name'],
-            'buy': productData['buy'],
-            'buy_value': productData['buy_value'],
-            'get_value': productData['get_value'],
-            'method': productData['method'],
-            'amount': productData['amount'],
-          });
-          print(
-              "dissssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccc${productData['discount_approved_products']}");
+          if (productData['offer_active'] == true) {
+            productsList.add({
+              'title': productData['name'],
+              'buy': productData['buy'],
+              'buy_value': productData['buy_value'],
+              'get_value': productData['get_value'],
+              'method': productData['method'],
+              'amount': productData['amount'],
+            });
 
-          if (productData.containsKey('discount_approved_products') &&
-              productData['discount_approved_products'].isNotEmpty) {
-            offerProductss.addAll(
-                List<int>.from(productData['discount_approved_products']));
-          } else if (productData.containsKey('discount_approved_category')) {
-            offerCategories
-                .addAll(List<int>.from(productData['discount_approved_category']));
+            if (productData.containsKey('offer_products') &&
+                productData['offer_products'].isNotEmpty) {
+              offerProducts
+                  .addAll(List<int>.from(productData['offer_products']));
+            } else if (productData.containsKey('offer_category')) {
+              offerCategories
+                  .addAll(List<int>.from(productData['offer_category']));
+            }
           }
         }
 
         setState(() {
-          bogodisoffers = productsList;
+          offerss = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $bogodisoffers');
-          print('Offer Products: $offerProductss');
+          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offerss');
+          print('Offer Products: $offerProducts');
           print('Offer Categories: $offerCategories');
-          fetchbogodiscountproducts();
+          fetchofferproducts();
         });
       } else {
         throw Exception('Failed to load wishlist products');
@@ -472,6 +356,105 @@ class _HomePageState extends State<HomePage> {
       print('Error fetching wishlist products: $error');
     }
   }
+
+  // ##Buyonegetone ends##
+
+  // ##Buyonegetone eligible discountproducts##
+  Future<void> fetchbogodiscountproducts() async {
+  try {
+    final response = await http.get(Uri.parse(productsurl));
+    print('Response: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      print("DDDDDDDDDDDDDDDDIIIIIIIIIIIIIISSSSSSSSSSSCCCCCCCCCCCCCC$parsed");
+
+      final List<dynamic> productsData = parsed['products'];
+      List<Map<String, dynamic>> productsList = [];
+
+      for (var productData in productsData) {
+        String imageUrl =
+            "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+        productsList.add({
+          'id': productData['id'],
+          'name': productData['name'],
+          'salePrice': productData['salePrice'],
+          'image': imageUrl,
+          'slug': productData['slug'],
+          'mainCategory': productData['mainCategory'],
+        });
+      }
+
+      setState(() {
+        bogoproducts = productsList;
+        print('productssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrDDDDDIIIIIIISSSSSSS: $bogoproducts');
+
+        // Filter the products that are present in offerProducts
+        productsIndiscountOffer = bogoproducts.where((product) {
+          return offerProductss.contains(product['id']);
+        }).toList();
+
+        print('Products in Offer DIIISSSSCCCCC: $productsIndiscountOffer');
+      });
+    } else {
+      throw Exception('Failed to load discount products');
+    }
+  } catch (error) {
+    print('Error fetching discount products: $error');
+  }
+}
+
+List<int> offerProductss = [];
+
+Future<void> fetchbogodiscountoffers() async {
+  try {
+    final response = await http.get(Uri.parse(bogooffersurl));
+    print('Response:::::::::::::::::::::::::: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+
+      List<Map<String, dynamic>> productsList = [];
+      List<int> offerCategories = [];
+
+      for (var productData in parsed) {
+        if (productData['offer_active'] == true) {
+          productsList.add({
+            'title': productData['name'],
+            'buy': productData['buy'],
+            'buy_value': productData['buy_value'],
+            'get_value': productData['get_value'],
+            'method': productData['method'],
+            'amount': productData['amount'],
+          });
+
+          print("dissssssssscccccccccccccccccaaaaaaaaaaaaaaaappppppppppppppppppppp${productData['discount_approved_products']}");
+
+          if (productData.containsKey('discount_approved_products') &&
+              productData['discount_approved_products'].isNotEmpty) {
+            offerProductss.addAll(
+                List<int>.from(productData['discount_approved_products']));
+          } else if (productData.containsKey('offer_category')) {
+            offerCategories.addAll(List<int>.from(productData['offer_category']));
+          }
+        }
+      }
+
+      setState(() {
+        bogodisoffers = productsList;
+        // Store offerProducts and offerCategories in state variables if needed
+        print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrbbbbbbbbbbooooooogggggggggdissss: $bogodisoffers');
+        print('Offer Products: $offerProductss');
+        print('Offer Categories: $offerCategories');
+        fetchbogodiscountproducts();
+      });
+    } else {
+      throw Exception('Failed to load discount offer products');
+    }
+  } catch (error) {
+    print('Error fetching discount offer productsssssss: $error');
+  }
+}
 
   // ##Buyonegetone eligible discountproducts ends##
 
@@ -501,7 +484,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${recentproductsData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -548,7 +531,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -583,7 +566,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${offerData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -614,13 +597,12 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
-            'slug':productData['slug']
           });
         }
 
@@ -648,7 +630,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -686,7 +668,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -725,7 +707,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -762,7 +744,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+  //             "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -799,7 +781,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -845,6 +827,8 @@ class _HomePageState extends State<HomePage> {
 
       print("Response Body: ${response.body}");
       print("Response Status Code: ${response.statusCode}");
+      print(
+          "Recommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmended Products:  ${response.body}");
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -856,7 +840,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -868,7 +852,8 @@ class _HomePageState extends State<HomePage> {
 
         setState(() {
           recommendedproducts = productRecommendedList;
-          print("Recommended Products: $recommendedproducts");
+          print(
+              "Recommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmended Products: $recommendedproducts");
         });
       } else {
         throw Exception('Failed to load recommended products');
@@ -908,7 +893,7 @@ class _HomePageState extends State<HomePage> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+  //             "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -941,7 +926,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -977,7 +962,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com/${bannerData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -1006,7 +991,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${categoryData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -1124,10 +1109,8 @@ class _HomePageState extends State<HomePage> {
                   Spacer(),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => coin()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => coin()));
 
                       // Add your logout functionality here
                     },
@@ -1563,7 +1546,7 @@ class _HomePageState extends State<HomePage> {
                                             builder: (context) =>
                                                 Product_big_View(
                                               product_id: products[index]['id'],
-                                              slug: products[index]['slug'],
+                                              slug: products[index]['id'],
                                               Category_id: products[index]
                                                   ['mainCategory'],
                                             ),
@@ -1707,8 +1690,6 @@ class _HomePageState extends State<HomePage> {
                                       (index) {
                                         final product = productsInOffer[index];
 
-                                        print(
-                                            "BBBBBBBBB1111111GGGGGGGGGGGGGGGGG1111111111111PPPPPRRRRRROOOOOOOO$product");
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: GestureDetector(
@@ -1803,128 +1784,128 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    // if (offers.isNotEmpty)
-                    //   Container(
-                    //     child: Column(
-                    //       children: [
-                    //         Padding(
-                    //           padding:
-                    //               const EdgeInsets.only(left: 10, bottom: 10),
-                    //           child: Row(
-                    //             crossAxisAlignment: CrossAxisAlignment.start,
-                    //             children: [
-                    //               Text(
-                    //                 "All Offers",
-                    //                 style:
-                    //                     TextStyle(fontWeight: FontWeight.bold),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                      //       Padding(
-                      //         padding: const EdgeInsets.only(
-                      //             left: 10, right: 10, bottom: 10),
-                      //         child: SizedBox(
-                      //           height: 240,
-                      //           child: Container(
-                      //             child: ListView.builder(
-                      //               scrollDirection: Axis.horizontal,
-                      //               itemCount: offers.length,
-                      //               itemBuilder:
-                      //                   (BuildContext context, int index) {
-                      //                 return Container(
-                      //                   width: 220,
-                      //                   margin: EdgeInsets.symmetric(
-                      //                       horizontal: 5.0),
-                      //                   decoration: BoxDecoration(
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10),
-                      //                     border: Border.all(
-                      //                         color: Color.fromARGB(
-                      //                             255, 219, 217, 217)),
-                      //                     boxShadow: [
-                      //                       BoxShadow(
-                      //                         color: Colors.white,
-                      //                         blurRadius: 3,
-                      //                         spreadRadius: 2,
-                      //                         offset: Offset(0, 2),
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                   child: Column(
-                      //                     crossAxisAlignment:
-                      //                         CrossAxisAlignment.start,
-                      //                     children: [
-                      //                       Padding(
-                      //                         padding: const EdgeInsets.only(
-                      //                             top: 10, left: 10, right: 10),
-                      //                         child: Container(
-                      //                           height:
-                      //                               140, // Adjusted height to accommodate the images
-                      //                           decoration: BoxDecoration(
-                      //                             image: DecorationImage(
-                      //                               image: NetworkImage(offers[
-                      //                                       index][
-                      //                                   'image']), // Using NetworkImage directly
-                      //                               fit: BoxFit.cover,
-                      //                             ),
-                      //                             borderRadius:
-                      //                                 BorderRadius.circular(10),
-                      //                           ),
-                      //                         ),
-                      //                       ),
-                      //                       SizedBox(height: 4),
-                      //                       Center(
-                      //                         child: Text(
-                      //                           offers[index]['name'],
-                      //                           style: TextStyle(fontSize: 12),
-                      //                           // maxLines: 2,
-                      //                           overflow: TextOverflow.ellipsis,
-                      //                         ),
-                      //                       ),
-                      //                       SizedBox(
-                      //                         height: 10,
-                      //                       ),
-                      //                       Center(
-                      //                         child: ElevatedButton(
-                      //                           onPressed: () {
-                      //                             Navigator.push(
-                      //                                 context,
-                      //                                 MaterialPageRoute(
-                      //                                     builder: (context) =>
-                      //                                         OfferProducts(
-                      //                                             offerId: offers[
-                      //                                                     index]
-                      //                                                 ['id'])));
-                      //                             // Add your onPressed function here
-                      //                           },
-                      //                           style: ElevatedButton.styleFrom(
-                      //                             backgroundColor: Colors.black,
-                      //                             shape: RoundedRectangleBorder(
-                      //                               borderRadius:
-                      //                                   BorderRadius.circular(
-                      //                                       20),
-                      //                             ),
-                      //                           ),
-                      //                           child: Text(
-                      //                             "Collect Now",
-                      //                             style: TextStyle(
-                      //                               color: Colors.white,
-                      //                             ),
-                      //                           ),
-                      //                         ),
-                      //                       )
-                      //                     ],
-                      //                   ),
-                      //                 );
-                      //               },
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                    if (offers.isNotEmpty)
+                      Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, bottom: 10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "All Offers",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 10),
+                              child: SizedBox(
+                                height: 240,
+                                child: Container(
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: offers.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        width: 220,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: Color.fromARGB(
+                                                  255, 219, 217, 217)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.white,
+                                              blurRadius: 3,
+                                              spreadRadius: 2,
+                                              offset: Offset(0, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10, left: 10, right: 10),
+                                              child: Container(
+                                                height:
+                                                    140, // Adjusted height to accommodate the images
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(offers[
+                                                            index][
+                                                        'image']), // Using NetworkImage directly
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Center(
+                                              child: Text(
+                                                offers[index]['name'],
+                                                style: TextStyle(fontSize: 12),
+                                                // maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Center(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              OfferProducts(
+                                                                  offerId: offers[
+                                                                          index]
+                                                                      ['id'])));
+                                                  // Add your onPressed function here
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.black,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "Collect Now",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     Column(
                       children: [
                         if (bestsaleproducts.isNotEmpty)
@@ -2612,7 +2593,7 @@ class _HomePageState extends State<HomePage> {
                           GestureDetector(
                             onTap: () {},
                             child: Container(
-                                // color: Color.fromARGB(255, 172, 217, 236),
+                                color: Color.fromARGB(255, 217, 219, 221),
                                 child: Column(
                                   children: [
                                     Row(

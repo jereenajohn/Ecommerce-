@@ -29,9 +29,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   var url =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//profile/";
+      "https://emails-permanent-available-risk.trycloudflare.com//profile/";
   var url2 =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//profile-image/";
+      "https://emails-permanent-available-risk.trycloudflare.com//profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -43,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//profile-view/";
+      "https://emails-permanent-available-risk.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

@@ -32,29 +32,29 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//category/";
+      "https://emails-permanent-available-risk.trycloudflare.com//category/";
 
   final multipleimageurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//product-images/";
+      "https://emails-permanent-available-risk.trycloudflare.com//product-images/";
 
   final String addtocarturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//cart/";
+      "https://emails-permanent-available-risk.trycloudflare.com//cart/";
   final String wishlisturl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//add-wishlist/";
+      "https://emails-permanent-available-risk.trycloudflare.com//add-wishlist/";
 
   final String discountsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//discount-sale/";
+      "https://emails-permanent-available-risk.trycloudflare.com//discount-sale/";
 
   var recentlyviewedurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//recently-viewed/";
+      "https://emails-permanent-available-risk.trycloudflare.com//recently-viewed/";
 
   final String recommendedproductsurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//recommended/";
+      "https://emails-permanent-available-risk.trycloudflare.com//recommended/";
   final imageurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//product/";
+      "https://emails-permanent-available-risk.trycloudflare.com//product/";
 
   final String ratingurl =
-      "http://sort-matters-zealand-affiliated.trycloudflare.com//review/";
+      "https://emails-permanent-available-risk.trycloudflare.com//review/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -139,7 +139,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           productratingList.add({
             'rating': productData['rating'],
             'review_text': productData['review_text'] ?? 'No review',
@@ -198,7 +198,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -246,7 +246,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${recentproductsData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -286,7 +286,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1716,7 +1716,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${productData['image']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1782,15 +1782,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image1']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image1']}";
           String imageUrl2 =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image2']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image2']}";
           String imageUrl3 =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image3']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image3']}";
           String imageUrl4 =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image4']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image4']}";
           String imageUrl5 =
-              "http://sort-matters-zealand-affiliated.trycloudflare.com//${imageData['image5']}";
+              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])
