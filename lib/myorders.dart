@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:intl/intl.dart';
 
 class MyOrder extends StatefulWidget {
   const MyOrder({super.key});
@@ -54,9 +55,9 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://emails-permanent-available-risk.trycloudflare.com//order-items/";
+      "https://emails-permanent-available-risk.trycloudflare.com/order-items/";
   final String ratingurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//product-review/";
+      "https://emails-permanent-available-risk.trycloudflare.com/product-review/";
 
   List<Map<String, dynamic>> products = [];
   bool isLoading = true;
@@ -66,61 +67,66 @@ class _MyOrderState extends State<MyOrder> {
     return prefs.getString('token');
   }
 
-  Future<void> myOrderDetails() async {
-    try {
-      final token = await getTokenFromPrefs();
+ Future<void> myOrderDetails() async {
+  try {
+    final token = await getTokenFromPrefs();
 
-      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
+    print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
 
-      final response = await http.get(
-        Uri.parse(orders),
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': ' $token',
-        },
-      );
+    final response = await http.get(
+      Uri.parse(orders),
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': ' $token',
+      },
+    );
 
-      print(
-          "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
-      print(
-          "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
+    print("77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
+    print("55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
 
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
-        final List<dynamic> productsData = parsed['data'];
-        List<Map<String, dynamic>> orderProducts = [];
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      final List<dynamic> productsData = parsed['data'];
+      List<Map<String, dynamic>> orderProducts = [];
 
-        print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
+      print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
-          orderProducts.add({
-            'id': productData['order'].toString(),
-            'productid': productData['product'].toString(),
-            'name': productData['name'],
-            'salePrice': productData['sale_price'].toString(),
-            'image': imageUrl,
-            'status': productData['status'],
-          });
-        }
+      for (var productData in productsData) {
+        String imageUrl = "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+        
+        // Parse and format the date
+        DateTime parsedDate = DateTime.parse(productData['created_at']);
+        String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
 
-        setState(() {
-          products = orderProducts;
-          isLoading = false;
+        orderProducts.add({
+          'id': productData['order'].toString(),
+          'productid': productData['product'].toString(),
+          'name': productData['name'],
+          'salePrice': productData['sale_price'].toString(),
+          'image': imageUrl,
+          'status': productData['status'],
+          'created_at': formattedDate,
         });
-      } else {
-        throw Exception('Failed to load recommended products');
       }
-    } catch (error) {
-      print('Error fetching recommended products: $error');
-    }
-  }
 
+      setState(() {
+        products = orderProducts;
+        isLoading = false;
+      });
+      print("my orderrrrrrrrr productssssssssssssssssssss $products");
+
+    } else {
+      throw Exception('Failed to load recommended products');
+    }
+  } catch (error) {
+    print('Error fetching recommended products: $error');
+  }
+}
   Future<void> postrating(
       String productid, double rating, String feedback) async {
     try {
       final token = await gettokenFromPrefs();
+      print("=======================>>>>>>>>>>>>>>>>>>+++++++++++++++++$token");
 
       var response = await http.post(
         Uri.parse('$ratingurl$productid/'),
@@ -244,7 +250,7 @@ class _MyOrderState extends State<MyOrder> {
             ElevatedButton(
               child: Text(
                 'Post',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: const Color.fromRGBO(255, 255, 255, 1)),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 0, 0, 0),
@@ -322,19 +328,30 @@ class _MyOrderState extends State<MyOrder> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          subtitle: Row(
+                          subtitle: Column(
                             children: [
-                              Text(
-                                '\$${product['salePrice']}',
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                              Row(
+                                children: [
+                                  Text(
+                                    '\$${product['salePrice']}',
+                                    style:
+                                        TextStyle(color: Colors.grey, fontSize: 12),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    '${product['status']}',
+                                    style:
+                                        TextStyle(color: statusColor, fontSize: 14),
+                                  ),
+                                ],
                               ),
-                              Spacer(),
-                              Text(
-                                '${product['status']}',
-                                style:
-                                    TextStyle(color: statusColor, fontSize: 14),
-                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                   ' ${product['created_at']}'
+                                  )
+                                ],
+                              )
                             ],
                           ),
                           trailing: Icon(
