@@ -58,12 +58,11 @@ class _lowtohighpageState extends State<lowtohighpage> {
     print(subcategoryId);
     final token = await gettokenFromPrefs();
     try {
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$hightolow$subcategoryId/'),
         headers: {
           'Authorization': '$token',
         },
-        body: ({'pk': subcategoryId.toString()}),
       );
 
       if (response.statusCode == 200) {
