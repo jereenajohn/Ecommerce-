@@ -8,7 +8,7 @@ class ParentWidget extends StatefulWidget {
 }
 
 class _ParentWidgetState extends State<ParentWidget> {
-  final imageurl = "https://emails-permanent-available-risk.trycloudflare.com//product/";
+  final imageurl = "https://garden-tunnel-tue-episodes.trycloudflare.com//product/";
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
   List<String> colors = [];
@@ -37,11 +37,11 @@ class _ParentWidgetState extends State<ParentWidget> {
         List<Map<String, dynamic>> productsList = [];
 
         for (var imageData in imageData) {
-          String imageUrl1 = "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image1']}";
-          String imageUrl2 = "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image2']}";
-          String imageUrl3 = "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image3']}";
-          String imageUrl4 = "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image4']}";
-          String imageUrl5 = "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image5']}";
+          String imageUrl1 = "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image1']}";
+          String imageUrl2 = "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image2']}";
+          String imageUrl3 = "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image3']}";
+          String imageUrl4 = "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image4']}";
+          String imageUrl5 = "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

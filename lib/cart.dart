@@ -38,18 +38,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://emails-permanent-available-risk.trycloudflare.com/cart-products/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com/products/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://emails-permanent-available-risk.trycloudflare.com/cart/increment/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://emails-permanent-available-risk.trycloudflare.com/cart/decrement/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://emails-permanent-available-risk.trycloudflare.com/cart-delete/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -65,7 +65,6 @@ class _CartState extends State<Cart> {
 
     fetchCartData();
     fetchoffers();
-
     calculateTotalPrice();
   }
 
@@ -115,7 +114,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${item['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -259,7 +258,7 @@ class _CartState extends State<Cart> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "https://emails-permanent-available-risk.trycloudflare.com/offer/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/offer/";
 
   var bogo;
   bool is_active = false;

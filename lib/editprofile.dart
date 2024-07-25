@@ -29,9 +29,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   var url =
-      "https://emails-permanent-available-risk.trycloudflare.com//profile/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//profile/";
   var url2 =
-      "https://emails-permanent-available-risk.trycloudflare.com//profile-image/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -43,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//profile-view/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {

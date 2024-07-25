@@ -72,44 +72,44 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> bogoproducts = [];
 
   final String bannerurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//banners/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//banners/";
   final String baseUrl =
-      "https://emails-permanent-available-risk.trycloudflare.com//";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//";
   final String categoryUrl =
-      "https://emails-permanent-available-risk.trycloudflare.com//category/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//category/";
   final String productsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com/products/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/";
   final String offersurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//offer-banner/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//offer-banner/";
 
   final String discountsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//discount-sale/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//discount-sale/";
   // final String buyonegetoneurl =
-  //     "https://emails-permanent-available-risk.trycloudflare.com//buy-1-get-1/";
+  //     "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//best-sale-products/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//best-sale-products/";
 
   final String flashsaleurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//flash-sale/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//flash-sale/";
 
   final String buytwogetoneurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//buy-2-get-1/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//offers/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//offers/";
 
   final String searchproducturl =
-      "https://emails-permanent-available-risk.trycloudflare.com//search-products/?q=";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//recommended/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//recommended/";
 
   var recentlyviewedurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//recently-viewed/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//recently-viewed/";
 
   final String bogooffersurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//offer/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -276,7 +276,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -374,7 +374,7 @@ class _HomePageState extends State<HomePage> {
 
       for (var productData in productsData) {
         String imageUrl =
-            "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+            "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
         productsList.add({
           'id': productData['id'],
           'name': productData['name'],
@@ -484,7 +484,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${recentproductsData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -531,7 +531,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -566,7 +566,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${offerData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -597,7 +597,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -630,7 +630,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -668,7 +668,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -707,7 +707,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -744,7 +744,7 @@ Future<void> fetchbogodiscountoffers() async {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+  //             "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -781,7 +781,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -840,7 +840,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -893,7 +893,7 @@ Future<void> fetchbogodiscountoffers() async {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
+  //             "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
   //         productRecommendedList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -926,7 +926,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -962,7 +962,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${bannerData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -991,7 +991,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${categoryData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],

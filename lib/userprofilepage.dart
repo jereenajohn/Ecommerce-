@@ -74,7 +74,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com/${userimage['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com/${userimage['image']}";
         });
 print("$imageUrl");
         print('Profile data fetched successfully');
@@ -105,9 +105,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://emails-permanent-available-risk.trycloudflare.com///profile-view/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com///profile-view/";
       var viewimage =
-      "https://emails-permanent-available-risk.trycloudflare.com///profile-image/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com///profile-image/";
   Future<void> getprofiledata() async {
     print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
@@ -151,7 +151,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://emails-permanent-available-risk.trycloudflare.com//${userimage['image']}"
+            ? "https://garden-tunnel-tue-episodes.trycloudflare.com//${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(

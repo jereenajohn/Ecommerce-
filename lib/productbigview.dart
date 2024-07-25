@@ -32,29 +32,29 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "https://emails-permanent-available-risk.trycloudflare.com//category/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//category/";
 
   final multipleimageurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//product-images/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//product-images/";
 
   final String addtocarturl =
-      "https://emails-permanent-available-risk.trycloudflare.com//cart/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//cart/";
   final String wishlisturl =
-      "https://emails-permanent-available-risk.trycloudflare.com//add-wishlist/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//add-wishlist/";
 
   final String discountsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//discount-sale/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//discount-sale/";
 
   var recentlyviewedurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//recently-viewed/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//recently-viewed/";
 
   final String recommendedproductsurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//recommended/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//recommended/";
   final imageurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//product/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//product/";
 
   final String ratingurl =
-      "https://emails-permanent-available-risk.trycloudflare.com//review/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com//review/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -139,7 +139,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
           productratingList.add({
             'rating': productData['rating'],
             'review_text': productData['review_text'] ?? 'No review',
@@ -198,7 +198,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -246,7 +246,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${recentproductsData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -286,7 +286,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -1006,8 +1006,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Colors.white,
-                                        Color.fromARGB(255, 255, 252, 252)!
+                                      Color.fromARGB(255, 237, 237, 237),
+                                        Color.fromARGB(255,245,243,243)!
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
@@ -1015,7 +1015,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                     borderRadius: BorderRadius.circular(15),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
+                                        color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 7,
                                         offset: Offset(
@@ -1716,7 +1716,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://emails-permanent-available-risk.trycloudflare.com//${productData['image']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1782,15 +1782,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image1']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image1']}";
           String imageUrl2 =
-              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image2']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image2']}";
           String imageUrl3 =
-              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image3']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image3']}";
           String imageUrl4 =
-              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image4']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image4']}";
           String imageUrl5 =
-              "https://emails-permanent-available-risk.trycloudflare.com//${imageData['image5']}";
+              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])
