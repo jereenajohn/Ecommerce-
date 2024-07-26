@@ -46,7 +46,6 @@ class _MyOrderState extends State<MyOrder> {
 
   Future<void> _initData() async {
     tokenn = await gettokenFromPrefs();
-    print("--------------------------------------------R$tokenn");
   }
 
   Future<String?> gettokenFromPrefs() async {
@@ -71,7 +70,6 @@ class _MyOrderState extends State<MyOrder> {
   try {
     final token = await getTokenFromPrefs();
 
-    print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
 
     final response = await http.get(
       Uri.parse(orders),
@@ -81,15 +79,12 @@ class _MyOrderState extends State<MyOrder> {
       },
     );
 
-    print("77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
-    print("55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
-
+  
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
       final List<dynamic> productsData = parsed['data'];
       List<Map<String, dynamic>> orderProducts = [];
 
-      print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
 
       for (var productData in productsData) {
         String imageUrl = "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
@@ -113,20 +108,17 @@ class _MyOrderState extends State<MyOrder> {
         products = orderProducts;
         isLoading = false;
       });
-      print("my orderrrrrrrrr productssssssssssssssssssss $products");
 
     } else {
       throw Exception('Failed to load recommended products');
     }
   } catch (error) {
-    print('Error fetching recommended products: $error');
   }
 }
   Future<void> postrating(
       String productid, double rating, String feedback) async {
     try {
       final token = await gettokenFromPrefs();
-      print("=======================>>>>>>>>>>>>>>>>>>+++++++++++++++++$token");
 
       var response = await http.post(
         Uri.parse('$ratingurl$productid/'),
@@ -142,12 +134,9 @@ class _MyOrderState extends State<MyOrder> {
         ),
       );
 
-      print('$ratingurl$productid/');
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
+     
 
       if (response.statusCode == 201) {
-        print('Rating submitted successfully');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Rating submitted successfully'),
@@ -158,8 +147,7 @@ class _MyOrderState extends State<MyOrder> {
         ratedProducts.add(productid);
         saveRatedProducts(); // Save the updated list
       } else {
-        print('Failed to submit rating: ${response.statusCode}');
-        print('Error: ${response.body}');
+       
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to submit rating: ${response.body}'),
@@ -168,7 +156,6 @@ class _MyOrderState extends State<MyOrder> {
         );
       }
     } catch (error) {
-      print('Error submitting rating: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error submitting rating'),

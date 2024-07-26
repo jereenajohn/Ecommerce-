@@ -5,7 +5,6 @@ import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/orderpage.dart';
 import 'package:bepocart/productbigview.dart';
-import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
 

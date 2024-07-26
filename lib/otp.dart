@@ -19,8 +19,7 @@ class _OtpPageState extends State<OtpPage> {
   Future<void> sendOtp() async {
     try {
        String otp = otpController.map((controller) => controller.text).join();
-      print(widget.email);
-      print("haiiiiiii");
+     
       var response = await http.post(
         Uri.parse(url),
         headers: {
@@ -28,9 +27,7 @@ class _OtpPageState extends State<OtpPage> {
         },
         body: jsonEncode({"otp": otp, "email": widget.email}),
       );
-      print("${response.body}");
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
         Navigator.push(
@@ -40,13 +37,11 @@ class _OtpPageState extends State<OtpPage> {
         );
       } else {
         var responseData = jsonDecode(response.body);
-        print("Error: ${responseData['message']}");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Invalid OTP. Please try again."),
         ));
       }
     } catch (e) {
-      print("Error: $e");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("An unexpected error occurred. Please try again later."),
       ));

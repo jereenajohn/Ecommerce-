@@ -68,10 +68,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   void toggleFavorite(int index) {
     setState(() {
       isFavorite[index] = !isFavorite[index];
-      print(
-          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd$index");
-      print(
-          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd${productsInOffer[index]['id']}");
+     
     });
 
     if (isFavorite[index]) {
@@ -97,7 +94,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   Future<void> fetchofferproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -119,20 +115,17 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         setState(() {
           products = productsList;
-          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
           // Filter the products that are present in offerProducts
           productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
 
-          print('Products in Offer: $productsInOffer');
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
@@ -142,7 +135,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
  Future<void> fetchbogooffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
-      print('Response:::::::::::::::::::::::::: ${response.body}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -172,26 +164,21 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         setState(() {
           offers = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
-          print('Offer Products: $offerProducts');
-          print('Offer Categories: $offerCategories');
+         
           fetchofferproducts();
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
 
   Future<void> addProductToWishlist(int productId) async {
-    print("tyyyttttttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffffff");
     try {
       final token = await gettokenFromPrefs();
 
-      print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
         Uri.parse('${wishlisturl}${productId}/'),
         headers: {
@@ -204,10 +191,8 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         }),
       );
 
-      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
       if (response.statusCode == 201) {
-        print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
@@ -222,31 +207,24 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
+      
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
     }
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print("=========SSSSSSSSSSSSSEEEEEEEEEEEEEEEEEEAAAAAAAARRRRRRCCCCCHHHHHHHHHH${response.body}");
-      print(
-          "==============SSSSSSEEEEEEEEEEEAAAAAAAAAAAAAARRRRRRRRCCCCCHHHHHHHSSSSSSSTTTTTTAATTTUUS${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========SSSSSSSSSSSEEEEEEEEEEEEEEEAAARRRRRRRCCCCCHHHHDDDDDAAAAAAAAATTTTTTTAAAA${searchData}");
+        
 
         for (var productData in searchData) {
           String imageUrl =
@@ -262,14 +240,11 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
@@ -300,7 +275,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                           borderRadius: BorderRadius.circular(20)),
                       suffixIcon: IconButton(
                         onPressed: () async {
-                          print("gggggggggggggggggggggggggggggggggggggggggg");
                           await searchproduct();
 
                           setState(() {
@@ -365,7 +339,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   //       throw Exception('Failed to load Buy One Get One products');
   //     }
   //   } catch (error) {
-  //     print('Error fetching Buy One Get One products: $error');
   //   }
   // }
 
@@ -432,7 +405,6 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                                   firstItemIndex]['slug'],
                                             )));
                               } catch (e) {
-                                print('Error navigating: $e');
                               }
                             },
                             child: Container(
@@ -482,8 +454,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            print(
-                                                "firstttttttttttttttttttttttindexxxxxxxxxxxxx$firstItemIndex");
+                                          
 
                                             toggleFavorite(firstItemIndex);
                                           },

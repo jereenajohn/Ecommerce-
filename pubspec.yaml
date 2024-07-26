@@ -124,6 +124,8 @@ flutter:
    - lib/assets/coin.png
    - lib/assets/telephone.png
    - lib/assets/whatsapp.png
+   - lib/assets/b1g1.png
+   - lib/assets/b2g2.png
 
 
 

@@ -15,13 +15,16 @@ import 'package:http/http.dart' as http;
 class Bogo_Eligible_Category_Products extends StatefulWidget {
   final String? user_id; // Receive user_id as a parameter
 
-  const Bogo_Eligible_Category_Products({Key? key, this.user_id}) : super(key: key);
+  const Bogo_Eligible_Category_Products({Key? key, this.user_id})
+      : super(key: key);
 
   @override
-  State<Bogo_Eligible_Category_Products> createState() => _Bogo_Eligible_Category_ProductsState();
+  State<Bogo_Eligible_Category_Products> createState() =>
+      _Bogo_Eligible_Category_ProductsState();
 }
 
-class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category_Products> {
+class _Bogo_Eligible_Category_ProductsState
+    extends State<Bogo_Eligible_Category_Products> {
   String? userId; // Declare userId variable to store user ID
   int _selectedIndex = 0; // Index of the selected tab
   List<bool> isFavorite = [];
@@ -65,10 +68,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
   void toggleFavorite(int index) {
     setState(() {
       isFavorite[index] = !isFavorite[index];
-      print(
-          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd$index");
-      print(
-          "iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd${productsIndiscountOffer[index]['id']}");
     });
 
     if (isFavorite[index]) {
@@ -94,13 +93,10 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
   Future<void> fetchbogodiscountproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
 
-        print(
-            "RRRRRRRRRRREEEEEEEEESSSSSSSSSSSSSSPPPPPOOOOOOOOOOOOOOOOOONNNNNSEEEEEE$parsed");
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> productsList = [];
 
@@ -119,7 +115,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
 
         setState(() {
           products = productsList;
-          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
           // Filter the products that are present in offerProducts
           productsIndiscountOffer = products.where((product) {
@@ -128,15 +123,11 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
 
           isFavorite =
               List.generate(productsIndiscountOffer.length, (index) => false);
-
-          print('Products in Offer: $productsIndiscountOffer');
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
-    } catch (error) {
-      print('Error fetching wishlist products: $error');
-    }
+    } catch (error) {}
   }
 
   List<int> offerProductss = [];
@@ -144,7 +135,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
   Future<void> fetchbogodiscountoffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
-      print('Response:::::::::::::::::::::::::: ${response.body}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -161,8 +151,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
             'method': productData['method'],
             'amount': productData['amount'],
           });
-          print(
-              "dissssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccc${productData['discount_approved_products']}");
 
           if (productData.containsKey('discount_approved_products') &&
               productData['discount_approved_products'].isNotEmpty) {
@@ -177,25 +165,19 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
         setState(() {
           bogodisoffers = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $bogodisoffers');
-          print('Offer Products: $offerProductss');
-          print('Offer Categories: $offerCategories');
+
           fetchbogodiscountproducts();
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
-    } catch (error) {
-      print('Error fetching wishlist products: $error');
-    }
+    } catch (error) {}
   }
 
   Future<void> addProductToWishlist(int productId) async {
-    print("tyyyttttttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffffff");
     try {
       final token = await gettokenFromPrefs();
 
-      print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
         Uri.parse('${wishlisturl}${productId}/'),
         headers: {
@@ -208,10 +190,7 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
         }),
       );
 
-      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
-
       if (response.statusCode == 201) {
-        print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
@@ -225,34 +204,19 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
             content: Text('Product already in wishlist'),
           ),
         );
-      } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
-      }
-    } catch (error) {
-      print('Error adding product to wishlist: $error');
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print(
-          "=========SSSSSSSSSSSSSEEEEEEEEEEEEEEEEEEAAAAAAAARRRRRRCCCCCHHHHHHHHHH${response.body}");
-      print(
-          "==============SSSSSSEEEEEEEEEEEAAAAAAAAAAAAAARRRRRRRRCCCCCHHHHHHHSSSSSSSTTTTTTAATTTUUS${response.statusCode}");
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print(
-            "=========SSSSSSSSSSSEEEEEEEEEEEEEEEAAARRRRRRRCCCCCHHHHDDDDDAAAAAAAAATTTTTTTAAAA${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -268,15 +232,9 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
-      } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
-      }
-    } catch (error) {
-      print('Error fetching product: $error');
-    }
+      } else {}
+    } catch (error) {}
   }
 
   void _showSearchDialog(BuildContext context) {
@@ -306,7 +264,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
                           borderRadius: BorderRadius.circular(20)),
                       suffixIcon: IconButton(
                         onPressed: () async {
-                          print("gggggggggggggggggggggggggggggggggggggggggg");
                           await searchproduct();
 
                           setState(() {
@@ -371,7 +328,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
   //       throw Exception('Failed to load Buy One Get One products');
   //     }
   //   } catch (error) {
-  //     print('Error fetching Buy One Get One products: $error');
   //   }
   // }
 
@@ -440,9 +396,7 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
                                               slug: productsIndiscountOffer[
                                                   firstItemIndex]['slug'],
                                             )));
-                              } catch (e) {
-                                print('Error navigating: $e');
-                              }
+                              } catch (e) {}
                             },
                             child: Container(
                               height: 250,
@@ -491,9 +445,6 @@ class _Bogo_Eligible_Category_ProductsState extends State<Bogo_Eligible_Category
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            print(
-                                                "firstttttttttttttttttttttttindexxxxxxxxxxxxx$firstItemIndex");
-
                                             toggleFavorite(firstItemIndex);
                                           },
                                           child: Padding(

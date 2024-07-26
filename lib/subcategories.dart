@@ -30,9 +30,6 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   List<Map<String, dynamic>> categoryProducts = [];
   String? userId; // Declare userId variable to store user ID
 
-  void aa() {
-    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii${widget.categoryId}");
-  }
 
   final String subcategoriesurl =
       "https://garden-tunnel-tue-episodes.trycloudflare.com//category/";
@@ -54,14 +51,12 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     _initData();
     fetchSubcategories();
     fetchCategoryProducts();
-    aa();
   }
 
   Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$tokenn");
     // Use userId after getting the value
   }
 
@@ -130,16 +125,12 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
   Future<void> fetchCategoryProducts() async {
     try {
-      print('$productsurl${widget.categoryId.toString()}/products/');
       final response = await http.get(
           Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
-      print('Responseeee: ${response.statusCode}');
-      print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL$response");
-      print(widget.categoryId);
+     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
-        print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$parsed");
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> ProductsList = [];
 
@@ -161,32 +152,24 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
           categoryProducts = ProductsList;
         });
 
-        print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD$categoryProducts");
       } else {
         throw Exception('Failed to load subcategories');
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+    
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -202,26 +185,20 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
   Future<void> fetchSubcategories() async {
-    print("dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    print(subcategoriesurl + widget.categoryId.toString());
+  
     try {
       final response = await http.get(
           Uri.parse(subcategoriesurl + widget.categoryId.toString() + "/"));
-      print('Response: ${response.statusCode}');
-      print(widget.categoryId);
-      print("responsee subcategoryyyyyyyyyyyyyyyyyyyyyyy${response.body}");
+     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -242,14 +219,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         setState(() {
           subcategories = subcategoryList;
 
-          print("SSSSSSSSSSSSSSSSSSSSUUUUUUUUUUUUBBBBBBBBBBBBBBBBBBBBBB$subcategories");
           
         });
       } else {
         throw Exception('Failed to load subcategories');
       }
     } catch (error) {
-      print('Error fetching subcategories: $error');
+
     }
   }
 
@@ -318,7 +294,6 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                           ['slug'],
                                                     )));
 
-                                                    print("SUUUUUUUUUBBBBBIIIIIIIIIIDDDDDDDDDDDD${subcategories[firstItemIndex]['id']}");
                                       },
                                       child: Container(
                                         height: 100,
@@ -546,7 +521,6 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                     ),
                                   );
                                 } catch (e) {
-                                  print('Error decoding image: $e');
                                   return ListTile(
                                     title: Text(product['name']),
                                     subtitle: Text('\$${product['price']}'),

@@ -43,8 +43,7 @@ class _pricefilterpageState extends State<pricefilterpage> {
     super.initState();
      _initData();
     isFavorite = List<bool>.filled(widget.filterresult.length, false);
-    print(
-        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB${widget.filterresult}");
+    
   }
 
    Future<void> _initData() async {
@@ -76,23 +75,17 @@ class _pricefilterpageState extends State<pricefilterpage> {
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -108,14 +101,11 @@ class _pricefilterpageState extends State<pricefilterpage> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+     
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
   void _showSearchDialog(BuildContext context) {
@@ -176,12 +166,10 @@ class _pricefilterpageState extends State<pricefilterpage> {
   }
 
    Future<void> addProductToWishlist(int productId) async {
-    print(
-        "PPPPPPPPPPPPPRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productId");
+   
 
     try {
       final token = await gettokenFromPrefs();
-      print("TTTTTTTOOOOOOOOOOKKKKKKKKKKKKKKKEEEEEEEEENNNNNNNNN$token");
 
       final response = await http.post(
         Uri.parse('${wishlisturl}${productId}/'),
@@ -196,7 +184,6 @@ class _pricefilterpageState extends State<pricefilterpage> {
       );
 
       if (response.statusCode == 201) {
-        print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
@@ -211,11 +198,9 @@ class _pricefilterpageState extends State<pricefilterpage> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
     }
   }
 

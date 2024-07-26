@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:bepocart/aaa.dart';
 import 'package:bepocart/bestsaleproducts.dart';
 import 'package:bepocart/bogoeligibleproducts.dart';
 import 'package:bepocart/buyonegetone.dart';
@@ -88,28 +87,28 @@ class _HomePageState extends State<HomePage> {
   //     "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//best-sale-products/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//flash-sale/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-2-get-1/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//offers/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//search-products/?q=";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//recommended/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//recently-viewed/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/recently-viewed/";
 
   final String bogooffersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//offer/";
+      "https://garden-tunnel-tue-episodes.trycloudflare.com/offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -142,7 +141,6 @@ class _HomePageState extends State<HomePage> {
     getUserIdFromPrefs().then((value) {
       setState(() {
         userId = value;
-        print("555555555555555R5555555555555555555555555$userId");
       });
     });
   }
@@ -151,7 +149,6 @@ class _HomePageState extends State<HomePage> {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$tokenn");
     // Use userId after getting the value
   }
 
@@ -259,7 +256,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showError() {
-    print('Could not launch WhatsApp. Make sure WhatsApp is installed.');
   }
 
   // ##Buyonegetone##
@@ -267,7 +263,6 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchofferproducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -289,29 +284,26 @@ class _HomePageState extends State<HomePage> {
 
         setState(() {
           products = productsList;
-          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
           // Filter the products that are present in offerProducts
           productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
 
-          print('Products in Offer: $productsInOffer');
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
   List<int> offerProducts = [];
-
+var bogo;
+  bool is_active = false;
   Future<void> fetchbogooffers() async {
     try {
       final response = await http.get(Uri.parse(bogooffersurl));
-      print('Response:::::::::::::::::::::::::: ${response.body}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -322,12 +314,15 @@ class _HomePageState extends State<HomePage> {
         for (var productData in parsed) {
           if (productData['offer_active'] == true) {
             productsList.add({
+             'id': productData['id'],
               'title': productData['name'],
               'buy': productData['buy'],
-              'buy_value': productData['buy_value'],
+              'offer_type': productData['offer_type'],
+              'get_option': productData['get_option'],
               'get_value': productData['get_value'],
               'method': productData['method'],
               'amount': productData['amount'],
+              'is_active': productData['is_active'],
             });
 
             if (productData.containsKey('offer_products') &&
@@ -344,16 +339,28 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           offerss = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offerss');
-          print('Offer Products: $offerProducts');
-          print('Offer Categories: $offerCategories');
+         
+
+            if (offerss[0]['offer_type'] == "BUY") {
+            if (offerss[0]['get_option'] == 1) {
+              bogo = "BUY 1 GET 1";
+            } else if (offerss[0]['get_option'] == 2) {
+              bogo = "BUY 2 GET 1";
+            }
+            if (offerss[0]['is_active'] == "true") {
+              is_active = true;
+            
+            } else {
+              is_active = false;
+            }
+
+          }
           fetchofferproducts();
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
@@ -363,11 +370,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchbogodiscountproducts() async {
   try {
     final response = await http.get(Uri.parse(productsurl));
-    print('Response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
-      print("DDDDDDDDDDDDDDDDIIIIIIIIIIIIIISSSSSSSSSSSCCCCCCCCCCCCCC$parsed");
 
       final List<dynamic> productsData = parsed['products'];
       List<Map<String, dynamic>> productsList = [];
@@ -387,20 +392,17 @@ class _HomePageState extends State<HomePage> {
 
       setState(() {
         bogoproducts = productsList;
-        print('productssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrDDDDDIIIIIIISSSSSSS: $bogoproducts');
 
         // Filter the products that are present in offerProducts
         productsIndiscountOffer = bogoproducts.where((product) {
           return offerProductss.contains(product['id']);
         }).toList();
 
-        print('Products in Offer DIIISSSSCCCCC: $productsIndiscountOffer');
       });
     } else {
       throw Exception('Failed to load discount products');
     }
   } catch (error) {
-    print('Error fetching discount products: $error');
   }
 }
 
@@ -409,7 +411,6 @@ List<int> offerProductss = [];
 Future<void> fetchbogodiscountoffers() async {
   try {
     final response = await http.get(Uri.parse(bogooffersurl));
-    print('Response:::::::::::::::::::::::::: ${response.body}');
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
@@ -428,7 +429,6 @@ Future<void> fetchbogodiscountoffers() async {
             'amount': productData['amount'],
           });
 
-          print("dissssssssscccccccccccccccccaaaaaaaaaaaaaaaappppppppppppppppppppp${productData['discount_approved_products']}");
 
           if (productData.containsKey('discount_approved_products') &&
               productData['discount_approved_products'].isNotEmpty) {
@@ -443,16 +443,13 @@ Future<void> fetchbogodiscountoffers() async {
       setState(() {
         bogodisoffers = productsList;
         // Store offerProducts and offerCategories in state variables if needed
-        print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrbbbbbbbbbbooooooogggggggggdissss: $bogodisoffers');
-        print('Offer Products: $offerProductss');
-        print('Offer Categories: $offerCategories');
+      
         fetchbogodiscountproducts();
       });
     } else {
       throw Exception('Failed to load discount offer products');
     }
   } catch (error) {
-    print('Error fetching discount offer productsssssss: $error');
   }
 }
 
@@ -470,8 +467,7 @@ Future<void> fetchbogodiscountoffers() async {
         },
       );
 
-      print(
-          "viewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww ${response.body}");
+  
 
       if (response.statusCode == 200) {
         final recent = jsonDecode(response.body);
@@ -479,8 +475,7 @@ Future<void> fetchbogodiscountoffers() async {
         final List<dynamic> recentproductsData = recent['data'];
         List<Map<String, dynamic>> Recentlylist = [];
 
-        print(
-            "RRRRRRRRRRREEEEEEEEECCCCCCCCCCCCEEEEEEEEENNNNNNNTTTTTTTTTTTT$recentproductsData");
+      
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
@@ -498,36 +493,25 @@ Future<void> fetchbogodiscountoffers() async {
         setState(() {
           recenlyviewd = Recentlylist;
 
-          print(
-              "RRRRRRRRRRRRRRRRRRvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv$recenlyviewd");
+     
         });
 
-        print('Profile data fetched successfully');
       } else {
-        print('Failed to fetch profile data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching profile data: $error');
     }
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
-
+    
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -543,21 +527,17 @@ Future<void> fetchbogodiscountoffers() async {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
   Future<void> fetchOffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -581,14 +561,12 @@ Future<void> fetchbogodiscountoffers() async {
         throw Exception('Failed to load offers');
       }
     } catch (error) {
-      print('Error fetching offers: $error');
     }
   }
 
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -613,14 +591,12 @@ Future<void> fetchbogodiscountoffers() async {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
   Future<void> fetchDiscountProducts() async {
     try {
       final response = await http.get(Uri.parse(discountsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -643,22 +619,18 @@ Future<void> fetchbogodiscountoffers() async {
 
         setState(() {
           discountproducts = productDiscountList;
-          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$discountproducts");
         });
       } else {
         throw Exception('Failed to load discount products');
       }
     } catch (error) {
-      print('Error fetching discount products: $error');
     }
   }
 
   Future<void> fetchBestSaleProducts() async {
     try {
       final response = await http.get(Uri.parse(bestsaleurl));
-      print('Response: ${response.statusCode}');
-      print(
-          "BBBBBBBBBBBBBBBBBBBBEEEEEEEEEEEEEEEEEEESSSSSSSSSSSSSSSSSSSSSTTTTTTTTTTTTTTTTTTTT${response.body}");
+     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -681,23 +653,19 @@ Future<void> fetchbogodiscountoffers() async {
 
         setState(() {
           bestsaleproducts = productBestSaleList;
-          print(
-              "YYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIII$bestsaleproducts");
+        
         });
       } else {
         throw Exception('Failed to load discount products');
       }
     } catch (error) {
-      print('Error fetching discount products: $error');
     }
   }
 
   Future<void> fetchFlashSaleProducts() async {
     try {
       final response = await http.get(Uri.parse(flashsaleurl));
-      print('Response: ${response.statusCode}');
-      print(
-          "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT${response.body}");
+    
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -720,54 +688,16 @@ Future<void> fetchbogodiscountoffers() async {
 
         setState(() {
           flashsaleproducts = productFlashSaleList;
-          print(
-              "YYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIII$flashsaleproducts");
+         
         });
       } else {
         throw Exception('Failed to load discount products');
       }
     } catch (error) {
-      print('Error fetching discount products: $error');
     }
   }
 
-  // Future<void> fetchbuyonegetoneProducts() async {
-  //   try {
-  //     final response = await http.get(Uri.parse(buyonegetoneurl));
-
-  //     print(
-  //         "ressssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss${response.body}");
-  //     if (response.statusCode == 200) {
-  //       final parsed = jsonDecode(response.body);
-  //       final List<dynamic> productsData = parsed['data'];
-  //       List<Map<String, dynamic>> productbuyonegetoneList = [];
-
-  //       for (var productData in productsData) {
-  //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
-  //         productbuyonegetoneList.add({
-  //           'id': productData['id'],
-  //           'mainCategory': productData['mainCategory'],
-  //           'name': productData['name'],
-  //           'price': productData['price'],
-  //           'salePrice': productData['salePrice'],
-  //           'image': imageUrl,
-  //         });
-  //       }
-
-  //       setState(() {
-  //         buyonegetoneproducts = productbuyonegetoneList;
-  //         print(
-  //             "HELLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOO$buyonegetoneproducts");
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load Buy One Get One products');
-  //     }
-  //   } catch (error) {
-  //     print('Error fetching Buy One Get One products: $error');
-  //   }
-  // }
-
+  
   void fetchbuytwogetoneProducts() async {
     try {
       final response = await http.get(Uri.parse(buytwogetoneurl));
@@ -776,8 +706,7 @@ Future<void> fetchbogodiscountoffers() async {
         final List<dynamic> productsData = jsonDecode(response.body);
         List<Map<String, dynamic>> productbuytwogetoneList = [];
 
-        print(
-            "JJJJJJJJJJJJJJJJJJUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU$productsData");
+      
 
         for (var productData in productsData) {
           String imageUrl =
@@ -794,14 +723,12 @@ Future<void> fetchbogodiscountoffers() async {
 
         setState(() {
           buytwogetoneproducts = productbuytwogetoneList;
-          print(
-              "AAAAAAUUUUUUUUUUUYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY$buytwogetoneproducts");
+        
         });
       } else {
         throw Exception('Failed to load Buy One Get One products');
       }
     } catch (error) {
-      print('Error fetching Buy One Get One products: $error');
     }
   }
 
@@ -815,7 +742,6 @@ Future<void> fetchbogodiscountoffers() async {
       final token =
           await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-      print("Token: $token");
 
       final response = await http.get(
         Uri.parse(recommendedproductsurl),
@@ -825,16 +751,12 @@ Future<void> fetchbogodiscountoffers() async {
         },
       );
 
-      print("Response Body: ${response.body}");
-      print("Response Status Code: ${response.statusCode}");
-      print(
-          "Recommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmended Products:  ${response.body}");
+     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
 
-        print("Products Data: $productsData");
 
         List<Map<String, dynamic>> productRecommendedList = [];
 
@@ -852,70 +774,16 @@ Future<void> fetchbogodiscountoffers() async {
 
         setState(() {
           recommendedproducts = productRecommendedList;
-          print(
-              "Recommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmended Products: $recommendedproducts");
+    
         });
       } else {
         throw Exception('Failed to load recommended products');
       }
     } catch (error) {
-      print('Error fetching recommended products: $error');
     }
   }
 
-  // Future<void> fetchRecommendedProducts() async {
-  //   try {
-  //     final token = await gettokenFromPrefs();
-
-  //     print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
-
-  //     final response = await http.post(
-  //       Uri.parse(recommendedproductsurl),
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //         'Authorization': ' $token',
-  //       },
-  //       body: jsonEncode({
-  //         'token': token,
-  //       }),
-  //     );
-  //     print(
-  //         "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
-  //     print(
-  //         "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
-  //     if (response.statusCode == 200) {
-  //       final parsed = jsonDecode(response.body);
-  //       final List<dynamic> productsData = parsed['data'];
-
-  //       print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
-
-  //       List<Map<String, dynamic>> productRecommendedList = [];
-
-  //       for (var productData in productsData) {
-  //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
-  //         productRecommendedList.add({
-  //           'id': productData['id'],
-  //           'mainCategory': productData['mainCategory'],
-  //           'name': productData['name'],
-  //           'salePrice': productData['salePrice'],
-  //           'image': imageUrl,
-  //         });
-  //       }
-
-  //       setState(() {
-  //         recommendedproducts = productRecommendedList;
-  //         print(
-  //             "Recommended Productsssssssssssssssssssssssssssssssssssssss: $recommendedproducts");
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load recommended products');
-  //     }
-  //   } catch (error) {
-  //     print('Error fetching recommended products: $error');
-  //   }
-  // }
-
+ 
   void halfratedProducts() async {
     try {
       final response = await http.get(Uri.parse(halfrateproductsurl));
@@ -946,14 +814,12 @@ Future<void> fetchbogodiscountoffers() async {
         throw Exception('Failed to load Buy One Get One products');
       }
     } catch (error) {
-      print('Error fetching Buy One Get One products: $error');
     }
   }
 
   Future<void> fetchBanners() async {
     try {
       final response = await http.get(Uri.parse(bannerurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -975,14 +841,12 @@ Future<void> fetchbogodiscountoffers() async {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
   Future<void> fetchCategories() async {
     try {
       final response = await http.get(Uri.parse(categoryUrl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -1006,7 +870,6 @@ Future<void> fetchbogodiscountoffers() async {
         throw Exception('Failed to load categories');
       }
     } catch (error) {
-      print('Error fetching categories: $error');
     }
   }
 
@@ -1639,16 +1502,25 @@ Future<void> fetchbogodiscountoffers() async {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Text("Buy 1 Get 1 Free",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ),
+  padding: const EdgeInsets.only(left: 10,top: 10),
+  child: Column(
+    children: [
+     
+      Image.asset(
+        bogo == "BUY 1 GET 1" 
+          ? 'lib/assets/b1g1.png' 
+          : 'lib/assets/b2g2.png',
+        width: 110.0, // Set the desired width
+        height: 110.0, // Set the desired height
+      ),
+    ],
+  ),
+),
+
                                       Spacer(),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            right: 10, top: 10),
+                                            right: 10),
                                         child: ElevatedButton(
                                           onPressed: () {
                                             Navigator.push(
@@ -1691,7 +1563,7 @@ Future<void> fetchbogodiscountoffers() async {
                                         final product = productsInOffer[index];
 
                                         return Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8),
                                           child: GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -2957,7 +2829,6 @@ Future<void> fetchbogodiscountoffers() async {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MyOrder()));
                   // Add your onPressed code for the first button here!
-                  print('First button pressed');
                 }),
                 _buildFabButton('lib/assets/settings.png',
                     const Color.fromARGB(255, 255, 255, 255), () {
@@ -2965,12 +2836,10 @@ Future<void> fetchbogodiscountoffers() async {
                       MaterialPageRoute(builder: (context) => usersettings()));
 
                   // Add your onPressed code for the second button here!
-                  print('Second button pressed');
                 }),
                 _buildFabButton('lib/assets/telephone.png',
                     Color.fromARGB(255, 255, 255, 255), () {
                   _showConfirmationDialog();
-                  print('Third button pressed');
                 }),
                 _buildFabButton('lib/assets/whatsapp.png',
                     Color.fromARGB(255, 255, 255, 255), () {
@@ -2979,7 +2848,6 @@ Future<void> fetchbogodiscountoffers() async {
                         "+919645848527", // replace with the target phone number
                     message: "can you help me out!",
                   );
-                  print('Fourth button pressed');
                 }),
               ],
               Container(

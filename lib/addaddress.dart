@@ -5,7 +5,6 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
 import 'package:bepocart/search.dart';
-import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/viewaddress.dart';
 import 'package:flutter/material.dart';
@@ -82,62 +81,7 @@ class _UserAddressState extends State<UserAddress> {
             child: Container(
               child: Column(
                 children: [
-                  // Container(
-                  //   height: 80,
-                  //   decoration: BoxDecoration(
-                  //     boxShadow: [
-                  //       BoxShadow(
-                  //         color: const Color.fromARGB(255, 183, 183, 183).withOpacity(0.5),
-                  //         spreadRadius: 5,
-                  //         blurRadius: 10,
-                  //         offset: Offset(0, 3),
-                  //       ),
-                  //     ],
-                  //     color: Colors.white,
-                  //   ),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.only(top: 35, left: 20),
-                  //     child: Row(
-                  //       children: [
-                  //         GestureDetector(
-                  //           onTap: () {
-                  //             Navigator.pop(context);
-                  //           },
-                  //           child: Image.asset(
-                  //             "lib/assets/backarrow.png",
-                  //             width: 30,
-                  //             height: 30,
-                  //             fit: BoxFit.cover,
-                  //           ),
-                  //         ),
-                  //         Spacer(),
-
-                  //          Padding(
-                  //            padding: const EdgeInsets.only(right: 10,bottom: 10),
-                  //            child: ElevatedButton(
-                  //                                      onPressed: () {
-                  //             // Navigator.push(context, MaterialPageRoute(builder: (context)=>viewAddress()));
-                  //                                      },
-                  //                                      style: ElevatedButton.styleFrom(
-                  //             foregroundColor: Colors.white,
-                  //             backgroundColor: Colors.black,
-                  //             shape: RoundedRectangleBorder(
-                  //               borderRadius: BorderRadius.circular(10),
-                  //             ),
-                  //             fixedSize: Size(double.infinity,
-                  //                 20), // Adjust the width and height as needed
-                  //                                      ),
-                  //                                      child: Text(
-                  //             "View Address",
-                  //             style: TextStyle(fontSize: 9),
-                  //                                      ),
-                  //                                    ),
-                  //          ),
-
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                 
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 40, left: 15, right: 15),
@@ -633,8 +577,7 @@ class _UserAddressState extends State<UserAddress> {
           "note": note
         }), 
       );
-      print("===========${response.statusCode}");
-      print("===========${response.body}");
+     
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(scaffoldContext).showSnackBar(

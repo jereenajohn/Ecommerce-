@@ -43,15 +43,13 @@ class _SearchState extends State<Search> {
     super.initState();
     _initData();
     isFavorite = List<bool>.filled(widget.searchresults.length, false);
-    print(
-        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB${widget.searchresults}");
+   
   }
 
    Future<void> _initData() async {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$userId");
     // Use userId after getting the value
   }
 
@@ -79,27 +77,20 @@ class _SearchState extends State<Search> {
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
         
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+    
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
-          print(
-              "cattttttttttttttttttttttttttttttttppppppppppppppppppppppp$productData");
+         
           String imageUrl =
               "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
           searchList.add({
@@ -113,15 +104,13 @@ class _SearchState extends State<Search> {
         }
         setState(() {
           searchResults = searchList;
-          print(
-              "5555555555555555555555555555555555555555555555555555555$searchResults");
+        
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
+
     }
   }
 
@@ -199,7 +188,6 @@ class _SearchState extends State<Search> {
       );
 
       if (response.statusCode == 200) {
-        print('Product added to wishlist: $productId');
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -208,11 +196,8 @@ class _SearchState extends State<Search> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
     }
   }
 
@@ -263,10 +248,7 @@ class _SearchState extends State<Search> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      print(
-                          "PROOOOOOOOOOOOOOOOOOOOOOOIIIIDDDDDDDDD${widget.searchresults[productIndex1]['id']}");
-                      print(
-                          "CATeeeeeeeeeegggggggooooooooooryiiiiiid${widget.searchresults[productIndex1]['category_id']}");
+                     
                       Navigator.push(
                         context,
                         MaterialPageRoute(

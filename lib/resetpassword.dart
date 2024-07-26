@@ -54,10 +54,8 @@ Future<void> _initData() async {
         ),
       );
 
-      print("Response: $response");
 
       if (response.statusCode == 200) {
-        print('Password reset successfully');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Password reset successfully'),
@@ -67,7 +65,6 @@ Future<void> _initData() async {
 
        logout();
       } else {
-        print('Failed to Reset Password: ${response.statusCode}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to Reset Password'),
@@ -76,7 +73,6 @@ Future<void> _initData() async {
         );
       }
     } catch (error) {
-      print('Error updating profile: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error updating profile'),
@@ -89,7 +85,6 @@ Future<void> _initData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('userId'); 
     await prefs.remove('token'); 
-    print('logout Success');
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
   }

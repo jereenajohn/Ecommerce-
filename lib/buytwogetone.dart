@@ -91,7 +91,6 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
     try {
       final token = await gettokenFromPrefs();
 
-      print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
         Uri.parse(wishlisturl),
         headers: {
@@ -104,10 +103,8 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
         }),
       );
 
-      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
       if (response.statusCode == 200) {
-        print('Product added to wishlist: $productId');
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -116,31 +113,25 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
+
     }
   }
 
   Future<void> searchproduct() async {
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
        
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -156,14 +147,13 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+      
+      
       }
     } catch (error) {
-      print('Error fetching product: $error');
+
     }
   }
 
@@ -257,7 +247,6 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
         throw Exception('Failed to load Buy One Get One products');
       }
     } catch (error) {
-      print('Error fetching Buy One Get One products: $error');
     }
   }
 
@@ -332,7 +321,6 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
                                   ),
                                 );
                               } catch (e) {
-                                print('Error navigating: $e');
                               }
                             },
                             child: Container(

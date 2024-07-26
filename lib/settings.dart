@@ -2,7 +2,6 @@ import 'package:bepocart/cart.dart';
 import 'package:bepocart/forgotpassword.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/resetpassword.dart';
-import 'package:bepocart/selectdeliveryaddress.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -34,7 +34,6 @@ class _forgotpasswordState extends State<forgotpassword> {
    Future<void> _initData() async {
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$tokenn");
     // Use userId after getting the value
   }
 
@@ -53,14 +52,11 @@ class _forgotpasswordState extends State<forgotpassword> {
       body: {"email": email.text},
     );
     if(response.statusCode==200){
-      print(response.body);
        var responseData = jsonDecode(response.body);  
-       print("otpppppppppppppp${responseData['email']}");
        emailres=email.text;
        
       
     }
-     print(response.statusCode);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => OtpPage(email:emailres)),
@@ -69,7 +65,6 @@ class _forgotpasswordState extends State<forgotpassword> {
     
    
   } catch (e) {
-    print("erorrrrrrrrrrrrrrrr$e");
     
   }
 }

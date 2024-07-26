@@ -39,11 +39,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   bool loading = true;
   RangeValues _priceFilter = RangeValues(20.0, 80.0);
 
-  void aa() {
-    print("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF${widget.slug}");
-        print("SUBBBBBBBBBBBBBIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDDDDDDDDDDD${widget.subcategoryId}");
-
-  }
+ 
 
   TextEditingController searchitem = TextEditingController();
 
@@ -81,16 +77,13 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$userId");
     // Use userId after getting the value
     subcategoryproducts();
     searchproduct();
-    aa();
   }
 
   Future<void> pricefilterr() async {
-    print('Start Price: $start');
-    print('End Price: $end');
+  
     try {
       final token = await gettokenFromPrefs();
 
@@ -101,9 +94,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
       };
       final body = jsonEncode({'min_price': start, 'max_price': end});
 
-      print("Request URL: $url");
-      print("Request Headers: $headers");
-      print("Request Body: $body");
+    
 
       final response = await http.post(
         url,
@@ -111,8 +102,6 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         body: body,
       );
 
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final filter = jsonDecode(response.body);
@@ -135,8 +124,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           pricefilterresult = offersList;
         });
 
-        print("Filtered Data: $pfill");
-        print('Profile data fetched successfully');
+     
 
         // Assuming you have a context variable available
         Navigator.push(
@@ -147,17 +135,14 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           ),
         );
       } else {
-        print('Failed to fetch profile data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching profile data: $error');
     }
   }
 
   List<Map<String, dynamic>> pricefilterresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
-    print(subcategoryId);
     final token = await gettokenFromPrefs();
     try {
       final response = await http.get(
@@ -186,20 +171,16 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         }
         setState(() {
           lowtohighresult = searchList;
-          print('llllllllllllllllll22222222hhhhhhhhhhhhhhhh$lowtohighresult');
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
   Future<void> HightoLow(int subcategoryId) async {
-    print(subcategoryId);
-    print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii$hightolow$subcategoryId/');
+  
     final token = await gettokenFromPrefs();
     try {
       final response = await http.get(
@@ -228,14 +209,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         }
         setState(() {
           hightolowresult = searchList;
-          print('hhhhhhhhhh222222222lllllllllllllll$hightolowresult');
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
@@ -258,10 +236,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   Future<dynamic> subcategoryproducts() async {
     try {
-      print(
-          "oooooooooooooooooooooooooooooooooooooooooooooooooooooo$productsUrl${widget.slug}");
+    
       final response = await http.get(Uri.parse('$productsUrl${widget.slug}/'));
-      print("HHHHHHHHHHHHHHHHAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRRRRIIIIIIIIIIIIIIIIIIIIIIIII${response.body}");
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
             jsonDecode(response.body)['products'];
@@ -287,13 +263,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           isFavorite = favoritesList;
           loading = false;
 
-          print("GGGGGGGGGGGGGGGGGGGGGGGGHHHHHHHHHHHHHHHHHHHHH$productsList");
         });
       } else {
         throw Exception('Failed to load products');
       }
     } catch (error) {
-      print('Error fetching products: $error');
     }
   }
 
@@ -315,12 +289,10 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   }
 
   Future<void> addProductToWishlist(int productId) async {
-    print(
-        "PPPPPPPPPPPPPRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productId");
+   
 
     try {
       final token = await gettokenFromPrefs();
-      print("TTTTTTTOOOOOOOOOOKKKKKKKKKKKKKKKEEEEEEEEENNNNNNNNN$token");
 
       final response = await http.post(
         Uri.parse('${wishlisturl}${productId}/'),
@@ -333,10 +305,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           'product': productId,
         }),
       );
-      print(
-          "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLGGGGGGGGGGGGGGGGGGGGGG${response.body}");
+    
       if (response.statusCode == 201) {
-        print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
@@ -351,31 +321,22 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
     }
   }
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+    
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -391,14 +352,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 

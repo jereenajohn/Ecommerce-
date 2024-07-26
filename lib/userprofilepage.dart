@@ -44,7 +44,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$userId");
+
     // Use userId after getting the value
   }
    Future<String?> getUserIdFromPrefs() async {
@@ -54,7 +54,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
 var userimage;
             String imageUrl='';
   Future<void> getimage() async {
-    print("Fetching profile image...");
     try {
       final token = await gettokenFromPrefs();
 
@@ -66,7 +65,6 @@ var userimage;
         },
       );
 
-      print("Response: ${response.body}");
 
       if (response.statusCode == 200) {
         userimage = jsonDecode(response.body);
@@ -76,13 +74,9 @@ var userimage;
             imageUrl =
               "https://garden-tunnel-tue-episodes.trycloudflare.com/${userimage['image']}";
         });
-print("$imageUrl");
-        print('Profile data fetched successfully');
       } else {
-        print('Failed to fetch profile data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching profile data: $error');
     }
   }
 
@@ -109,7 +103,6 @@ var viewprofileurl =
       var viewimage =
       "https://garden-tunnel-tue-episodes.trycloudflare.com///profile-image/";
   Future<void> getprofiledata() async {
-    print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
       final token = await gettokenFromPrefs();
 
@@ -121,30 +114,24 @@ var viewprofileurl =
         },
       );
 
-      print(
-          "Responserrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.body}");
+    
 
       if (response.statusCode == 200) {
         // userdata = jsonDecode(response.body);
          final parsed = jsonDecode(response.body);
         var productsData = parsed['data'];
-        print(
-            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$productsData");
+      
             setState(() {
               username=productsData['first_name'];
               email=productsData['email'];
               phone=productsData['phone'];
-              print(
-            "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$email");
+             
 
             });
 
-        print('Profile data fetched successfully');
       } else {
-        print('Failed to fetch profile data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching profile data: $error');
 }
 }
   @override

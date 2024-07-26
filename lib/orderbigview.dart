@@ -26,8 +26,7 @@ class _OrderBigViewState extends State<OrderBigView> {
     super.initState();
     _initData();
     myOrderDetails();
-    print(
-        "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${widget.productid}");
+  
   }
 
   Future<void> _initData() async {
@@ -63,7 +62,6 @@ class _OrderBigViewState extends State<OrderBigView> {
     try {
       final token = await getTokenFromPrefs();
 
-      print("TTTTTTTTTTTTTOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKK$token");
 
       final response = await http.get(
         Uri.parse(orders),
@@ -74,17 +72,13 @@ class _OrderBigViewState extends State<OrderBigView> {
        
       );
 
-      print(
-          "77777777777777777777777777777777777766666666666666666666666666666666666${response.body}");
-      print(
-          "55555555555555555555544444444444444444444444444443333333333333333333333${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
           List<Map<String, dynamic>> orderProducts = [];
 
-        print("WWWWWWWWWWWqqqqqqqqqwwwwwwwwwwwweeeeeeeeeeeeeeee$productsData");
 
 
         for (var productData in productsData) {
@@ -94,7 +88,6 @@ class _OrderBigViewState extends State<OrderBigView> {
          if(widget.productid==productData['product']){
 
                   quantity=productData['quantity'];
-                  print(quantity);
 
                   fetchProducts();
 
@@ -116,7 +109,6 @@ class _OrderBigViewState extends State<OrderBigView> {
         throw Exception('Failed to load recommended products');
       }
     } catch (error) {
-      print('Error fetching recommended products: $error');
     }
   }
 
@@ -124,14 +116,12 @@ class _OrderBigViewState extends State<OrderBigView> {
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsUrl));
-      print('fetchProducts Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['products'];
         List<Map<String, dynamic>> filteredProducts = [];
 
-        print("Products Data: $productsData");
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
             String imageUrl =
@@ -151,12 +141,10 @@ class _OrderBigViewState extends State<OrderBigView> {
           isLoading = false; // Set loading state to false
 
         });
-        print("nnnnnnnnnnnnnnnnnnnnn$products");
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 

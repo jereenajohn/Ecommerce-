@@ -28,8 +28,7 @@ class _EditProfileState extends State<EditProfile> {
     getprofiledata();
   }
 
-  var url =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//profile/";
+  var url = "https://garden-tunnel-tue-episodes.trycloudflare.com//profile/";
   var url2 =
       "https://garden-tunnel-tue-episodes.trycloudflare.com//profile-image/";
   TextEditingController first_name = TextEditingController();
@@ -45,7 +44,6 @@ class _EditProfileState extends State<EditProfile> {
   var viewprofileurl =
       "https://garden-tunnel-tue-episodes.trycloudflare.com//profile-view/";
   Future<void> getprofiledata() async {
-    print("jvnxsssssssssssssssssssssssssssssssssssssss");
     try {
       final token = await gettokenFromPrefs();
 
@@ -57,13 +55,11 @@ class _EditProfileState extends State<EditProfile> {
         },
       );
 
-      print(
-          "Responserrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${response.body}");
+    
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         var productsData = parsed['data'];
-        print("999999999999999999999999999${productsData['first_name']}");
         setState(() {
           first_name.text = productsData['first_name'];
           last_name.text = productsData['last_name'];
@@ -72,25 +68,14 @@ class _EditProfileState extends State<EditProfile> {
           place.text = productsData['place'];
           zip_code.text = productsData['zip_code'];
 
-          print(
-              "ttttttttttttthhhhhhhhhhhhhhhaaaaaaaaaallllllllllaaaaaaaaaaaaaaaa$first_name");
         });
 
-        print('Profile data fetched successfully');
-      }
-      else if(response.statusCode== 401){
-        print("session expired");
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
-
-
-      }
-      
-      
-       else {
-        print('Failed to fetch profile data: ${response.statusCode}');
+      } else if (response.statusCode == 401) {
+       Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Login_Page()));
+      } else {
       }
     } catch (error) {
-      print('Error fetching profile data: $error');
     }
   }
 
@@ -116,11 +101,9 @@ class _EditProfileState extends State<EditProfile> {
         ),
       );
 
-      print("Response: $response");
-      print(response.statusCode);
+    
 
       if (response.statusCode == 200) {
-        print('Profile updated successfully');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Profile updated successfully'),
@@ -131,10 +114,7 @@ class _EditProfileState extends State<EditProfile> {
           context,
           MaterialPageRoute(builder: (context) => UserProfilePage()),
         );
-      }
-     
-       else {
-        print('Failed to update profile: ${response.statusCode}');
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to update profile'),
@@ -143,7 +123,6 @@ class _EditProfileState extends State<EditProfile> {
         );
       }
     } catch (error) {
-      print('Error updating profile: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error updating profile'),
@@ -358,8 +337,7 @@ class _EditProfileState extends State<EditProfile> {
                                         SizedBox(
                                           height: 15,
                                         ),
-
-                                             TextField(
+                                        TextField(
                                           controller: place,
                                           decoration: InputDecoration(
                                             labelText: 'place',
@@ -396,8 +374,7 @@ class _EditProfileState extends State<EditProfile> {
                                         SizedBox(
                                           height: 15,
                                         ),
-
-                                             TextField(
+                                        TextField(
                                           controller: zip_code,
                                           decoration: InputDecoration(
                                             labelText: 'Zip Code',
@@ -587,14 +564,12 @@ class _EditProfileState extends State<EditProfile> {
 
   void imageSelect() async {
     try {
-      print("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image,
       );
       if (result != null) {
         setState(() {
           selectedImage = File(result.files.single.path!);
-          print("================$selectedImage");
         });
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("image1 selected successfully."),
@@ -616,9 +591,7 @@ class _EditProfileState extends State<EditProfile> {
     String token,
   ) async {
     try {
-      print("00000000000000000000000000000000000$token");
-      print(
-          "imageeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$image1");
+     
       var request = http.MultipartRequest('PUT', Uri.parse(url));
 
       // Add headers to the request
@@ -632,8 +605,7 @@ class _EditProfileState extends State<EditProfile> {
 
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-      print(
-          "statttttttttttttttttttsssssssssssssssssssssssttttttttt${response.body}");
+    
 
       // Handle response based on status code
       if (response.statusCode == 200) {
@@ -670,7 +642,6 @@ class _EditProfileState extends State<EditProfile> {
       }
     } catch (e) {
       // Handle network errors or exceptions
-      print("Error: $e");
       ScaffoldMessenger.of(scaffoldContext).showSnackBar(
         SnackBar(
           content: Text('Network error. Please check your connection.'),

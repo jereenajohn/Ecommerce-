@@ -30,7 +30,6 @@ class _OfferState extends State<Offer> {
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -50,20 +49,17 @@ class _OfferState extends State<Offer> {
 
         setState(() {
           products = productsList;
-          print('productsssssssssssssssssssssssssssssssssssssssss: $products');
 
           // Filter the products that are present in offerProducts
           productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
 
-          print('Products in Offer: $productsInOffer');
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 
@@ -72,7 +68,6 @@ class _OfferState extends State<Offer> {
   Future<void> fetchoffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
-      print('Response:::::::::::::::::::::::::: ${response.body}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -102,16 +97,13 @@ class _OfferState extends State<Offer> {
         setState(() {
           offers = productsList;
           // Store offerProducts and offerCategories in state variables if needed
-          print('offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: $offers');
-          print('Offer Products: $offerProducts');
-          print('Offer Categories: $offerCategories');
+         
           fetchProducts();
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      print('Error fetching wishlist products: $error');
     }
   }
 

@@ -86,8 +86,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
   @override
   void initState() {
-    print("product_iddddddddddddddd${widget.product_id}");
-    print("category_idddddddddddddd${widget.Category_id}");
+   
     _initData();
     fetchproductdata();
     fetchDiscountProducts();
@@ -101,7 +100,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
   Future<void> _initData() async {
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$tokenn");
     // Use userId after getting the value
   }
 
@@ -116,7 +114,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
         throw Exception('Token is null');
       }
 
-      print("Tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnn: $token");
 
       final response = await http.get(
         Uri.parse('$ratingurl${widget.product_id}/'),
@@ -126,14 +123,11 @@ class _Product_big_ViewState extends State<Product_big_View> {
         },
       );
 
-      print('URL: $ratingurl${widget.product_id}/');
-      print("Response Body: ${response.body}");
-      print("Response Status Code: ${response.statusCode}");
+    
 
       if (response.statusCode == 200) {
         final productsData = jsonDecode(response.body) as List;
 
-        print("Products Data: $productsData");
 
         List<Map<String, dynamic>> productratingList = [];
 
@@ -159,14 +153,12 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 (totalRating / productsData.length).toStringAsFixed(1);
           }
           productsrating = productratingList;
-          print("Products: $productsrating");
-          print("Average Rating: $averageRating");
+         
         });
       } else {
         throw Exception('Failed to load rating data');
       }
     } catch (error) {
-      print('Error fetching rating data: $error');
     }
   }
 
@@ -175,7 +167,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
       final token =
           await gettokenFromPrefs(); // Make sure this method returns your token correctly
 
-      print("Token: $token");
 
       final response = await http.get(
         Uri.parse(recommendedproductsurl),
@@ -185,14 +176,12 @@ class _Product_big_ViewState extends State<Product_big_View> {
         },
       );
 
-      print("Response Body: ${response.body}");
-      print("Response Status Code: ${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
 
-        print("Products Data: $productsData");
 
         List<Map<String, dynamic>> productRecommendedList = [];
 
@@ -210,13 +199,11 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         setState(() {
           recommendedproducts = productRecommendedList;
-          print("Recommended Products: $recommendedproducts");
         });
       } else {
         throw Exception('Failed to load recommended products');
       }
     } catch (error) {
-      print('Error fetching recommended products: $error');
     }
   }
 
@@ -232,17 +219,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
         },
       );
 
-      print(
-          "viewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww ${response.body}");
-
+    
       if (response.statusCode == 200) {
         final recent = jsonDecode(response.body);
 
         final List<dynamic> recentproductsData = recent['data'];
         List<Map<String, dynamic>> Recentlylist = [];
 
-        print(
-            "RRRRRRRRRRREEEEEEEEECCCCCCCCCCCCEEEEEEEEENNNNNNNTTTTTTTTTTTT$recentproductsData");
+      
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
@@ -260,23 +244,18 @@ class _Product_big_ViewState extends State<Product_big_View> {
         setState(() {
           recenlyviewd = Recentlylist;
 
-          print(
-              "RRRRRRRRRRRRRRRRRRTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT$recenlyviewd");
+         
         });
 
-        print('Profile data fetched successfully');
       } else {
-        print('Failed to fetch profile data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching profile data: $error');
     }
   }
 
   Future<void> fetchDiscountProducts() async {
     try {
       final response = await http.get(Uri.parse(discountsurl));
-      print('Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -298,23 +277,19 @@ class _Product_big_ViewState extends State<Product_big_View> {
         }
         setState(() {
           discountproducts = productDiscountList;
-          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$discountproducts");
         });
       } else {
         throw Exception('Failed to load discount products');
       }
     } catch (error) {
-      print('Error fetching discount products: $error');
     }
   }
 
   Future<void> addProductToWishlist(int productId) async {
-    print(
-        "PPPPPPPPPPPPPRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productId");
+  
 
     try {
       final token = await gettokenFromPrefs();
-      print("TTTTTTTOOOOOOOOOOKKKKKKKKKKKKKKKEEEEEEEEENNNNNNNNN$token");
 
       final response = await http.post(
         Uri.parse('${wishlisturl}${productId}/'),
@@ -328,7 +303,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
         }),
       );
       if (response.statusCode == 201) {
-        print('Product added to wishlist: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to wishlist'),
@@ -343,11 +317,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
     }
   }
 
@@ -382,7 +354,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
   Future<void> addProductToCart(int productId, var name, var price) async {
     try {
-      print('AAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLL$addtocarturl$productId/');
       final token = await gettokenFromPrefs();
 
       final response = await http.post(
@@ -400,10 +371,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
           'size': selectedSize
         }),
       );
-      print('statsssssssssssssssssssssssssssssssssssssssss${response.body}');
 
       if (response.statusCode == 201) {
-        print('Product added to cart: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Product added to Cart'),
@@ -426,11 +395,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Login_Page()));
       } else {
-        print('Failed to add product to cart: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error adding product to cart: $error');
     }
   }
 
@@ -797,7 +764,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   selectedSize = sizes.isNotEmpty
                                       ? sizes[0]['size']
                                       : null;
-                                  print("colorrrrrrrrrrr$selectedColor");
 
                                   updateDisplayedImage(selectedColor);
                                 });
@@ -843,8 +809,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                     setState(() {
                                       selectedSize = sizeData['size'];
                                       selectedstock = sizeData['stock'];
-                                      print("sizeeeeeeeeeee$selectedSize");
-                                      print("stockeeeeeeeeee$selectedstock");
+                                     
                                     });
                                   }
                                 : null,
@@ -993,8 +958,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                             itemBuilder: (context, index) {
                               final rating = productsrating[index]['rating'];
                               var img = productsrating[index]['image'];
-                              print(
-                                  "RRRRRRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAA$rating");
+                            
                               final reviewText =
                                   productsrating[index]['review_text'];
                               return Padding(
@@ -1735,8 +1699,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
         setState(() {
           for (int i = 0; i < productsList.length; i++) {
             if (widget.product_id == productsList[i]['id']) {
-              print(
-                  "AAAAAAAAAMMMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAA${productsList[i]}");
+             
 
               image = productsList[i]['image'];
               name = productsList[i]['name'];
@@ -1752,13 +1715,11 @@ class _Product_big_ViewState extends State<Product_big_View> {
           categoryProducts = productsList;
           isDataLoaded = true;
         });
-        print(
-            "==========================LLLLLLLLLLLLLLLLLLLLLLLLLL$categoryProducts");
+      
       } else {
         throw Exception('Failed to load category products');
       }
     } catch (error) {
-      print('Error fetching category products: $error');
     }
   }
 
@@ -1767,16 +1728,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
   List<String> colors = [];
 
   Future<void> sizecolor() async {
-    print('======================$imageurl${widget.slug}/');
     Set<String> colorsSet = {};
     try {
       final response = await http.get(Uri.parse('$imageurl${widget.slug}/'));
-      print("statussssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
         final List<dynamic> imageData = data['images'];
         final List<dynamic> variantsData = data['variants'];
-        print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
         List<Map<String, dynamic>> productsList = [];
 
@@ -1797,7 +1755,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
               .map<Map<String, dynamic>>((variant) =>
                   {'size': variant['size'], 'stock': variant['stock']})
               .toList();
-          print("${sizes}");
 
           productsList.add({
             'id': imageData['id'],
@@ -1816,7 +1773,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
           images = productsList;
           colors = colorsSet.toList();
 
-          print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
           selectedColor = colors.isNotEmpty ? colors[0] : null;
           sizes = images.firstWhere(
                   (image) => image['color'] == selectedColor)['sizes'] ??
@@ -1828,7 +1784,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
         throw Exception('Error fetching product image');
       }
     } catch (error) {
-      print('Error fetching product image : $error');
     }
   }
 }

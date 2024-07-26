@@ -30,19 +30,15 @@ class _changepasswordState extends State<changepassword> {
           "email": widget.email
         },
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
-        print("changed");
         logout();
       }
       else if(response.statusCode == 401){
-         print("session expired");
                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
 
 
       }
     } catch (e) {
-      print("erorrrrrrrrrrrrrrrr$e");
     }
   }
 
@@ -50,7 +46,6 @@ class _changepasswordState extends State<changepassword> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('userId');
     await prefs.remove('token');
-    print('logout Success');
 
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => Login_Page()));

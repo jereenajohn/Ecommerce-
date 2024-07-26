@@ -50,7 +50,6 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     super.initState();
     fetchCatProducts();
     _initData();
-    bbb();
   }
 
   Future<void> _initData() async {
@@ -62,28 +61,19 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     return prefs.getString('token');
   }
 
-  void bbb() {
-    print(
-        "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu${widget.categoryId}");
-  }
+ 
 
   Future<void> searchproduct() async {
-    print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -99,14 +89,11 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+      
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
@@ -114,12 +101,10 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     try {
       final response = await http.get(
           Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
-      print('$productsurl${widget.categoryId}');
-      print("QQQQQQQQQQQQQQQQQQQQQQQQQ$response");
+     
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
             jsonDecode(response.body)['products'];
-        print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO$productsData");
         List<Map<String, dynamic>> productsList = [];
         List<bool> favoritesList = [];
         for (var productData in productsData) {
@@ -146,7 +131,6 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         throw Exception('Failed to load category products');
       }
     } catch (error) {
-      print('Error fetching category products: $error');
     }
   }
 
@@ -217,92 +201,8 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     );
   }
 
-  // Future<void> LowtoHigh(int subcategoryId) async {
-  //   print(subcategoryId);
-  //   final token = await gettokenFromPrefs();
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('$lowtohigh$subcategoryId/'),
-  //       headers: {
-  //         'Authorization': '$token',
-  //       },
-  //       body: ({'pk': subcategoryId.toString()}),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> searchData = jsonDecode(response.body);
-  //       List<Map<String, dynamic>> searchList = [];
-
-  //       for (var productData in searchData) {
-  //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com///${productData['image']}";
-  //         searchList.add({
-  //           'id': productData['id'],
-  //           'name': productData['name'],
-  //           'price': productData['price'],
-  //           'salePrice': productData['salePrice'],
-  //           'image': imageUrl,
-  //           'category_id': productData['mainCategory'],
-  //         });
-  //       }
-  //       setState(() {
-  //         lowtohighresult = searchList;
-  //         print('llllllllllllllllll22222222hhhhhhhhhhhhhhhh$lowtohighresult');
-  //       });
-  //     } else {
-  //       print('Failed to search item: ${response.statusCode}');
-  //       print('Response body: ${response.body}');
-  //     }
-  //   } catch (error) {
-  //     print('Error fetching product: $error');
-  //   }
-  // }
-
-  // Future<String?> gettokenFromPrefs() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString('token');
-  // }
-
-  // Future<void> HightoLow(int subcategoryId) async {
-  //   print(subcategoryId);
-  //   final token = await gettokenFromPrefs();
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('$hightolow$subcategoryId/'),
-  //       headers: {
-  //         'Authorization': '$token',
-  //       },
-  //       body: ({'pk': subcategoryId.toString()}),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> searchData = jsonDecode(response.body);
-  //       List<Map<String, dynamic>> searchList = [];
-
-  //       for (var productData in searchData) {
-  //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com///${productData['image']}";
-  //         searchList.add({
-  //           'id': productData['id'],
-  //           'name': productData['name'],
-  //           'price': productData['price'],
-  //           'salePrice': productData['salePrice'],
-  //           'image': imageUrl,
-  //           'category_id': productData['mainCategory'],
-  //         });
-  //       }
-  //       setState(() {
-  //         hightolowresult = searchList;
-  //         print('hhhhhhhhhh222222222lllllllllllllll$hightolowresult');
-  //       });
-  //     } else {
-  //       print('Failed to search item: ${response.statusCode}');
-  //       print('Response body: ${response.body}');
-  //     }
-  //   } catch (error) {
-  //     print('Error fetching product: $error');
-  //   }
-  // }
+ 
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -334,125 +234,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          // Row(
-          //   children: [
-          //     SizedBox(
-          //       width: 10,
-          //     ),
-          //     GestureDetector(
-          //       onTap: () {
-          //         showModalBottomSheet(
-          //           context: context,
-          //           builder: (BuildContext context) {
-          //             return Container(
-          //               height: 130,
-          //               child: Column(
-          //                 children: [
-          //                   ListTile(
-          //                     title: Text('High to Low'),
-          //                     onTap: () async {
-          //                       await HightoLow(widget.subcategoryId);
-          //                       Navigator.push(
-          //                           context,
-          //                           MaterialPageRoute(
-          //                               builder: (context) => hightolowpage(
-          //                                   result: hightolowresult,
-          //                                   SubcatId: widget.subcategoryId)));
-          //                     },
-          //                   ),
-          //                   ListTile(
-          //                     title: Text('Low to High'),
-          //                     onTap: () async {
-          //                       await LowtoHigh(widget.subcategoryId);
-          //                       Navigator.push(
-          //                           context,
-          //                           MaterialPageRoute(
-          //                               builder: (context) => lowtohighpage(
-          //                                   result: lowtohighresult,
-          //                                   SubcatId: widget.subcategoryId)));
-          //                     },
-          //                   ),
-          //                 ],
-          //               ),
-          //             );
-          //           },
-          //         );
-          //       },
-          //       child: Container(
-          //         width: 100,
-          //         height: 40,
-          //         decoration: BoxDecoration(
-          //           color: Colors.white,
-          //           borderRadius: BorderRadius.circular(10.0),
-          //           border: Border.all(
-          //             color:
-          //                 Colors.black, // Specify the color of the border here
-          //             width: 1.0, // Specify the width of the border here
-          //           ),
-          //           boxShadow: [
-          //             BoxShadow(
-          //               color: Colors.black.withOpacity(0.1),
-          //               blurRadius: 3,
-          //               spreadRadius: 2,
-          //               offset: Offset(0, 2),
-          //             ),
-          //           ],
-          //         ),
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment
-          //               .center, // Center the text horizontally
-          //           children: [
-          //             Text("Sort By"),
-          //             SizedBox(width: 5),
-          //             Image.asset(
-          //               "lib/assets/sort.png",
-          //               width: 24,
-          //               height: 24,
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //     SizedBox(
-          //       width: 20,
-          //     ),
-          //     Container(
-          //       width: 100,
-          //       height: 40,
-          //       decoration: BoxDecoration(
-          //         color: Colors.white,
-          //         borderRadius: BorderRadius.circular(10.0),
-          //         border: Border.all(
-          //           color: Colors.black, // Specify the color of the border here
-          //           width: 1.0, // Specify the width of the border here
-          //         ),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: Colors.black.withOpacity(0.1),
-          //             blurRadius: 3,
-          //             spreadRadius: 2,
-          //             offset: Offset(0, 2),
-          //           ),
-          //         ],
-          //       ),
-          //       child: Row(
-          //         mainAxisAlignment:
-          //             MainAxisAlignment.center, // Center the text horizontally
-          //         children: [
-          //           Text("Filter"),
-          //           SizedBox(
-          //             width: 5,
-          //           ),
-          //           Image.asset(
-          //             "lib/assets/filter.png",
-          //             width: 24,
-          //             height: 24,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
+         
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: ListView.builder(
@@ -492,7 +274,6 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                     ),
                                   );
                                 } catch (e) {
-                                  print('Error navigating: $e');
                                 }
                               },
                               child: Container(

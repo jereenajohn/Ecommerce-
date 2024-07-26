@@ -274,8 +274,7 @@ class _Sign_UpState extends State<Sign_Up> {
             "password": password
           }));
 
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
+    
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(scaffoldContext).showSnackBar(
@@ -321,9 +320,7 @@ class _Sign_UpState extends State<Sign_Up> {
 
       Map<String, dynamic> responseData = jsonDecode(response.body);
       userId = responseData['data']['id'];
-      print('User ID is $userId');
     } catch (e) {
-      print("Error: $e");
       // Show SnackBar for network error
       ScaffoldMessenger.of(scaffoldContext).showSnackBar(
         SnackBar(

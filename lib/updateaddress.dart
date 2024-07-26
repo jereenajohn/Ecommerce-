@@ -59,13 +59,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
 
   Future<void> fetchAddress() async {
     final token = await gettokenFromPrefs();
-    print("--------------------------------------------R$token");
 
     var response = await http.get(Uri.parse(url), headers: {
       'Authorization': '$token',
     },);
 
-    print("FetchWishlistData status code: ${response.body}");
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -73,7 +71,6 @@ class _UpdateAddressState extends State<UpdateAddress> {
 
       setState(() {
         addressList = List<Map<String, dynamic>>.from(data);
-        print(addressList);
 
         if (addressList.isNotEmpty) {
           var fetchedAddress = addressList[0];
@@ -87,7 +84,6 @@ class _UpdateAddressState extends State<UpdateAddress> {
         }
       });
     } else {
-      print("Failed to fetch address data");
     }
   }
 
@@ -523,11 +519,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
   }
 
   Future<void> updateaddress(int id) async {
-    print("========================>>>>>>>>>>>>>>>>>.....$id");
     try {
       final token = await gettokenFromPrefs();
 
-      print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy$token");
       var response = await http.put(
         Uri.parse('$updateaddressurl$id/'),
         headers: {
@@ -547,16 +541,12 @@ class _UpdateAddressState extends State<UpdateAddress> {
         ),
       );
 
-      print("Response: $response");
 
       if (response.statusCode == 200) {
-        print('Address updated successfully');
         Navigator.push(context, MaterialPageRoute(builder: (context)=>viewAddress()));
       } else {
-        print('Failed to update address: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error updating address: $error');
     }
   }
 }

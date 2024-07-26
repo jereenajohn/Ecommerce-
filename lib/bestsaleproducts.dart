@@ -91,7 +91,6 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
     try {
       final token = await gettokenFromPrefs();
 
-      print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$token");
       final response = await http.post(
         Uri.parse(wishlisturl),
         headers: {
@@ -104,10 +103,8 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
         }),
       );
 
-      print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ$response");
 
       if (response.statusCode == 200) {
-        print('Product added to wishlist: $productId');
       } else if (response.statusCode == 400) {
         // Product already in wishlist, show SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
@@ -116,30 +113,22 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
           ),
         );
       } else {
-        print('Failed to add product to wishlist: ${response.statusCode}');
-        print('Response body: ${response.body}');
       }
     } catch (error) {
-      print('Error adding product to wishlist: $error');
     }
   }
 
   Future<void> searchproduct() async {
     try {
-      print('$searchproducturl${searchitem.text}');
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-      print("==============hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${response.body}");
-      print(
-          "==============JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${response.statusCode}");
+     
 
       if (response.statusCode == 200) {
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
 
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
-        print("=========KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK${searchData}");
 
         for (var productData in searchData) {
           String imageUrl =
@@ -155,14 +144,11 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
         }
         setState(() {
           searchResults = searchList;
-          print("8888888888888888888$searchResults");
         });
       } else {
-        print('Failed to search item: ${response.statusCode}');
-        print('Response body: ${response.body}');
+       
       }
     } catch (error) {
-      print('Error fetching product: $error');
     }
   }
 
@@ -227,9 +213,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   Future<void> fetchBestSaleProducts() async {
     try {
       final response = await http.get(Uri.parse(bestsaleurl));
-      print('Response: ${response.statusCode}');
-      print(
-          "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT${response.body}");
+    
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -255,14 +239,12 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
           bestsaleproducts = productBestSaleList;
           isFavorite = List.generate(bestsaleproducts.length, (index) => false);
 
-          print(
-              "YYYYYYYYYYYYYYYYYYYYUUUUUUUUUUUUIIIIIIIIIIIIIIIIIIIIII$bestsaleproducts");
+        
         });
       } else {
         throw Exception('Failed to load discount products');
       }
     } catch (error) {
-      print('Error fetching discount products: $error');
     }
   }
 
@@ -334,7 +316,6 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
                                   ),
                                 );
                               } catch (e) {
-                                print('Error navigating: $e');
                               }
                             },
                             child: Container(

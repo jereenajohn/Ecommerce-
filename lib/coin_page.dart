@@ -47,14 +47,12 @@ Future<void> fetchCoins() async {
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
-      print("$parsed");
 
       // Access the 'data' field which contains the list of items
       final List<dynamic> data = parsed['data'];
       List<Map<String, dynamic>> coindatalist = [];
       var coinvalue = parsed['coinValue'];
       value = (coinvalue['value'] as num).toDouble();
-      print("-VALLLLLLLLLLLLLLLLLLLL$value");
 
       for (var productData in data) {
         // Ensure 'amount' is parsed as an integer
@@ -72,20 +70,16 @@ Future<void> fetchCoins() async {
 
         totalcoins = 0; // Initialize totalcoins to 0 before summing
         for (int i = 0; i < coinResults.length; i++) {
-          print(coinResults[i]['amount']);
           totalcoins += coinResults[i]['amount'] as int; // Explicitly cast to int
         }
 
         totalamount = totalcoins * value; // Calculate totalamount
-        print("8888888888888888888 $coinResults");
-        print(totalcoins);
-        print("Total amount: $totalamount");
+      
       });
     } else {
       throw Exception('Failed to load recommended products');
     }
   } catch (error) {
-    print('Error fetching recommended products: $error');
   }
 }
 

@@ -48,14 +48,11 @@ class _viewAddressState extends State<viewAddress> {
 
   Future<void> fetchAddress() async {
     final token = await gettokenFromPrefs();
-    print("--------------------------------------------R$token");
 
     var response = await http.get(Uri.parse(url), headers: {
       'Authorization': '$token',
     },);
 
-    print("FetchWishlistData status code: ${response.body}");
-        print("FetchWishlistData status code: ${response.statusCode}");
 
 
     if (response.statusCode == 200) {
@@ -67,12 +64,10 @@ class _viewAddressState extends State<viewAddress> {
       });
     }
     else if(response.statusCode==401){
-      print("session expired");
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Page()));
 
 
     } else {
-      print("Failed to fetch address data");
     }
   }
 
@@ -296,7 +291,6 @@ class _viewAddressState extends State<viewAddress> {
 
   Future<void> deleteaddress(int Id) async {
     final token = await gettokenFromPrefs();
-    print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG$token");
 
     try {
       final response = await http.delete(
@@ -305,17 +299,13 @@ class _viewAddressState extends State<viewAddress> {
           'Authorization': '$token',
         },
       );
-      print("uuuuuuuuuuuuuuuuuuuuuuuuuu");
-      print("Response status code: ${response.statusCode}");
-      print("Response body: ${response.body}");
+    
 
       if (response.statusCode == 204) {
-        print('Wishlist ID deleted successfully: $Id');
       } else {
         throw Exception('Failed to delete wishlist ID: $Id');
       }
     } catch (error) {
-      print('Error: $error');
     }
   }
 

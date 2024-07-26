@@ -48,7 +48,6 @@ class _WishlistState extends State<Wishlist> {
     userId = await getUserIdFromPrefs();
     tokenn = await gettokenFromPrefs();
 
-    print("--------------------------------------------R$userId");
     FetchWishlistData();
     fetchProducts();
   }
@@ -60,7 +59,6 @@ class _WishlistState extends State<Wishlist> {
 
   Future<void> FetchWishlistData() async {
     final token = await gettokenFromPrefs();
-    print("--------------------------------------------R$token");
 
     var response = await http.get(
       Uri.parse(wishlisturl),
@@ -68,8 +66,6 @@ class _WishlistState extends State<Wishlist> {
         'Authorization': '$token',
       },
     );
-
-    print("FetchWishlistData status code: ${response.body}");
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -86,32 +82,22 @@ class _WishlistState extends State<Wishlist> {
         ids.add(productId);
         wishlistIds.add(wishlistItemId);
         localProductWishlistMap[productId] = wishlistItemId;
-
-        print("Item::::::::::::::::::::::::::::::::::: $item");
       }
 
       setState(() {
         productIds = ids;
         wishlistIds = wishlistIds;
         productWishlistMap = localProductWishlistMap;
-        print("Product IDs: $productIds");
-        print("Wishlist IDs: $wishlistIds");
-        print("Product-Wishlist Map: $productWishlistMap");
       });
     } else if (response.statusCode == 401) {
-      print("session expired");
-
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Login_Page()));
-    } else {
-      print("Failed to fetch wishlist data");
-    }
+    } else {}
   }
 
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsurl));
-      print('fetchProducts Response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -125,7 +111,6 @@ class _WishlistState extends State<Wishlist> {
             String imageUrl =
                 "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
-            print("Product ID: ${productData['id']}, Wishlist ID: $wishlistId");
 
             filteredProducts.add({
               'id': productData['id'],
@@ -140,19 +125,13 @@ class _WishlistState extends State<Wishlist> {
           }
         }
 
-        print("Filtered Products Before SetState: $filteredProducts");
         setState(() {
           products = filteredProducts;
-          print("Filtered Products After SetState: $products");
         });
-
-        print("-------------------------------$products");
       } else {
         throw Exception('Failed to load wishlist products');
       }
-    } catch (error) {
-      print('Error fetching wishlist products: $error');
-    }
+    } catch (error) {}
   }
 
   final imageurl =
@@ -166,16 +145,13 @@ class _WishlistState extends State<Wishlist> {
   var sizes;
   int? selectedstock;
   Future<void> sizecolor(var slug) async {
-    print('======================$imageurl${slug}/r');
     Set<String> colorsSet = {};
     try {
       final response = await http.get(Uri.parse('$imageurl${slug}/'));
-      print("statussssssssssssssssssssssssss${response.body}");
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
         final List<dynamic> imageData = data['images'];
         final List<dynamic> variantsData = data['variants'];
-        print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$imageData");
 
         List<Map<String, dynamic>> productsList = [];
 
@@ -196,7 +172,6 @@ class _WishlistState extends State<Wishlist> {
               .map<Map<String, dynamic>>((variant) =>
                   {'size': variant['size'], 'stock': variant['stock']})
               .toList();
-          print("sizeeeeee${sizes}");
 
           productsList.add({
             'id': imageData['id'],
@@ -215,7 +190,6 @@ class _WishlistState extends State<Wishlist> {
           images = productsList;
           colors = colorsSet.toList();
 
-          print("COLORSSSSSSSSSSSSSSSSSSSS$colors");
           selectedColor = colors.isNotEmpty ? colors[0] : null;
           sizes = images.firstWhere(
                   (image) => image['color'] == selectedColor)['sizes'] ??
@@ -226,9 +200,7 @@ class _WishlistState extends State<Wishlist> {
       } else {
         throw Exception('Error fetching product image');
       }
-    } catch (error) {
-      print('Error fetching product image : $error');
-    }
+    } catch (error) {}
   }
 
   void showBottomSheet(
@@ -289,7 +261,6 @@ class _WishlistState extends State<Wishlist> {
                                     onPressed: () {
                                       setModalState(() {
                                         selectedColor = color;
-                                        print("selectedcolorrrr$selectedColor");
                                         sizes = images.firstWhere((image) =>
                                                 image['color'] ==
                                                 selectedColor)['sizes'] ??
@@ -351,10 +322,7 @@ class _WishlistState extends State<Wishlist> {
                                                 selectedSize = sizeData['size'];
                                                 selectedStock =
                                                     sizeData['stock'];
-                                                print(
-                                                    "selectedcolorrrr$selectedSize");
-                                                print(
-                                                    "selectedcolorrrr$selectedStock");
+
                                                 onColorSizeChanged(
                                                     selectedColor!,
                                                     sizes,
@@ -425,33 +393,23 @@ class _WishlistState extends State<Wishlist> {
   }
 
   Future<void> deleteWishlistProduct(int wishlistId) async {
-    print("fvvvvvvvvvvvvvvvvvvvvvvvjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjv$wishlistId");
     try {
-      print('$deletewishlisturl$wishlistId/');
       final response = await http.delete(
         Uri.parse('$deletewishlisturl$wishlistId/'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
       );
-      print("uuuuuuuuuuuuuuuuuuuuuuuuuu");
-      print("Response status code: ${response.statusCode}");
-      print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
-        print('Wishlist ID deleted successfully: $wishlistId');
       } else {
         throw Exception('Failed to delete wishlist ID: $wishlistId');
       }
-    } catch (error) {
-      print('Error: $error');
-    }
+    } catch (error) {}
   }
 
   Future<void> addProductToCart(int productId, var name, var price) async {
-    print(productId);
     try {
-      print('AAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLL$addtocarturl$productId/');
       final token = await gettokenFromPrefs();
 
       final response = await http.post(
@@ -469,10 +427,8 @@ class _WishlistState extends State<Wishlist> {
           'size': selectedSize,
         }),
       );
-      print("Response status code: ${response.statusCode}");
 
       if (response.statusCode == 201) {
-        print('Product added to cart: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.green,
@@ -486,13 +442,8 @@ class _WishlistState extends State<Wishlist> {
             content: Text('Product already in Cart'),
           ),
         );
-      } else {
-        print('Failed to add product to cart: ${response.statusCode}');
-        print('Response body: ${response.body}');
-      }
-    } catch (error) {
-      print('Error adding product to cart: $error');
-    }
+      } else {}
+    } catch (error) {}
   }
 
   void removeProduct(int index) {
@@ -532,10 +483,6 @@ class _WishlistState extends State<Wishlist> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              print(
-                  "iddddddddddddddddddddddddddddddddddd${products[index]['id']}");
-              print(
-                  "iddddddddddddddddddddddddddddduuuuuuuuuuuu${products[index]['mainCategory']}");
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -689,8 +636,6 @@ class _WishlistState extends State<Wishlist> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            print(
-                                "delettttttttttttttttttttttttttttttttttttttiddd${products[index]['wishlistId']}");
                             deleteWishlistProduct(
                                 products[index]['wishlistId']);
                             removeProduct(index);
@@ -705,26 +650,6 @@ class _WishlistState extends State<Wishlist> {
                   ),
                 ],
               ),
-
-              // child: ListTile(
-              //   title: Text(products[index]['name']),
-              //   subtitle: Text('\$${products[index]['price']}'),
-              //   leading: Container(
-              //     width: 100, // Adjust the width as needed
-              //     height: 190, // Adjust the height to match ListTile height
-              //     child: Image.network(
-              //       products[index]['image'],
-              //       fit: BoxFit.cover, // Adjust the BoxFit property as needed
-              //     ),
-              //   ),
-              //   trailing: GestureDetector(
-              //     onTap: () {
-              //       deleteWishlistProduct(WishlistIds[index]);
-              //       removeProduct(index);
-              //     },
-              //     child: Icon(Icons.close),
-              //   ),
-              // ),
             ),
           );
         },
