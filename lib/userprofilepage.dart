@@ -72,7 +72,7 @@ var userimage;
         setState(() {
 
             imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${userimage['image']}";
+              "${userimage['image']}";
         });
       } else {
       }
@@ -99,9 +99,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com///profile-view/";
+      "http://51.20.129.52/profile-view/";
       var viewimage =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com///profile-image/";
+      "http://51.20.129.52/profile-image/";
   Future<void> getprofiledata() async {
     try {
       final token = await gettokenFromPrefs();
@@ -138,7 +138,7 @@ var viewprofileurl =
   Widget build(BuildContext context) {
       String imageUrl =
         userimage != null && userimage['image'] != null && userimage['image'].isNotEmpty
-            ? "https://garden-tunnel-tue-episodes.trycloudflare.com//${userimage['image']}"
+            ? "${userimage['image']}"
             : '';
     return Scaffold(
       appBar: AppBar(

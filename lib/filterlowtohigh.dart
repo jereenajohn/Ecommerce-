@@ -29,7 +29,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
   List<Map<String, dynamic>> hightolowresult = [];
    final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
    bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -49,8 +49,8 @@ class _lowtohighpageState extends State<lowtohighpage> {
     // Use userId after getting the value
   }
 
-  final String hightolow = "https://garden-tunnel-tue-episodes.trycloudflare.com///high-products/";
-  final String wishlisturl = "https://garden-tunnel-tue-episodes.trycloudflare.com///whishlist/";
+  final String hightolow = "http://51.20.129.52/high-products/";
+  final String wishlisturl = "http://51.20.129.52/whishlist/";
 
   Future<void> HightoLow(int subcategoryId) async {
     final token = await gettokenFromPrefs();
@@ -67,7 +67,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -158,7 +158,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

@@ -22,15 +22,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//wishlist/";
+      "http://51.20.129.52/wishlist/";
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/";
+      "http://51.20.129.52/products/";
 
   final String deletewishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//wishlist-delete/";
+      "http://51.20.129.52/wishlist-delete/";
 
   final String addtocarturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//cart/";
+      "http://51.20.129.52/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -109,7 +109,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+                "${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
 
             filteredProducts.add({
@@ -135,7 +135,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//product/";
+      "http://51.20.129.52/product/";
 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -157,15 +157,15 @@ class _WishlistState extends State<Wishlist> {
 
         for (var imageData in imageData) {
           String imageUrl1 =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image1']}";
+              "${imageData['image1']}";
           String imageUrl2 =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image2']}";
+              "${imageData['image2']}";
           String imageUrl3 =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image3']}";
+              "${imageData['image3']}";
           String imageUrl4 =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image4']}";
+              "${imageData['image4']}";
           String imageUrl5 =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${imageData['image5']}";
+              "${imageData['image5']}";
 
           List<Map<String, dynamic>> sizes = variantsData
               .where((variant) => variant['color'] == imageData['id'])

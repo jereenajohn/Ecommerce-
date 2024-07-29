@@ -44,19 +44,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/subcategory/";
+      "http://51.20.129.52/subcategory/";
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
   final String lowtohigh =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/low-products/";
+      "http://51.20.129.52/low-products/";
   final String hightolow =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/high-products/";
+      "http://51.20.129.52/high-products/";
 
   final String pricefilter =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/filtered-products/";
+      "http://51.20.129.52/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -111,7 +111,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var pfilter in pfill) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${pfilter['image']}";
+              "${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
@@ -159,7 +159,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -197,7 +197,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -246,7 +246,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -340,7 +340,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

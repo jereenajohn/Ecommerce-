@@ -71,44 +71,44 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> bogoproducts = [];
 
   final String bannerurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//banners/";
+      "http://51.20.129.52/banners/";
   final String baseUrl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//";
+      "http://51.20.129.52/";
   final String categoryUrl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//category/";
+      "http://51.20.129.52/category/";
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
   final String offersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//offer-banner/";
+      "http://51.20.129.52/offer-banner/";
 
   final String discountsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//discount-sale/";
+      "http://51.20.129.52/discount-sale/";
   // final String buyonegetoneurl =
-  //     "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-1-get-1/";
+  //     "http://51.20.129.52/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/best-sale-products/";
+      "http://51.20.129.52/best-sale-products/";
 
   final String flashsaleurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/flash-sale/";
+      "http://51.20.129.52/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/buy-2-get-1/";
+      "http://51.20.129.52/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/offers/";
+      "http://51.20.129.52/offers/";
 
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/recommended/";
+      "http://51.20.129.52/recommended/";
 
   var recentlyviewedurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/recently-viewed/";
+      "http://51.20.129.52/recently-viewed/";
 
   final String bogooffersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -379,7 +379,7 @@ var bogo;
 
       for (var productData in productsData) {
         String imageUrl =
-            "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+            "${productData['image']}";
         productsList.add({
           'id': productData['id'],
           'name': productData['name'],
@@ -479,7 +479,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var recentproductsData in recentproductsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${recentproductsData['image']}";
+              "${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -515,7 +515,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -546,7 +546,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var offerData in offersData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${offerData['image']}";
+              "${offerData['image']}";
           offersList.add({
             'id': offerData['id'],
             'name': offerData['name'],
@@ -575,7 +575,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -606,7 +606,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -640,7 +640,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -675,7 +675,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -710,7 +710,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -762,7 +762,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -794,7 +794,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           halfratedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -828,7 +828,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${bannerData['image']}";
+              "${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -855,7 +855,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${categoryData['image']}";
+              "${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],

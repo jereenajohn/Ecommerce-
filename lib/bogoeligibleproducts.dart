@@ -30,16 +30,16 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
 
   final String offersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -101,7 +101,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -230,7 +230,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -319,7 +319,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+  //             "http://51.20.129.52/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

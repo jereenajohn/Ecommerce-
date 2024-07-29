@@ -32,11 +32,11 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
 
   final String subcategoriesurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//category/";
+      "http://51.20.129.52/category/";
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//category/";
+      "http://51.20.129.52/category/";
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -136,7 +136,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -173,7 +173,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -207,7 +207,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         for (var subcategoryData in subcategoriessData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${subcategoryData['image']}";
+              "${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

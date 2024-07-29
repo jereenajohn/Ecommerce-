@@ -54,9 +54,9 @@ class _MyOrderState extends State<MyOrder> {
   }
 
   final String orders =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/order-items/";
+      "http://51.20.129.52/order-items/";
   final String ratingurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/product-review/";
+      "http://51.20.129.52/product-review/";
 
   List<Map<String, dynamic>> products = [];
   bool isLoading = true;
@@ -87,7 +87,7 @@ class _MyOrderState extends State<MyOrder> {
 
 
       for (var productData in productsData) {
-        String imageUrl = "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+        String imageUrl = "${productData['image']}";
         
         // Parse and format the date
         DateTime parsedDate = DateTime.parse(productData['created_at']);

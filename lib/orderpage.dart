@@ -31,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/get-address/";
+      "http://51.20.129.52/get-address/";
   String orderurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/order/create/";
+      "http://51.20.129.52/order/create/";
   String cuponurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/cupons/";
+      "http://51.20.129.52/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -99,7 +99,7 @@ class _orderState extends State<order> {
   List<int> offerProducts = [];
      List<Map<String, dynamic>> offers = [];
  final String offersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
 var bogo;
 bool is_active=false;
@@ -186,6 +186,7 @@ bool onlyDiscountAllowedAndNormal = true;
 
 bool offernotdiscount=false;
 bool notofferdiscount1=false;
+  bool notofferdiscount2 = false;
 
  int discount_product_quantity=0;
  bool offeronly=false;
@@ -194,6 +195,7 @@ bool notofferdiscount1=false;
     double totalPrice = 0.0;
     double? leastPrice;
     int offerProductCount = 0;
+     int offeronlycount = 0;
 int quat=0;
     setState(() {
       
@@ -246,6 +248,22 @@ if (has_offer == "Offer Applied") {
               Dquantity = quantity;
               print("Quantity of least price product: $Dquantity");
             }
+          }
+        }
+
+                for (int i = 0; i < cartProducts.length; i++) {
+          int quantity = cartProducts[i]['quantity'] ?? 1;
+
+          // Check if this product has an offer
+          String? discountapplicable = cartProducts[i]['discount_product'];
+          String? has_offer = cartProducts[i]['has_offer'];
+          if (has_offer == "Offer Applied" && discountapplicable == "normal") {
+            // Count the offer products
+            offeronlycount += quantity;
+            print(
+                "OOOOOOOONNNNNNNNNNNNLLLYYYYYYYYYYYrproductttttttttttttCCCCCountTTTTTTTTTTT:$offeronlycount");
+            offeronly = true;
+            print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offeronly");
           }
         }
 
@@ -316,6 +334,20 @@ for (int i = 0; i < cartProducts.length; i++) {
     
   }
 }
+
+ for (int i = 0; i < cartProducts.length; i++) {
+                String? discountapplicable =
+                    cartProducts[i]['discount_product'];
+                String? has_offer = cartProducts[i]['has_offer'];
+                int discount_product_quantity =
+                    cartProducts[i]['quantity'] ?? 0;
+                if (has_offer == "Offer Applied" &&
+                    discountapplicable == "normal") {
+                  offernotdiscount = true;
+                } else {
+                  notofferdiscount1 = true;
+                }
+              }
 
 // Determine free items based on the conditions
 if (hasOfferAppliedNormalProduct) {
@@ -468,6 +500,25 @@ for (int i = 0; i < cartProducts.length; i++) {
  
 }
 
+
+   for (int i = 0; i < cartProducts.length; i++) {
+                String? discountapplicable =
+                    cartProducts[i]['discount_product'];
+                String? has_offer = cartProducts[i]['has_offer'];
+                int discount_product_quantity =
+                    cartProducts[i]['quantity'] ?? 0;
+                if (has_offer == "Offer Applied" &&
+                    discountapplicable == "normal") {
+                  offernotdiscount = true;
+                } else if (has_offer == "Offer Not Applicable" &&
+                    discountapplicable == "Discount Allowed") {
+                  notofferdiscount1 = true;
+                } else if (has_offer == "Offer Applied" &&
+                    discountapplicable == "Discount Allowed") {
+                  notofferdiscount2 = true;
+                  print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj$notofferdiscount2");
+                }
+              }
 if (hasOfferAppliedNormalProduct) {
   print("offeerrrrrrrrrrrrronnlyyyyyyy");
   freeItems = 0;
@@ -475,42 +526,143 @@ if (hasOfferAppliedNormalProduct) {
   print("discountnlyyyyyyyyyyyyyyyyyyyyy");
   freeItems = 0;
 }
-else if(offernotdiscount==true && notofferdiscount1==true){
-  print("offernotdiscount$quat");
-   if(offerProductCount>=quat){
-print("offerProductCounttttttttttttttttttttttt$offerProductCount");
-    int f=offerProductCount~/2 ;
-   
-    print("fffffffffffffffffffffffffff$f");
-    if(quat<f){
-      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
-      freeItems=quat;
+else if (offernotdiscount == true &&
+                  notofferdiscount1 == true &&
+                  notofferdiscount2 == false) {
+                print(
+                    "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+                print("offernotdiscount$quat");
+                if (offerProductCount >= quat) {
+                  print(
+                      "offerProductCounttttttttttttttttttttttt$offerProductCount");
+                  int f = offerProductCount ~/ 2;
 
+                  print("fffffffffffffffffffffffffff$f");
+                  if (quat < f) {
+                    print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+                    freeItems = quat;
+                  } else {
+                    freeItems = f;
+                  }
 
-    }
+                  print(
+                      "1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                } else if (quat > offerProductCount) {
+                  int f = offerProductCount ~/ 2;
+                  freeItems = f;
+                  print("fffffffffffffffffffffffffff$f");
+                } else {
+                  print(
+                      "freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                }
+              } 
+               else if (offernotdiscount == false &&
+                  notofferdiscount1 == false &&
+                  notofferdiscount2 == true) {
+                print(
+                    "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                print("offernotdiscount$quat");
+                if(offerProductCount==1 || offerProductCount==2){
+                  freeItems=0;
+                }
+                else if (offerProductCount >= quat) {
+                  print(
+                      "offerProductCounttttttttttttttttttttttt$offerProductCount");
+                  int f = offerProductCount ~/ 3;
 
-    else{
-      freeItems=f;
-    }
+                  print("fffffffffffffffffffffffffff$f");
+                  if (quat < f) {
+                    print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+                    freeItems = quat;
+                  } else {
+                    freeItems = f;
+                  }
 
-        print("1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                  print(
+                      "1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                } else if (quat > offerProductCount) {
+                  int f = offerProductCount ~/ 2;
+                  freeItems = f;
+                  print("fffffffffffffffffffffffffff$f");
+                } else {
+                  print(
+                      "freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                }
+              } 
 
-   }
-  
-   else if(quat>offerProductCount){
-     int f=offerProductCount~/2 ;
-     freeItems=f;
-     print("fffffffffffffffffffffffffff$f");
-   }
+               else if (offernotdiscount == true &&
+                  notofferdiscount1 == false &&
+                  notofferdiscount2 == true) {
+                print(
+                    "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH$offerProductCount");
+                print("offernotdiscount$quat");
 
-   
-   
-   else{
-   
-    print("freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
-   
-   }
-}
+                if (offerProductCount == 1 || offerProductCount == 2) {
+                  freeItems = 0;
+                  print(
+                      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                  break;
+                } else if (offerProductCount % 2 == 0) {
+                  print(
+                      "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNnn$offeronlycount");
+                  int f = offeronlycount ~/ 2;
+                  int f2 = offerProductCount ~/ 3;
+
+                  if (offeronlycount == quat) {
+                    freeItems = f2;
+                  } else if (offeronlycount > quat) {
+                    print(
+                        "offerProductCounttttttttttttttttttttttt$offerProductCount");
+
+                    print("fffffffffffffffffffffffffff$f");
+                    if (quat < f) {
+                      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+                      freeItems = quat;
+                    } else {
+                      freeItems = f;
+                    }
+
+                    print(
+                        "1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                  } else if (quat > offeronlycount) {
+                    freeItems = f2;
+                    print("fffffffffffffffffffffffffff$f");
+                  } else {
+                    print(
+                        "freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                  }
+                }
+//elseeeeeeeeeeeeeeeeeeeeeeeeeee
+                else if (offerProductCount % 2 == 1) {
+                  print(
+                      "elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+                  if (offerProductCount >= quat) {
+                    print(
+                        "offerProductCounttttttttttttttttttttttt$offerProductCount");
+                    int f = offerProductCount ~/ 3;
+
+                    print("fffffffffffffffffffffffffff$f");
+                    if (quat < f) {
+                      print("quatlessthannnfreeitemmmmmmmmmmmmmmmmmmmmmmmmm");
+                      freeItems = quat;
+                    } else {
+                      freeItems = f;
+                    }
+
+                    print(
+                        "1111111===freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                  } else if (quat > offerProductCount) {
+                    int f = offerProductCount ~/ 3;
+                    freeItems = f;
+                    print("fffffffffffffffffffffffffff$f");
+                  } else {
+                    print(
+                        "freeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$freeItems");
+                  }
+                }
+              }
+
 
 
 print("Total free items: $freeItems");
@@ -612,7 +764,7 @@ print("Total free items: $freeItems");
 }
 
   var CartUrl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart-products/";
+      "http://51.20.129.52/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -939,7 +1091,7 @@ print("Total free items: $freeItems");
 
         for (var item in data) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${item['image']}";
+              "${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;

@@ -10,7 +10,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class forgotpassword extends StatefulWidget {
   const forgotpassword({super.key});
 
@@ -18,56 +17,45 @@ class forgotpassword extends StatefulWidget {
   State<forgotpassword> createState() => _forgotpasswordState();
 }
 
-
-
 class _forgotpasswordState extends State<forgotpassword> {
-  var url="https://garden-tunnel-tue-episodes.trycloudflare.com//forgot-password/";
-  TextEditingController email=TextEditingController();
+  var url = "http://51.20.129.52/forgot-password/";
+  TextEditingController email = TextEditingController();
   var tokenn;
   var emailres;
- @override
+  @override
   void initState() {
     super.initState();
     _initData();
   }
 
-   Future<void> _initData() async {
+  Future<void> _initData() async {
     tokenn = await gettokenFromPrefs();
 
     // Use userId after getting the value
   }
 
-   Future<String?> gettokenFromPrefs() async {
+  Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
-  
-
-
   Future<void> sendemail() async {
-  try {
-    var response = await http.post(
-      Uri.parse(url),
-      body: {"email": email.text},
-    );
-    if(response.statusCode==200){
-       var responseData = jsonDecode(response.body);  
-       emailres=email.text;
-       
-      
-    }
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => OtpPage(email:emailres)),
-        );
-      
-    
-   
-  } catch (e) {
-    
+    try {
+      var response = await http.post(
+        Uri.parse(url),
+        body: {"email": email.text},
+      );
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        emailres = email.text;
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OtpPage(email: emailres)),
+      );
+    } catch (e) {}
   }
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,9 +66,9 @@ class _forgotpasswordState extends State<forgotpassword> {
             child: Container(
               child: Column(
                 children: [
-                 
                   Padding(
-                    padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
+                    padding:
+                        const EdgeInsets.only(top: 40, left: 15, right: 15),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -96,12 +84,18 @@ class _forgotpasswordState extends State<forgotpassword> {
                       ),
                       child: Column(
                         children: [
-                          SizedBox(height: 30,),
+                          SizedBox(
+                            height: 30,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Forgot Password!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                              Text(
+                                "Forgot Password!",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
                             ],
                           ),
                           SizedBox(height: 15),
@@ -109,36 +103,51 @@ class _forgotpasswordState extends State<forgotpassword> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20, right: 20),
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
                                   child: Container(
                                     child: Column(
                                       children: [
-                                       
-                                        SizedBox(height: 15,),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
                                         TextField(
                                           controller: email,
                                           decoration: InputDecoration(
                                             labelText: 'Email',
                                             border: OutlineInputBorder(
-                                              borderSide: BorderSide(color: const Color.fromARGB(255, 165, 165, 165)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: const Color.fromARGB(
+                                                      255, 165, 165, 165)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 170, 170, 170).withOpacity(0.5)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                          255, 170, 170, 170)
+                                                      .withOpacity(0.5)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Color.fromARGB(255, 188, 2, 2)),
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 188, 2, 2)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             filled: true,
                                             fillColor: Colors.white,
-                                            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 12.0,
+                                                    horizontal: 16.0),
                                           ),
                                         ),
-                                        SizedBox(height: 15,),
-                                        
-                                       
+                                        SizedBox(
+                                          height: 15,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -146,7 +155,9 @@ class _forgotpasswordState extends State<forgotpassword> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.6,
                             decoration: BoxDecoration(
@@ -155,8 +166,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                             ),
                             child: TextButton(
                               onPressed: () async {
-                                    sendemail();
-                               
+                                sendemail();
                               },
                               child: Text(
                                 "Continue",
@@ -167,7 +177,9 @@ class _forgotpasswordState extends State<forgotpassword> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 40,),
+                          SizedBox(
+                            height: 40,
+                          ),
                         ],
                       ),
                     ),
@@ -178,70 +190,67 @@ class _forgotpasswordState extends State<forgotpassword> {
           );
         },
       ),
-
-        bottomNavigationBar: Container(
-          color: Color.fromARGB(255, 244, 244, 244),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: GNav(
-              gap: 20,
-              onTabChange: (index) {
-                setState(() {
-                  // _index = index;
-                  // if (index == 2) {
-                  //   _showSearchDialog(context);
-                  // }
-                });
-              },
-              padding: EdgeInsets.all(16),
-              // selectedIndex: _index,
-              tabs: [
-                GButton(
-                  icon: Icons.home,
-                  onPressed: () {
+      bottomNavigationBar: Container(
+        color: Color.fromARGB(255, 244, 244, 244),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          child: GNav(
+            gap: 20,
+            onTabChange: (index) {
+              setState(() {
+                // _index = index;
+                // if (index == 2) {
+                //   _showSearchDialog(context);
+                // }
+              });
+            },
+            padding: EdgeInsets.all(16),
+            // selectedIndex: _index,
+            tabs: [
+              GButton(
+                icon: Icons.home,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                  // Navigate to Home page
+                },
+              ),
+              GButton(
+                icon: Icons.shopping_bag,
+                onPressed: () {
+                  if (tokenn == null) {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                    // Navigate to Home page
-                  },
-                ),
-                 GButton(
-                  icon: Icons.shopping_bag,
-                  onPressed: () {
-                    if (tokenn == null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login_Page()));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    }
+                        MaterialPageRoute(builder: (context) => Login_Page()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
 
-                    // Navigate to Cart page
-                  },
-                ),
-                GButton(
-                  icon: Icons.search,
-                  onPressed: () {
-                    //  Navigator.push(
-                    //     context, MaterialPageRoute(builder: (context) => search()));
-                    // Show search dialog if tapped
-                  },
-                ),
-                GButton(
-                  icon: Icons.person,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UserProfilePage()));
-                    // Navigate to Profile page
-                  },
-                ),
-              ],
-            ),
+                  // Navigate to Cart page
+                },
+              ),
+              GButton(
+                icon: Icons.search,
+                onPressed: () {
+                  //  Navigator.push(
+                  //     context, MaterialPageRoute(builder: (context) => search()));
+                  // Show search dialog if tapped
+                },
+              ),
+              GButton(
+                icon: Icons.person,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserProfilePage()));
+                  // Navigate to Profile page
+                },
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

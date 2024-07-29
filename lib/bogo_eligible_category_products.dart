@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Bogo_Eligible_Category_Products extends StatefulWidget {
-  final String? user_id; // Receive user_id as a parameter
-
+  final String? user_id; 
   const Bogo_Eligible_Category_Products({Key? key, this.user_id})
       : super(key: key);
 
@@ -33,16 +32,16 @@ class _Bogo_Eligible_Category_ProductsState
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/";
+      "http://51.20.129.52/products/";
 
   final String offersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//offer/";
+      "http://51.20.129.52/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -102,7 +101,7 @@ class _Bogo_Eligible_Category_ProductsState
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -220,7 +219,7 @@ class _Bogo_Eligible_Category_ProductsState
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -289,47 +288,10 @@ class _Bogo_Eligible_Category_ProductsState
       },
     );
   }
-
   Future<String?> getUserIdFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('userId');
   }
-
-  // void fetchbuyonegetoneProducts() async {
-  //   try {
-  //     final response = await http.get(Uri.parse(buyonegetoneurl));
-
-  //     if (response.statusCode == 200) {
-  //       final parsed = jsonDecode(response.body);
-  //       final List<dynamic> productsData = parsed['data'];
-  //       List<Map<String, dynamic>> productbuyonegetoneList = [];
-
-  //       for (var productData in productsData) {
-  //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
-  //         productbuyonegetoneList.add({
-  //           'id': productData['id'],
-  //           'mainCategory': productData['mainCategory'],
-  //           'name': productData['name'],
-  //           'price': productData['price'],
-  //           'salePrice': productData['salePrice'],
-  //           'image': imageUrl,
-  //           'slug': productData['slug']
-  //         });
-  //       }
-
-  //       setState(() {
-  //         productsinoffer = productbuyonegetoneList;
-  //         // Initialize isFavorite list with the same length as products list
-  //         isFavorite =
-  //             List.generate(productsinoffer.length, (index) => false);
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load Buy One Get One products');
-  //     }
-  //   } catch (error) {
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

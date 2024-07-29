@@ -33,9 +33,9 @@ class _pricefilterpageState extends State<pricefilterpage> {
   var tokenn;
   TextEditingController searchitem = TextEditingController();
  final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   @override
@@ -89,7 +89,7 @@ class _pricefilterpageState extends State<pricefilterpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "http://51.20.129.52/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

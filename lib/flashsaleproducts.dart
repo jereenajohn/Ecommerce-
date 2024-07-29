@@ -27,14 +27,14 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
   List<bool> isFavorite = [];
 
   final String flashsaleurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//flash-sale/";
+      "http://51.20.129.52/flash-sale/";
   List<Map<String, dynamic>> flashsaleproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//whishlist/";
+      "http://51.20.129.52/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -135,7 +135,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -226,7 +226,7 @@ class _FlashSaleProductsState extends State<FlashSaleProducts> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://4a48-117-193-85-167.ngrok-free.app${productData['image']}";
+              "${productData['image']}";
           productFlashSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

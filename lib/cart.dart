@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart-products/";
+      "http://51.20.129.52/cart-products/";
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
 
   final quantityincrementurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart/increment/";
+      "http://51.20.129.52/cart/increment/";
 
   final quantitydecrementurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart/decrement/";
+      "http://51.20.129.52/cart/decrement/";
 
   final deletecarturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/cart-delete/";
+      "http://51.20.129.52/cart-delete/";
 
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${item['image']}";
+              "${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -257,7 +257,7 @@ class _CartState extends State<Cart> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   var bogo;
   bool is_active = false;

@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-2-get-1/";
+      "http://51.20.129.52/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//whishlist/";
+      "http://51.20.129.52/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -135,7 +135,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "http://51.20.129.52/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -225,7 +225,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "http://51.20.129.52/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

@@ -30,7 +30,7 @@ class _UserAddressState extends State<UserAddress> {
   TextEditingController note = TextEditingController();
 
   String url =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/add-address/";
+      "http://51.20.129.52/add-address/";
   var tokenn;
 
   @override

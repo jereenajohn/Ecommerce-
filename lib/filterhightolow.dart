@@ -26,7 +26,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -51,7 +51,7 @@ class _hightolowpageState extends State<hightolowpage> {
   }
 
 
-  final String lowtohigh = "https://garden-tunnel-tue-episodes.trycloudflare.com///low-products/";
+  final String lowtohigh = "http://51.20.129.52/low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -70,7 +70,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+          String imageUrl = "http://51.20.129.52/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -90,7 +90,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://garden-tunnel-tue-episodes.trycloudflare.com///whishlist/";
+  final String wishlisturl = "http://51.20.129.52/whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
@@ -163,7 +163,7 @@ class _hightolowpageState extends State<hightolowpage> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

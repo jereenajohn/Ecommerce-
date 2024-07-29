@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//recommended/";
+      "http://51.20.129.52/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -141,7 +141,7 @@ Future<void> _initData() async {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -242,7 +242,7 @@ Future<void> _initData() async {
       List<Map<String, dynamic>> productRecommendedList = [];
 
       for (var productData in productsData) {
-        String imageUrl = "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+        String imageUrl = "${productData['image']}";
         productRecommendedList.add({
           'id': productData['id'],
           'mainCategory': productData['mainCategory'],

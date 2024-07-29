@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com///best-sale-products/";
+      "http://51.20.129.52/best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com///products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com///whishlist/";
+      "http://51.20.129.52/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -67,8 +67,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
         bestsaleproducts[index]['id'],
       );
     } else {
-      // If the product is being removed from the wishlist
-      // You can implement this logic if needed
+     
     }
   }
 
@@ -132,7 +131,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -223,7 +222,7 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productBestSaleList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

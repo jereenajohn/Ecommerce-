@@ -28,20 +28,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   // final String buyonegetoneurl =
-  //     "https://garden-tunnel-tue-episodes.trycloudflare.com//buy-1-get-1/";
+  //     "http://51.20.129.52/buy-1-get-1/";
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String productsurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
 
   final String offersurl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//offer/";
+      "http://51.20.129.52/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -102,7 +102,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com/${productData['image']}";
+              "http://51.20.129.52/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -171,6 +171,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
+      
     }
   }
 
@@ -228,7 +229,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+              "http://51.20.129.52/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -317,7 +318,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+  //             "http://51.20.129.52/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

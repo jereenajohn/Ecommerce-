@@ -23,7 +23,7 @@ class _Login_PageState extends State<Login_Page> {
 
   List<dynamic> data = [];
 
-  var url = "https://garden-tunnel-tue-episodes.trycloudflare.com//login/";
+  var url = "http://51.20.129.52/login/";
 
   @override
   void initState() {

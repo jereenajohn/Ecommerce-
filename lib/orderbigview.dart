@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class OrderBigView extends StatefulWidget {
- 
   OrderBigView({super.key, required this.productid});
   final int productid;
 
@@ -26,7 +25,6 @@ class _OrderBigViewState extends State<OrderBigView> {
     super.initState();
     _initData();
     myOrderDetails();
-  
   }
 
   Future<void> _initData() async {
@@ -38,11 +36,9 @@ class _OrderBigViewState extends State<OrderBigView> {
     return prefs.getString('token');
   }
 
-  final String orders =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//order-items/";
+  final String orders = "http://51.20.129.52/order-items/";
 
-  final String productsUrl =
-      "https://garden-tunnel-tue-episodes.trycloudflare.com//products/";
+  final String productsUrl = "http://51.20.129.52/products/";
 
   List<dynamic> productIds = [];
   var productquantity;
@@ -56,12 +52,9 @@ class _OrderBigViewState extends State<OrderBigView> {
 
   var quantity;
 
-
-
   Future<void> myOrderDetails() async {
     try {
       final token = await getTokenFromPrefs();
-
 
       final response = await http.get(
         Uri.parse(orders),
@@ -69,50 +62,30 @@ class _OrderBigViewState extends State<OrderBigView> {
           'Content-type': 'application/json',
           'Authorization': ' $token',
         },
-       
       );
-
-     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
-          List<Map<String, dynamic>> orderProducts = [];
-
-
+        List<Map<String, dynamic>> orderProducts = [];
 
         for (var productData in productsData) {
-
           setState(() {
-            
-         if(widget.productid==productData['product']){
+            if (widget.productid == productData['product']) {
+              quantity = productData['quantity'];
 
-                  quantity=productData['quantity'];
-
-                  fetchProducts();
-
-
-
-         }
-            
+              fetchProducts();
+            }
           });
-
-         
         }
 
-      
-
         // Fetch product details after getting order details
-     
-
       } else {
         throw Exception('Failed to load recommended products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
-      
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(Uri.parse(productsUrl));
@@ -124,8 +97,7 @@ class _OrderBigViewState extends State<OrderBigView> {
 
         for (var productData in productsData) {
           if (widget.productid == productData['id']) {
-            String imageUrl =
-                "https://garden-tunnel-tue-episodes.trycloudflare.com//${productData['image']}";
+            String imageUrl = "${productData['image']}";
             filteredProducts.add({
               'id': productData['id'],
               'name': productData['name'],
@@ -139,13 +111,11 @@ class _OrderBigViewState extends State<OrderBigView> {
         setState(() {
           products = filteredProducts;
           isLoading = false; // Set loading state to false
-
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   @override
