@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bepocart/addaddress.dart';
 import 'package:bepocart/cart.dart';
+import 'package:bepocart/coin_page.dart';
 import 'package:bepocart/contactus.dart';
 import 'package:bepocart/editprofile.dart';
 import 'package:bepocart/forgotpassword.dart';
@@ -216,7 +217,7 @@ var viewprofileurl =
                       width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
-                        child: Text("Your Order"),
+                        child: Text("MY ORDERS",style: TextStyle(fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
@@ -236,7 +237,7 @@ var viewprofileurl =
                       width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
-                        child: Text("Wishlist"),
+                        child: Text("WISHLIST",style: TextStyle(fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
@@ -262,14 +263,14 @@ var viewprofileurl =
                       width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
-                        child: Text("Cart"),
+                        child: Text("CART",style: TextStyle(fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Add onTap functionality here
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>coin()));
                   },
                   child: Card(
                     color: Colors.white,
@@ -281,7 +282,7 @@ var viewprofileurl =
                       width: MediaQuery.of(context).size.width / 2 - 20,
                       height: 70,
                       child: Center(
-                        child: Text("Track Order"),
+                        child: Text("BECOINS",style: TextStyle(fontWeight: FontWeight.bold),),
                       ),
                     ),
                   ),

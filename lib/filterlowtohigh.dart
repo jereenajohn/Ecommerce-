@@ -49,7 +49,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
     // Use userId after getting the value
   }
 
-  final String hightolow = "http://51.20.129.52/high-products/";
+  final String hightolow = "http://51.20.129.52/low-products/";
   final String wishlisturl = "http://51.20.129.52/whishlist/";
 
   Future<void> HightoLow(int subcategoryId) async {
@@ -61,6 +61,8 @@ class _lowtohighpageState extends State<lowtohighpage> {
           'Authorization': '$token',
         },
       );
+
+      print("=============================$response");
 
       if (response.statusCode == 200) {
         final List<dynamic> searchData = jsonDecode(response.body);
@@ -236,7 +238,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Results'),
+        title: Text('Low to High Price'),
       ),
       body: Column(
         children: [
