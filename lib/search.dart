@@ -213,7 +213,7 @@ class _SearchState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Search Results',
+          'Products',
           style: TextStyle(fontSize: 15, color: Colors.grey),
         ),
         actions: [

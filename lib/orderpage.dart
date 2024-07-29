@@ -40,7 +40,7 @@ class _orderState extends State<order> {
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
   TextEditingController coupon = TextEditingController();
-  int CODAMOUNT = 40;
+  int CODAMOUNT = 50;
   late Razorpay razorpay;
   Map<String, dynamic>? selectedAddress;
   var hasAddresses;

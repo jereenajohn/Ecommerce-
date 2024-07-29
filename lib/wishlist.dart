@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
+import 'package:bepocart/myorders.dart';
 import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/material.dart';
@@ -575,56 +576,52 @@ class _WishlistState extends State<Wishlist> {
                             height: 5,
                           ),
 
-                          ElevatedButton(
-                            onPressed: () async {
-                              await sizecolor(products[index]['slug']);
-                              if (colors.isNotEmpty) {
-                                showBottomSheet(
-                                  products[index]['id'],
-                                  products[index]['slug'],
-                                  products[index]['name'],
-                                  products[index]['SalePrice'],
-                                  context,
-                                  colors,
-                                  images,
-                                  selectedColor,
-                                  sizes,
-                                  selectedSize,
-                                  selectedstock,
-                                  (color, sizeList, size, stock) {
-                                    setState(() {
-                                      selectedColor = color;
-                                      sizes = sizeList;
-                                      selectedSize = size;
-                                      selectedstock = stock;
-                                    });
-                                  },
-                                );
-                              } else {
-                                await sizecolor(products[index][
-                                    'slug']); // Add await here to ensure the async call is completed
-                                addProductToCart(
-                                  products[index]['id'],
-                                  products[index]['name'],
-                                  products[index]['price'],
-                                );
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
+                         ElevatedButton(
+  onPressed: () async {
+    await sizecolor(products[index]['slug']);
+    if (colors.isNotEmpty && sizes.isNotEmpty) {
+      showBottomSheet(
+        products[index]['id'],
+        products[index]['slug'],
+        products[index]['name'],
+        products[index]['SalePrice'],
+        context,
+        colors,
+        images,
+        selectedColor,
+        sizes,
+        selectedSize,
+        selectedstock,
+        (color, sizeList, size, stock) {
+          setState(() {
+            selectedColor = color;
+            sizes = sizeList;
+            selectedSize = size;
+            selectedstock = stock;
+          });
+        },
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Out of Stock'),
+        ),
+      );
+    }
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.black,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    fixedSize: Size(double.infinity, 20), // Adjust the width and height as needed
+  ),
+  child: Text(
+    "ADD TO CART",
+    style: TextStyle(fontSize: 7, color: Colors.white),
+  ),
+)
 
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              fixedSize: Size(double.infinity,
-                                  20), // Adjust the width and height as needed
-                            ),
-                            child: Text(
-                              "ADD TO CART",
-                              style:
-                                  TextStyle(fontSize: 7, color: Colors.white),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -694,10 +691,10 @@ class _WishlistState extends State<Wishlist> {
                 },
               ),
               GButton(
-                icon: Icons.search,
+                icon: Icons.receipt,
                 onPressed: () {
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => search()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyOrder()));
                   // Show search dialog if tapped
                 },
               ),

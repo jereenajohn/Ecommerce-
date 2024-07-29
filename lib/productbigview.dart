@@ -1638,10 +1638,10 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 },
               ),
               GButton(
-                icon: Icons.search,
+                icon: Icons.favorite,
                 onPressed: () {
-                  //  Navigator.push(
-                  //     context, MaterialPageRoute(builder: (context) => search()));
+                   Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Wishlist()));
                   // Show search dialog if tapped
                 },
               ),
