@@ -100,9 +100,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "http://51.20.129.52/profile-view/";
+      "https://spot-defence-womens-audit.trycloudflare.com/profile-view/";
       var viewimage =
-      "http://51.20.129.52/profile-image/";
+      "https://spot-defence-womens-audit.trycloudflare.com/profile-image/";
   Future<void> getprofiledata() async {
     try {
       final token = await gettokenFromPrefs();

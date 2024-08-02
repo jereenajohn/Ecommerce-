@@ -23,15 +23,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "http://51.20.129.52/wishlist/";
+      "https://spot-defence-womens-audit.trycloudflare.com/wishlist/";
   final String productsurl =
-      "http://51.20.129.52/products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "http://51.20.129.52/wishlist-delete/";
+      "https://spot-defence-womens-audit.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "http://51.20.129.52/cart/";
+      "https://spot-defence-womens-audit.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -51,6 +51,7 @@ class _WishlistState extends State<Wishlist> {
 
     FetchWishlistData();
     fetchProducts();
+   
   }
 
   Future<String?> getUserIdFromPrefs() async {
@@ -110,7 +111,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "${productData['image']}";
+                "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
 
             filteredProducts.add({
@@ -136,7 +137,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "http://51.20.129.52/product/";
+      "https://spot-defence-womens-audit.trycloudflare.com/product/";
 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -145,64 +146,114 @@ class _WishlistState extends State<Wishlist> {
   String? selectedSize;
   var sizes;
   int? selectedstock;
-  Future<void> sizecolor(var slug) async {
-    Set<String> colorsSet = {};
-    try {
-      final response = await http.get(Uri.parse('$imageurl${slug}/'));
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        final List<dynamic> imageData = data['images'];
-        final List<dynamic> variantsData = data['variants'];
+   Map<String, dynamic> product = {};
+ 
 
-        List<Map<String, dynamic>> productsList = [];
 
-        for (var imageData in imageData) {
-          String imageUrl1 =
-              "${imageData['image1']}";
-          String imageUrl2 =
-              "${imageData['image2']}";
-          String imageUrl3 =
-              "${imageData['image3']}";
-          String imageUrl4 =
-              "${imageData['image4']}";
-          String imageUrl5 =
-              "${imageData['image5']}";
+int? selectedStock;
 
-          List<Map<String, dynamic>> sizes = variantsData
-              .where((variant) => variant['color'] == imageData['id'])
-              .map<Map<String, dynamic>>((variant) =>
-                  {'size': variant['size'], 'stock': variant['stock']})
-              .toList();
 
+Future<void> sizecolor(var slug) async {
+  Set<String> colorsSet = {};
+  try {
+    print('urlllllllllllllllllllllllllllllllllllllllllllllllll$imageurl${slug}/');
+    final response = await http.get(Uri.parse('$imageurl${slug}/'));
+    print("responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${response.body}");
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      print("responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${data['images']}");
+
+      final List<dynamic> imageData = data['images'];
+      List<Map<String, dynamic>> productsList = [];
+
+      for (var image in imageData) {
+        String imageUrl1 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image1']}";
+        String imageUrl2 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image2']}";
+        String imageUrl3 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image3']}";
+        String imageUrl4 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image4']}";
+        String imageUrl5 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image5']}";
+
+        List<Map<String, dynamic>> sizes = [];
+
+        if (image['type'] == 'single') {
           productsList.add({
-            'id': imageData['id'],
+            'id': image['id'],
             'image1': imageUrl1,
             'image2': imageUrl2,
             'image3': imageUrl3,
             'image4': imageUrl4,
             'image5': imageUrl5,
-            'color': imageData['color'],
-            'sizes': sizes,
+            'color': image['color'],
+            'stock': image['stock'],
+            'type': image['type']
           });
-          colorsSet.add(imageData['color']);
+          colorsSet.add(image['color']);
+        } else if (image['type'] == 'variant') {
+          sizes = (image['stock_info'] as List<dynamic>)
+              .map((variant) => {
+                'size': variant['size'],
+                'stock': variant['stock']
+              }).toList();
+              print("siiiiiiiiiiiiiiiiiiiiiii$sizes");
+              
+          productsList.add({
+            'id': image['id'],
+            'image1': imageUrl1,
+            'image2': imageUrl2,
+            'image3': imageUrl3,
+            'image4': imageUrl4,
+            'image5': imageUrl5,
+            'color': image['color'],
+            'sizes': sizes,
+            'type': image['type']
+          });
+          colorsSet.add(image['color']);
         }
-
-        setState(() {
-          images = productsList;
-          colors = colorsSet.toList();
-
-          selectedColor = colors.isNotEmpty ? colors[0] : null;
-          sizes = images.firstWhere(
-                  (image) => image['color'] == selectedColor)['sizes'] ??
-              [];
-          selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
-          selectedstock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
-        });
-      } else {
-        throw Exception('Error fetching product image');
       }
-    } catch (error) {}
+
+      setState(() {
+        images = productsList;
+        colors = colorsSet.toList();
+        print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW$images");
+       if(selectedColor==null){
+        selectedColor=colors[0];
+        print("selectedColor$selectedColor");
+       }
+       if(productsList[0]['type']=='single'){
+
+        selectedStock=productsList[0]['stock'];
+        print("stockkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
+
+       }
+
+        if (productsList.isNotEmpty&&productsList[0]['type']=='variant') {
+          print("jdddddddddddddddddddddddddddddddddddddddddddd");
+          Map<String, dynamic>? selectedProduct = productsList.firstWhere(
+              (product) => product['color'] == selectedColor,
+              orElse: () => <String, dynamic>{});
+          
+          if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'variant') {
+            sizes = selectedProduct['sizes'];
+            print("sizeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$sizes");
+            selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+            print("selectedSize$selectedSize");
+            selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
+             print("selectedStock$selectedStock");
+
+          } else if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'single') {
+            selectedSize = null;
+            selectedStock = selectedProduct['stock'];
+          }
+        }
+      });
+    } else {
+      throw Exception('Error fetching product image');
+    }
+  } catch (error) {
+    print('Error fetching product image: $error');
   }
+}
 
   void showBottomSheet(
     int id,
@@ -576,52 +627,55 @@ class _WishlistState extends State<Wishlist> {
                             height: 5,
                           ),
 
-                         ElevatedButton(
-  onPressed: () async {
-    await sizecolor(products[index]['slug']);
-    if (colors.isNotEmpty && sizes.isNotEmpty) {
-      showBottomSheet(
-        products[index]['id'],
-        products[index]['slug'],
-        products[index]['name'],
-        products[index]['SalePrice'],
-        context,
-        colors,
-        images,
-        selectedColor,
-        sizes,
-        selectedSize,
-        selectedstock,
-        (color, sizeList, size, stock) {
-          setState(() {
-            selectedColor = color;
-            sizes = sizeList;
-            selectedSize = size;
-            selectedstock = stock;
-          });
-        },
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Out of Stock'),
-        ),
-      );
-    }
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.black,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10),
-    ),
-    fixedSize: Size(double.infinity, 20), // Adjust the width and height as needed
-  ),
-  child: Text(
-    "ADD TO CART",
-    style: TextStyle(fontSize: 7, color: Colors.white),
-  ),
-)
-
+                          ElevatedButton(
+                            onPressed: () async {
+                              
+                              await sizecolor(products[index]['slug']);
+                              print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+                              if (colors.isNotEmpty && sizes.isNotEmpty) {
+                                showBottomSheet(
+                                  products[index]['id'],
+                                  products[index]['slug'],
+                                  products[index]['name'],
+                                  products[index]['SalePrice'],
+                                  context,
+                                  colors,
+                                  images,
+                                  selectedColor,
+                                  sizes,
+                                  selectedSize,
+                                  selectedstock,
+                                  (color, sizeList, size, stock) {
+                                    setState(() {
+                                      selectedColor = color;
+                                      sizes = sizeList;
+                                      selectedSize = size;
+                                      selectedstock = stock;
+                                    });
+                                  },
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Out of Stock'),
+                                  ),
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              fixedSize: Size(double.infinity,
+                                  20), // Adjust the width and height as needed
+                            ),
+                            child: Text(
+                              "ADD TO CART",
+                              style:
+                                  TextStyle(fontSize: 7, color: Colors.white),
+                            ),
+                          )
                         ],
                       ),
                     ),

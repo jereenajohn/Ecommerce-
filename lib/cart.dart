@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "http://51.20.129.52/cart-products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/cart-products/";
   final String productsurl =
-      "http://51.20.129.52/products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "http://51.20.129.52/cart/increment/";
+      "https://spot-defence-womens-audit.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "http://51.20.129.52/cart/decrement/";
+      "https://spot-defence-womens-audit.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "http://51.20.129.52/cart-delete/";
+      "https://spot-defence-womens-audit.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "${item['image']}";
+              "https://spot-defence-womens-audit.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -257,7 +257,7 @@ class _CartState extends State<Cart> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "http://51.20.129.52/offer/";
+      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
 
   var bogo;
   bool is_active = false;

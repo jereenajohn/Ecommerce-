@@ -53,10 +53,8 @@ class _MyOrderState extends State<MyOrder> {
     return prefs.getString('token');
   }
 
-  final String orders =
-      "http://51.20.129.52/order-items/";
-  final String ratingurl =
-      "http://51.20.129.52/product-review/";
+  final String orders = "https://spot-defence-womens-audit.trycloudflare.com/order-items/";
+  final String ratingurl = "https://spot-defence-womens-audit.trycloudflare.com/product-review/";
 
   List<Map<String, dynamic>> products = [];
   bool isLoading = true;
@@ -66,55 +64,51 @@ class _MyOrderState extends State<MyOrder> {
     return prefs.getString('token');
   }
 
- Future<void> myOrderDetails() async {
-  try {
-    final token = await getTokenFromPrefs();
+  Future<void> myOrderDetails() async {
+    try {
+      final token = await getTokenFromPrefs();
 
+      final response = await http.get(
+        Uri.parse(orders),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': ' $token',
+        },
+      );
 
-    final response = await http.get(
-      Uri.parse(orders),
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': ' $token',
-      },
-    );
+      if (response.statusCode == 200) {
+        final parsed = jsonDecode(response.body);
+        final List<dynamic> productsData = parsed['data'];
+        List<Map<String, dynamic>> orderProducts = [];
 
-  
-    if (response.statusCode == 200) {
-      final parsed = jsonDecode(response.body);
-      final List<dynamic> productsData = parsed['data'];
-      List<Map<String, dynamic>> orderProducts = [];
+        for (var productData in productsData) {
+          String imageUrl = "${productData['image']}";
 
+          // Parse and format the date
+          DateTime parsedDate = DateTime.parse(productData['created_at']);
+          String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
 
-      for (var productData in productsData) {
-        String imageUrl = "${productData['image']}";
-        
-        // Parse and format the date
-        DateTime parsedDate = DateTime.parse(productData['created_at']);
-        String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
+          orderProducts.add({
+            'id': productData['order'].toString(),
+            'productid': productData['product'].toString(),
+            'name': productData['name'],
+            'salePrice': productData['sale_price'].toString(),
+            'image': imageUrl,
+            'status': productData['status'],
+            'created_at': formattedDate,
+          });
+        }
 
-        orderProducts.add({
-          'id': productData['order'].toString(),
-          'productid': productData['product'].toString(),
-          'name': productData['name'],
-          'salePrice': productData['sale_price'].toString(),
-          'image': imageUrl,
-          'status': productData['status'],
-          'created_at': formattedDate,
+        setState(() {
+          products = orderProducts;
+          isLoading = false;
         });
+      } else {
+        throw Exception('Failed to load recommended products');
       }
-
-      setState(() {
-        products = orderProducts;
-        isLoading = false;
-      });
-
-    } else {
-      throw Exception('Failed to load recommended products');
-    }
-  } catch (error) {
+    } catch (error) {}
   }
-}
+
   Future<void> postrating(
       String productid, double rating, String feedback) async {
     try {
@@ -134,8 +128,6 @@ class _MyOrderState extends State<MyOrder> {
         ),
       );
 
-     
-
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -147,7 +139,6 @@ class _MyOrderState extends State<MyOrder> {
         ratedProducts.add(productid);
         saveRatedProducts(); // Save the updated list
       } else {
-       
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to submit rating: ${response.body}'),
@@ -321,23 +312,19 @@ class _MyOrderState extends State<MyOrder> {
                                 children: [
                                   Text(
                                     '\$${product['salePrice']}',
-                                    style:
-                                        TextStyle(color: Colors.grey, fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12),
                                   ),
                                   Spacer(),
                                   Text(
                                     '${product['status']}',
-                                    style:
-                                        TextStyle(color: statusColor, fontSize: 14),
+                                    style: TextStyle(
+                                        color: statusColor, fontSize: 14),
                                   ),
                                 ],
                               ),
                               Row(
-                                children: [
-                                  Text(
-                                   ' ${product['created_at']}'
-                                  )
-                                ],
+                                children: [Text(' ${product['created_at']}')],
                               )
                             ],
                           ),

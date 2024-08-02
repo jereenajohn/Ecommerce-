@@ -25,8 +25,7 @@ class CategoryProductView extends StatefulWidget {
 }
 
 class _CategoryProductViewState extends State<CategoryProductView> {
-  final String productsurl =
-      "http://51.20.129.52/category/";
+  final String productsurl = "https://spot-defence-womens-audit.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -34,12 +33,9 @@ class _CategoryProductViewState extends State<CategoryProductView> {
   List<Map<String, dynamic>> searchResults = [];
 
   TextEditingController searchitem = TextEditingController();
-  final String searchproducturl =
-      "http://51.20.129.52/search-products/?q=";
-  final String lowtohigh =
-      "http://51.20.129.52/products/filter/";
-  final String hightolow =
-      "http://51.20.129.52/products/filtering/";
+  final String searchproducturl = "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
+  final String lowtohigh = "https://spot-defence-womens-audit.trycloudflare.com/products/filter/";
+  final String hightolow = "https://spot-defence-womens-audit.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -61,23 +57,18 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     return prefs.getString('token');
   }
 
- 
-
   Future<void> searchproduct() async {
     try {
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-     
 
       if (response.statusCode == 200) {
-
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -90,18 +81,15 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         setState(() {
           searchResults = searchList;
         });
-      } else {
-      
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<void> fetchCatProducts() async {
     try {
       final response = await http.get(
           Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
-     
+
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
             jsonDecode(response.body)['products'];
@@ -110,8 +98,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         for (var productData in productsData) {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -130,8 +117,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
       } else {
         throw Exception('Failed to load category products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   void toggleFavorite(int index) {
@@ -201,9 +187,6 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     );
   }
 
- 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -234,7 +217,6 @@ class _CategoryProductViewState extends State<CategoryProductView> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-         
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: ListView.builder(
@@ -273,8 +255,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                       ),
                                     ),
                                   );
-                                } catch (e) {
-                                }
+                                } catch (e) {}
                               },
                               child: Container(
                                 height: 250,
@@ -370,16 +351,19 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                                 ),
                                               ),
                                             ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Text(
-                                              'Sale Price: \$${categoryProducts[firstItemIndex]['salePrice']}',
-                                              style: TextStyle(
-                                                color: Colors.green,
+                                          if (categoryProducts[firstItemIndex]
+                                                  ['salePrice'] !=
+                                              null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                'Sale Price: \$${categoryProducts[firstItemIndex]['salePrice']}',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
                                               ),
                                             ),
-                                          ),
                                         ],
                                       )
                                     ],
@@ -493,16 +477,19 @@ class _CategoryProductViewState extends State<CategoryProductView> {
                                                 ),
                                               ),
                                             ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Text(
-                                              'Sale Price: \$${categoryProducts[firstItemIndex]['salePrice']}',
-                                              style: TextStyle(
-                                                color: Colors.green,
+                                          if (categoryProducts[firstItemIndex]
+                                                  ['salePrice'] !=
+                                              null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Text(
+                                                'Sale Price: \$${categoryProducts[firstItemIndex]['salePrice']}',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
                                               ),
                                             ),
-                                          ),
                                         ],
                                       )
                                     ],

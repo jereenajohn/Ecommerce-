@@ -28,20 +28,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   // final String buyonegetoneurl =
-  //     "http://51.20.129.52/buy-1-get-1/";
+  //     "https://spot-defence-womens-audit.trycloudflare.com/buy-1-get-1/";
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://51.20.129.52/products/search/?q=";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "http://51.20.129.52/add-wishlist/";
+      "https://spot-defence-womens-audit.trycloudflare.com/add-wishlist/";
 
   final String productsurl =
-      "http://51.20.129.52/products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/";
 
   final String offersurl =
-      "http://51.20.129.52/offer/";
+      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -318,7 +318,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "http://51.20.129.52/${productData['image']}";
+  //             "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

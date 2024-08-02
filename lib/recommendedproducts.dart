@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "http://51.20.129.52/recommended/";
+      "https://spot-defence-womens-audit.trycloudflare.com/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://51.20.129.52/products/search/?q=";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "http://51.20.129.52/add-wishlist/";
+      "https://spot-defence-womens-audit.trycloudflare.com/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -236,6 +236,7 @@ Future<void> _initData() async {
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
+      print("====================-----------------$parsed");
       final List<dynamic> productsData = parsed['data'];
 
 

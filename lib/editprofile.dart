@@ -28,9 +28,9 @@ class _EditProfileState extends State<EditProfile> {
     getprofiledata();
   }
 
-  var url = "http://51.20.129.52/profile/";
+  var url = "https://spot-defence-womens-audit.trycloudflare.com/profile/";
   var url2 =
-      "http://51.20.129.52/profile-image/";
+      "https://spot-defence-womens-audit.trycloudflare.com/profile-image/";
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -42,7 +42,7 @@ class _EditProfileState extends State<EditProfile> {
   var userdata;
 
   var viewprofileurl =
-      "http://51.20.129.52/profile-view/";
+      "https://spot-defence-womens-audit.trycloudflare.com/profile-view/";
   Future<void> getprofiledata() async {
     try {
       final token = await gettokenFromPrefs();

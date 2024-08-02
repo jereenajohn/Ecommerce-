@@ -32,29 +32,29 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "http://51.20.129.52/category/";
+      "https://spot-defence-womens-audit.trycloudflare.com/category/";
 
   final multipleimageurl =
-      "http://51.20.129.52/product-images/";
+      "https://spot-defence-womens-audit.trycloudflare.com/product-images/";
 
   final String addtocarturl =
-      "http://51.20.129.52/cart/";
+      "https://spot-defence-womens-audit.trycloudflare.com/cart/";
   final String wishlisturl =
-      "http://51.20.129.52/add-wishlist/";
+      "https://spot-defence-womens-audit.trycloudflare.com/add-wishlist/";
 
   final String discountsurl =
-      "http://51.20.129.52/discount-sale/";
+      "https://spot-defence-womens-audit.trycloudflare.com/discount-sale/";
 
   var recentlyviewedurl =
-      "http://51.20.129.52/recently-viewed/";
+      "https://spot-defence-womens-audit.trycloudflare.com/recently-viewed/";
 
   final String recommendedproductsurl =
-      "http://51.20.129.52/recommended/";
+      "https://spot-defence-womens-audit.trycloudflare.com/recommended/";
   final imageurl =
-      "http://51.20.129.52/product/";
+      "https://spot-defence-womens-audit.trycloudflare.com/product/";
 
   final String ratingurl =
-      "http://51.20.129.52/review/";
+      "https://spot-defence-womens-audit.trycloudflare.com/review/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -86,7 +86,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
   @override
   void initState() {
-   
     _initData();
     fetchproductdata();
     fetchDiscountProducts();
@@ -114,7 +113,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
         throw Exception('Token is null');
       }
 
-
       final response = await http.get(
         Uri.parse('$ratingurl${widget.product_id}/'),
         headers: {
@@ -123,17 +121,13 @@ class _Product_big_ViewState extends State<Product_big_View> {
         },
       );
 
-    
-
       if (response.statusCode == 200) {
         final productsData = jsonDecode(response.body) as List;
-
 
         List<Map<String, dynamic>> productratingList = [];
 
         for (var productData in productsData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           productratingList.add({
             'rating': productData['rating'],
             'review_text': productData['review_text'] ?? 'No review',
@@ -153,20 +147,17 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 (totalRating / productsData.length).toStringAsFixed(1);
           }
           productsrating = productratingList;
-         
         });
       } else {
         throw Exception('Failed to load rating data');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   Future<void> fetchRecommendedProducts() async {
     try {
       final token =
           await gettokenFromPrefs(); // Make sure this method returns your token correctly
-
 
       final response = await http.get(
         Uri.parse(recommendedproductsurl),
@@ -176,18 +167,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
         },
       );
 
-     
-
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
         final List<dynamic> productsData = parsed['data'];
 
-
         List<Map<String, dynamic>> productRecommendedList = [];
 
         for (var productData in productsData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           productRecommendedList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -203,8 +190,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
       } else {
         throw Exception('Failed to load recommended products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   Future<void> recentlyviewed() async {
@@ -219,18 +205,14 @@ class _Product_big_ViewState extends State<Product_big_View> {
         },
       );
 
-    
       if (response.statusCode == 200) {
         final recent = jsonDecode(response.body);
 
         final List<dynamic> recentproductsData = recent['data'];
         List<Map<String, dynamic>> Recentlylist = [];
 
-      
-
         for (var recentproductsData in recentproductsData) {
-          String imageUrl =
-              "${recentproductsData['image']}";
+          String imageUrl = "${recentproductsData['image']}";
           Recentlylist.add({
             'id': recentproductsData['id'],
             'mainCategory': recentproductsData['mainCategory'],
@@ -243,14 +225,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         setState(() {
           recenlyviewd = Recentlylist;
-
-         
         });
-
-      } else {
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<void> fetchDiscountProducts() async {
@@ -264,8 +241,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
         List<Map<String, dynamic>> productDiscountList = [];
 
         for (var productData in productsData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           productDiscountList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],
@@ -281,13 +257,10 @@ class _Product_big_ViewState extends State<Product_big_View> {
       } else {
         throw Exception('Failed to load discount products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   Future<void> addProductToWishlist(int productId) async {
-  
-
     try {
       final token = await gettokenFromPrefs();
 
@@ -316,11 +289,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
             content: Text('Product already in wishlist'),
           ),
         );
-      } else {
-       
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<String?> gettokenFromPrefs() async {
@@ -394,11 +364,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
         );
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Login_Page()));
-      } else {
-       
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   void updateDisplayedImage(String? color) {
@@ -731,101 +698,105 @@ class _Product_big_ViewState extends State<Product_big_View> {
                 Container(
                   height: 70,
                   color: const Color.fromRGBO(255, 255, 255, 1),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Wrap(
-                          spacing: 8.0,
-                          children: colors.map<Widget>((color) {
-                            // Ensure type safety here
-                            return OutlinedButton(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        children: [
+                          Wrap(
+                            spacing: 8.0,
+                            children: colors.map<Widget>((color) {
+                              return OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: selectedColor == color
+                                      ? Color.fromARGB(255, 1, 80, 12)
+                                      : Colors.black,
+                                  side: BorderSide(
+                                    color: selectedColor == color
+                                        ? Color.fromARGB(255, 28, 146, 1)
+                                        : Colors.black,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        4.0), // Adjust the radius as needed
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    selectedColor = color;
+                                    print(selectedColor);
+                                   sizecolor();
+                                    updateDisplayedImage(selectedColor);
+                                  });
+                                },
+                                child: Text(color.toUpperCase()),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+              if (selectedColor != null && selectedSize!=null)
+                Container(
+                  height: 60,
+                  color: Colors.white,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        children: sizes.map<Widget>((sizeData) {
+                          return Container(
+                            width: 40.0,
+                            height: 40.0,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal:
+                                    4.0), // Add horizontal margin for spacing
+                            child: OutlinedButton(
                               style: OutlinedButton.styleFrom(
-                                foregroundColor: selectedColor == color
-                                    ? Color.fromARGB(255, 1, 80, 12)
-                                    : Colors.black,
+                                padding: EdgeInsets.zero,
+                                foregroundColor:
+                                    selectedSize == sizeData['size']
+                                        ? Color.fromARGB(255, 1, 80, 12)
+                                        : Colors.black,
                                 side: BorderSide(
-                                  color: selectedColor == color
+                                  color: selectedSize == sizeData['size']
                                       ? Color.fromARGB(255, 28, 146, 1)
                                       : Colors.black,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      4.0), // Adjust the radius as needed
+                                  borderRadius: BorderRadius.circular(30.0),
                                 ),
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  selectedColor = color;
-                                  sizes = images.firstWhere((image) =>
-                                          image['color'] ==
-                                          selectedColor)['sizes'] ??
-                                      [];
-                                  selectedSize = sizes.isNotEmpty
-                                      ? sizes[0]['size']
-                                      : null;
+                              onPressed: sizeData['stock'] > 0
+                                  ? () {
+                                      setState(() {
+                                        selectedSize = sizeData['size'];
+                                        selectedstock = sizeData['stock'];
+                                        print("selectedSizeeeeeees$selectedSize");
+                                        print("selectedSizeeeeeees$selectedstock");
 
-                                  updateDisplayedImage(selectedColor);
-                                });
-                              },
-                              child: Text(color.toUpperCase()),
-                            );
-                          }).toList(),
-                        ),
+                                      });
+                                    }
+                                  : null,
+                              child: Center(
+                                child: Text(
+                                  sizeData['size'].toUpperCase(),
+                                  style: TextStyle(
+                                    decoration: sizeData['stock'] == 0
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
-                    ],
-                  ),
-                ),
-
-              if (selectedColor != null && sizes.isNotEmpty)
-                Container(
-                  height: 80,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Wrap(
-                      spacing: 8.0,
-                      children: sizes.map<Widget>((sizeData) {
-                        return Container(
-                          width: 40.0,
-                          height: 40.0,
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              foregroundColor: selectedSize == sizeData['size']
-                                  ? Color.fromARGB(255, 1, 80, 12)
-                                  : Colors.black,
-                              side: BorderSide(
-                                color: selectedSize == sizeData['size']
-                                    ? Color.fromARGB(255, 28, 146, 1)
-                                    : Colors.black,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                            ),
-                            onPressed: sizeData['stock'] > 0
-                                ? () {
-                                    setState(() {
-                                      selectedSize = sizeData['size'];
-                                      selectedstock = sizeData['stock'];
-                                     
-                                    });
-                                  }
-                                : null,
-                            child: Center(
-                              child: Text(
-                                sizeData['size'].toUpperCase(),
-                                style: TextStyle(
-                                  decoration: sizeData['stock'] == 0
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
                     ),
                   ),
                 ),
@@ -838,7 +809,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       Container(
                         width: 150,
                         child: ElevatedButton(
-                          onPressed: (selectedstock ?? 0) > 0
+                          onPressed: (selectedStock ?? 0) > 0
                               ? () {
                                   addProductToCart(
                                       widget.product_id, name, price);
@@ -846,7 +817,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                               : null,
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: (selectedstock ?? 0) > 0
+                            backgroundColor: (selectedStock ?? 0) > 0
                                 ? Colors.black
                                 : Colors.grey,
                             shape: RoundedRectangleBorder(
@@ -958,7 +929,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                             itemBuilder: (context, index) {
                               final rating = productsrating[index]['rating'];
                               var img = productsrating[index]['image'];
-                            
+
                               final reviewText =
                                   productsrating[index]['review_text'];
                               return Padding(
@@ -970,8 +941,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                      Color.fromARGB(255, 237, 237, 237),
-                                        Color.fromARGB(255,245,243,243)!
+                                        Color.fromARGB(255, 237, 237, 237),
+                                        Color.fromARGB(255, 245, 243, 243)!
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
@@ -979,7 +950,9 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                     borderRadius: BorderRadius.circular(15),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255)
+                                                .withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 7,
                                         offset: Offset(
@@ -1640,8 +1613,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
               GButton(
                 icon: Icons.favorite,
                 onPressed: () {
-                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Wishlist()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Wishlist()));
                   // Show search dialog if tapped
                 },
               ),
@@ -1680,7 +1653,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "${productData['image']}";
+              "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1699,8 +1672,6 @@ class _Product_big_ViewState extends State<Product_big_View> {
         setState(() {
           for (int i = 0; i < productsList.length; i++) {
             if (widget.product_id == productsList[i]['id']) {
-             
-
               image = productsList[i]['image'];
               name = productsList[i]['name'];
               price = productsList[i]['price'];
@@ -1715,75 +1686,121 @@ class _Product_big_ViewState extends State<Product_big_View> {
           categoryProducts = productsList;
           isDataLoaded = true;
         });
-      
       } else {
         throw Exception('Failed to load category products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   Map<String, dynamic> product = {};
   String? selectedColor;
   List<String> colors = [];
 
-  Future<void> sizecolor() async {
-    Set<String> colorsSet = {};
-    try {
-      final response = await http.get(Uri.parse('$imageurl${widget.slug}/'));
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        final List<dynamic> imageData = data['images'];
-        final List<dynamic> variantsData = data['variants'];
 
-        List<Map<String, dynamic>> productsList = [];
+int? selectedStock;
 
-        for (var imageData in imageData) {
-          String imageUrl1 =
-              "${imageData['image1']}";
-          String imageUrl2 =
-              "${imageData['image2']}";
-          String imageUrl3 =
-              "${imageData['image3']}";
-          String imageUrl4 =
-              "${imageData['image4']}";
-          String imageUrl5 =
-              "${imageData['image5']}";
 
-          List<Map<String, dynamic>> sizes = variantsData
-              .where((variant) => variant['color'] == imageData['id'])
-              .map<Map<String, dynamic>>((variant) =>
-                  {'size': variant['size'], 'stock': variant['stock']})
-              .toList();
+Future<void> sizecolor() async {
+  Set<String> colorsSet = {};
+  try {
+    print('urlllllllllllllllllllllllllllllllllllllllllllllllll$imageurl${widget.slug}/');
+    final response = await http.get(Uri.parse('$imageurl${widget.slug}/'));
+    print("responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${response.body}");
 
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      print("responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${data['images']}");
+
+      final List<dynamic> imageData = data['images'];
+      List<Map<String, dynamic>> productsList = [];
+
+      for (var image in imageData) {
+        String imageUrl1 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image1']}";
+        String imageUrl2 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image2']}";
+        String imageUrl3 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image3']}";
+        String imageUrl4 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image4']}";
+        String imageUrl5 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image5']}";
+
+        List<Map<String, dynamic>> sizes = [];
+
+        if (image['type'] == 'single') {
           productsList.add({
-            'id': imageData['id'],
+            'id': image['id'],
             'image1': imageUrl1,
             'image2': imageUrl2,
             'image3': imageUrl3,
             'image4': imageUrl4,
             'image5': imageUrl5,
-            'color': imageData['color'],
-            'sizes': sizes,
+            'color': image['color'],
+            'stock': image['stock'],
+            'type': image['type']
           });
-          colorsSet.add(imageData['color']);
+          colorsSet.add(image['color']);
+        } else if (image['type'] == 'variant') {
+          sizes = (image['stock_info'] as List<dynamic>)
+              .map((variant) => {
+                'size': variant['size'],
+                'stock': variant['stock']
+              }).toList();
+              print("siiiiiiiiiiiiiiiiiiiiiii$sizes");
+              
+          productsList.add({
+            'id': image['id'],
+            'image1': imageUrl1,
+            'image2': imageUrl2,
+            'image3': imageUrl3,
+            'image4': imageUrl4,
+            'image5': imageUrl5,
+            'color': image['color'],
+            'sizes': sizes,
+            'type': image['type']
+          });
+          colorsSet.add(image['color']);
         }
-
-        setState(() {
-          images = productsList;
-          colors = colorsSet.toList();
-
-          selectedColor = colors.isNotEmpty ? colors[0] : null;
-          sizes = images.firstWhere(
-                  (image) => image['color'] == selectedColor)['sizes'] ??
-              [];
-          selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
-          selectedstock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
-        });
-      } else {
-        throw Exception('Error fetching product image');
       }
-    } catch (error) {
+
+      setState(() {
+        images = productsList;
+        colors = colorsSet.toList();
+        print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW$images");
+       if(selectedColor==null){
+        selectedColor=colors[0];
+        print("selectedColor$selectedColor");
+       }
+       if(productsList[0]['type']=='single'){
+
+        selectedStock=productsList[0]['stock'];
+        print("stockkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
+
+       }
+
+        if (productsList.isNotEmpty&&productsList[0]['type']=='variant') {
+          print("jdddddddddddddddddddddddddddddddddddddddddddd");
+          Map<String, dynamic>? selectedProduct = productsList.firstWhere(
+              (product) => product['color'] == selectedColor,
+              orElse: () => <String, dynamic>{});
+          
+          if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'variant') {
+            sizes = selectedProduct['sizes'];
+            print("sizeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$sizes");
+            selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+            print("selectedSize$selectedSize");
+            selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
+             print("selectedStock$selectedStock");
+
+          } else if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'single') {
+            selectedSize = null;
+            selectedStock = selectedProduct['stock'];
+          }
+        }
+      });
+    } else {
+      throw Exception('Error fetching product image');
     }
+  } catch (error) {
+    print('Error fetching product image: $error');
   }
+}
+
+
 }

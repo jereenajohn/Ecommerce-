@@ -30,13 +30,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   List<Map<String, dynamic>> categoryProducts = [];
   String? userId; // Declare userId variable to store user ID
 
-
-  final String subcategoriesurl =
-      "http://51.20.129.52/category/";
-  final String productsurl =
-      "http://51.20.129.52/category/";
-  final String searchproducturl =
-      "http://51.20.129.52/search-products/?q=";
+  final String subcategoriesurl = "https://spot-defence-womens-audit.trycloudflare.com/category/";
+  final String productsurl = "https://spot-defence-womens-audit.trycloudflare.com/category/";
+  final String searchproducturl = "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -127,7 +123,6 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
     try {
       final response = await http.get(
           Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
-     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -135,8 +130,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         List<Map<String, dynamic>> ProductsList = [];
 
         for (var productData in productsData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -144,19 +138,17 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
-            'slug':productData['slug']
+            'slug': productData['slug']
           });
         }
 
         setState(() {
           categoryProducts = ProductsList;
         });
-
       } else {
         throw Exception('Failed to load subcategories');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   Future<void> searchproduct() async {
@@ -164,16 +156,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-    
 
       if (response.statusCode == 200) {
-
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -186,19 +175,14 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         setState(() {
           searchResults = searchList;
         });
-      } else {
-       
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<void> fetchSubcategories() async {
-  
     try {
       final response = await http.get(
           Uri.parse(subcategoriesurl + widget.categoryId.toString() + "/"));
-     
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -206,8 +190,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         List<Map<String, dynamic>> subcategoryList = [];
 
         for (var subcategoryData in subcategoriessData) {
-          String imageUrl =
-              "${subcategoryData['image']}";
+          String imageUrl = "https://spot-defence-womens-audit.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],
@@ -218,15 +201,12 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
 
         setState(() {
           subcategories = subcategoryList;
-
-          
+          print("SSSSSSUUUUUUUUBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB$subcategories");
         });
       } else {
         throw Exception('Failed to load subcategories');
       }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   @override
@@ -293,7 +273,6 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                               firstItemIndex]
                                                           ['slug'],
                                                     )));
-
                                       },
                                       child: Container(
                                         height: 100,
@@ -329,12 +308,15 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                               ),
                                             ),
                                             SizedBox(width: 10),
-                                            Image.network(
-                                              subcategories[firstItemIndex]
-                                                  ['image'],
-                                              width: 50,
-                                              height: 50,
-                                            ),
+                                            if (subcategories[firstItemIndex]
+                                                    ['image'] !=
+                                                null)
+                                              Image.network(
+                                                subcategories[firstItemIndex]
+                                                    ['image'],
+                                                width: 50,
+                                                height: 50,
+                                              ),
                                             SizedBox(width: 10),
                                           ],
                                         ),
@@ -372,7 +354,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                           color: Colors.white,
                                         ),
                                         child: Row(
-                                          children: [
+                                           children: [
                                             SizedBox(width: 10),
                                             Expanded(
                                               child: Column(
@@ -381,26 +363,28 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    subcategories[
-                                                            secondItemIndex]
-                                                        ['name'],
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  if(subcategories[secondItemIndex]['name']!=null)
+                                                    Text(
+                                                      subcategories[
+                                                              secondItemIndex]
+                                                          ['name'],
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
-                                                  ),
                                                 ],
                                               ),
                                             ),
                                             SizedBox(width: 10),
+                                          if (subcategories[secondItemIndex]['image']!=null)
                                             Image.network(
-                                              subcategories[secondItemIndex]
-                                                  ['image'],
-                                              width: 50,
-                                              height: 50,
-                                            ),
+                                                  subcategories[secondItemIndex]
+                                                      ['image'],
+                                                  width: 50,
+                                                  height: 50,
+                                          ),
                                             SizedBox(width: 10),
                                           ],
                                         ),
@@ -476,14 +460,13 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                Product_big_View(
-                                                  product_id: product['id'],
-                                                  Category_id:
-                                                      product['category_id'],
-                                                  slug: product['slug'],
-                                                ),
-                                            ),
+                                          builder: (context) =>
+                                              Product_big_View(
+                                            product_id: product['id'],
+                                            Category_id: product['category_id'],
+                                            slug: product['slug'],
+                                          ),
+                                        ),
                                       );
                                     },
                                     child: ListTile(

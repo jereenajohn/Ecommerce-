@@ -28,14 +28,14 @@ class _Bestsale_ProductsState extends State<Bestsale_Products> {
   List<Map<String, dynamic>> bestsaleproducts = [];
 
   final String bestsaleurl =
-      "http://51.20.129.52/best-sale-products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/best-sale-products/";
   List<Map<String, dynamic>> buyonegetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://51.20.129.52/products/search/?q=";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "http://51.20.129.52/whishlist/";
+      "https://spot-defence-womens-audit.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 

@@ -71,44 +71,44 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> bogoproducts = [];
 
   final String bannerurl =
-      "http://51.20.129.52/banners/";
+      "https://spot-defence-womens-audit.trycloudflare.com/banners/";
   final String baseUrl =
-      "http://51.20.129.52/";
+      "https://spot-defence-womens-audit.trycloudflare.com/";
   final String categoryUrl =
-      "http://51.20.129.52/category/";
+      "https://spot-defence-womens-audit.trycloudflare.com/category/";
   final String productsurl =
-      "http://51.20.129.52/products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/products/";
   final String offersurl =
-      "http://51.20.129.52/offer-banner/";
+      "https://spot-defence-womens-audit.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "http://51.20.129.52/discount-sale/";
+      "https://spot-defence-womens-audit.trycloudflare.com/discount-sale/";
   // final String buyonegetoneurl =
-  //     "http://51.20.129.52/buy-1-get-1/";
+  //     "https://spot-defence-womens-audit.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "http://51.20.129.52/best-sale-products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "http://51.20.129.52/flash-sale/";
+      "https://spot-defence-womens-audit.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "http://51.20.129.52/buy-2-get-1/";
+      "https://spot-defence-womens-audit.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "http://51.20.129.52/offers/";
+      "https://spot-defence-womens-audit.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "http://51.20.129.52/search-products/?q=";
+      "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "http://51.20.129.52/recommended/";
+      "https://spot-defence-womens-audit.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "http://51.20.129.52/recently-viewed/";
+      "https://spot-defence-womens-audit.trycloudflare.com/recently-viewed/";
 
   final String bogooffersurl =
-      "http://51.20.129.52/offer/";
+      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "${productData['image']}";
+              "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -828,7 +828,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "${bannerData['image']}";
+              "https://spot-defence-womens-audit.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -855,7 +855,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "${categoryData['image']}";
+              "https://spot-defence-womens-audit.trycloudflare.com${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
@@ -1016,7 +1016,7 @@ Future<void> fetchbogodiscountoffers() async {
                         : SizedBox(
                             height: 240,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.only(),
                               child: PageView.builder(
                                 controller: _pageController,
                                 itemCount: banners.length,
@@ -1038,9 +1038,7 @@ Future<void> fetchbogodiscountoffers() async {
                               ),
                             ),
                           ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Row(
@@ -1096,9 +1094,7 @@ Future<void> fetchbogodiscountoffers() async {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                 
                     if (recenlyviewd.isNotEmpty)
                       Container(
                         child: Column(
@@ -1467,6 +1463,7 @@ Future<void> fetchbogodiscountoffers() async {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
+                                            if(products[index]['salePrice']!=null)
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 10),

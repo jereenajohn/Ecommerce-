@@ -44,19 +44,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "http://51.20.129.52/subcategory/";
+      "https://spot-defence-womens-audit.trycloudflare.com/subcategory/";
   final String wishlisturl =
-      "http://51.20.129.52/add-wishlist/";
+      "https://spot-defence-womens-audit.trycloudflare.com/add-wishlist/";
 
   final String searchproducturl =
-      "http://51.20.129.52/search-products/?q=";
+      "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
   final String lowtohigh =
-      "http://51.20.129.52/low-products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/low-products/";
   final String hightolow =
-      "http://51.20.129.52/high-products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/high-products/";
 
   final String pricefilter =
-      "http://51.20.129.52/filtered-products/";
+      "https://spot-defence-womens-audit.trycloudflare.com/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
