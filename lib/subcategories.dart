@@ -30,9 +30,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   List<Map<String, dynamic>> categoryProducts = [];
   String? userId; // Declare userId variable to store user ID
 
-  final String subcategoriesurl = "https://spot-defence-womens-audit.trycloudflare.com/category/";
-  final String productsurl = "https://spot-defence-womens-audit.trycloudflare.com/category/";
-  final String searchproducturl = "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
+  final String subcategoriesurl = "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
+  final String productsurl = "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
+  final String searchproducturl = "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -190,7 +190,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         List<Map<String, dynamic>> subcategoryList = [];
 
         for (var subcategoryData in subcategoriessData) {
-          String imageUrl = "https://spot-defence-womens-audit.trycloudflare.com/${subcategoryData['image']}";
+          String imageUrl = "http://monthly-r-atlas-fisheries.trycloudflare.com/${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],

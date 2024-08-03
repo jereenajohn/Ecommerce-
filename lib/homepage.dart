@@ -71,44 +71,44 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> bogoproducts = [];
 
   final String bannerurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/banners/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/banners/";
   final String baseUrl =
-      "https://spot-defence-womens-audit.trycloudflare.com/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/";
   final String categoryUrl =
-      "https://spot-defence-womens-audit.trycloudflare.com/category/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
   final String productsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
   final String offersurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offer-banner/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer-banner/";
 
   final String discountsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/discount-sale/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/discount-sale/";
   // final String buyonegetoneurl =
-  //     "https://spot-defence-womens-audit.trycloudflare.com/buy-1-get-1/";
+  //     "http://monthly-r-atlas-fisheries.trycloudflare.com/buy-1-get-1/";
 
   final String bestsaleurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/best-sale-products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/best-sale-products/";
 
   final String flashsaleurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/flash-sale/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/flash-sale/";
 
   final String buytwogetoneurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/buy-2-get-1/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offers/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offers/";
 
   final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
 
   final String recommendedproductsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/recommended/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/recommended/";
 
   var recentlyviewedurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/recently-viewed/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/recently-viewed/";
 
   final String bogooffersurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -828,7 +828,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com/${bannerData['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com/${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -855,7 +855,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com${categoryData['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],

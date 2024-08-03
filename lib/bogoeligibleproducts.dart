@@ -30,16 +30,16 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/add-wishlist/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
 
   final String productsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
 
   final String offersurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -319,7 +319,7 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+  //             "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],

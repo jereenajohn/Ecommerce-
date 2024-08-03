@@ -23,15 +23,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/wishlist/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/wishlist/";
   final String productsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
 
   final String deletewishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/wishlist-delete/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/wishlist-delete/";
 
   final String addtocarturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cart/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -111,7 +111,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+                "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
 
             filteredProducts.add({
@@ -137,7 +137,7 @@ class _WishlistState extends State<Wishlist> {
   }
 
   final imageurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/product/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/product/";
 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -168,11 +168,11 @@ Future<void> sizecolor(var slug) async {
       List<Map<String, dynamic>> productsList = [];
 
       for (var image in imageData) {
-        String imageUrl1 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image1']}";
-        String imageUrl2 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image2']}";
-        String imageUrl3 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image3']}";
-        String imageUrl4 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image4']}";
-        String imageUrl5 = "https://spot-defence-womens-audit.trycloudflare.com/${image['image5']}";
+        String imageUrl1 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image1']}";
+        String imageUrl2 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image2']}";
+        String imageUrl3 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image3']}";
+        String imageUrl4 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image4']}";
+        String imageUrl5 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image5']}";
 
         List<Map<String, dynamic>> sizes = [];
 
@@ -272,10 +272,12 @@ Future<void> sizecolor(var slug) async {
         onColorSizeChanged,
   ) {
     showModalBottomSheet(
+     
       context: context,
       isScrollControlled: true, // Allow the bottom sheet to be scrollable
       builder: (BuildContext context) {
         return Container(
+          
           color: Colors.white,
           padding: const EdgeInsets.all(8.0),
           child: StatefulBuilder(
@@ -285,6 +287,7 @@ Future<void> sizecolor(var slug) async {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (colors.isNotEmpty)
+
                       Container(
                         color: Colors.white,
                         child: Row(
@@ -321,11 +324,14 @@ Future<void> sizecolor(var slug) async {
                                             ? sizes[0]['size']
                                             : null;
                                         selectedStock = sizes.isNotEmpty
+                                        
                                             ? sizes[0]['stock']
                                             : null;
                                         onColorSizeChanged(selectedColor!,
                                             sizes, selectedSize, selectedStock);
                                       });
+                                      print("stockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
+
                                     },
                                     child: Text(color.toUpperCase()),
                                   );
@@ -412,6 +418,7 @@ Future<void> sizecolor(var slug) async {
                                   ? () {
                                       addProductToCart(id, name, price);
                                       Navigator.pop(context);
+                                      print("stockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(
@@ -644,13 +651,13 @@ Future<void> sizecolor(var slug) async {
                                   selectedColor,
                                   sizes,
                                   selectedSize,
-                                  selectedstock,
+                                  selectedStock,
                                   (color, sizeList, size, stock) {
                                     setState(() {
                                       selectedColor = color;
                                       sizes = sizeList;
                                       selectedSize = size;
-                                      selectedstock = stock;
+                                      selectedStock = stock;
                                     });
                                   },
                                 );

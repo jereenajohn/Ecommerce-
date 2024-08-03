@@ -32,9 +32,9 @@ class _SearchState extends State<Search> {
   int _index = 0;
   TextEditingController searchitem = TextEditingController();
   final String wishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/whishlist/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/whishlist/";
   final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
 
   List<Map<String, dynamic>> searchResults = [];
   var tokenn;

@@ -36,9 +36,9 @@ class _OrderBigViewState extends State<OrderBigView> {
     return prefs.getString('token');
   }
 
-  final String orders = "https://spot-defence-womens-audit.trycloudflare.com/order-items/";
+  final String orders = "http://monthly-r-atlas-fisheries.trycloudflare.com/order-items/";
 
-  final String productsUrl = "https://spot-defence-womens-audit.trycloudflare.com/products/";
+  final String productsUrl = "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
 
   List<dynamic> productIds = [];
   var productquantity;

@@ -32,16 +32,16 @@ class _Bogo_Eligible_Category_ProductsState
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/add-wishlist/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
 
   final String productsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
 
   final String offersurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
 
   List<Map<String, dynamic>> products = [];
 

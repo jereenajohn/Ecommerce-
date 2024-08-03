@@ -53,8 +53,8 @@ class _MyOrderState extends State<MyOrder> {
     return prefs.getString('token');
   }
 
-  final String orders = "https://spot-defence-womens-audit.trycloudflare.com/order-items/";
-  final String ratingurl = "https://spot-defence-womens-audit.trycloudflare.com/product-review/";
+  final String orders = "http://monthly-r-atlas-fisheries.trycloudflare.com/order-items/";
+  final String ratingurl = "http://monthly-r-atlas-fisheries.trycloudflare.com/product-review/";
 
   List<Map<String, dynamic>> products = [];
   bool isLoading = true;

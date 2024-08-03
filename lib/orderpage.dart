@@ -31,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/get-address/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/get-address/";
   String orderurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/order/create/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/order/create/";
   String cuponurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cupons/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -99,7 +99,7 @@ class _orderState extends State<order> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
 
   var bogo;
   bool is_active = false;
@@ -115,7 +115,9 @@ class _orderState extends State<order> {
         List<int> offerCategories = [];
 
         for (var productData in parsed) {
-          productsList.add({
+          if(productData['offer_active']==true){
+
+             productsList.add({
             'id': productData['id'],
             'title': productData['name'],
             'buy': productData['buy'],
@@ -134,6 +136,9 @@ class _orderState extends State<order> {
             offerCategories
                 .addAll(List<int>.from(productData['offer_category']));
           }
+
+          }
+         
         }
 
         setState(() {
@@ -218,14 +223,17 @@ class _orderState extends State<order> {
           if (has_offer == "Offer Applied") {
             // Count the offer products
             offerProductCount += quantity;
+            print(
+                "offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrproductttttttttttttCCCCCountTTTTTTTTTTT:$offerProductCount");
             offeronly = true;
-
-            print("ofeerrrrrrcountttttttttttttttttttttttt$offerProductCount");
+            print("offerrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:$offeronly");
+          } else {
+            offeronly = false;
           }
 
           // Check if this product has an offer
           // String? offerType = cartProducts[i]['offer_type'];
-          if (discountapplicable == "Discount Allowd") {
+          if (discountapplicable == "Discount Allowed") {
             print("ssssssssssssssssssssssssss");
 
             // Determine the least priced offer product
@@ -285,7 +293,7 @@ class _orderState extends State<order> {
                 String? discountapplicable =
                     cartProducts[i]['discount_product'];
 
-                if (discountapplicable == "Discount Allowd") {
+                if (discountapplicable == "Discount Allowed") {
                   discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
                   quat += discount_product_quantity;
                 }
@@ -299,7 +307,7 @@ class _orderState extends State<order> {
                     cartProducts[i]['quantity'] ?? 0;
 
                 if (has_offer == "Offer Not Applicable" &&
-                    discountapplicable == "Discount Allowd") {
+                    discountapplicable == "Discount Allowed") {
                   onlyDiscountAllowedAndNormal = true;
                 } else {
                   onlyDiscountAllowedAndNormal = false;
@@ -320,19 +328,7 @@ class _orderState extends State<order> {
                 }
               }
 
-              for (int i = 0; i < cartProducts.length; i++) {
-                String? discountapplicable =
-                    cartProducts[i]['discount_product'];
-                String? has_offer = cartProducts[i]['has_offer'];
-                int discount_product_quantity =
-                    cartProducts[i]['quantity'] ?? 0;
-                if (has_offer == "Offer Applied" &&
-                    discountapplicable == "normal") {
-                  offernotdiscount = true;
-                } else {
-                  notofferdiscount1 = true;
-                }
-              }
+            
 
 // Determine free items based on the conditions
               if (hasOfferAppliedNormalProduct) {
@@ -377,8 +373,10 @@ class _orderState extends State<order> {
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['saleprice']);
                     // String? nextOfferType = cartProducts[j]['offer_type'];
+                     String? discountapplicable =
+                    cartProducts[j]['discount_product'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (bogo == "BUY 1 GET 1" || bogo == "BUY 2 GET 1") &&
+                        (discountapplicable == "Discount Allowed") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
@@ -424,7 +422,7 @@ class _orderState extends State<order> {
                 String? discountapplicable =
                     cartProducts[i]['discount_product'];
 
-                if (discountapplicable == "Discount Allowd") {
+                if (discountapplicable == "Discount Allowed") {
                   discount_product_quantity = cartProducts[i]['quantity'] ?? 0;
                   quat += discount_product_quantity;
                 }
@@ -439,7 +437,7 @@ class _orderState extends State<order> {
                     cartProducts[i]['quantity'] ?? 0;
 
                 if (has_offer == "Offer Not Applicable" &&
-                    discountapplicable == "Discount Allowd") {
+                    discountapplicable == "Discount Allowed") {
                   onlyDiscountAllowedAndNormal = true;
                   print(
                       "discountonlyyyyyyyyyyyyyyyyyyyyyyiffffffffffffffffffffffffffffffff");
@@ -451,24 +449,7 @@ class _orderState extends State<order> {
                   break;
                 }
               }
-              for (int i = 0; i < cartProducts.length; i++) {
-                String? discountapplicable =
-                    cartProducts[i]['discount_product'];
-                String? has_offer = cartProducts[i]['has_offer'];
-                int discount_product_quantity =
-                    cartProducts[i]['quantity'] ?? 0;
-                if (has_offer == "Offer Applied" &&
-                    discountapplicable == "normal") {
-                  offernotdiscount = true;
-                } else {
-                  notofferdiscount1 = true;
-                }
-              }
-
-              for (int i = 0; i < cartProducts.length; i++) {
-                String? discountapplicable =
-                    cartProducts[i]['discount_product'];
-              }
+             
 
               for (int i = 0; i < cartProducts.length; i++) {
                 String? discountapplicable =
@@ -645,8 +626,10 @@ class _orderState extends State<order> {
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['saleprice']);
                     // String? nextOfferType = cartProducts[j]['offer_type'];
+                     String? discountapplicable =
+                    cartProducts[j]['discount_product'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (bogo == "BUY 1 GET 1" || bogo == "BUY 2 GET 1") &&
+                        (discountapplicable == "Discount Allowed") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
@@ -723,7 +706,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cart-products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -1056,7 +1039,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com/${item['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;

@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cart-products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart-products/";
   final String productsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
 
   final quantityincrementurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cart/increment/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/increment/";
 
   final quantitydecrementurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cart/decrement/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/decrement/";
 
   final deletecarturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/cart-delete/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart-delete/";
 
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com/${item['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com/${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -257,7 +257,7 @@ class _CartState extends State<Cart> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offer/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
 
   var bogo;
   bool is_active = false;
@@ -517,11 +517,15 @@ class _CartState extends State<Cart> {
                   int nextDquantity = 0;
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['price']);
+                    String? discountapplicable =
+                    cartProducts[j]['discount_product'];
+                    print("discountapplicable$discountapplicable");
                     // String? nextOfferType = cartProducts[j]['offer_type'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (bogo == "BUY 1 GET 1" || bogo == "BUY 2 GET 1") &&
+                        (discountapplicable == "Discount Allowed") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
+                      print("nextttttttttttttttttttttttttttttttttt$nextLeastPrice");
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;
                     }
                   }
@@ -532,6 +536,10 @@ class _CartState extends State<Cart> {
                   leastPrice = nextLeastPrice;
                   Dquantity = nextDquantity;
                 } else {
+                                    print("totalllllllllllllllll$totalPrice");
+                print("totalllllllllllllllll$leastPrice");
+
+
                   totalPrice -= (leastPrice! * freeItems);
                   freeItems = 0;
                   print("Total after final reduction: $totalPrice");
@@ -774,8 +782,10 @@ class _CartState extends State<Cart> {
                   for (int j = 0; j < cartProducts.length; j++) {
                     double price = double.parse(cartProducts[j]['price']);
                     // String? nextOfferType = cartProducts[j]['offer_type'];
+                     String? discountapplicable =
+                    cartProducts[j]['discount_product'];
                     if ((nextLeastPrice == null || price < nextLeastPrice) &&
-                        (bogo == "BUY 1 GET 1" || bogo == "BUY 2 GET 1") &&
+                        (discountapplicable == "Discount Allowed") &&
                         price > leastPrice!) {
                       nextLeastPrice = price;
                       nextDquantity = cartProducts[j]['quantity'] ?? 1;

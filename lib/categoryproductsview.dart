@@ -25,7 +25,7 @@ class CategoryProductView extends StatefulWidget {
 }
 
 class _CategoryProductViewState extends State<CategoryProductView> {
-  final String productsurl = "https://spot-defence-womens-audit.trycloudflare.com/category/";
+  final String productsurl = "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
   List<Map<String, dynamic>> categoryProducts = [];
   List<bool> isFavorite = [];
 
@@ -33,9 +33,9 @@ class _CategoryProductViewState extends State<CategoryProductView> {
   List<Map<String, dynamic>> searchResults = [];
 
   TextEditingController searchitem = TextEditingController();
-  final String searchproducturl = "https://spot-defence-womens-audit.trycloudflare.com/search-products/?q=";
-  final String lowtohigh = "https://spot-defence-womens-audit.trycloudflare.com/products/filter/";
-  final String hightolow = "https://spot-defence-womens-audit.trycloudflare.com/products/filtering/";
+  final String searchproducturl = "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
+  final String lowtohigh = "http://monthly-r-atlas-fisheries.trycloudflare.com/products/filter/";
+  final String hightolow = "http://monthly-r-atlas-fisheries.trycloudflare.com/products/filtering/";
   bool _isSearching = false;
   int _index = 0;
   List<Map<String, dynamic>> lowtohighresult = [];
@@ -98,7 +98,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         for (var productData in productsData) {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
-          String imageUrl = "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+          String imageUrl = "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],

@@ -27,14 +27,14 @@ class _HalfRate_ProductsState extends State<HalfRate_Products> {
   List<bool> isFavorite = [];
 
   final String halfrateproductsurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/offers/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/offers/";
   List<Map<String, dynamic>> halfrateproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/whishlist/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 

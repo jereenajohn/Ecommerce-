@@ -27,14 +27,14 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
   List<bool> isFavorite = [];
 
   final String buytwogetoneurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/buy-2-get-1/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/buy-2-get-1/";
   List<Map<String, dynamic>> buytwogetoneproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
 
   final String wishlisturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/whishlist/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/whishlist/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -135,7 +135,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in searchData) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -225,7 +225,7 @@ class _Buytwo_Getone_ProductsState extends State<Buytwo_Getone_Products> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+              "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
           productbuytwogetoneList.add({
             'id': productData['id'],
             'mainCategory': productData['mainCategory'],

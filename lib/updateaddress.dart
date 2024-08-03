@@ -49,11 +49,11 @@ class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController note = TextEditingController();
 
   String updateaddressurl =
-      "https://spot-defence-womens-audit.trycloudflare.com/update-address/";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/update-address/";
 
-  String durl = "https://spot-defence-womens-audit.trycloudflare.com/delete-address/";
+  String durl = "http://monthly-r-atlas-fisheries.trycloudflare.com/delete-address/";
 
-  String url = "https://spot-defence-womens-audit.trycloudflare.com/get-address/";
+  String url = "http://monthly-r-atlas-fisheries.trycloudflare.com/get-address/";
 
   List<Map<String, dynamic>> addressList = [];
 

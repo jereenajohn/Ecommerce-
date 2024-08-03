@@ -29,7 +29,7 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
   List<Map<String, dynamic>> hightolowresult = [];
    final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
    bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -49,8 +49,8 @@ class _lowtohighpageState extends State<lowtohighpage> {
     // Use userId after getting the value
   }
 
-  final String hightolow = "https://spot-defence-womens-audit.trycloudflare.com/low-products/";
-  final String wishlisturl = "https://spot-defence-womens-audit.trycloudflare.com/whishlist/";
+  final String hightolow = "http://monthly-r-atlas-fisheries.trycloudflare.com/low-products/";
+  final String wishlisturl = "http://monthly-r-atlas-fisheries.trycloudflare.com/whishlist/";
 
   Future<void> HightoLow(int subcategoryId) async {
     final token = await gettokenFromPrefs();

@@ -26,7 +26,7 @@ class _hightolowpageState extends State<hightolowpage> {
       TextEditingController searchitem = TextEditingController();
 
       final String searchproducturl =
-      "https://spot-defence-womens-audit.trycloudflare.com/products/search/?q=";
+      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
   bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
@@ -51,7 +51,7 @@ class _hightolowpageState extends State<hightolowpage> {
   }
 
 
-  final String lowtohigh = "https://spot-defence-womens-audit.trycloudflare.com/low-products/";
+  final String lowtohigh = "http://monthly-r-atlas-fisheries.trycloudflare.com/low-products/";
   List<Map<String, dynamic>> lowtohighresult = [];
 
   Future<void> LowtoHigh(int subcategoryId) async {
@@ -70,7 +70,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "https://spot-defence-womens-audit.trycloudflare.com/${productData['image']}";
+          String imageUrl = "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -90,7 +90,7 @@ class _hightolowpageState extends State<hightolowpage> {
     }
   }
 
-  final String wishlisturl = "https://spot-defence-womens-audit.trycloudflare.com/whishlist/";
+  final String wishlisturl = "http://monthly-r-atlas-fisheries.trycloudflare.com/whishlist/";
 
   void toggleFavorite(int index) {
     setState(() {
