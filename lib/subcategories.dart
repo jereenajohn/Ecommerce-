@@ -14,12 +14,15 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SubcategoriesPage extends StatefulWidget {
-  final String? user_id; // Receive user_id as a parameter
+  final String? user_id; 
+  // Receive user_id as a parameter
+  final int categoryId;
+  final String slug;
 
-  const SubcategoriesPage({Key? key, this.user_id, required this.categoryId})
+  const SubcategoriesPage({Key? key, this.user_id, required this.categoryId, required this.slug})
       : super(key: key);
 
-  final int categoryId;
+  
 
   @override
   State<SubcategoriesPage> createState() => _SubcategoriesPageState();
@@ -30,9 +33,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   List<Map<String, dynamic>> categoryProducts = [];
   String? userId; // Declare userId variable to store user ID
 
-  final String subcategoriesurl = "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
-  final String productsurl = "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
-  final String searchproducturl = "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
+  final String subcategoriesurl = "http://51.20.129.52/category/";
+  final String productsurl = "http://51.20.129.52/category/";
+  final String searchproducturl = "http://51.20.129.52/search-products/?q=";
 
   int _selectedIndex = 0;
   bool _isSearching = false;
@@ -44,7 +47,10 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   @override
   void initState() {
     super.initState();
+          print("sluggggggggggggggggggggggggggggggggggggg${widget.slug}");
+
     _initData();
+
     fetchSubcategories();
     fetchCategoryProducts();
   }
@@ -122,7 +128,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
   Future<void> fetchCategoryProducts() async {
     try {
       final response = await http.get(
-          Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
+          Uri.parse('$productsurl${widget.slug}/products/'));
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -130,7 +136,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         List<Map<String, dynamic>> ProductsList = [];
 
         for (var productData in productsData) {
-          String imageUrl = "${productData['image']}";
+          String imageUrl ="${productData['image']}";
           ProductsList.add({
             'id': productData['id'],
             'category_id': productData['mainCategory'],
@@ -148,7 +154,9 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
       } else {
         throw Exception('Failed to load subcategories');
       }
-    } catch (error) {}
+    } catch (error) {
+      print("error:$error");
+    }
   }
 
   Future<void> searchproduct() async {
@@ -190,7 +198,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
         List<Map<String, dynamic>> subcategoryList = [];
 
         for (var subcategoryData in subcategoriessData) {
-          String imageUrl = "http://monthly-r-atlas-fisheries.trycloudflare.com/${subcategoryData['image']}";
+          String imageUrl ="${subcategoryData['image']}";
           subcategoryList.add({
             'id': subcategoryData['id'],
             'name': subcategoryData['name'],
@@ -419,7 +427,7 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CategoryProductView(
-                                        categoryId: widget.categoryId,
+                                        categoryId: widget.slug,
                                       ),
                                     ),
                                   );

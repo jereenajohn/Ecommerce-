@@ -23,9 +23,9 @@ class _OfferState extends State<Offer> {
   List<Map<String, dynamic>> offers = [];
   List<Map<String, dynamic>> productsInOffer = [];
   final String productsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
   final String offersurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   Future<void> fetchProducts() async {
     try {

@@ -28,20 +28,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   var tokenn;
 
   // final String buyonegetoneurl =
-  //     "http://monthly-r-atlas-fisheries.trycloudflare.com/buy-1-get-1/";
+  //     "http://51.20.129.52/buy-1-get-1/";
   List<Map<String, dynamic>> productsinoffer = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String productsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
 
   final String offersurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   List<Map<String, dynamic>> products = [];
 
@@ -318,7 +318,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
 
   //       for (var productData in productsData) {
   //         String imageUrl =
-  //             "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
+  //             "http://51.20.129.52/${productData['image']}";
   //         productbuyonegetoneList.add({
   //           'id': productData['id'],
   //           'mainCategory': productData['mainCategory'],
@@ -485,19 +485,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${productsInOffer[firstItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if(productsInOffer[firstItemIndex]['price']!=null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsInOffer[firstItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
@@ -603,19 +604,20 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${productsInOffer[secondItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if(productsInOffer[secondItemIndex]['price']!=null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsInOffer[secondItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),

@@ -27,14 +27,14 @@ class _Discount_ProductsState extends State<Discount_Products> {
   List<bool> isFavorite = [];
 
   final String discountsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/discount-sale/";
+      "http://51.20.129.52/discount-sale/";
   List<Map<String, dynamic>> discountproducts = [];
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 

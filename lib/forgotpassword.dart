@@ -18,7 +18,7 @@ class forgotpassword extends StatefulWidget {
 }
 
 class _forgotpasswordState extends State<forgotpassword> {
-  var url = "http://monthly-r-atlas-fisheries.trycloudflare.com/forgot-password/";
+  var url = "http://51.20.129.52/forgot-password/";
   TextEditingController email = TextEditingController();
   var tokenn;
   var emailres;

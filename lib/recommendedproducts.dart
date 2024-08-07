@@ -29,13 +29,13 @@ class _Recommended_productsState extends State<Recommended_products> {
 
 
   final String recommendedproductsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/recommended/";
+      "http://51.20.129.52/recommended/";
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
 
   final String wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   List<Map<String, dynamic>> products = [];
 

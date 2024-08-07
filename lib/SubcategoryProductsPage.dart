@@ -44,19 +44,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   TextEditingController searchitem = TextEditingController();
 
   final String productsUrl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/subcategory/";
+      "http://51.20.129.52/subcategory/";
   final String wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
   final String lowtohigh =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/low-products/";
+      "http://51.20.129.52/low-products/";
   final String hightolow =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/high-products/";
+      "http://51.20.129.52/high-products/";
 
   final String pricefilter =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/filtered-products/";
+      "http://51.20.129.52/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -246,7 +246,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "${productData['image']}";
+              "http://51.20.129.52${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],

@@ -32,29 +32,29 @@ class Product_big_View extends StatefulWidget {
 
 class _Product_big_ViewState extends State<Product_big_View> {
   final producturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
+      "http://51.20.129.52/category/";
 
   final multipleimageurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/product-images/";
+      "http://51.20.129.52/product-images/";
 
   final String addtocarturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/";
+      "http://51.20.129.52/cart/";
   final String wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String discountsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/discount-sale/";
+      "http://51.20.129.52/discount-sale/";
 
   var recentlyviewedurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/recently-viewed/";
+      "http://51.20.129.52/recently-viewed/";
 
   final String recommendedproductsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/recommended/";
+      "http://51.20.129.52/recommended/";
   final imageurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/product/";
+      "http://51.20.129.52/product/";
 
   final String ratingurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/review/";
+      "http://51.20.129.52/review/";
   List<Map<String, dynamic>> Products = [];
   List<Map<String, dynamic>> categoryProducts = [];
   List<Map<String, dynamic>> images = [];
@@ -87,7 +87,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
   @override
   void initState() {
     _initData();
-    fetchproductdata();
+    // fetchproductdata();
     fetchDiscountProducts();
     recentlyviewed();
     fetchRecommendedProducts();
@@ -620,37 +620,39 @@ class _Product_big_ViewState extends State<Product_big_View> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      name != null
-                          ? Text(
-                              "$name",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 87, 87, 87),
-                              ),
-                            )
-                          : SizedBox.shrink(),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Row(
-                        children: [
-                          salePrice != null
-                              ? Text(
-                                  "$salePrice",
+                      if(productmaindata['name'] != null)
+                                  Text(
+                                  "${productmaindata['name']}",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromARGB(255, 87, 87, 87),
                                   ),
-                                )
-                              : SizedBox.shrink(),
+                                ),
+                              
+                      
+                          
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          if(productmaindata['salePrice'] != null)
+                              Text(
+                                  "${productmaindata['salePrice']}",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 87, 87, 87),
+                                  ),
+                                ),
+                            
                           SizedBox(
                             width: 5,
                           ),
-                          if (price != null)
+                          if (productmaindata['price'] != null)
                             Text(
-                              "\₹$price",
+                              "${productmaindata['price']}",
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Color.fromARGB(255, 155, 153, 153),
@@ -801,7 +803,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                   ),
                 ),
 
-              if (name != null)
+              
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Row(
@@ -1643,6 +1645,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
   Future<void> fetchproductdata() async {
     try {
+      print('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu$producturl${widget.Category_id}/products/');
       final response = await http
           .get(Uri.parse('$producturl${widget.Category_id}/products/'));
 
@@ -1653,7 +1656,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -1699,7 +1702,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
 
 int? selectedStock;
 
-
+Map productmaindata={};
 Future<void> sizecolor() async {
   Set<String> colorsSet = {};
   try {
@@ -1709,17 +1712,25 @@ Future<void> sizecolor() async {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
-      print("responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${data['images']}");
+
+      if (!data.containsKey('images')) {
+        throw Exception('No images key in response data');
+      }
 
       final List<dynamic> imageData = data['images'];
+      productmaindata = data['product'];
+      print("productmaindataaaaaaaaaaaaaaaaaaaaaaa${productmaindata}");
+      String imageUrl =
+          "${productmaindata['image']}";
+
       List<Map<String, dynamic>> productsList = [];
 
       for (var image in imageData) {
-        String imageUrl1 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image1']}";
-        String imageUrl2 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image2']}";
-        String imageUrl3 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image3']}";
-        String imageUrl4 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image4']}";
-        String imageUrl5 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image5']}";
+        String imageUrl1 = "${image['image1']}";
+        String imageUrl2 = "${image['image2']}";
+        String imageUrl3 = "${image['image3']}";
+        String imageUrl4 = "${image['image4']}";
+        String imageUrl5 = "${image['image5']}";
 
         List<Map<String, dynamic>> sizes = [];
 
@@ -1739,11 +1750,11 @@ Future<void> sizecolor() async {
         } else if (image['type'] == 'variant') {
           sizes = (image['stock_info'] as List<dynamic>)
               .map((variant) => {
-                'size': variant['size'],
-                'stock': variant['stock']
-              }).toList();
-              print("siiiiiiiiiiiiiiiiiiiiiii$sizes");
-              
+                    'size': variant['size'],
+                    'stock': variant['stock']
+                  }).toList();
+          print("siiiiiiiiiiiiiiiiiiiiiii$sizes");
+
           productsList.add({
             'id': image['id'],
             'image1': imageUrl1,
@@ -1756,38 +1767,28 @@ Future<void> sizecolor() async {
             'type': image['type']
           });
           colorsSet.add(image['color']);
+        } else {
+          throw Exception('Unknown product type');
         }
       }
 
       setState(() {
+        image = imageUrl;
         images = productsList;
         colors = colorsSet.toList();
-        print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW$images");
-       if(selectedColor==null){
-        selectedColor=colors[0];
-        print("selectedColor$selectedColor");
-       }
-       if(productsList[0]['type']=='single'){
+        if (selectedColor == null && colors.isNotEmpty) {
+          selectedColor = colors[0];
+        }
 
-        selectedStock=productsList[0]['stock'];
-        print("stockkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
-
-       }
-
-        if (productsList.isNotEmpty&&productsList[0]['type']=='variant') {
-          print("jdddddddddddddddddddddddddddddddddddddddddddd");
+        if (productsList.isNotEmpty) {
           Map<String, dynamic>? selectedProduct = productsList.firstWhere(
               (product) => product['color'] == selectedColor,
               orElse: () => <String, dynamic>{});
-          
-          if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'variant') {
-            sizes = selectedProduct['sizes'];
-            print("sizeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$sizes");
-            selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
-            print("selectedSize$selectedSize");
-            selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
-             print("selectedStock$selectedStock");
 
+          if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'variant') {
+            sizes = selectedProduct['sizes'] ?? [];
+            selectedSize = sizes.isNotEmpty ? sizes[0]['size'] : null;
+            selectedStock = sizes.isNotEmpty ? sizes[0]['stock'] : null;
           } else if (selectedProduct.isNotEmpty && selectedProduct['type'] == 'single') {
             selectedSize = null;
             selectedStock = selectedProduct['stock'];

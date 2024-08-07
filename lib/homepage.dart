@@ -71,44 +71,44 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> bogoproducts = [];
 
   final String bannerurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/banners/";
+      "http://51.20.129.52/banners/";
   final String baseUrl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/";
+      "http://51.20.129.52/";
   final String categoryUrl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/category/";
+      "http://51.20.129.52/category/";
   final String productsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
   final String offersurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer-banner/";
+      "http://51.20.129.52/offer-banner/";
 
   final String discountsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/discount-sale/";
+      "http://51.20.129.52/discount-sale/";
   // final String buyonegetoneurl =
-  //     "http://monthly-r-atlas-fisheries.trycloudflare.com/buy-1-get-1/";
+  //     "http://51.20.129.52/buy-1-get-1/";
 
   final String bestsaleurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/best-sale-products/";
+      "http://51.20.129.52/best-sale-products/";
 
   final String flashsaleurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/flash-sale/";
+      "http://51.20.129.52/flash-sale/";
 
   final String buytwogetoneurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/buy-2-get-1/";
+      "http://51.20.129.52/buy-2-get-1/";
 
   final String halfrateproductsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offers/";
+      "http://51.20.129.52/offers/";
 
   final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
 
   final String recommendedproductsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/recommended/";
+      "http://51.20.129.52/recommended/";
 
   var recentlyviewedurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/recently-viewed/";
+      "http://51.20.129.52/recently-viewed/";
 
   final String bogooffersurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   bool _isSearching = false;
   int _index = 0;
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
 
         for (var productData in productsData) {
           String imageUrl =
-              "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
+              "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -828,7 +828,7 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var bannerData in bannersData) {
           String imageUrl =
-              "http://monthly-r-atlas-fisheries.trycloudflare.com/${bannerData['image']}";
+              "${bannerData['image']}";
           bannerList.add({
             'image': imageUrl,
           });
@@ -855,16 +855,18 @@ Future<void> fetchbogodiscountoffers() async {
 
         for (var categoryData in categorysData) {
           String imageUrl =
-              "http://monthly-r-atlas-fisheries.trycloudflare.com${categoryData['image']}";
+              "${categoryData['image']}";
           categoryList.add({
             'id': categoryData['id'],
             'name': categoryData['name'],
             'image': imageUrl,
+            'slug':categoryData['slug']
           });
         }
 
         setState(() {
           categories = categoryList;
+          print("categoriessssssssssssssssssssssssssssssssssssssssssssss$categories");
         });
       } else {
         throw Exception('Failed to load categories');
@@ -1052,7 +1054,7 @@ Future<void> fetchbogodiscountoffers() async {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10),
+                
                     SizedBox(
                       height: 110,
                       child: ListView.builder(
@@ -1062,11 +1064,13 @@ Future<void> fetchbogodiscountoffers() async {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
+                              print("slllllllllllllllllllllllllll:${categories[index]['slug']}");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => SubcategoriesPage(
                                     categoryId: categories[index]['id'],
+                                    slug:categories[index]['slug']
                                     // userid: widget.userid,
                                   ),
                                 ),

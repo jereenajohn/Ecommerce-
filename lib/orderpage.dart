@@ -31,11 +31,11 @@ class _orderState extends State<order> {
   bool isCouponApplied = false;
   int? selectedAddressId;
   String fetchaddressurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/get-address/";
+      "http://51.20.129.52/get-address/";
   String orderurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/order/create/";
+      "http://51.20.129.52/order/create/";
   String cuponurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cupons/";
+      "http://51.20.129.52/cupons/";
 
   List<Map<String, dynamic>> addressList = [];
   int selectedAddressIndex = -1;
@@ -63,7 +63,7 @@ class _orderState extends State<order> {
 
     userId = await getUserIdFromPrefs();
     fetchcupons();
-    fetchoffers();
+    await fetchoffers();
 
     fetchCartData();
     fetchAddress();
@@ -99,7 +99,7 @@ class _orderState extends State<order> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   var bogo;
   bool is_active = false;
@@ -195,6 +195,8 @@ class _orderState extends State<order> {
     int offeronlycount = 0;
     int quat = 0;
     setState(() {
+               
+
       if (is_active == 'true') {
         for (int i = 0; i < cartProducts.length; i++) {
           double price = (cartProducts[i]['saleprice'] is int)
@@ -706,7 +708,7 @@ class _orderState extends State<order> {
   }
 
   var CartUrl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart-products/";
+      "http://51.20.129.52/cart-products/";
   List<Map<String, dynamic>> cartProducts = [];
   var orginalprice;
   var sellingprice;
@@ -1039,7 +1041,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "http://monthly-r-atlas-fisheries.trycloudflare.com/${item['image']}";
+              "http://51.20.129.52/${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -1060,20 +1062,25 @@ class _orderState extends State<order> {
             'discount_product': item['discount_product'],
           });
         }
+                 
 
-        setState(() {
+       
+
+        setState((){
           cartProducts = cartItems;
           print(
               "Cart Productssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss: $cartProducts");
+          totalPrice = calculateTotalPrice();
+          print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++$totalPrice");
 
           orginalprice = calculateOriginalPrice();
-          totalPrice = calculateTotalPrice();
+       
           discount = orginalprice - totalPrice;
           print("Original Price: $orginalprice");
           print(
               "Selling Priceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: $totalPrice");
           print("Discount: $discount");
-          fetchoffers();
+          
         });
 
         print(cartProducts.length);
@@ -1111,7 +1118,7 @@ class _orderState extends State<order> {
       print(
           "total::::::::::::::::::::::::::::::::::::::::::::::::::::::::::$totalPrice");
 
-      if (totalPrice < 500) {
+      if (totalPrice <= 500) {
         deliverycharge = 60;
         totalPrice = totalPrice + deliverycharge;
       } else {
@@ -1575,7 +1582,7 @@ class _orderState extends State<order> {
                               ),
                               Spacer(),
                               Text(
-                                "₹$totalPrice",
+                                "₹${totalPrice}",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,

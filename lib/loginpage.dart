@@ -23,7 +23,7 @@ class _Login_PageState extends State<Login_Page> {
 
   List<dynamic> data = [];
 
-  var url = "http://monthly-r-atlas-fisheries.trycloudflare.com/login/";
+  var url = "http://51.20.129.52/login/";
 
   @override
   void initState() {

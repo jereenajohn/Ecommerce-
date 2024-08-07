@@ -37,18 +37,18 @@ class _CartState extends State<Cart> {
   var tokenn;
 
   var CartUrl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart-products/";
+      "http://51.20.129.52/cart-products/";
   final String productsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
 
   final quantityincrementurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/increment/";
+      "http://51.20.129.52/cart/increment/";
 
   final quantitydecrementurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/decrement/";
+      "http://51.20.129.52/cart/decrement/";
 
   final deletecarturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart-delete/";
+      "http://51.20.129.52/cart-delete/";
 
   @override
   void initState() {
@@ -87,6 +87,7 @@ class _CartState extends State<Cart> {
   //   }
   // }
 
+
   Future<void> fetchCartData() async {
     print("Fetching cart data...");
     try {
@@ -113,7 +114,7 @@ class _CartState extends State<Cart> {
 
         for (var item in data) {
           String imageUrl =
-              "http://monthly-r-atlas-fisheries.trycloudflare.com/${item['image']}";
+              "${item['image']}";
 
           cartItems.add({
             'id': item['id'],
@@ -257,7 +258,7 @@ class _CartState extends State<Cart> {
   List<int> offerProducts = [];
   List<Map<String, dynamic>> offers = [];
   final String offersurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer/";
+      "http://51.20.129.52/offer/";
 
   var bogo;
   bool is_active = false;
@@ -869,235 +870,234 @@ class _CartState extends State<Cart> {
           //   ),
           // ),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: cartProducts.length,
-              itemBuilder: (context, index) {
-                var stock = cartProducts[index]['stock'] ?? 0;
-                var quantity = cartProducts[index]['quantity'] ?? 0;
+        Expanded(
+  child: cartProducts.isEmpty
+    ? Center(
+        child: Text(
+          'Your cart is empty',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.grey),
+        ),
+      )
+    : ListView.builder(
+        itemCount: cartProducts.length,
+        itemBuilder: (context, index) {
+          var stock = cartProducts[index]['stock'] ?? 0;
+          var quantity = cartProducts[index]['quantity'] ?? 0;
 
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Product_big_View(
-                          product_id: cartProducts[index]['productId'],
-                          slug: cartProducts[index]['slug'],
-                          Category_id:
-                              int.parse(cartProducts[index]['mainCategory']),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 200,
-                    margin:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Product_big_View(
+                    product_id: cartProducts[index]['productId'],
+                    slug: cartProducts[index]['slug'],
+                    Category_id: int.parse(cartProducts[index]['mainCategory']),
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              height: 200,
+              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  SizedBox(width: 10),
+                  Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 3,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
+                    height: 120,
+                    width: 120,
+                    child: Image.network(
+                      cartProducts[index]['image'],
+                      width: 120,
+                      height: 120,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            cartProducts[index]['name'],
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          height: 120,
-                          width: 120,
-                          child: Image.network(
-                            cartProducts[index]['image'],
-                            width: 120,
-                            height: 120,
+                          SizedBox(height: 5),
+                          if (cartProducts[index]['actualprice'] != null)
+                            Text(
+                              '\$${cartProducts[index]['actualprice']}',
+                              style: TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          SizedBox(height: 5),
+                          Text(
+                            '\$${cartProducts[index]['price']}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.green,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          if (cartProducts[index]['color'] != null &&
+                              cartProducts[index]['size'] != null)
+                            Row(
                               children: [
                                 Text(
-                                  cartProducts[index]['name'],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  '${cartProducts[index]['color']}',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color: const Color.fromARGB(
+                                        255, 115, 115, 115),
                                   ),
                                 ),
-
-                                SizedBox(height: 5),
-                                if (cartProducts[index]['actualprice'] != null)
-                                  Text(
-                                    '\$${cartProducts[index]['actualprice']}',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                SizedBox(height: 5),
+                                SizedBox(width: 10),
                                 Text(
-                                  '\$${cartProducts[index]['price']}',
+                                  '${cartProducts[index]['size']}',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.green,
+                                    fontSize: 13,
+                                    color: const Color.fromARGB(
+                                        255, 115, 115, 115),
                                   ),
                                 ),
-                                if (cartProducts[index]['color'] != null &&
-                                    cartProducts[index]['size'] != null)
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '${cartProducts[index]['color']}',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: const Color.fromARGB(
-                                              255, 115, 115, 115),
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        '${cartProducts[index]['size']}',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: const Color.fromARGB(
-                                              255, 115, 115, 115),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                if ((cartProducts[index]['has_offer'] ==
-                                            "Offer Applied" ||
-                                        cartProducts[index]
-                                                ['category_discount'] ==
-                                            "Category Offer Applied") &&
-                                    bogo != null)
-                                  Text(
-                                    '$bogo',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.green,
-                                    ),
-                                  ),
+                              ],
+                            ),
+                          if ((cartProducts[index]['has_offer'] ==
+                                      "Offer Applied" ||
+                                  cartProducts[index]['category_discount'] ==
+                                      "Category Offer Applied") &&
+                              bogo != null)
+                            Text(
+                              '$bogo',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                              ),
+                            ),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    Decrementquantity(
+                                        cartProducts[index]['id'],
+                                        cartProducts[index]["quantity"] - 1);
 
-                                // Inside the ListView.builder itemBuilder method
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          Decrementquantity(
-                                              cartProducts[index]['id'],
-                                              cartProducts[index]["quantity"] -
-                                                  1);
-
-                                          setState(() {
-                                            calculateTotalPrice();
-                                            fetchCartData();
-                                          });
-                                        },
-                                        icon: Icon(Icons.remove),
-                                        iconSize: 18,
-                                      ),
-                                      Text(
-                                        '${cartProducts[index]["quantity"] ?? 1}',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          if (stock > quantity) {
-                                            incrementquantity(
-                                                cartProducts[index]['id'],
-                                                cartProducts[index]
-                                                        ["quantity"] +
-                                                    1);
-
-                                            setState(() {
-                                              fetchCartData();
-                                              calculateTotalPrice();
-                                              _initData();
-                                            });
-                                          } else {
-                                            print("out of stockkk");
-                                          }
-                                        },
-                                        icon: Icon(Icons.add),
-                                        iconSize: 18,
-                                      ),
-                                    ],
+                                    setState(() {
+                                      calculateTotalPrice();
+                                      fetchCartData();
+                                    });
+                                  },
+                                  icon: Icon(Icons.remove),
+                                  iconSize: 18,
+                                ),
+                                Text(
+                                  '${cartProducts[index]["quantity"] ?? 1}',
+                                  style: TextStyle(
+                                    fontSize: 16,
                                   ),
                                 ),
-                                if (selectedOption == 'Option 1' &&
-                                    (cartProducts[index]['offer_type'] ==
-                                            'BUY 1 GET 1' ||
-                                        cartProducts[index]['offer_type'] ==
-                                            'BUY 2 GET 1'))
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 2.0),
-                                    child: Text(
-                                      cartProducts[index]['offer_type'] ==
-                                              'BUY 2 GET 1'
-                                          ? 'Special Offer: ${cartProducts[index]['offer_type']}'
-                                          : 'Special Offer: ${cartProducts[index]['offer_type']} - Get ${calculateOfferQuantity(cartProducts[index]['offer_type'], cartProducts[index]['quantity'])} items',
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (stock > quantity) {
+                                      incrementquantity(
+                                          cartProducts[index]['id'],
+                                          cartProducts[index]["quantity"] + 1);
+
+                                      setState(() {
+                                        fetchCartData();
+                                        calculateTotalPrice();
+                                        _initData();
+                                      });
+                                    } else {
+                                      print("out of stockkk");
+                                    }
+                                  },
+                                  icon: Icon(Icons.add),
+                                  iconSize: 18,
+                                ),
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8, top: 15),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print(
-                                      "iddddddddddddddddddddddddddddddddd${cartProducts[index]['id']}");
-                                  deleteCartProduct(cartProducts[index]['id']);
-                                  removeProduct(index);
-
-                                  setState(() {
-                                    fetchCartData();
-                                    calculateTotalPrice();
-                                  });
-                                },
-                                child: ImageIcon(
-                                  AssetImage('lib/assets/close.png'),
-                                  size: 24,
-                                  color: Color.fromARGB(255, 0, 0, 0),
+                          if (selectedOption == 'Option 1' &&
+                              (cartProducts[index]['offer_type'] ==
+                                      'BUY 1 GET 1' ||
+                                  cartProducts[index]['offer_type'] ==
+                                      'BUY 2 GET 1'))
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Text(
+                                cartProducts[index]['offer_type'] ==
+                                        'BUY 2 GET 1'
+                                    ? 'Special Offer: ${cartProducts[index]['offer_type']}'
+                                    : 'Special Offer: ${cartProducts[index]['offer_type']} - Get ${calculateOfferQuantity(cartProducts[index]['offer_type'], cartProducts[index]['quantity'])} items',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.red,
                                 ),
                               ),
-                            ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8, top: 15),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            print(
+                                "iddddddddddddddddddddddddddddddddd${cartProducts[index]['id']}");
+                            deleteCartProduct(cartProducts[index]['id']);
+                            removeProduct(index);
+
+                            setState(() {
+                              fetchCartData();
+                              calculateTotalPrice();
+                            });
+                          },
+                          child: ImageIcon(
+                            AssetImage('lib/assets/close.png'),
+                            size: 24,
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
                       ],
                     ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
-          ),
+          );
+        },
+      ),
+),
+
 
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -1116,7 +1116,7 @@ class _CartState extends State<Cart> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => order(total: selectedOption)));
+                        builder: (context) => order(total: total)));
               },
               child: Container(
                 height: 50,

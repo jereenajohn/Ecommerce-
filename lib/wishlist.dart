@@ -23,15 +23,15 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   String? userId;
   var wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/wishlist/";
+      "http://51.20.129.52/wishlist/";
   final String productsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/";
+      "http://51.20.129.52/products/";
 
   final String deletewishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/wishlist-delete/";
+      "http://51.20.129.52/wishlist-delete/";
 
   final String addtocarturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/cart/";
+      "http://51.20.129.52/cart/";
   List<Map<String, dynamic>> products = [];
   List<dynamic> productIds = [];
   List<dynamic> WishlistIds = [];
@@ -111,7 +111,7 @@ class _WishlistState extends State<Wishlist> {
 
           if (productIds.contains(idd)) {
             String imageUrl =
-                "http://monthly-r-atlas-fisheries.trycloudflare.com/${productData['image']}";
+                "${productData['image']}";
             int? wishlistId = productWishlistMap[idd];
 
             filteredProducts.add({
@@ -129,6 +129,7 @@ class _WishlistState extends State<Wishlist> {
 
         setState(() {
           products = filteredProducts;
+          print("$products");
         });
       } else {
         throw Exception('Failed to load wishlist products');
@@ -136,8 +137,7 @@ class _WishlistState extends State<Wishlist> {
     } catch (error) {}
   }
 
-  final imageurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/product/";
+  final imageurl ="http://51.20.129.52/product/";
 
   List<Map<String, dynamic>> images = [];
   String? selectedColor;
@@ -168,11 +168,11 @@ Future<void> sizecolor(var slug) async {
       List<Map<String, dynamic>> productsList = [];
 
       for (var image in imageData) {
-        String imageUrl1 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image1']}";
-        String imageUrl2 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image2']}";
-        String imageUrl3 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image3']}";
-        String imageUrl4 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image4']}";
-        String imageUrl5 = "http://monthly-r-atlas-fisheries.trycloudflare.com/${image['image5']}";
+        String imageUrl1 = "http://51.20.129.52/${image['image1']}";
+        String imageUrl2 = "http://51.20.129.52/${image['image2']}";
+        String imageUrl3 = "http://51.20.129.52/${image['image3']}";
+        String imageUrl4 = "http://51.20.129.52/${image['image4']}";
+        String imageUrl5 = "http://51.20.129.52/${image['image5']}";
 
         List<Map<String, dynamic>> sizes = [];
 

@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
+import 'package:bepocart/pricefilter.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -29,12 +31,15 @@ class _lowtohighpageState extends State<lowtohighpage> {
 
   List<Map<String, dynamic>> hightolowresult = [];
    final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/products/search/?q=";
+      "http://51.20.129.52/products/search/?q=";
    bool _isSearching = false;
     int _index = 0;
       int _selectedIndex = 0;
       var tokenn;
 
+  RangeValues _priceFilter = RangeValues(20.0, 80.0);
+    var start;
+  var end;
 
   @override
   void initState() {
@@ -49,8 +54,8 @@ class _lowtohighpageState extends State<lowtohighpage> {
     // Use userId after getting the value
   }
 
-  final String hightolow = "http://monthly-r-atlas-fisheries.trycloudflare.com/low-products/";
-  final String wishlisturl = "http://monthly-r-atlas-fisheries.trycloudflare.com/whishlist/";
+  final String hightolow = "http://51.20.129.52/low-products/";
+  final String wishlisturl = "http://51.20.129.52/whishlist/";
 
   Future<void> HightoLow(int subcategoryId) async {
     final token = await gettokenFromPrefs();
@@ -84,6 +89,66 @@ class _lowtohighpageState extends State<lowtohighpage> {
         });
       } else {
        
+      }
+    } catch (error) {
+    }
+  }
+final String pricefilter =
+      "http://51.20.129.52/filtered-products/";
+  List<Map<String, dynamic>> pricefilterresult = [];
+  Future<void> pricefilterr() async {
+  
+    try {
+      final token = await gettokenFromPrefs();
+
+      final url = Uri.parse('$pricefilter${widget.SubcatId}/');
+      final headers = {
+        'Authorization': '$token',
+        'Content-Type': 'application/json',
+      };
+      final body = jsonEncode({'min_price': start, 'max_price': end});
+
+    
+
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+
+
+      if (response.statusCode == 200) {
+        final filter = jsonDecode(response.body);
+        final List<dynamic> pfill = filter['data'];
+
+        List<Map<String, dynamic>> offersList = [];
+
+        for (var pfilter in pfill) {
+          String imageUrl =
+              "${pfilter['image']}";
+          offersList.add({
+            'id': pfilter['id'],
+            'name': pfilter['name'],
+            'salePrice': pfilter['salePrice'],
+            'image': imageUrl,
+          });
+        }
+
+        setState(() {
+          pricefilterresult = offersList;
+        });
+
+     
+
+        // Assuming you have a context variable available
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                pricefilterpage(filterresult: pricefilterresult),
+          ),
+        );
+      } else {
       }
     } catch (error) {
     }
@@ -315,36 +380,121 @@ class _lowtohighpageState extends State<lowtohighpage> {
                 ),
               ),
               SizedBox(width: 20),
-              Container(
-                width: 100,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.0,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) {
+                          return Container(
+                            padding: EdgeInsets.all(16.0),
+                            height: 170,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20.0),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Price Filter',
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                RangeSlider(
+                                  values: _priceFilter,
+                                  min: 0,
+                                  max: 5000,
+                                  divisions: 5000,
+                                  labels: RangeLabels(
+                                    '\$${_priceFilter.start.toStringAsFixed(0)}',
+                                    '\$${_priceFilter.end.toStringAsFixed(0)}',
+                                  ),
+                                  activeColor: Colors.black,
+                                  inactiveColor: Colors.black38,
+                                  onChanged: (RangeValues values) {
+                                    setState(() {
+                                      _priceFilter = values;
+                                      start =
+                                          _priceFilter.start.toStringAsFixed(0);
+                                      end = _priceFilter.end.toStringAsFixed(0);
+                                    });
+                                  },
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                      child: TextButton(
+                                        onPressed: () async {
+                                          pricefilterr();
+                                        },
+                                        child: Text(
+                                          "Apply",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                      color:
+                          Colors.black, // Specify the color of the border here
+                      width: 1.0, // Specify the width of the border here
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        spreadRadius: 2,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      spreadRadius: 2,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Filter"),
-                    SizedBox(width: 5),
-                    Image.asset(
-                      "lib/assets/filter.png",
-                      width: 24,
-                      height: 24,
-                    ),
-                  ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Center the text horizontally
+                    children: [
+                      Text("Filter"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset(
+                        "lib/assets/filter.png",
+                        width: 24,
+                        height: 24,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

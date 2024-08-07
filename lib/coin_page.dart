@@ -22,7 +22,7 @@ class _coinState extends State<coin> {
 
 
   final String orders =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/coin/";
+      "http://51.20.129.52/coin/";
 
         Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

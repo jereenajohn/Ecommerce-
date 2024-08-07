@@ -13,7 +13,7 @@ class Sign_Up extends StatefulWidget {
 
 class _Sign_UpState extends State<Sign_Up> {
   var url =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/register/";
+      "http://51.20.129.52/register/";
   bool _obscureText = true;
 
   var userId;

@@ -100,9 +100,9 @@ var username="";
 var email="";
 var phone="";
 var viewprofileurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/profile-view/";
+      "http://51.20.129.52/profile-view/";
       var viewimage =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/profile-image/";
+      "http://51.20.129.52/profile-image/";
   Future<void> getprofiledata() async {
     try {
       final token = await gettokenFromPrefs();

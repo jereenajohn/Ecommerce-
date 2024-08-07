@@ -32,22 +32,22 @@ class _OfferProductsState extends State<OfferProducts> {
 
   TextEditingController searchitem = TextEditingController();
   final String searchproducturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/search-products/?q=";
+      "http://51.20.129.52/search-products/?q=";
   bool _isSearching = false;
   int _index = 0;
   int _selectedIndex = 0;
   List<bool> isFavorite = [];
 
   final String offerproductsurl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/offer-banner/";
+      "http://51.20.129.52/offer-banner/";
 
   final String wishlisturl =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/add-wishlist/";
+      "http://51.20.129.52/add-wishlist/";
 
   final String lowtohigh =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/low-products/";
+      "http://51.20.129.52/low-products/";
   final String hightolow =
-      "http://monthly-r-atlas-fisheries.trycloudflare.com/high-products/";
+      "http://51.20.129.52/high-products/";
   var tokenn;
 
   Future<String?> getUserIdFromPrefs() async {
