@@ -35,7 +35,7 @@ class _Sign_UpState extends State<Sign_Up> {
         builder: (BuildContext scaffoldContext) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: 130),
+              padding: const EdgeInsets.only(top: 100),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -52,128 +52,181 @@ class _Sign_UpState extends State<Sign_Up> {
                   Container(
                     height: 4,
                     width: 160,
-                    color: Colors.red,
+                    color:  Color.fromARGB(255, 37, 197, 28),
                     margin: EdgeInsets.symmetric(horizontal: 20),
                   ),
                   SizedBox(height: 10),
+                 Center(
+                   child: Padding(
+                     padding: const EdgeInsets.only(left: 20, right: 20),
+                     child: Container(
+                       width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+                       child: TextField(
+                         controller: firstname,
+                         decoration: InputDecoration(
+                           labelText: 'First Name',
+                           hintText: 'Enter First Name',
+                            labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                            hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+
+                  
+
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: firstname,
-                      decoration: InputDecoration(
-                        labelText: 'First Name',
-                        hintText: 'Enter First Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                       width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+                      child: TextField(
+                        
+                        controller: lastname,
+                        decoration: InputDecoration(
+                          labelText: 'Last Name',
+                          hintText: 'Enter Last Name',
+                           labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                          hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
                         ),
                       ),
                     ),
                   ),
-                   SizedBox(height: 10),
+                                 
 
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: lastname,
-                      decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        hintText: 'Enter Last Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+
+                      child: TextField(
+                        controller: phone,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: 'Phone',
+                          hintText: 'Enter Phone Number',
+                           labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                           hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
                         ),
                       ),
                     ),
                   ),
-                                     SizedBox(height: 10),
+                                
 
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: phone,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        labelText: 'Phone',
-                        hintText: 'Enter Phone Number',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                                             width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+
+                      child: TextField(
+                        controller: email,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          hintText: 'Enter Email Address',
+                          
+                          labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                          hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
                         ),
                       ),
                     ),
                   ),
-                                     SizedBox(height: 10),
+                                  
 
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: email,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter Email Address',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                                             width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+
+                      child: TextField(
+                        controller: place,
+                        decoration: InputDecoration(
+                          labelText: 'Place',
+                          hintText: 'Enter Place',
+                           labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                           hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
                         ),
                       ),
                     ),
                   ),
-                                     SizedBox(height: 10),
+                                    
+
+                 Padding(
+  padding: const EdgeInsets.only(left: 20, right: 20),
+  child: Container(
+    width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+    child: TextField(
+      controller: zipcode,
+      decoration: InputDecoration(
+        labelText: 'Zipcode',
+        hintText: 'Enter Zipcode',
+         labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+      ),
+    ),
+  ),
+),
+
+                                 
 
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: place,
-                      decoration: InputDecoration(
-                        labelText: 'Place',
-                        hintText: 'Enter Place',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                                     SizedBox(height: 10),
+                    child: Container(
+                                             width: MediaQuery.of(context).size.width * 0.8, // 80% of screen width
 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: zipcode,
-                      decoration: InputDecoration(
-                        labelText: 'Zipcode',
-                        hintText: 'Enter Zipcode',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                                     SizedBox(height: 10),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: TextField(
-                      controller: password,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Enter Password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(_obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
+                      child: TextField(
+                        controller: password,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          hintText: 'Enter Password',
+                           labelStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                           hintStyle: TextStyle(
+          fontSize: 12, // Set the desired font size here
+        ),
+                         
+                          suffixIcon: IconButton(
+                            icon: Icon(_obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 30,
                   ),
                   SizedBox(
                     width: 250,
@@ -193,7 +246,7 @@ class _Sign_UpState extends State<Sign_Up> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red),
+                            MaterialStateProperty.all<Color>( Color.fromARGB(255, 37, 197, 28)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -214,6 +267,32 @@ class _Sign_UpState extends State<Sign_Up> {
                       ),
                     ),
                   ),
+                   SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Or",
+                style: TextStyle(color: Colors.grey),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "If You Already Have An Account? ",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login_Page()));
+                    },
+                    child: Text(
+                      "Sign In",
+                      style: TextStyle(color: Color.fromARGB(255, 49, 107, 223)),
+                    ),
+                  ),
+                ],
+              )
                 ],
               ),
             ),

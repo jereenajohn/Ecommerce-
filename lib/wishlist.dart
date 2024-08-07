@@ -255,196 +255,177 @@ Future<void> sizecolor(var slug) async {
   }
 }
 
-  void showBottomSheet(
-    int id,
-    var slug,
-    var name,
-    var price,
-    BuildContext context,
-    List<String> colors,
-    List<Map<String, dynamic>> images,
-    String? selectedColor,
-    List<Map<String, dynamic>> sizes,
-    String? selectedSize,
-    int? selectedStock,
-    Function(String color, List<Map<String, dynamic>> sizeList, String? size,
-            int? stock)
-        onColorSizeChanged,
-  ) {
-    showModalBottomSheet(
-     
-      context: context,
-      isScrollControlled: true, // Allow the bottom sheet to be scrollable
-      builder: (BuildContext context) {
-        return Container(
-          
-          color: Colors.white,
-          padding: const EdgeInsets.all(8.0),
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setModalState) {
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (colors.isNotEmpty)
-
-                      Container(
-                        color: Colors.white,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Wrap(
-                                spacing: 8.0,
-                                children: colors.map<Widget>((color) {
-                                  return OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      foregroundColor: selectedColor == color
-                                          ? Color.fromARGB(255, 1, 80, 12)
-                                          : Colors.black,
-                                      side: BorderSide(
-                                        color: selectedColor == color
-                                            ? Color.fromARGB(255, 28, 146, 1)
-                                            : Colors.black,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      setModalState(() {
-                                        selectedColor = color;
-                                        sizes = images.firstWhere((image) =>
-                                                image['color'] ==
-                                                selectedColor)['sizes'] ??
-                                            [];
-                                        selectedSize = sizes.isNotEmpty
-                                            ? sizes[0]['size']
-                                            : null;
-                                        selectedStock = sizes.isNotEmpty
-                                        
-                                            ? sizes[0]['stock']
-                                            : null;
-                                        onColorSizeChanged(selectedColor!,
-                                            sizes, selectedSize, selectedStock);
-                                      });
-                                      print("stockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
-
-                                    },
-                                    child: Text(color.toUpperCase()),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    if (selectedColor != null && sizes.isNotEmpty)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            color: Colors.white,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Wrap(
-                                spacing: 8.0,
-                                children: sizes.map<Widget>((sizeData) {
-                                  return Container(
-                                    width: 40.0,
-                                    height: 40.0,
-                                    child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        padding: EdgeInsets.zero,
-                                        foregroundColor:
-                                            selectedSize == sizeData['size']
-                                                ? Color.fromARGB(255, 1, 80, 12)
-                                                : Colors.black,
-                                        side: BorderSide(
-                                          color: selectedSize ==
-                                                  sizeData['size']
-                                              ? Color.fromARGB(255, 28, 146, 1)
-                                              : Colors.black,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                        ),
-                                      ),
-                                      onPressed: sizeData['stock'] > 0
-                                          ? () {
-                                              setModalState(() {
-                                                selectedSize = sizeData['size'];
-                                                selectedStock =
-                                                    sizeData['stock'];
-
-                                                onColorSizeChanged(
-                                                    selectedColor!,
-                                                    sizes,
-                                                    selectedSize,
-                                                    selectedStock);
-                                              });
-                                            }
-                                          : null,
-                                      child: Center(
-                                        child: Text(
-                                          sizeData['size'].toUpperCase(),
-                                          style: TextStyle(
-                                            decoration: sizeData['stock'] == 0
-                                                ? TextDecoration.lineThrough
-                                                : TextDecoration.none,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: (selectedStock ?? 0) > 0
-                                  ? () {
-                                      addProductToCart(id, name, price);
-                                      Navigator.pop(context);
-                                      print("stockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
-                                    }
-                                  : null,
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor: (selectedStock ?? 0) > 0
-                                    ? Colors.black
-                                    : Colors.grey,
+void showBottomSheet(
+  int id,
+  var slug,
+  var name,
+  var price,
+  BuildContext context,
+  List<String> colors,
+  List<Map<String, dynamic>> images,
+  String? selectedColor,
+  List<Map<String, dynamic>> sizes,
+  String? selectedSize,
+  int? selectedStock,
+  Function(String color, List<Map<String, dynamic>> sizeList, String? size, int? stock) onColorSizeChanged,
+) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Allow the bottom sheet to be scrollable
+    builder: (BuildContext context) {
+      return Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(8.0),
+        child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (colors.isNotEmpty)
+                    Container(
+                      color: Colors.white,
+                      height: 40.0, // Set a fixed height or adjust as needed
+                      alignment: Alignment.centerLeft, // Align contents to the left
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: colors.map<Widget>((color) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: selectedColor == color
+                                    ? Color.fromARGB(255, 1, 80, 12)
+                                    : Colors.black,
+                                side: BorderSide(
+                                  color: selectedColor == color
+                                      ? Color.fromARGB(255, 28, 146, 1)
+                                      : Colors.black,
+                                ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(4.0),
                                 ),
                               ),
-                              child: Text("ADD TO CART"),
+                              onPressed: () {
+                                setModalState(() {
+                                  selectedColor = color;
+                                  sizes = images.firstWhere((image) =>
+                                          image['color'] == selectedColor)['sizes'] ??
+                                      [];
+                                  selectedSize = sizes.isNotEmpty
+                                      ? sizes[0]['size']
+                                      : null;
+                                  selectedStock = sizes.isNotEmpty
+                                      ? sizes[0]['stock']
+                                      : null;
+                                  onColorSizeChanged(selectedColor!,
+                                      sizes, selectedSize, selectedStock);
+                                });
+                                print("stockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
+                              },
+                              child: Text(color.toUpperCase()),
                             ),
-                          ),
-                        ],
+                          );
+                        }).toList(),
                       ),
                     ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
+                    SizedBox(height: 10,),
+                  if (selectedColor != null && sizes.isNotEmpty)
+                    Container(
+                      color: Colors.white,
+                      height: 47.0, // Set a fixed height or adjust as needed
+                      alignment: Alignment.centerLeft, // Align contents to the left
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: sizes.map<Widget>((sizeData) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Container(
+                              width: 47.0,
+                              height: 47.0,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  foregroundColor: selectedSize == sizeData['size']
+                                      ? Color.fromARGB(255, 1, 80, 12)
+                                      : Colors.black,
+                                  side: BorderSide(
+                                    color: selectedSize == sizeData['size']
+                                        ? Color.fromARGB(255, 28, 146, 1)
+                                        : Colors.black,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                ),
+                                onPressed: sizeData['stock'] > 0
+                                    ? () {
+                                        setModalState(() {
+                                          selectedSize = sizeData['size'];
+                                          selectedStock = sizeData['stock'];
+
+                                          onColorSizeChanged(
+                                              selectedColor!,
+                                              sizes,
+                                              selectedSize,
+                                              selectedStock);
+                                        });
+                                      }
+                                    : null,
+                                child: Center(
+                                  child: Text(
+                                    sizeData['size'].toUpperCase(),
+                                    style: TextStyle(
+                                      decoration: sizeData['stock'] == 0
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: (selectedStock ?? 0) > 0
+                                ? () {
+                                    addProductToCart(id, name, price);
+                                    Navigator.pop(context);
+                                    print("stockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk$selectedStock");
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: (selectedStock ?? 0) > 0
+                                  ? Colors.black
+                                  : Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text("ADD TO CART"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    },
+  );
+}
 
   Future<String?> gettokenFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

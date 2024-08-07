@@ -137,7 +137,7 @@ class _hightolowpageState extends State<hightolowpage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl = "http://51.20.129.52/${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],

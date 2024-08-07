@@ -75,6 +75,7 @@ class _MyOrderState extends State<MyOrder> {
           'Authorization': ' $token',
         },
       );
+      print("OOOOOOOOOOOORRRRRRRRRRDDDDDDDDERRRRRRRRRRRRRRRRRRRRRRRRR${response.body}");
 
       if (response.statusCode == 200) {
         final parsed = jsonDecode(response.body);
@@ -292,13 +293,16 @@ class _MyOrderState extends State<MyOrder> {
                           _showRatingDialog(context, product['productid']);
                       },
                       child: Container(
-                        height: 110,
+                        height: 70,
                         margin: EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          leading: Image.network(product['image']),
+
+                          leading: Image.network(
+                           
+                            product['image']),
                           title: Text(
                             product['name'],
                             style: TextStyle(
@@ -324,7 +328,7 @@ class _MyOrderState extends State<MyOrder> {
                                 ],
                               ),
                               Row(
-                                children: [Text(' ${product['created_at']}')],
+                                children: [Text(' ${product['created_at']}',style: TextStyle(fontSize: 10),)],
                               )
                             ],
                           ),

@@ -100,10 +100,12 @@ class _SearchState extends State<Search> {
             'salePrice': productData['salePrice'],
             'image': imageUrl,
             'category_id': productData['mainCategory'],
+            'slug': productData['slug']
           });
         }
         setState(() {
           searchResults = searchList;
+          print('searchResultssearchResults$searchResults');
         
         });
       } else {

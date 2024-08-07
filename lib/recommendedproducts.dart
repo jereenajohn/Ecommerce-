@@ -250,6 +250,7 @@ Future<void> _initData() async {
           'name': productData['name'],
           'salePrice': productData['salePrice'],
           'image': imageUrl,
+          'slug':productData['slug']
         });
       }
 

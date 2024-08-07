@@ -1041,7 +1041,7 @@ class _orderState extends State<order> {
 
         for (var item in data) {
           String imageUrl =
-              "http://51.20.129.52/${item['image']}";
+              "${item['image']}";
 
           // Check if item['price'] is null and assign zero if so
           var price = item['price'] != null ? item['price'] : 0;
@@ -1836,6 +1836,7 @@ class _orderState extends State<order> {
                       maxLines: 1,
                     ),
                     SizedBox(height: 5.0),
+                      if (product['quantity'] != null)
                     Text('Quantity: ${product['quantity']}'),
                     SizedBox(height: 5.0),
                     if (product['color'] != null)
@@ -1848,6 +1849,8 @@ class _orderState extends State<order> {
                           SizedBox(
                             width: 10,
                           ),
+                                              if (product['size'] != null)
+
                           Text('${product['size']}'),
                         ],
                       ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bepocart/cart.dart';
 import 'package:bepocart/homepage.dart';
 import 'package:bepocart/loginpage.dart';
+import 'package:bepocart/productbigview.dart';
 import 'package:bepocart/search.dart';
 import 'package:bepocart/userprofilepage.dart';
 import 'package:bepocart/wishlist.dart';
@@ -244,138 +245,180 @@ class _pricefilterpageState extends State<pricefilterpage> {
             return Row(
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Image.network(
-                              widget.filterresult[productIndex1]['image'],
-                              width: double.infinity,
-                              height: 160,
-                              // fit: BoxFit.cover,
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: GestureDetector(
-                                onTap: () {
-                                  toggleFavorite(productIndex1);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: buildFavoriteIcon(productIndex1),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  child: GestureDetector(
+                    onTap: () {
+
+                       Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Product_big_View(
+                                                        product_id:  widget.filterresult[
+                                                                productIndex1]
+                                                            ['id'],
+                                                        Category_id:  widget.filterresult[
+                                                                productIndex1]
+                                                            ['category_id'],
+                                                        slug:  widget.filterresult[
+                                                                productIndex1]
+                                                            ['slug']),
+                                              ),
+                                            );
+                      
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        children: [
+                          Stack(
                             children: [
-                              Text(
-                                widget.filterresult[productIndex1]['name'] ??
-                                    '',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis,
-                                    fontSize: 13
-                                    ),
+                              Image.network(
+                                widget.filterresult[productIndex1]['image'],
+                                width: double.infinity,
+                                height: 160,
+                                // fit: BoxFit.cover,
                               ),
-                             
-                              Text(
-                                '\$${widget.filterresult[productIndex1]['salePrice'] ?? ''}',
-                                style: TextStyle(color: Colors.green),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    toggleFavorite(productIndex1);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: buildFavoriteIcon(productIndex1),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.filterresult[productIndex1]['name'] ??
+                                      '',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 13
+                                      ),
+                                ),
+                               
+                                Text(
+                                  '\$${widget.filterresult[productIndex1]['salePrice'] ?? ''}',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(width: 8.0),
                 Expanded(
                   child: productIndex2 < widget.filterresult.length
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  Image.network(
-                                    widget.filterresult[productIndex2]
-                                        ['image'],
-                                    width: double.infinity,
-                                    height: 160,
-                                    // fit: BoxFit.cover,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        toggleFavorite(productIndex2);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: buildFavoriteIcon(productIndex2),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                      ? GestureDetector(
+                        onTap: () {
+                           Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Product_big_View(
+                                                        product_id:  widget.filterresult[
+                                                                productIndex2]
+                                                            ['id'],
+                                                        Category_id:  widget.filterresult[
+                                                                productIndex2]
+                                                            ['category_id'],
+                                                        slug:  widget.filterresult[
+                                                                productIndex2]
+                                                            ['slug']),
+                                              ),
+                                            );
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Column(
+                              children: [
+                                Stack(
                                   children: [
-                                    Text(
+                                    Image.network(
                                       widget.filterresult[productIndex2]
-                                              ['name'] ??
-                                          '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          overflow: TextOverflow.ellipsis,
-                                          fontSize: 13
-                                          ),
+                                          ['image'],
+                                      width: double.infinity,
+                                      height: 160,
+                                      // fit: BoxFit.cover,
                                     ),
-                                    
-                                    Text(
-                                      '\$${widget.filterresult[productIndex2]['salePrice'] ?? ''}',
-                                      style: TextStyle(color: Colors.green),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          toggleFavorite(productIndex2);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: buildFavoriteIcon(productIndex2),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.filterresult[productIndex2]
+                                                ['name'] ??
+                                            '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            overflow: TextOverflow.ellipsis,
+                                            fontSize: 13
+                                            ),
+                                      ),
+                                      
+                                      Text(
+                                        '\$${widget.filterresult[productIndex2]['salePrice'] ?? ''}',
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )
+                      )
                       : Container(),
                 ),
               ],

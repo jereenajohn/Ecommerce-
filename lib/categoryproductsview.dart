@@ -76,6 +76,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
             'salePrice': productData['salePrice'],
             'image': imageUrl,
             'category_id': productData['mainCategory'],
+            
           });
         }
         setState(() {
@@ -89,6 +90,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
     try {
       final response = await http.get(
           Uri.parse('$productsurl${widget.categoryId.toString()}/products/'));
+          print('$productsurl${widget.categoryId.toString()}/products/');
 
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
@@ -98,7 +100,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
         for (var productData in productsData) {
           // Fetch image URL
           // ignore: prefer_interpolation_to_compose_strings
-          String imageUrl = "http://51.20.129.52/${productData['image']}";
+          String imageUrl = "${productData['image']}";
           // Convert image to base64
           productsList.add({
             'id': productData['id'],
@@ -107,6 +109,7 @@ class _CategoryProductViewState extends State<CategoryProductView> {
             'price': productData['price'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
           favoritesList.add(false);
         }

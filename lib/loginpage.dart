@@ -33,13 +33,20 @@ class _Login_PageState extends State<Login_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 252, 253, 251),
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 130),
+          padding: const EdgeInsets.only(top: 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                height: 150,
+                width: 150,
+                "lib/assets/cycling.gif"
+              ),
+
               Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Text(
@@ -53,12 +60,12 @@ class _Login_PageState extends State<Login_Page> {
               Container(
                 height: 4,
                 width: 160,
-                color: Colors.red,
+                color: Color.fromARGB(255, 37, 197, 28),
                 margin: EdgeInsets.symmetric(horizontal: 20),
               ),
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.only(left: 30,right: 30,bottom: 10),
                 child: TextField(
                   controller: email,
                   decoration: InputDecoration(
@@ -71,7 +78,7 @@ class _Login_PageState extends State<Login_Page> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.only(right: 30,left: 30),
                 child: TextField(
                   controller: password,
                   obscureText: _obscureText,
@@ -108,7 +115,7 @@ class _Login_PageState extends State<Login_Page> {
                     child: Text(
                       'Forgot Password?',
                       style: TextStyle(
-                          color: Colors.red, fontWeight: FontWeight.bold),
+                          color: const Color.fromARGB(255, 22, 22, 22), fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -118,13 +125,14 @@ class _Login_PageState extends State<Login_Page> {
               ),
               SizedBox(
                 width: 300,
+                height: 60,
                 child: ElevatedButton(
                   onPressed: () {
                     UserLogin();
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.red),
+                        MaterialStateProperty.all<Color>(Color.fromARGB(255, 37, 197, 28),),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -161,7 +169,7 @@ class _Login_PageState extends State<Login_Page> {
                     },
                     child: Text(
                       "Sign up",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Color.fromARGB(255, 49, 107, 223)),
                     ),
                   ),
                 ],

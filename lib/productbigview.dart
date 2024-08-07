@@ -181,6 +181,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
             'name': productData['name'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -753,8 +754,8 @@ class _Product_big_ViewState extends State<Product_big_View> {
                       child: Row(
                         children: sizes.map<Widget>((sizeData) {
                           return Container(
-                            width: 40.0,
-                            height: 40.0,
+                            width: 47.0,
+                            height: 47.0,
                             margin: const EdgeInsets.symmetric(
                                 horizontal:
                                     4.0), // Add horizontal margin for spacing
@@ -1294,13 +1295,15 @@ class _Product_big_ViewState extends State<Product_big_View> {
                   ),
                 ),
 
+                
+
               if (recenlyviewd.isNotEmpty)
                 Container(
                   color: Colors.white,
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 10, bottom: 10),
+                        padding: const EdgeInsets.only(left: 10, bottom: 10,top: 10),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1315,7 +1318,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Container(
                           height:
-                              220, // Adjusted height to accommodate the images
+                              230, // Adjusted height to accommodate the images
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5, top: 5),
                             child: SizedBox(
@@ -1401,16 +1404,21 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                         ],
                                       ),
                                     ),
+                                  
                                   );
                                 },
                               ),
                             ),
                           ),
                         ),
+                        
                       ),
                     ],
                   ),
                 ),
+
+                SizedBox(height: 15,),
+
               Column(
                 children: [
                   if (recommendedproducts.isNotEmpty)
@@ -1493,7 +1501,7 @@ class _Product_big_ViewState extends State<Product_big_View> {
                                                 product_id: product['id'],
                                                 Category_id:
                                                     product['mainCategory'],
-                                                slug: product[index]['slug'],
+                                                slug: product['slug'],
                                               ),
                                             ),
                                           );

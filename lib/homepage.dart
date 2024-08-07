@@ -279,16 +279,24 @@ class _HomePageState extends State<HomePage> {
             'image': imageUrl,
             'slug': productData['slug'],
             'mainCategory': productData['mainCategory'],
+            'category':productData['category']
           });
         }
 
         setState(() {
           products = productsList;
 
-          // Filter the products that are present in offerProducts
-          productsInOffer = products.where((product) {
+           if(offerProducts.isNotEmpty){
+             productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
+          }
+          else{
+             productsInOffer = products.where((product) {
+            return offerCategories.contains(product['category']);
+          }).toList();
+print("productsInOfferproductsInOffer$productsInOffer");
+          }
 
         });
       } else {
@@ -299,6 +307,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<int> offerProducts = [];
+     List<int> offerCategories = [];
 var bogo;
   bool is_active = false;
   Future<void> fetchbogooffers() async {
@@ -309,7 +318,7 @@ var bogo;
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
-        List<int> offerCategories = [];
+     
 
         for (var productData in parsed) {
           if (productData['offer_active'] == true) {
@@ -333,6 +342,7 @@ var bogo;
               offerCategories
                   .addAll(List<int>.from(productData['offer_category']));
             }
+            print("offerCategoriesssssssssssssssssssssssssss$offerCategories");
           }
         }
 
@@ -391,12 +401,17 @@ var bogo;
       }
 
       setState(() {
-        bogoproducts = productsList;
-
-        // Filter the products that are present in offerProducts
-        productsIndiscountOffer = bogoproducts.where((product) {
-          return offerProductss.contains(product['id']);
-        }).toList();
+         if(offerProductss.isNotEmpty){
+             productsIndiscountOffer = products.where((product) {
+            return offerProductss.contains(product['id']);
+          }).toList();
+          }
+          else{
+             productsIndiscountOffer = products.where((product) {
+            return offerCategoriess.contains(product['category']);
+          }).toList();
+print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX$productsIndiscountOffer");
+          }
 
       });
     } else {
@@ -407,6 +422,7 @@ var bogo;
 }
 
 List<int> offerProductss = [];
+ List<int> offerCategoriess = [];
 
 Future<void> fetchbogodiscountoffers() async {
   try {
@@ -416,7 +432,7 @@ Future<void> fetchbogodiscountoffers() async {
       final parsed = jsonDecode(response.body);
 
       List<Map<String, dynamic>> productsList = [];
-      List<int> offerCategories = [];
+     
 
       for (var productData in parsed) {
         if (productData['offer_active'] == true) {
@@ -434,9 +450,10 @@ Future<void> fetchbogodiscountoffers() async {
               productData['discount_approved_products'].isNotEmpty) {
             offerProductss.addAll(
                 List<int>.from(productData['discount_approved_products']));
-          } else if (productData.containsKey('offer_category')) {
-            offerCategories.addAll(List<int>.from(productData['offer_category']));
+          } else if (productData.containsKey('discount_approved_category')) {
+            offerCategoriess.addAll(List<int>.from(productData['discount_approved_category']));
           }
+          print("dissssssssssssssCategoriessssssssss$offerCategoriess");
         }
       }
 
@@ -523,6 +540,7 @@ Future<void> fetchbogodiscountoffers() async {
             'salePrice': productData['salePrice'],
             'image': imageUrl,
             'category_id': productData['mainCategory'],
+            'slug':productData['slug']
           });
         }
         setState(() {
@@ -581,6 +599,7 @@ Future<void> fetchbogodiscountoffers() async {
             'name': productData['name'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -769,6 +788,7 @@ Future<void> fetchbogodiscountoffers() async {
             'name': productData['name'],
             'salePrice': productData['salePrice'],
             'image': imageUrl,
+            'slug':productData['slug']
           });
         }
 
@@ -955,6 +975,7 @@ Future<void> fetchbogodiscountoffers() async {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+             
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               // color: Color.fromARGB(255, 235, 232, 232),
               child: Row(
@@ -1016,7 +1037,7 @@ Future<void> fetchbogodiscountoffers() async {
                     banners.isEmpty
                         ? Center(child: CircularProgressIndicator())
                         : SizedBox(
-                            height: 240,
+                            height: 200,
                             child: Padding(
                               padding: const EdgeInsets.only(),
                               child: PageView.builder(
@@ -1040,6 +1061,8 @@ Future<void> fetchbogodiscountoffers() async {
                               ),
                             ),
                           ),
+                          SizedBox(height: 5,),
+
                     
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
@@ -1409,9 +1432,10 @@ Future<void> fetchbogodiscountoffers() async {
                                             builder: (context) =>
                                                 Product_big_View(
                                               product_id: products[index]['id'],
-                                              slug: products[index]['id'],
+                                              slug: products[index]['slug'],
                                               Category_id: products[index]
                                                   ['mainCategory'],
+                                             
                                             ),
                                           ),
                                         );
@@ -1657,128 +1681,128 @@ Future<void> fetchbogodiscountoffers() async {
                     SizedBox(
                       height: 10,
                     ),
-                    if (offers.isNotEmpty)
-                      Container(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, bottom: 10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "All Offers",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, bottom: 10),
-                              child: SizedBox(
-                                height: 240,
-                                child: Container(
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: offers.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        width: 220,
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 219, 217, 217)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.white,
-                                              blurRadius: 3,
-                                              spreadRadius: 2,
-                                              offset: Offset(0, 2),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, left: 10, right: 10),
-                                              child: Container(
-                                                height:
-                                                    140, // Adjusted height to accommodate the images
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(offers[
-                                                            index][
-                                                        'image']), // Using NetworkImage directly
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 4),
-                                            Center(
-                                              child: Text(
-                                                offers[index]['name'],
-                                                style: TextStyle(fontSize: 12),
-                                                // maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Center(
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              OfferProducts(
-                                                                  offerId: offers[
-                                                                          index]
-                                                                      ['id'])));
-                                                  // Add your onPressed function here
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.black,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "Collect Now",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    // if (offers.isNotEmpty)
+                    //   Container(
+                    //     child: Column(
+                    //       children: [
+                    //         Padding(
+                    //           padding:
+                    //               const EdgeInsets.only(left: 10, bottom: 10),
+                    //           child: Row(
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             children: [
+                    //               Text(
+                    //                 "All Offers",
+                    //                 style:
+                    //                     TextStyle(fontWeight: FontWeight.bold),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         Padding(
+                    //           padding: const EdgeInsets.only(
+                    //               left: 10, right: 10, bottom: 10),
+                    //           child: SizedBox(
+                    //             height: 240,
+                    //             child: Container(
+                    //               child: ListView.builder(
+                    //                 scrollDirection: Axis.horizontal,
+                    //                 itemCount: offers.length,
+                    //                 itemBuilder:
+                    //                     (BuildContext context, int index) {
+                    //                   return Container(
+                    //                     width: 220,
+                    //                     margin: EdgeInsets.symmetric(
+                    //                         horizontal: 5.0),
+                    //                     decoration: BoxDecoration(
+                    //                       borderRadius:
+                    //                           BorderRadius.circular(10),
+                    //                       border: Border.all(
+                    //                           color: Color.fromARGB(
+                    //                               255, 219, 217, 217)),
+                    //                       boxShadow: [
+                    //                         BoxShadow(
+                    //                           color: Colors.white,
+                    //                           blurRadius: 3,
+                    //                           spreadRadius: 2,
+                    //                           offset: Offset(0, 2),
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                     child: Column(
+                    //                       crossAxisAlignment:
+                    //                           CrossAxisAlignment.start,
+                    //                       children: [
+                    //                         Padding(
+                    //                           padding: const EdgeInsets.only(
+                    //                               top: 10, left: 10, right: 10),
+                    //                           child: Container(
+                    //                             height:
+                    //                                 140, // Adjusted height to accommodate the images
+                    //                             decoration: BoxDecoration(
+                    //                               image: DecorationImage(
+                    //                                 image: NetworkImage(offers[
+                    //                                         index][
+                    //                                     'image']), // Using NetworkImage directly
+                    //                                 fit: BoxFit.cover,
+                    //                               ),
+                    //                               borderRadius:
+                    //                                   BorderRadius.circular(10),
+                    //                             ),
+                    //                           ),
+                    //                         ),
+                    //                         SizedBox(height: 4),
+                    //                         Center(
+                    //                           child: Text(
+                    //                             offers[index]['name'],
+                    //                             style: TextStyle(fontSize: 12),
+                    //                             // maxLines: 2,
+                    //                             overflow: TextOverflow.ellipsis,
+                    //                           ),
+                    //                         ),
+                    //                         SizedBox(
+                    //                           height: 10,
+                    //                         ),
+                    //                         Center(
+                    //                           child: ElevatedButton(
+                    //                             onPressed: () {
+                    //                               Navigator.push(
+                    //                                   context,
+                    //                                   MaterialPageRoute(
+                    //                                       builder: (context) =>
+                    //                                           OfferProducts(
+                    //                                               offerId: offers[
+                    //                                                       index]
+                    //                                                   ['id'])));
+                    //                               // Add your onPressed function here
+                    //                             },
+                    //                             style: ElevatedButton.styleFrom(
+                    //                               backgroundColor: Colors.black,
+                    //                               shape: RoundedRectangleBorder(
+                    //                                 borderRadius:
+                    //                                     BorderRadius.circular(
+                    //                                         20),
+                    //                               ),
+                    //                             ),
+                    //                             child: Text(
+                    //                               "Collect Now",
+                    //                               style: TextStyle(
+                    //                                 color: Colors.white,
+                    //                               ),
+                    //                             ),
+                    //                           ),
+                    //                         )
+                    //                       ],
+                    //                     ),
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
                     Column(
                       children: [
                         if (bestsaleproducts.isNotEmpty)
@@ -2293,9 +2317,9 @@ Future<void> fetchbogodiscountoffers() async {
                           ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
                     Column(
                       children: [
                         if (recommendedproducts.isNotEmpty)
@@ -2466,7 +2490,7 @@ Future<void> fetchbogodiscountoffers() async {
                           GestureDetector(
                             onTap: () {},
                             child: Container(
-                                color: Color.fromARGB(255, 217, 219, 221),
+                                color: Color.fromARGB(255, 196, 220, 193),
                                 child: Column(
                                   children: [
                                     Row(
@@ -2544,8 +2568,7 @@ Future<void> fetchbogodiscountoffers() async {
                                                 height: 200,
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                    color: Color.fromARGB(
-                                                        255, 211, 211, 211),
+                                                    color: Color.fromARGB(255, 211, 211, 211),
                                                     width: 1.0,
                                                   ),
                                                   borderRadius:

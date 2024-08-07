@@ -39,24 +39,16 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   bool loading = true;
   RangeValues _priceFilter = RangeValues(20.0, 80.0);
 
- 
-
   TextEditingController searchitem = TextEditingController();
 
-  final String productsUrl =
-      "http://51.20.129.52/subcategory/";
-  final String wishlisturl =
-      "http://51.20.129.52/add-wishlist/";
+  final String productsUrl = "http://51.20.129.52/subcategory/";
+  final String wishlisturl = "http://51.20.129.52/add-wishlist/";
 
-  final String searchproducturl =
-      "http://51.20.129.52/search-products/?q=";
-  final String lowtohigh =
-      "http://51.20.129.52/low-products/";
-  final String hightolow =
-      "http://51.20.129.52/high-products/";
+  final String searchproducturl = "http://51.20.129.52/search-products/?q=";
+  final String lowtohigh = "http://51.20.129.52/low-products/";
+  final String hightolow = "http://51.20.129.52/high-products/";
 
-  final String pricefilter =
-      "http://51.20.129.52/filtered-products/";
+  final String pricefilter = "http://51.20.129.52/filtered-products/";
 
   List<Map<String, dynamic>> products = [];
   int _selectedIndex = 0;
@@ -83,7 +75,6 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   }
 
   Future<void> pricefilterr() async {
-  
     try {
       final token = await gettokenFromPrefs();
 
@@ -94,14 +85,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
       };
       final body = jsonEncode({'min_price': start, 'max_price': end});
 
-    
-
       final response = await http.post(
         url,
         headers: headers,
         body: body,
       );
-
 
       if (response.statusCode == 200) {
         final filter = jsonDecode(response.body);
@@ -110,21 +98,19 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         List<Map<String, dynamic>> offersList = [];
 
         for (var pfilter in pfill) {
-          String imageUrl =
-              "${pfilter['image']}";
+          String imageUrl = "${pfilter['image']}";
           offersList.add({
             'id': pfilter['id'],
             'name': pfilter['name'],
             'salePrice': pfilter['salePrice'],
             'image': imageUrl,
+            'slug':pfilter['slug']
           });
         }
 
         setState(() {
           pricefilterresult = offersList;
         });
-
-     
 
         // Assuming you have a context variable available
         Navigator.push(
@@ -134,10 +120,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                 pricefilterpage(filterresult: pricefilterresult),
           ),
         );
-      } else {
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   List<Map<String, dynamic>> pricefilterresult = [];
@@ -158,8 +142,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -172,15 +155,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         setState(() {
           lowtohighresult = searchList;
         });
-      } else {
-       
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<void> HightoLow(int subcategoryId) async {
-  
     final token = await gettokenFromPrefs();
     try {
       final response = await http.get(
@@ -196,8 +175,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -210,11 +188,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         setState(() {
           hightolowresult = searchList;
         });
-      } else {
-       
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   void logout() async {
@@ -236,7 +211,6 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
 
   Future<dynamic> subcategoryproducts() async {
     try {
-    
       final response = await http.get(Uri.parse('$productsUrl${widget.slug}/'));
       if (response.statusCode == 200) {
         final List<dynamic> productsData =
@@ -245,8 +219,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         List<bool> favoritesList = [];
 
         for (var productData in productsData) {
-          String imageUrl =
-              "http://51.20.129.52${productData['image']}";
+          String imageUrl = "${productData['image']}";
           productsList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -254,7 +227,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
             'salePrice': productData['salePrice'],
             'image': imageUrl,
             'category_id': productData['mainCategory'],
-            'slug':productData['slug']
+            'slug': productData['slug']
           });
           favoritesList.add(false);
         }
@@ -262,13 +235,11 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           products = productsList;
           isFavorite = favoritesList;
           loading = false;
-
         });
       } else {
         throw Exception('Failed to load products');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   void toggleFavorite(int index) {
@@ -289,8 +260,6 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
   }
 
   Future<void> addProductToWishlist(int productId) async {
-   
-
     try {
       final token = await gettokenFromPrefs();
 
@@ -305,7 +274,7 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
           'product': productId,
         }),
       );
-    
+
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -320,10 +289,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
             content: Text('Product already in wishlist'),
           ),
         );
-      } else {
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   Future<void> searchproduct() async {
@@ -331,16 +298,13 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
       final response = await http.get(
         Uri.parse('$searchproducturl${searchitem.text}'),
       );
-    
 
       if (response.statusCode == 200) {
-
         final List<dynamic> searchData = jsonDecode(response.body);
         List<Map<String, dynamic>> searchList = [];
 
         for (var productData in searchData) {
-          String imageUrl =
-              "${productData['image']}";
+          String imageUrl = "${productData['image']}";
           searchList.add({
             'id': productData['id'],
             'name': productData['name'],
@@ -353,11 +317,8 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
         setState(() {
           searchResults = searchList;
         });
-      } else {
-       
-      }
-    } catch (error) {
-    }
+      } else {}
+    } catch (error) {}
   }
 
   void _showSearchDialog(BuildContext context) {
@@ -680,19 +641,21 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                                       Expanded(
                                         child: GestureDetector(
                                           onTap: () {
+                                            
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     Product_big_View(
-                                                  product_id:
-                                                      products[firstItemIndex]
-                                                          ['id'],
-                                                  Category_id:
-                                                      products[firstItemIndex]
-                                                          ['category_id'],
-                                                 slug:products[firstItemIndex]['slug']
-                                                ),
+                                                        product_id: products[
+                                                                firstItemIndex]
+                                                            ['id'],
+                                                        Category_id: products[
+                                                                firstItemIndex]
+                                                            ['category_id'],
+                                                        slug: products[
+                                                                firstItemIndex]
+                                                            ['slug']),
                                               ),
                                             );
                                           },
@@ -859,7 +822,9 @@ class _SubcategoryProductsPageState extends State<SubcategoryProductsPage> {
                                                   Category_id:
                                                       products[secondItemIndex]
                                                           ['category_id'],
-                                                  slug: products[secondItemIndex]['slug'],
+                                                  slug:
+                                                      products[secondItemIndex]
+                                                          ['slug'],
                                                 ),
                                               ),
                                             );

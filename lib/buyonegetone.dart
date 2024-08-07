@@ -26,6 +26,9 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   int _selectedIndex = 0; // Index of the selected tab
   List<bool> isFavorite = [];
   var tokenn;
+    bool is_active = false;
+    var bogo;
+
 
   // final String buyonegetoneurl =
   //     "http://51.20.129.52/buy-1-get-1/";
@@ -51,6 +54,8 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<Map<String, dynamic>> offers = [];
   List<Map<String, dynamic>> productsInOffer = [];
     List<Map<String, dynamic>> productsInOffercat = [];
+      List<Map<String, dynamic>> offerss = [];
+
 
   @override
   void initState() {
@@ -110,6 +115,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
             'image': imageUrl,
             'slug': productData['slug'],
             'mainCategory': productData['mainCategory'],
+            'category':productData['category']
           });
         }
 
@@ -117,9 +123,18 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
           products = productsList;
 
           // Filter the products that are present in offerProducts
-          productsInOffer = products.where((product) {
+          if(offerProducts.isNotEmpty){
+             productsInOffer = products.where((product) {
             return offerProducts.contains(product['id']);
           }).toList();
+          }
+          else{
+             productsInOffer = products.where((product) {
+            return offerCategories.contains(product['category']);
+          }).toList();
+print("productsInOfferproductsInOffer$productsInOffer");
+          }
+         
 
         });
       } else {
@@ -132,7 +147,7 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
   List<int> offerProducts = [];
           List<int> offerCategories = [];
 
- Future<void> fetchbogooffers() async {
+Future<void> fetchbogooffers() async {
     try {
       final response = await http.get(Uri.parse(offersurl));
 
@@ -140,40 +155,62 @@ class _Buyone_Getone_ProductsState extends State<Buyone_Getone_Products> {
         final parsed = jsonDecode(response.body);
 
         List<Map<String, dynamic>> productsList = [];
-        List<int> offerCategories = [];
+     
 
         for (var productData in parsed) {
-          productsList.add({
-            'title': productData['name'],
-            'buy': productData['buy'],
-            'buy_value': productData['buy_value'],
-            'get_value': productData['get_value'],
-            'method': productData['method'],
-            'amount': productData['amount'],
-          });
+          if (productData['offer_active'] == true) {
+            productsList.add({
+             'id': productData['id'],
+              'title': productData['name'],
+              'buy': productData['buy'],
+              'offer_type': productData['offer_type'],
+              'get_option': productData['get_option'],
+              'get_value': productData['get_value'],
+              'method': productData['method'],
+              'amount': productData['amount'],
+              'is_active': productData['is_active'],
+            });
 
-          if (productData.containsKey('offer_products') &&
-              productData['offer_products'].isNotEmpty) {
-            offerProducts.addAll(List<int>.from(productData['offer_products']));
-          } else if (productData.containsKey('offer_category')) {
-            offerCategories
-                .addAll(List<int>.from(productData['offer_category']));
+            if (productData.containsKey('offer_products') &&
+                productData['offer_products'].isNotEmpty) {
+              offerProducts
+                  .addAll(List<int>.from(productData['offer_products']));
+            } else if (productData.containsKey('offer_category')) {
+              offerCategories
+                  .addAll(List<int>.from(productData['offer_category']));
+            }
+            print("offerCategoriesssssssssssssssssssssssssss$offerCategories");
           }
         }
 
         setState(() {
-          offers = productsList;
+          offerss = productsList;
           // Store offerProducts and offerCategories in state variables if needed
          
+
+            if (offerss[0]['offer_type'] == "BUY") {
+            if (offerss[0]['get_option'] == 1) {
+              bogo = "BUY 1 GET 1";
+            } else if (offerss[0]['get_option'] == 2) {
+              bogo = "BUY 2 GET 1";
+            }
+            if (offerss[0]['is_active'] == "true") {
+              is_active = true;
+            
+            } else {
+              is_active = false;
+            }
+
+          }
           fetchofferproducts();
         });
       } else {
         throw Exception('Failed to load wishlist products');
       }
     } catch (error) {
-      
     }
   }
+
 
 
   Future<void> addProductToWishlist(int productId) async {

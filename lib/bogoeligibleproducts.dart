@@ -48,6 +48,8 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   List<Map<String, dynamic>> searchResults = [];
   List<Map<String, dynamic>> bogodisoffers = [];
   List<Map<String, dynamic>> productsIndiscountOffer = [];
+   List<int> offerCategoriess = [];
+
 
   @override
   void initState() {
@@ -89,63 +91,66 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
   }
 
   Future<void> fetchbogodiscountproducts() async {
-    try {
-      final response = await http.get(Uri.parse(productsurl));
+  try {
+    final response = await http.get(Uri.parse(productsurl));
 
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
 
-       
-        final List<dynamic> productsData = parsed['products'];
-        List<Map<String, dynamic>> productsList = [];
+      final List<dynamic> productsData = parsed['products'];
+      List<Map<String, dynamic>> productsList = [];
 
-        for (var productData in productsData) {
-          String imageUrl =
-              "${productData['image']}";
-          productsList.add({
-            'id': productData['id'],
-            'name': productData['name'],
-            'salePrice': productData['salePrice'],
-            'image': imageUrl,
-            'slug': productData['slug'],
-            'mainCategory': productData['mainCategory'],
-          });
-        }
+      for (var productData in productsData) {
+        String imageUrl =
+            "${productData['image']}";
+        productsList.add({
+          'id': productData['id'],
+          'name': productData['name'],
+          'salePrice': productData['salePrice'],
+          'image': imageUrl,
+          'slug': productData['slug'],
+          'mainCategory': productData['mainCategory'],
+          'category':productData['category']
+        });
+      }
 
-        setState(() {
+      setState(() {
           products = productsList;
-
-          // Filter the products that are present in offerProducts
-          productsIndiscountOffer = products.where((product) {
+         if(offerProductss.isNotEmpty){
+             productsIndiscountOffer = products.where((product) {
             return offerProductss.contains(product['id']);
           }).toList();
+          }
+          else{
+             productsIndiscountOffer = products.where((product) {
+            return offerCategoriess.contains(product['category']);
+          }).toList();
+print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX$productsIndiscountOffer");
+          }
 
-          isFavorite =
-              List.generate(productsIndiscountOffer.length, (index) => false);
-
-        });
-      } else {
-        throw Exception('Failed to load wishlist products');
-      }
-    } catch (error) {
+      });
+    } else {
+      throw Exception('Failed to load discount products');
     }
+  } catch (error) {
   }
+}
 
   List<int> offerProductss = [];
+  // List<int> offerProductss = [];
 
-  Future<void> fetchbogodiscountoffers() async {
-    try {
-      final response = await http.get(Uri.parse(offersurl));
+ Future<void> fetchbogodiscountoffers() async {
+  try {
+    final response = await http.get(Uri.parse(offersurl));
 
-      if (response.statusCode == 200) {
-        final parsed = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
 
-        List<Map<String, dynamic>> productsList = [];
-        List<int> offerCategories = [];
+      List<Map<String, dynamic>> productsList = [];
+     
 
-        for (var productData in parsed) {
-          if (productData['offer_active'] == true) {}
-
+      for (var productData in parsed) {
+        if (productData['offer_active'] == true) {
           productsList.add({
             'title': productData['name'],
             'buy': productData['buy'],
@@ -154,29 +159,31 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
             'method': productData['method'],
             'amount': productData['amount'],
           });
-         
+
+
           if (productData.containsKey('discount_approved_products') &&
               productData['discount_approved_products'].isNotEmpty) {
             offerProductss.addAll(
                 List<int>.from(productData['discount_approved_products']));
-          } else if (productData.containsKey('offer_category')) {
-            offerCategories
-                .addAll(List<int>.from(productData['offer_category']));
+          } else if (productData.containsKey('discount_approved_category')) {
+            offerCategoriess.addAll(List<int>.from(productData['discount_approved_category']));
           }
+          print("dissssssssssssssCategoriessssssssss$offerCategoriess");
         }
-
-        setState(() {
-          bogodisoffers = productsList;
-          // Store offerProducts and offerCategories in state variables if needed
-         
-          fetchbogodiscountproducts();
-        });
-      } else {
-        throw Exception('Failed to load wishlist products');
       }
-    } catch (error) {
+
+      setState(() {
+        bogodisoffers = productsList;
+        // Store offerProducts and offerCategories in state variables if needed
+      
+        fetchbogodiscountproducts();
+      });
+    } else {
+      throw Exception('Failed to load discount offer products');
     }
+  } catch (error) {
   }
+}
 
   Future<void> addProductToWishlist(int productId) async {
     try {
@@ -489,19 +496,20 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${productsIndiscountOffer[firstItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if(productsIndiscountOffer[firstItemIndex]['price']!=null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsIndiscountOffer[firstItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
@@ -606,19 +614,20 @@ class _Bogo_Eligible_ProductsState extends State<Bogo_Eligible_Products> {
                                                     TextOverflow.ellipsis),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Text(
-                                            '\$${productsIndiscountOffer[secondItemIndex]['price']}',
-                                            style: TextStyle(
-                                              decoration: TextDecoration
-                                                  .lineThrough, // Add strikethrough decoration
-                                              color: Colors
-                                                  .grey, // You can adjust the color according to your design
+                                        if(productsIndiscountOffer[secondItemIndex]['price']!=null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Text(
+                                              '\$${productsIndiscountOffer[secondItemIndex]['price']}',
+                                              style: TextStyle(
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Add strikethrough decoration
+                                                color: Colors
+                                                    .grey, // You can adjust the color according to your design
+                                              ),
                                             ),
                                           ),
-                                        ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),

@@ -178,10 +178,12 @@ class _SubcategoriesPageState extends State<SubcategoriesPage> {
             'salePrice': productData['salePrice'],
             'image': imageUrl,
             'category_id': productData['mainCategory'],
+            'slug':productData['slug']
           });
         }
         setState(() {
           searchResults = searchList;
+          print("HHHHHHHHHOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII$searchResults");
         });
       } else {}
     } catch (error) {}
